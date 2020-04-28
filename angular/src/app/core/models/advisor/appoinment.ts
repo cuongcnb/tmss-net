@@ -1,0 +1,43 @@
+import { BaseModel } from '../base.model';
+
+export interface AppoinmentModel extends BaseModel {
+  appchangercount: number;
+  appointmentno: string;
+  appstatus: string;
+  apptype: string;
+  cancelreason: string;
+  cardelivery: Date;
+  contactcount: number;
+  cusarr: Date;
+  cusvsId: number;
+  dateconfirm: Date;
+  datecontact: Date;
+  deleteflag: string;
+  deposits: number;
+  depositsstatus: string;
+  dlrId: number;
+  estimateMoney: number;
+  estimateTime: number;
+  isdone: string;
+  kqNoshow: string;
+  lh1: Date;
+  lh1Note: string;
+  lh2: Date;
+  lh2Note: string;
+  lh3: Date;
+  lh3Note: string;
+  notes: string;
+  reqdesc: string;
+  roId: number;
+  saId: number;
+  safrom: Date;
+  sato: Date;
+  sponsor: string;
+  technicalId: number;
+  wshopId: number;
+  wshopfrom: Date;
+  wshopto: Date;
+  confirm?: boolean;
+  cancel?: boolean;
+  noShow?: boolean;
+}

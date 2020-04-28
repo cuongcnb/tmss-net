@@ -1,0 +1,59 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="main-login col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
+        <div class="logo text-center dblock"><img src="/assets/images/login-logo.png" alt="">
+        </div>
+        <div class="box-login">
+          <h3>Please Sign In</h3>
+          <form class="form-login" [formGroup]="form" novalidate (submit)="submit()" focusField>
+            <fieldset>
+              <div class="form-group" hasError="dealerId">
+                <label>TMV/Dealer</label>
+                <span class="input-icon">
+                  <select class="form-control pl-2" formControlName="dealerId">
+                    <option value="">Choose an dealer or TMV</option>
+                    <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">
+                      {{dealer.code}}. {{dealer.vnName}}
+                    </option>
+                  </select>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">TMV/Dealer is required</div>
+                  </div>
+                </span>
+              </div>
+              <div class="form-group" hasError="username">
+                <label>Tên truy nhập</label>
+                <span class="input-icon">
+									<input type="text" class="form-control" (change)="changeUsername()" formControlName="username" placeholder="Username">
+									<i class="fa fa-user"></i>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Username is required</div>
+                    <!--<div *ifError="'justNormalString'">Username cannot contain special characters or spaces</div>-->
+                  </div>
+                </span>
+              </div>
+              <div class="form-group" hasError="password">
+                <label>Mật khẩu</label>
+                <span class="input-icon">
+                  <input type="password" class="form-control password" formControlName="password"
+                         placeholder="Password">
+                  <i class="fa fa-lock"></i>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Password is required</div>
+                  </div>
+                </span>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-bricky btn-block mbt10">
+                  Sign In
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

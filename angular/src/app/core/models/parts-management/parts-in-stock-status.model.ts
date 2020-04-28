@@ -1,0 +1,58 @@
+import { BaseModel } from '../base.model';
+
+export interface PartsInStockStatusModel extends BaseModel {
+  stt?;
+  partsCode;
+  partsName;
+  partsNameVn;
+  unit;
+  price;
+  sellPrice;
+  rate;
+  qty;
+  instocktype;
+  instockTypeName;
+  mad;
+  madTT;
+  mipTT;
+  mipLT;
+  mip;
+  locationNo;
+
+  modifiedBy?;
+  modifyDate?;
+  createdBy?;
+  createDate?;
+  status?;
+  id?;
+  pnc?;
+  partsType?;
+  handlemodel?;
+  handletype?;
+  supplierId?;
+  sellUnitId?;
+  substitutionpartno?;
+  substitutioncode?;
+  fobPrice?;
+  fobcurrencycode?;
+  deleteflag?;
+  specialclasscode?;
+  criternuminstock?;
+  localFlag?;
+  genuine?;
+  remark?;
+  bdirectshipping?;
+  orderunit?;
+  orderunitnum?;
+  partSize?;
+  expressShipping?;
+  substitutionpartnoOld?;
+  frCd?;
+  partType?;
+  kpiPartType?;
+  kpiPartRate?;
+  kpiPartPcg?;
+  bigPartFg?;
+  coo?;
+  ordering?;
+}

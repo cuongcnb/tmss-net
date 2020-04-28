@@ -35,6 +35,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
                         path: '**', redirectTo: 'notifications'
                     }
                 ]
+            },
+            {
+                path: 'auth',
+                // loadChildren: './auth/auth.module#AuthModule',
+                loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
+                // canActivate: [AppRouteGuard]
             }
         ])
     ],

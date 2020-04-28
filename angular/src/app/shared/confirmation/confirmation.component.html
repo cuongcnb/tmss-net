@@ -1,0 +1,11 @@
+<swal #confirmModal
+      type="warning"
+      [title]="title? title : 'Bạn chắc không?'"
+      [text]="message? message : ''"
+      confirmButtonClass="btn btn-blue mr-2"
+      confirmButtonText="Đồng ý"
+      cancelButtonText="Hủy bỏ"
+      [showCancelButton]="true"
+      (confirm)="onClose()"
+      (cancel)="onCancel()"
+></swal>

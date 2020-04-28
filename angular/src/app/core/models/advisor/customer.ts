@@ -1,0 +1,46 @@
+import { BaseModel } from '../base.model';
+
+export interface CustomerModel extends BaseModel {
+  appoinmentId?: string;
+  registerno: string;
+  vinno?: string;
+  customerId?: number;
+  vehiclesId?: number;
+  cusDId?: number;
+  cusdesId?: number;
+  carownername: string;
+  cusno: string;
+  orgname: string;
+  custypeId: number;
+  carowneradd: string;
+  carownermobil: string;
+  carownertel: string;
+  carownerfax: string;
+  taxcode: string;
+  carowneremail: string;
+  cusNote?: string;
+  cmType?: string;
+  ckd?: string;
+  districtId: number;
+  provinceId: number;
+  cmId?: number;
+  fullmodel?: string;
+  cmName?: string;
+  frameno?: string;
+  enginetypeId?: number;
+  enginecode?: string;
+  engineno?: number;
+  vcId?: number;
+  vccode?: number;
+  ntCode?: number;
+  cmCode?: number;
+  doixe?: string;
+  name?: string;
+  tel?: string;
+  address?: string;
+  email?: string;
+  nonFir?: string;
+  type?: string;
+  pds?: string;
+  repairContent?: string;
+}

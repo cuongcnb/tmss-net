@@ -1,0 +1,1 @@
+export const DecodeMessageNoData = 'eyJtZXRhIjp7InN0YXR1c19jb2RlIjoyMDQsIm1lc3NhZ2UiOiJObyBEYXRhIn19';

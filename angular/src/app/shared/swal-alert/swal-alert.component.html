@@ -1,0 +1,19 @@
+<swal #forceErrorModal
+      type="error"
+      [title]="title ? title : 'Error'">
+  <div *swalPartial class="text-center">
+    <span [innerHtml]="message"></span>
+  </div>
+</swal>
+
+<swal #forceSuccessModal
+      type="success"
+      [title]="title ? title : 'Successful'"
+      [text]="message ? message : 'Action was successful!'">
+</swal>
+
+<swal #forceWarningModal
+      type="warning"
+      [title]="title ? title : 'Warning'"
+      [text]="message ? message : ''">
+</swal>

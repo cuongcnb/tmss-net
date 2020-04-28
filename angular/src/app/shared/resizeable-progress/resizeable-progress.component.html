@@ -1,0 +1,130 @@
+<ng-container>
+  <label class="mouse-time" [style.top.px]="positionTop" [style.left.px]="positionLeft - 50">&nbsp;</label>
+  <label *ngIf="showMouseTime" class="mouse-time" [style.top.px]="positionTop + 30" [style.left.px]="positionLeft - 50">{{startTimeDisplay | date:'HH:mm'}}</label>
+  <label *ngIf="showMouseTime" class="mouse-time" [style.top.px]="positionTop + 30" [style.left.px]="positionLeft - 50">{{endTimeDisplay | date:'HH:mm'}}</label>
+
+  <div disabled="true"
+      [ngClass]="isSCC === scc ? 'scc-tracking-progress' : isSCC === ds ? 'ds-tracking-progress' : isSCC === rx ? 'rx-tracking-progress' : isSCC === car ? 'car-tracking-progress' : 'wshop-tracking-progress' "
+      cdkDrag (cdkDragEnded)="cdkDragEnded($event)" (cdkDragStarted)="cdkDragStarted()"
+      [cdkDragDisabled]="disable || disable_drag || val.isStart === 'Y' || (state === ProgressState.plan && val.appId) || state === ProgressState.stopOutside"
+      (mousedown)="startDrag($event)"
+      (drag)="isShowTooltip = false"
+      (click)="isShowTooltip = false"
+      (dblclick)="openRepairPlanModal()"
+      [attr.data-empId]="val.empId"
+      [attr.data-wshopId]="val.wshopId"
+      [attr.data-toDatetime]="val.toDatetime"
+      [contextMenu]="basicMenu"
+      #trackingProgress>
+    <span *ngIf="val && val.registerno"
+          [ngClass]="[isSCC === scc ? 'scc-register-no-progress' : isSCC === ds ? 'ds-register-no-progress' : isSCC === rx ? 'rx-register-no-progress' : isSCC === car ? 'car-register-no-progress' : 'wshop-register-no-progress'
+          ,[ds, car, wshop].includes(isSCC) && state === ProgressState.autoSuggest ? 'quotation-manual-suggest': '']">
+        
+        <!-- {{byCar === true ? val.wshopIdAct ? val.wsNameAct : val.wsName : val.registerno + ((val.isPriority && val.isPriority === 'Y') ? ' *' : '')}} -->
+        <ng-container *ngIf="[scc, ds, rx, wshop].includes(isSCC)">{{val.registerno + ((val.isPriority && val.isPriority === 'Y') ? ' *' : ' ')}}</ng-container>
+        <!-- <label class="mouse-time" >{{startTimeDisplay | date:'HH:mm'}}</label> -->
+        <ng-container *ngIf="isSCC === car">{{val.wsCode ? (val.wsCode + ((val.isPriority && val.isPriority === 'Y') ? ' *' : ' ')) : ''}}</ng-container>
+      <i *ngIf="(val && val.typeDs) || ([car, ds, wshop].includes(isSCC))"
+        [ngClass]="progressIcon" style="font-size: 16px !important;"></i>
+      <i *ngIf="(state === ProgressState.manualSuggest || state === ProgressState.manualAppointment)"><img class="size-img" src="/assets/images/h.svg"/></i>
+    </span>
+    <div class="resize-area" (mousedown)="startResize($event)"></div>
+  </div>
+
+  <context-menu
+    [disabled]="disable === true || disableMenuContent.includes(state) || (ProgressState.plan === state && val.isStart === 'Y') || (state === ProgressState.plan && !!val.appId) "
+    *ngIf="state != ProgressState.performed && (!(state === ProgressState.stopInside && val.toTimeAct) )">
+    <ng-template *ngIf="disableFieldContent.includes(state) && isSCC != rx" contextMenuItem (execute)="changePlanToWorking()">
+      <span style="font-size: 11px !important;">Thực hiện</span>
+    </ng-template>
+    <ng-template
+      *ngIf=" [scc].includes(isSCC) && [ProgressState.plan, ProgressState.autoSuggest, ProgressState.autoAppointment, ProgressState.manualSuggest, ProgressState.manualAppointment].includes(state)"
+      contextMenuItem
+      (execute)="clonePlan()">
+      <span style="font-size: 11px !important;">Thêm kế hoạch</span>
+    </ng-template>
+    <ng-template *ngIf="disableFieldContent.includes(state)" contextMenuItem (execute)="freePlan()">
+      <span style="font-size: 11px !important;">
+        <ng-container *ngIf="isSCC === scc">Đưa về danh sách xe chờ</ng-container>
+        <ng-container *ngIf="isSCC === ds">Hủy tất cả các kế hoạch</ng-container>
+      </span>
+    </ng-template>
+    <ng-template *ngIf="(isSCC === ds && state == ProgressState.wait)" contextMenuItem (execute)="removePlan()">
+      <span style="font-size: 11px !important;">Hủy</span>
+    </ng-template>
+    <ng-template *ngIf="(state === ProgressState.stopInside && !val.toTimeAct) || state === ProgressState.stopOutside" contextMenuItem (execute)="continueWorking()">
+      <span style="font-size: 11px !important;">Tiếp tục</span>
+    </ng-template>
+    <ng-template
+      *ngIf="!disableFieldContent.includes(state) && state == ProgressState.actual && !disableCancel.includes(state) && isSCC !== rx"
+      contextMenuItem
+      (execute)="stopWorkingInside()">
+      <span style="font-size: 11px !important;">Dừng sửa chữa</span>
+    </ng-template>
+    <!-- <ng-template
+      *ngIf="!disableFieldContent.includes(state) && state !== ProgressState.complete && isSCC === scc && !disableCancel.includes(state) && isSCC !== rx"
+      contextMenuItem
+      (execute)="stopWorkingOutside()">
+      <span style="font-size: 11px !important;">Dừng ngoài khoang</span>
+    </ng-template> -->
+    <ng-template
+      *ngIf="!disableFieldContent.includes(state) && state !== ProgressState.complete && !disableCancel.includes(state) && state !== ProgressState.performed && isSCC === scc && state !== ProgressState.stopInside"
+      contextMenuItem
+      (execute)="completeWorking()">
+      <span style="font-size: 11px !important;">Kết thúc</span>
+    </ng-template>
+
+    <ng-template
+      *ngIf="!disableFieldContent.includes(state) && state !== ProgressState.complete && !disableCancel.includes(state) && state !== ProgressState.performed && isSCC === ds"
+      contextMenuItem
+      (execute)="completeWorking()">
+      <span style="font-size: 11px !important;">Kết thúc công đoạn</span>
+    </ng-template>
+
+    <ng-template *ngIf="disableCancel.includes(state) && [scc].includes(isSCC)"
+                contextMenuItem
+                (execute)="cancelSuggest()">
+      <span style="font-size: 11px !important;">Hủy</span>
+    </ng-template>
+    <ng-template *ngIf="disableCancelAll.includes(state)"
+                contextMenuItem
+                (execute)="cancelAllSuggest()">
+      <span style="font-size: 11px !important;">Hủy tất cả</span>
+    </ng-template>
+
+    <ng-template *ngIf="isSCC === rx" contextMenuItem (execute)="freePlanRx()">
+      <span style="font-size: 11px !important;">Đưa về danh sách xe chờ</span>
+    </ng-template>
+
+    <ng-template *ngIf="isSCC === rx && state !== ProgressState.plan" contextMenuItem let-vehicle (execute)="completePlanRx()">
+      <span style="font-size: 11px !important;">Hoàn thành</span>
+    </ng-template>
+
+  </context-menu>
+  <tmss-tooltip *ngIf="isShowTooltip" [contentElem]="trackingProgress">
+    <div *ngIf="isSCC === car"> Tên cổng: {{val.wshopIdAct ? val.wsNameAct : val.wsName}} </div>
+    <!--  Tên chủ xe: {{val?.carownername}} <br/>-->
+    <div>Tên người mang xe đến: {{val?.name || val?.carownername}} <br/></div>
+    <div *ngIf="isSCC !== car">Biển số xe: {{val?.registerno}} <br/></div>
+
+    <div>KH chờ: {{val.isCusWait === 'Y' ? 'Có' : 'Không'}}</div>
+    <div>KH hẹn: {{(val.appIdDone || val.appId) ? 'Có' : 'Không'}}</div>
+    <div>Thời gian KH đến: {{val?.inDate | date:"dd/MM/yyyy HH:mm"}}</div>
+    <div>Trạng thái: {{NameProgressByState[val.state]}}</div>
+    Thời gian bắt đầu:
+    <ng-container
+      *ngIf="disablePlanContent.includes(state)">{{val?.fromDatetime | date:"dd/MM/yyyy HH:mm"}}</ng-container>
+    <ng-container
+      *ngIf="!disablePlanContent.includes(state)">{{val?.fromTimeAct | date:"dd/MM/yyyy HH:mm"}}</ng-container>
+    <br/>
+    Thời gian kết thúc:
+    <ng-container
+      *ngIf="disablePlanContent.includes(state)">{{val?.toDatetime | date:"dd/MM/yyyy HH:mm"}}</ng-container>
+    <ng-container
+      *ngIf="state === ProgressState.actual">{{val?.toTimeAct ? (val?.toTimeAct | date:"dd/MM/yyyy HH:mm") : 'Chưa rõ'}}</ng-container>
+    <ng-container *ngIf="state === ProgressState.stopInside">{{val?.toTimeAct ? (val?.toTimeAct | date:"dd/MM/yyyy HH:mm") : 'Chưa rõ'}}</ng-container>
+    <ng-container
+      *ngIf="state === ProgressState.complete || state === ProgressState.performed">{{val?.toTimeAct | date:"dd/MM/yyyy HH:mm"}}</ng-container>
+    <div>Thời gian DKGX: {{val.carDeliveryTime ? (val.carDeliveryTime | date:"dd/MM/yyyy HH:mm") : 'Chưa rõ'}}</div>
+  </tmss-tooltip>
+</ng-container>

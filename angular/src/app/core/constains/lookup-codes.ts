@@ -1,0 +1,17 @@
+export const LookupCodes = {
+  dealer_type: 'dealer_type',
+  regions: 'regions',
+  bank_type: 'bank_type',
+  payment_type: 'payment_type',
+  estimated_reason: 'estimated_reason',
+  legal_status: 'legal_status',
+  gasoline_type: 'gasoline_type',
+  businessField: 'BUSINESS_FIELD',
+  yard_location: 'yard_location',
+  gender: 'gender',
+  age_lead_time: 'age_lead_time',
+  driving_type: 'driving_type',
+  purchasing_type: 'purchasing_type',
+  purchasing_purpose: 'purchasing_purpose',
+  cancel_reason: 'cancel_reason',
+};

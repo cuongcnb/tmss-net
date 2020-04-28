@@ -1,0 +1,93 @@
+import { BaseModel } from '../base.model';
+
+export interface BoOrderModel extends BaseModel {
+  stt?: number;
+  ro: string;
+  reqtype: string;
+  model: string;
+  advisorName: string;
+  registerNo: string;
+  customerName: string;
+  customerAddress: string;
+  requestDate: number;
+
+  partsCode: string;
+  partsName: string;
+  qty?: number;
+  unit: string;
+  price: number;
+  sumPrice: number;
+  rate: number;
+  transportTypeId: number;
+  transportType: string;
+
+  boQty?;
+  boStatus?;
+  diDong?;
+  dienThoai?;
+  dlrId?;
+  donGia?;
+  donViTinhMua?;
+  frCd?;
+  inputQty?;
+  maSoThue?;
+  mip?;
+  onHandQty?;
+  orderQty?;
+  parstCode?;
+  partsId?;
+  partstypeCode?;
+  preTaxPrice?;
+  reqId?;
+  roType?;
+  seqdisplay?;
+  slBoChuaXuat?;
+  slBoDaVe?;
+  slBoDaXuat?;
+  slCon?;
+  slDaXuat?;
+  slDatBo?;
+  soQty?;
+  status?;
+  taxPrice?;
+  trangThai?;
+  viTriLuuKho?;
+}
+
+export interface BoPartsOfOrder extends BaseModel {
+  stt?: number;
+  partsCode: string;
+  partsName: string;
+  demand: number;
+  qty?: number;
+  cpd: number;
+  unit: string;
+  price: number;
+  sumPrice: number;
+  rate: number;
+  transportTypeId: number;
+  transportType: string;
+  boQty: number;
+  boStatus: number;
+  donGia: number;
+  donViTinhMua: string;
+  frCd: string;
+  inputQty: number;
+  mip: number;
+  onHandQty: number;
+  orderQty: number;
+  partsId: number;
+  partstypeCode: string;
+  preTaxPrice: number;
+  reqId: number;
+  seqdisplay: number;
+  slBoChuaXuat: number;
+  slBoDaVe: number;
+  slBoDaXuat: number;
+  slCon: number;
+  slDaXuat: number;
+  slDatBo: number;
+  soQty: number;
+  taxPrice: number;
+  viTriLuuKho: string;
+}
