@@ -52,6 +52,7 @@
               
               "src/app/shared/core.less",
               "src/app/shared/layout/layout.less",
+              "src/assets/css/toyota.css",
               "src/styles.css"
             ],
             "scripts": [

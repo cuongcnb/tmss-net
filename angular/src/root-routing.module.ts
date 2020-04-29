@@ -39,6 +39,8 @@ export class RootRoutingModule {
 
             if (url.indexOf('/account/') >= 0) {
                 this.setAccountModuleBodyClassInternal();
+            } if (url.indexOf('/auth/login') >= 0) {
+                this.setLoginBodyClassInternal();
             } else {
                 this.setAppModuleBodyClassInternal();
             }
@@ -81,6 +83,10 @@ export class RootRoutingModule {
         }
 
         document.body.className = this._uiCustomizationService.getAccountModuleBodyClass() + ' ' + classesToRemember;
+    }
+
+    setLoginBodyClassInternal(): void {
+        document.body.className = 'login';
     }
 
     getSetting(key: string): string {

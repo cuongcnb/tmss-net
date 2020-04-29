@@ -1,6 +1,6 @@
 import { AbpModule } from '@abp/abp.module';
 import * as ngCommon from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { ChatSignalrService } from '@app/shared/layout/chat/chat-signalr.service';
@@ -14,7 +14,7 @@ import { SmsVerificationModalComponent } from '@app/shared/layout/profile/sms-ve
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { UtilsModule } from '@shared/utils/utils.module';
 import { FileUploadModule } from 'ng2-file-upload';
-import { ModalModule, TabsModule, TooltipModule, BsDropdownModule, PopoverModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { ModalModule, TabsModule, TooltipModule, BsDropdownModule, PopoverModule, BsDatepickerModule, AccordionModule } from 'ngx-bootstrap';
 import { FileUploadModule as PrimeNgFileUploadModule } from 'primeng/fileupload';
 import { PaginatorModule } from 'primeng/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -78,7 +78,17 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MenuSearchBarComponent } from './shared/layout/nav/menu-search-bar/menu-search-bar.component';
 import { NgxSpinnerModule, NgxSpinnerComponent } from 'ngx-spinner';
 import { ScrollTopComponent } from './shared/layout/scroll-top.component';
+import { ApiModule } from './api/api.module';
+import { ToastrModule } from 'ngx-toastr';
+import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
+import { DragulaModule } from 'ng2-dragula';
+import { AgGridModule } from 'ag-grid-angular';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { SharedModule } from './shared/shared.module';
+import { EnvConfigService } from './env-config.service';
 
+
+const appEnvInitializerFn = (envConfig: EnvConfigService) => () => envConfig.loadEnvConfig();
 
 @NgModule({
     declarations: [
@@ -158,7 +168,25 @@ import { ScrollTopComponent } from './shared/layout/scroll-top.component';
         TextMaskModule,
         ImageCropperModule,
         AutoCompleteModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        ApiModule.forRoot(),
+        SharedModule,
+        ToastrModule.forRoot({
+            closeButton: true
+        }),
+        KeyboardShortcutsModule.forRoot(),
+        AccordionModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        DragulaModule.forRoot(),
+        AgGridModule.withComponents([]),
+        ModalModule.forRoot(),
+        ApiModule.forRoot(),
+        SweetAlert2Module.forRoot({
+            buttonsStyling: false,
+            customClass: 'modal-content',
+            confirmButtonClass: 'btn btn-blue mr-2',
+            cancelButtonClass: 'btn btn-light-grey'
+        })
 
     ],
     providers: [
@@ -169,7 +197,13 @@ import { ScrollTopComponent } from './shared/layout/scroll-top.component';
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appEnvInitializerFn,
+            multi: true,
+            deps: [EnvConfigService]
+          }
     ],
     entryComponents: [NgxSpinnerComponent]
 })

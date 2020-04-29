@@ -1,0 +1,118 @@
+[
+  {
+    "key": "/calculation/search",
+    "value": 3600000
+  },
+  {
+    "key": "/ro/approve",
+    "value": 1200000
+  },
+  {
+    "key": "/ro/approve/all",
+    "value": 1200000
+  },
+  {
+    "key": "/parts-report/import-export-report",
+    "value": 1200000
+  },
+  {
+    "key": "/parts-report/export-report",
+    "value": 1200000
+  },
+  {
+    "key": "/repair-order/search-ro-appoinment",
+    "value": 1200000
+  },
+  {
+    "key": "/parts-report/imp-exp-parthis",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/adjusted-part-quantities-report",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/import-export-report",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/rate-provide-parts-sr",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/parts-instock-bycode",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/export-report",
+    "value": 300000
+  },
+  {
+    "key": "/report/report-retail-shipping",
+    "value": 300000
+  },
+  {
+    "key": "/report/report-receiving",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/ro-over-all",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/rate-provide-parts-report",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/parts-instock-dlr",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/parts-export-report",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/parts-debit-inquiry",
+    "value": 300000
+  },
+  {
+    "key": "/report/report-service-rate",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/cs-over-all",
+    "value": 300000
+  },
+  {
+    "key": "/report/report-ro-unfinished",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/part-receive-enough",
+    "value": 300000
+  },
+  {
+    "key": "/report/day-in-warehouse",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/parts-order-dealer-to-tmv",
+    "value": 300000
+  },
+  {
+    "key": "/parts-report/list-ro-part-bo-not-enough",
+    "value": 300000
+  },
+  {
+    "key": "/bo-order/search",
+    "value": 300000
+  },
+  {
+    "key": "/cashier/refresh",
+    "value": 300000
+  },
+  {
+    "key": "/mip/calculation/save",
+    "value": 600000
+  }
+]

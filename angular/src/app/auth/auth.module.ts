@@ -11,7 +11,7 @@ import {CoreModule} from '../core/core.module';
     CommonModule,
     AuthRoutingModule,
     SharedModule,
-    CoreModule,
+    CoreModule
   ],
   declarations: [
     LoginComponent,

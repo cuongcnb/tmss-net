@@ -30,7 +30,7 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {NgxEditorModule} from 'ngx-editor';
 
 import {FormValidationModule} from './form-validation/form-validation.module';
-import {FooterComponent} from './layout/footer.component';
+// import {FooterComponent} from './layout/footer.component';
 import {HeaderComponent} from './layout/header.component';
 import {SidebarComponent} from './layout/sidebar.component';
 import {CheckboxComponent} from './checkbox/checkbox.component';
@@ -172,7 +172,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
 }
 
 const Layout = [
-  FooterComponent,
+  // FooterComponent,
   SidebarComponent,
   HeaderComponent
 ];
