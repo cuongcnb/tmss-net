@@ -30,11 +30,11 @@ export class RootRoutingModule {
     toggleBodyCssClass(url: string): void {
         if (url) {
             if (url === '/') {
-                if (abp.session.userId > 0) {
-                    this.setAppModuleBodyClassInternal();
-                } else {
-                    this.setAccountModuleBodyClassInternal();
-                }
+                // if (abp.session.userId > 0) {
+                //     this.setAppModuleBodyClassInternal();
+                // } else {
+                //     this.setAccountModuleBodyClassInternal();
+                // }
             }
 
             if (url.indexOf('/account/') >= 0) {
@@ -42,7 +42,7 @@ export class RootRoutingModule {
             } if (url.indexOf('/auth/login') >= 0) {
                 this.setLoginBodyClassInternal();
             } else {
-                this.setAppModuleBodyClassInternal();
+                // this.setAppModuleBodyClassInternal();
             }
         }
     }

@@ -8,7 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
             {
                 path: '',
                 children: [
-                    { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
+                    // { path: 'dashboard', component: DashboardComponent, data: { permission: 'Pages.Tenant.Dashboard' } },
+                    { path: 'dashboard', component: DashboardComponent},
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
                 ]
             }
