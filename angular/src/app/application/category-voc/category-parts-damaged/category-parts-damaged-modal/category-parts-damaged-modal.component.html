@@ -1,0 +1,77 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Danh mục bộ phận hư hỏng/Quy trình {{selectedRowData? '[Cập nhật]' : '[Thêm
+            mới]'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Tên lĩnh vực khiếu nại</span>
+                <select class="form-control" formControlName="nameComplainField"></select>
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Tên vấn đề khiếu nại</span>
+                <select class="form-control" formControlName="nameComplainProblem"></select>
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Mã bộ phận hư hỏng/Quy trình</span>
+                <input class="form-control" formControlName="codePartsDamaged">
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Bộ phận hư hỏng/Quy trình (VN)</span>
+                <input class="form-control" formControlName="namePartsDamagedVN">
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Bộ phận hư hỏng/Quy trình (EN)</span>
+                <input class="form-control" formControlName="namePartsDamagedEN">
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái</span>
+                <select class="form-control" formControlName="status"></select>
+              </div>
+            </div>
+            <div class="form-group span-185">
+              <div class="input-group">
+                <span class="input-group-addon">Số thứ tự</span>
+                <input class="form-control" formControlName="stt">
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue">
+            <i class="fa fa-save"></i>
+            Lưu
+          </button>
+          <button class="btn btn-blue" (click)="resetForm()">
+            <i class="fa fa-refresh"></i>
+            Làm mới
+          </button>
+          <button class="btn btn-light-grey" (click)="close()">
+            <i class="fa fa-times"></i>
+            Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

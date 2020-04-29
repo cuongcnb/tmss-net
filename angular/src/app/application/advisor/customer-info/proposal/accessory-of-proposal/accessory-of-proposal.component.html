@@ -1,0 +1,91 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="fa btn-collapse" [ngClass]="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'"
+              (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEventAcc">
+      </button>
+    </div>
+  </div>
+  <div id="collapseEventAcc" [collapse]="isCollapsed">
+    <grid-table [fieldGrid]="gridField" #gridTable
+                [showPagination]="false"
+                (getParams)="getParams()"
+                [isSuppressHorizontalScroll]="true"
+                [frameworkComponents]="frameworkComponents"
+                (callbackGrid)="callbackGrid($event)"
+                [height]="gridHeight"
+                (cellEditingStarted)="cellEditingStarted($event)"
+                (cellEditingStopped)="cellEditingStopped($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+                (keyup)="agKeyUp($event)"
+                (cellFocused)="cellFocused($event)"
+                (cellDoubleClicked)="cellDoubleClicked($event)"
+                [navigateToNextCell]="navigateToNextCell"
+                (rowClicked)="rowClicked($event)"
+    ></grid-table>
+    <div class="row p-2">
+
+      <div class="col-sm-8 money-style mt-2">
+        <div class="form-group inline mr-2">
+          TT trước thuế:
+        </div>
+        <div class="form-group inline fix-width">
+          <strong>{{moneyFormat(footerData?.beforeTax)}}</strong>
+        </div>
+        <div class="form-group inline mr-2">
+          Giảm giá:
+        </div>
+        <div class="form-group inline fix-width">
+          <strong>{{moneyFormat(footerData?.discount)}}</strong>
+        </div>
+        <div class="form-group inline mr-2">
+          Tổng tiền thuế:
+        </div>
+        <div class="form-group inline fix-width">
+          <strong>{{moneyFormat(footerData?.taxRate)}}</strong>
+        </div>
+        <div class="form-group inline mr-2">
+          TT sau thuế:
+        </div>
+        <div class="form-group inline fix-width">
+          <strong>{{moneyFormat(footerData?.total)}}</strong>
+        </div>
+      </div>
+      <div class="col-sm-4 text-right">
+        <button type="button" class="btn btn-blue mr-2"
+                [disabled]="!(proposalForm.getRawValue().appointmentId && proposalForm.getRawValue().rostate <= stateQuotation) "
+                (click)="partFromBooking.open(proposalForm.getRawValue().appointmentId)">Chọn PT
+        </button>
+        <button type="button" class="btn btn-blue mr-2"
+                [disabled]="!(proposalForm.getRawValue().roId)"
+                (click)="partFromBookingDetail.open(proposalForm.getRawValue().roId)"> TT Chi tiết
+        </button>
+        <button type="button" class="btn btn-blue mr-2"
+                [disabled]="state && disabledBtnAdd.includes(state.toString()) || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy && !stateCVDV.includes(state) )"
+                (click)="addParts()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue"
+                [disabled]="partHasAppId || (state && !disableBtnDel.includes(state.toString()) && selectedNode && selectedNode.data.pstate === 'Y' || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy  && !stateCVDV.includes(state)))"
+                (click)="removePart()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<search-data-grid-modal #searchPartsModal
+                        (cancel)="cancelPart()"
+                        [headerText]="'Chọn phụ tùng'"
+                        [apiCall]="searchPartApiCall.bind(this)" [fieldGrid]="fieldPartsSearch"
+                        (close)="setDataToRow($event)">
+</search-data-grid-modal>
+<recently-part-price #recentlyPartPriceComponent
+                        [headerText]="'Chọn đơn giá'"
+                        (close)="setSellPrice($event)"></recently-part-price>
+<accessory-discount [registerno]="proposalForm.get('registerno').value" #discountModal ></accessory-discount>
+<part-from-booking #partFromBooking [listPT]=" params ? gridTableService.getAllData(params) : []" (choosingPart)="patchPartToGrid($event)"></part-from-booking>
+<part-from-booking-detail #partFromBookingDetail></part-from-booking-detail>

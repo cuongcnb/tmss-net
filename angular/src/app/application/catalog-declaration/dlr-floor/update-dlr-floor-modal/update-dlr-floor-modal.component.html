@@ -1,0 +1,69 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật tầng sửa chữa' : 'Thêm mới tầng sửa chữa'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="floorName">
+              <div class="input-group">
+                <span class="input-group-addon">Tên tầng</span>
+                <input type="text" formControlName="floorName" class="form-control required">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Hãy nhập tên tầng</div>
+                <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="description">
+              <div class="input-group">
+                <span class="input-group-addon">Ghi chú</span>
+                <input type="text" formControlName="description" class="form-control">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái</span>
+                <select formControlName="status" class="form-control">
+                  <option value="Y">Còn Hiệu Lực</option>
+                  <option value="N">Hết Hiệu Lực</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" hasError="type">
+              <div class="input-group">
+                <span class="input-group-addon">Loại CV</span>
+                <select formControlName="type" class="form-control">
+                  <option value="1">GJ + MA</option>
+                  <option value="2">BP</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Hãy chọn loại CV</div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

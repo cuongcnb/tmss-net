@@ -1,0 +1,65 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Lịch sử liên hệ mốc hiện tại
+  </div>
+  <div class="panel-body">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'150px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+    ></grid-table>
+  </div>
+</div>
+<ng-container>
+  <button type="button" class="btn btn-blue m-2">
+    <i class="clip-history mr-2"></i>
+    Xóa lịch sử LH
+  </button>
+  <button type="button" class="btn btn-blue m-2"
+          (click)="contactHistory.open(selectedData)">
+    <i class="clip-alarm mr-2"></i>
+    Lịch sử LH
+  </button>
+  <button type="button" class="btn btn-blue m-2" (click)="reparHistory.open()">
+    <i class="fa fa-clock-o mr-2"></i>
+    Lịch sử SC
+  </button>
+  <div class="btn-group dropup">
+    <button type="button" class="btn btn-blue dropdown-toggle m-2" data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
+      <i class="clip-user-2"></i>
+      KH tiềm năng
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <button type="button" class="btn btn-link" (click)="newCar.open()">Khách hàng mua xe mới</button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-link" (click)="oldCar.open()">Khách hàng mua xe cũ</button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-link" (click)="insurance.open()">Khách hàng mua bảo hiểm</button>
+      </li>
+      <li>
+        <button type="button" class="btn btn-link" (click)="accessaryCar.open()">Khách hàng mua phụ tùng
+        </button>
+      </li>
+    </ul>
+  </div>
+  <button type="button" class="btn btn-blue mr-2">
+    <i class="clip-file-excel mr-2"></i>
+    Xuất Excel
+  </button>
+  <button type="button" class="btn btn-blue mr-2">
+    <i class="clip-pencil-2 mr-2"></i>
+    Ghi lại
+  </button>
+</ng-container>
+
+<contact-history #contactHistory></contact-history>
+<repair-history #reparHistory></repair-history>
+<new-car #newCar></new-car>
+<new-car #oldCar [isOldCar]="true"></new-car>
+<insurrance-car #insurance></insurrance-car>
+<accessary-car #accessaryCar></accessary-car>

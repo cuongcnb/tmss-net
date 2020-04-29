@@ -1,0 +1,97 @@
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {CurrentUserModel} from '../../../core/models/base.model';
+import {CurrentUser} from '../../../home/home.component';
+import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
+import {LoadingService} from '../../../shared/loading/loading.service';
+import {ServiceReportApi} from '../../../api/service-report/service-report.api';
+import {DownloadService} from '../../../shared/common-service/download.service';
+import {GlobalValidator} from '../../../shared/form-validation/validators';
+import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
+import {DealerModel} from '../../../core/models/sales/dealer.model';
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'part-import-export-report',
+  templateUrl: './part-import-export-report.component.html',
+  styleUrls: ['./part-import-export-report.component.scss']
+})
+export class PartImportExportReportComponent implements OnInit, AfterViewInit {
+  @ViewChild('modal', {static: false}) modal: ModalDirective;
+  @ViewChild('btn', {static: false}) btn: ElementRef;
+  form: FormGroup;
+  modalHeight: number;
+
+  currentUser: CurrentUserModel = CurrentUser;
+  dealerList: DealerModel[] = [];
+
+  constructor(
+    private setModalHeightService: SetModalHeightService,
+    private formBuilder: FormBuilder,
+    private loadingService: LoadingService,
+    private serviceReportApi: ServiceReportApi,
+    private downloadService: DownloadService,
+    private dealerApi: DealerApi
+  ) {
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+  }
+
+  onResize() {
+    this.modalHeight = this.setModalHeightService.onResize();
+  }
+
+  open() {
+    this.getDealers();
+    this.modal.show();
+    setTimeout(() => {
+      this.btn.nativeElement.focus();
+    }, 200);
+  }
+
+  getDealers() {
+    this.loadingService.setDisplay(true);
+    this.dealerApi.getAllAvailableDealers().subscribe(res => {
+      this.loadingService.setDisplay(false);
+      this.dealerList = res;
+      this.buildForm();
+    });
+  }
+
+  reset() {
+    this.form = undefined;
+  }
+
+  downloadFile() {
+    if (this.form.invalid) {
+      return;
+    }
+    const obj = this.form.getRawValue();
+    this.loadingService.setDisplay(true);
+    this.serviceReportApi.partImportExportReport(obj).subscribe(res => {
+      this.downloadService.downloadFile(res);
+      this.loadingService.setDisplay(false);
+    });
+  }
+
+  private buildForm() {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const date = new Date().getDate();
+    this.form = this.formBuilder.group({
+      dlrId: [{
+        value: !this.currentUser.isAdmin ? this.currentUser.dealerId : undefined,
+        disabled: !this.currentUser.isAdmin
+      }, GlobalValidator.required],
+      fromDate: [new Date(year, month, date, 0, 0, 0).getTime()],
+      toDate: [new Date(year, month, date, 23, 59, 59).getTime()],
+      partType: ['A', GlobalValidator.required],
+      extension: ['xls']
+    });
+  }
+}

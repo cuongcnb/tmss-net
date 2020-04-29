@@ -1,0 +1,198 @@
+<div class="row">
+  <form [formGroup]="searchForm" *ngIf="searchForm">
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 1px 5px;" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutGap="10px">
+        <div class="form-group receptionist-search-box">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số</span>
+            <input type="text" class="form-control" formControlName="registerNo">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-blue" (click)="findCar()"><i class="fa fa-search"> </i></button>
+        </div>
+      </div>
+
+      <div fxLayout="row">
+        <div class="form-group">
+          <div class="input-group">
+            <select class="form-control" formControlName="job">
+              <option value="ALL">Tất cả</option>
+              <option value="1K">1K</option>
+              <option value="MA">Bảo dưỡng</option>
+              <option value="GJ">Sửa chữa chung</option>
+              <option value="BP">Đồng Sơn</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div fxFlex fxLayout="row" fxLayoutAlign="space-around center">
+        <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+          <span>Khách hàng chờ tiếp</span>
+          <strong>{{ waitingQty }}</strong>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+          <span>Khách hàng đã tiếp</span>
+          <strong style="color: #8a8680;">{{ receivedQty }}</strong>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="text-right">
+          <tmss-datepicker formControlName="date" [dateInputFormat]="'DD/MM/YYYY'"></tmss-datepicker>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row" style="padding: 0 5px !important;">
+  <div fxLayout="row" fxLayoutGap="10px">
+    <div class="mt-2 guests-list" fxLayout="column">
+      <div class="panel panel-default customer-list">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i> Khách chờ
+
+          <a class="pull-right" data-toggle="tooltip" title="Tiếp theo"
+             *ngIf="guestCars.length && guessReceptionOrder === 'Y'" (click)="doCallSpeakerThenChooseVehicle(guestCars[0])">
+<!--            Tiếp theo-->
+            <i class="fa fa-step-forward"></i>
+          </a>
+        </div>
+        <div class="panel-body no-padding">
+          <div class="cars-list waiting-list no-padding" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+              <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                <div id="guest-cars" class="cars">
+                  <div class="car-box" *ngFor="let car of guestCars" [contextMenu]="basicMenu"
+                       [contextMenuSubject]="car"
+                       [ngClass]="{'is-first-in': car.isFirstIn === 'Y' && getDuration(car) <= moment.duration(warningTime).asMinutes(),
+                                  'in-wait-time': car.isFirstIn !== 'Y' && getDuration(car) <= moment.duration(warningTime).asMinutes(),
+                                  'out-wait-time': getDuration(car) > moment.duration(warningTime).asMinutes(),
+                                  'before-today': !isToday()}">
+                    <strong class="register-no" fxFlex="45%">{{car.registerNo}}</strong>
+                    <img src="assets/imgs/h.png" alt="Khach hen" *ngIf="car.isAppointment === 'Y'">
+                    <div class="car-info" fxFlex="40%" fxLayout="column" fxLayoutAlign="space-between end"
+                         fxLayoutGap="2px"
+                         *ngIf="car.isAppointment === 'Y'">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ getDuration(car) }} ph</strong>
+                    </div>
+                    <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end" fxLayoutGap="2px"
+                         *ngIf="car.isAppointment !== 'Y'">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ getDuration(car) }} ph</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <context-menu  [disabled]="guessReceptionOrder === 'Y'">
+                  <ng-template contextMenuItem (execute)="doVehicleReceive('RECEIVE', $event.item)">
+                    <span style="font-size: 11px !important;">Tiếp nhận</span>
+                  </ng-template>
+                  <ng-template contextMenuItem divider="true"></ng-template>
+                  <ng-template contextMenuItem let-item (execute)="doChooseVehicle($event.item)">
+                    <!--                    Bye, {{item | json}}-->
+                    <span style="font-size: 11px !important;">Chọn xe</span>
+                  </ng-template>
+                  <ng-template contextMenuItem divider="true"></ng-template>
+                  <ng-template contextMenuItem let-item (execute)="doCallSpeakerThenChooseVehicle($event.item)">
+                    <!--                    Bye, {{item | json}}-->
+                    <span style="font-size: 11px !important;">Gọi loa</span>
+                  </ng-template>
+                </context-menu>
+              </perfect-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default customer-list">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Khách hẹn
+        </div>
+        <div class="panel-body no-padding">
+          <div class="cars-list appointment-list no-padding" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+              <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                <div id="appointment-cars" class="cars">
+                  <div class="car-box" *ngFor="let car of appointmentCars">
+                    <strong class="register-no" fxFlex="50%">{{car.registerNo}}</strong>
+                    <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end" fxLayoutGap="2px">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ !!car.cusArr ? moment(car.cusArr).format('HH:mm') : '' }}</strong>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-2" fxLayout="column" fxFlex>
+      <div class="advisers-list" fxLayout="column" fxLayoutAlign="end stretch">
+        <!-- xe đang tư vấn -->
+        <div class="cars-list car-current" style="padding: 40px 20px;" *ngIf="!!consultingCar"
+             fxLayout="row" fxLayoutAlign="space-between center">
+          <strong class="register-no">{{ consultingCar.registerNo }}</strong>
+          <strong>{{ !!consultingCar.inDate ? moment(consultingCar.inDate).format('HH:mm') : '' }}</strong>
+          <strong>{{ commonFunctionsService.getCarJobs(consultingCar) }}</strong>
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
+            <button class="btn btn-blue btn-pause" (click)="doVehicleReceive('CANCEL', consultingCar)">Tạm dừng</button>
+            <button class="btn btn-blue" (click)="doVehicleReceive('DONE', consultingCar)">Tiếp nhận xong</button>
+          </div>
+        </div>
+        <div class="cars-list car-current" style="padding: 40px 20px;" *ngIf="!consultingCar">
+          <div class="col-sm-12 text-center">Không có xe đang tư vấn</div>
+        </div>
+
+        <!-- xe đang chờ tư vấn -->
+        <div class="cars-list car-consulted-list" fxFlex style="border-bottom: solid 1px #ccc;">
+          <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+              <grid-table [fieldGrid]="fieldGrid" [height]="'355px'" [frameworkComponents]="frameworkComponents"
+                          [showPagination]="false" (callbackGrid)="callbackGrid($event)"
+                          (getParams)="getParams($event)">
+              </grid-table>
+            </perfect-scrollbar>
+          </div>
+        </div>
+        <!-- xe đã tư vấn -->
+        <div class="cars-list car-consulted-list">
+          <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true" *ngIf="consultedCars.length">
+              <div gdGap="8px" gdColumns="repeat(auto-fill, minmax(250px, 1fr))">
+                <div class="car-box horizontal-car-box" *ngFor="let car of consultedCars" cdkDrag
+                     [cdkDragDisabled]="true" (click)="opeCustomerInfo(car)">
+                  <strong class="register-no" fxFlex="40%">{{car.registerNo}}</strong>
+                  <div fxLayout="column" fxLayoutAlign="space-between center" fxFlex="10%" fxLayoutGap="5px">
+                    <img src="assets/imgs/h.png" alt="Khach hen" *ngIf="car.isAppointment === 'Y'">
+                    <img src="assets/imgs/cup.png" alt="Khach cho" *ngIf="car.isCusWait === 'Y'">
+                  </div>
+                  <div class="car-info" fxFlex="50%" fxLayout="column" fxLayoutAlign="space-between end"
+                       fxLayoutGap="2px">
+                    <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                    <strong>{{ !!car.jobs ? commonFunctionsService.getCarJobs(car) : '' }}</strong>
+                    <strong>{{ !!car.carDeliveryTime ? moment(car.carDeliveryTime).format('HH:mm') : '' }}</strong>
+                  </div>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+
+        <!--          <div class="cars-list actions" style="display: none !important;" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">-->
+        <!--            <button class="btn btn-blue" (click)="opeCustomerInfo(consultingCar)">-->
+        <!--              Xem thông tin-->
+        <!--            </button>-->
+        <!--          </div>-->
+      </div>
+    </div>
+  </div>
+</div>

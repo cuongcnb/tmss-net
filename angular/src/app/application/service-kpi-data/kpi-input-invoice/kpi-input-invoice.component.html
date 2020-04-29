@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Điều kiện tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseKpiInputInvoice" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseKpiInputInvoice" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-7">
+          <file-uploader acceptType=".csv"
+                         [apiCallUpload]="apiCallUpload.bind(this)"
+                         (responseUpload)="uploadSuccess($event)"
+                         (errorUpload)="uploadFail($event)"
+          ></file-uploader>
+        </div>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+    ></grid-table>
+  </div>
+</div>

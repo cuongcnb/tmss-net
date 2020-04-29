@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin khách hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseCustomerInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseCustomerInfo" class="panel-collapse collapse in">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form" focusField>
+      <div class="row">
+        <div class="form-group col-md-12 col-sm-12" hasError="owerName">
+          <div class="input-group">
+            <span class="input-group-addon">Tên chủ xe</span>
+            <input type="text" class="required form-control" formControlName="owerName">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12 col-sm-12" hasError="address">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input type="text" class="form-control required" formControlName="address">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4 col-sm-4" hasError="phone">
+          <div class="input-group">
+            <span class="input-group-addon">Số điện thoại</span>
+            <input type="text" class="form-control required" formControlName="phone">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="province">
+          <div class="input-group">
+            <span class="input-group-addon">Tỉnh/TP</span>
+            <input type="text" class="form-control required" formControlName="province">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="district">
+          <div class="input-group">
+            <span class="input-group-addon">Quận/huyện</span>
+            <input type="text" class="form-control required" formControlName="district">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="text-left pt-1 pb-1 ml-4">
+  <button class="btn btn-blue text-left">Cập nhật</button>
+</div>
+

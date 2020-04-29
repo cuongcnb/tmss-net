@@ -1,0 +1,98 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Hồ sơ LSC</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><b>Thông tin lệnh sửa chữa</b></h5>
+                <div class="form-group">
+                  <label>CDVD</label>
+                  <select class="form-control" formControlName="cvdv"
+                          [attr.disabled]="advisors&&advisors?.length===1?true:null">
+                    <option *ngFor="let emp of advisors" [ngValue]="emp.id">{{emp.empName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Số RO</label>
+                  <input class="form-control" formControlName="roNo">
+                </div>
+                <div class="form-group">
+                  <label>Biển số</label>
+                  <input class="form-control" formControlName="registerno">
+                </div>
+                <div class="form-group">
+                  <label>Model</label>
+                  <input class="form-control" formControlName="cmName">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <h5><b>Thông tin thời gian</b></h5>
+                <div class="form-group">
+                  <label>Bắt đầu</label>
+                  <tmss-datepicker formControlName="openroDate" [hasTimepicker]="true"
+                                   [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                </div>
+                <div class="form-group">
+                  <label>Kết thúc</label>
+                  <tmss-datepicker formControlName="closeroDate" [hasTimepicker]="true"
+                                   [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                </div>
+                <div class="form-group" hasError="dkgx">
+                  <label>DKGX</label>
+                  <tmss-datepicker formControlName="dkgx" [hasTimepicker]="true" [isRequired]="true"
+                                   [dateInputFormat]="'DD/MM/YYYY HH:mm'"
+                                   fieldAccessor="input"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <h5><b>Thông tin sửa chữa</b></h5>
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Trạng thái</label>
+                    <input class="form-control" formControlName="status">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <checkbox formControlName="isConfirmPlan"></checkbox>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                    <label>Khoang</label>
+                    <input class="form-control" formControlName="khoang">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label>KTV</label>
+                    <input class="form-control" formControlName="ktv">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

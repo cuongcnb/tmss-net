@@ -1,0 +1,68 @@
+<div>
+  <div class="grid-table-area mt-3">
+    <div class="row my-3">
+      <div class="col-sm-3">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Form</span>
+          <select class="form-control" [(ngModel)]="selectedFormId" (change)="onchangeForm()">
+            <option [ngValue]="undefined" selected="selected">--Please choose a Form--</option>
+            <option *ngFor="let form of forms" [ngValue]="form.id">{{form.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Form Group
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshListGroup()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="groupGridField"
+                  (callbackGrid)="callbackGroupGrid($event)"
+                  (getParams)="getParamsGroup()"
+                  [showPagination]="false"
+                  [height]="'400px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addGroup()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue" (click)="updateGroup()">
+          <i class="fa fa-pencil"></i> Update
+        </button>
+      </div>
+    </div>
+
+    <div class="panel panel-default mt-3">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Column List
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshListColumn()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="columnGridField"
+                  (callbackGrid)="callbackColumnGrid($event)"
+                  (getParams)="getParamsColumn()"
+                  [showPagination]="false"
+                  [height]="'400px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addColumn()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue" (click)="updateColumn()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<modify-form-group-modal #modifyFormGroupModal (close)="refreshListGroup()"></modify-form-group-modal>
+<modify-column-of-group-modal #modifyColumnOfGroupModal (close)="refreshListColumn()"></modify-column-of-group-modal>

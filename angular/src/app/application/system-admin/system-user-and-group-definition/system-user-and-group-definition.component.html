@@ -1,0 +1,92 @@
+<div pageTitle="Khai báo NSD và Phân Nhóm">
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Người Dùng
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshCreateUser()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridCreateUser"
+                  [enableFilter]="true"
+                  height="350px"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridCreateUser($event)"
+                  (getParams)="getParamsCreateUser()"
+      ></grid-table>
+    </div>
+    <div class="text-right my-3 grid-table-btn">
+      <button class="btn btn-blue mr-2" (click)="createUserModal.open()">
+        <i class="fa fa-plus"></i> Thêm người dùng
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!selectedUser" (click)="updateUser()">
+        <i class="fa fa-edit"></i> Sửa thông tin người dùng
+      </button>
+      <button class="btn btn-blue mr-2"  [disabled]="!selectedUser" (click)="changeStatusUser()">{{!selectedUser ? 'Active/InActive' : (
+        activeUser ? 'InActive' : 'Active'
+      )}}</button>
+    </div>
+  </div>
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Phân Nhóm
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGroupAssign()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridGroupAssignment"
+                  [enableFilter]="true"
+                  [showPagination]="false"
+                  height="250px"
+                  (callbackGrid)="callbackGridGroupAssignment($event)"
+                  (getParams)="getParamsGridAssignment()"
+      ></grid-table>
+    </div>
+    <div class="my-3 grid-table-btn">
+      <div class="float-right">
+        <button class="btn btn-blue mr-2" (click)="saveUserGroup()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+        <button class="btn btn-blue mr-2" [disabled]="!selectedUser"
+                (click)="systemGroupAssignModal.open(selectedUser)">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedGroupAssignment" (click)="removeSelectedRow()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<swal #forceSelectUser
+      title="Thông báo"
+      text="Bạn phải chọn 1 tài khoản"
+      type="warning"
+></swal>
+<swal #confirmChangeModal
+      text='Bạn có muốn áp dụng thay đổi không?'
+      type="warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      [showCancelButton]="true"
+      (confirm)="isConfirmChange = true; saveUserGroup()"
+></swal>
+<swal #switchUserDefWhileEditing
+      title="Bạn có muốn lưu thay đổi không?"
+      text='Chọn tài khoản khác trong khi đang sửa sẽ xóa hết dữ liệu chưa lưu. Bấm cancel để xác nhận chọn tài khoản khác.'
+      type="warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      [showCancelButton]="true"
+      (confirm)="saveUserGroup()"
+      (cancel)="forceSwitchUserDef()"
+></swal>
+<create-user-modal #createUserModal (close)="refreshCreateUser()"></create-user-modal>
+<update-password #updatePass (close)="refreshCreateUser()"></update-password>
+<system-group-assign-modal #systemGroupAssignModal
+                           (close)="setDataToGroupAssignTable($event)"></system-group-assign-modal>

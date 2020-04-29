@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-6">
+    <grid-table [fieldGrid]="fieldRetailPartCustomerTab"
+                [height]="'180px'"
+                [showPagination]="false"
+                (callbackGrid)="callbackCustomer($event)"
+                (getParams)="getParamsCustomer()"
+    ></grid-table>
+  </div>
+  <div class="col-sm-6">
+    <grid-table [fieldGrid]="fieldRetailPartTab"
+                [height]="'180px'"
+                [showPagination]="false"
+                (callbackGrid)="callbackPart($event)"
+    ></grid-table>
+
+  </div>
+</div>

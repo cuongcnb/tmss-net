@@ -1,0 +1,56 @@
+<div pageTitle="Khai báo nhóm NSD và Quyền hạn">
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Nhóm Người Dùng
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshUserGroup()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGridUserGroup"
+                [enableFilter]="true"
+                (callbackGrid)="callbackGridUserGroup($event)"
+                (getParams)="getParamsUserGroup()"></grid-table>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-blue mr-2" (click)="addUserGroupModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" [disabled]="!selectedGroup || (selectedGroup && currentUser.dealerId > 0 && selectedGroup.dealerId !== currentUser.dealerId)" (click)="updateUserGroup()">
+      <i class="fa fa-edit"></i> Sửa
+    </button>
+  </div>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh Sách Chức Năng
+    </div>
+    <grid-table [fieldGrid]="fieldGridFunctionDetail"
+                [enableFilter]="true"
+                (getParams)="getParamsFunctionDetail()"
+                (callbackGrid)="callbackGridFunctionDetail($event)"></grid-table>
+  </div>
+
+  <div class="my-3">
+    <span class="float-right">
+      <button class="btn btn-blue mr-2" (click)="save()" [disabled]="!selectedGroup || (selectedGroup && currentUser.dealerId > 0 && selectedGroup.dealerId !== currentUser.dealerId)">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+       <button class="btn btn-blue mr-2" [disabled]="!selectedGroup || (selectedGroup && currentUser.dealerId > 0 && selectedGroup.dealerId !== currentUser.dealerId) " (click)="menuFunctionAssginModal.open(functions)">
+        <i class="fa fa-plus-square-o"></i> Thêm Chức Năng Theo Menu
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!selectedGroup || (selectedGroup && currentUser.dealerId > 0 && selectedGroup.dealerId !== currentUser.dealerId)" (click)="addSystemFucntionListModal.open(functions, true)">
+        <i class="fa fa-plus"></i> Thêm Chức Năng
+      </button>
+      <button class="btn btn-blue" (click)="removeSelectedFunction()" [disabled]="!selectedSystemFunction || (selectedGroup && currentUser.dealerId > 0 && selectedGroup.dealerId !== currentUser.dealerId)">
+        <i class="fa fa-trash-o"></i> Xóa Chức Năng
+      </button>
+      </span>
+  </div>
+</div>
+<add-user-group-modal #addUserGroupModal (close)="refreshUserGroup()"></add-user-group-modal>
+<add-system-fucntion-list-modal #addSystemFucntionListModal (close)="setFunctionToGrid($event)"></add-system-fucntion-list-modal>
+<menu-function-assign #menuFunctionAssginModal (close)="setFunctionToGrid($event)"></menu-function-assign>

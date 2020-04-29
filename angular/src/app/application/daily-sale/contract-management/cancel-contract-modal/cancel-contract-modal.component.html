@@ -1,0 +1,176 @@
+<div class="modal fade" bsModal #cancelContractModal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Cancel Contract</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Customer Name</span>
+                  <input type="text" formControlName="customerName" class="form-control">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Contract No.</span>
+                  <input type="text" formControlName="contractNo" class="form-control">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <tmss-datepicker-sale [addOnMinWidth]="'101px'" [text]="'Wod Date'" formControlName="wodDate"></tmss-datepicker-sale>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3" hasError="grade">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Grade</span>
+                  <input class="required form-control" formControlName="grade">
+                </div>
+              </div>
+              <div class="col-sm-3" hasError="gradeProduction">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Grade product</span>
+                  <input class="required form-control" formControlName="gradeProduction">
+                </div>
+              </div>
+              <div class="col-sm-3" hasError="color">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Color</span>
+                  <input class="required form-control" formControlName="color">
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Interior color</span>
+                  <input class="form-control" formControlName="interiorColor">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <tmss-datepicker-sale [addOnMinWidth]="'101px'" [text]="'Estimated Date'" formControlName="estimatedDate"></tmss-datepicker-sale>
+              </div>
+              <div class="col-sm-4">
+                <tmss-datepicker-sale [addOnMinWidth]="'101px'" [text]="'Sale Date'" formControlName="salesDate"></tmss-datepicker-sale>
+              </div>
+              <div class="col-sm-4" hasError="cancelDateNew">
+                <tmss-datepicker-sale [addOnMinWidth]="'101px'" [text]="'Cancel Date'" [isRequired]="true" formControlName="cancelDateNew"></tmss-datepicker-sale>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Cancel date is required</div>
+                  <div *ifError="'depositDate'">You only entered today
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-sm-12" hasError="cancelTypeId">
+                <div class="input-group form-group" >
+                  <span class="input-group-addon min-width">Cancel Type</span>
+                  <select type="text" formControlName="cancelTypeId" class=" required form-control">
+                    <option value=""></option>
+                    <option *ngFor="let val of reasons" [ngValue]="val.id">{{val.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Cancel Type is required</div>
+                </div>
+              </div>
+              <div class="col-sm-12" hasError="cancelReasonText">
+                <div class="input-group form-group" >
+                  <span class="input-group-addon min-width">Detail Reason</span>
+                  <textarea type="text" formControlName="cancelReasonText" rows="4"
+                            class="form-control required resize-vertical"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Detail Reason is required</div>
+                  <div *ifError="'maxLenngth'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="col-sm-12" *ngIf="!currentUser.isAdmin">
+                <div class="form-group" >
+                  <checkbox formControlName="all" text="All"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <span class="float-left" *ngIf="currentUser.isAdmin">
+            <ng-container *ngIf="cancelFormType === 'cancel'">
+              <button type="button" class="btn btn-blue" (click)="forceRejectCancelModal.show()">
+                <i class="fa fa-ban"></i> Reject cancel
+              </button>
+              <button type="button" class="btn btn-blue" (click)="forceApproveCancelModal.show()">
+                <i class="fa fa-hand-o-right"></i> Approve cancel
+              </button>
+            </ng-container>
+
+             <ng-container *ngIf="cancelFormType === 'undoCancel'">
+              <button type="button" class="btn btn-blue" (click)="forceRejectUncancelModal.show()">
+                <i class="fa fa-ban"></i> Reject undo cancel
+              </button>
+              <button type="button" class="btn btn-blue" (click)="forceApproveUncancelModal.show()">
+                <i class="fa fa-hand-o-right"></i> Approve undo cancel
+              </button>
+            </ng-container>
+          </span>
+
+          <button type="button" class="btn btn-blue" (click)="undoCancel()"
+                  *ngIf="!currentUser.isAdmin && canUndoCancel">
+            <i class="fa fa-undo"></i> Undo Cancel
+          </button>
+          <button type="submit" class="btn btn-blue" (click)="save()" *ngIf="!currentUser.isAdmin">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--Undo cancel-->
+<swal #forceApproveUncancelModal
+      type="warning"
+      title="Warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      text="Bạn có đồng ý cho Đại lý hủy bỏ trạng thái hủy hợp đồng không?"
+      (confirm)="approveUndoCancel()"
+      [showCancelButton]="true"
+></swal>
+<swal #forceRejectUncancelModal
+      type="warning"
+      title="Warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      text="Bạn có muốn hủy bỏ việc Đại lý xin hủy trạng thái hủy hợp đồng không?"
+      (confirm)="rejectUndoCancel()"
+      [showCancelButton]="true"
+></swal>
+
+<!--Cancel-->
+<swal #forceApproveCancelModal
+      type="warning"
+      title="Warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      text="Bạn có đồng ý hủy hợp đồng này không?"
+      (confirm)="approveCancel()"
+      [showCancelButton]="true"
+></swal>
+<swal #forceRejectCancelModal
+      type="warning"
+      title="Warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      text="Bạn có muốn hủy bỏ việc hủy hợp đồng này không?"
+      (confirm)="rejectCancel()"
+      [showCancelButton]="true"
+></swal>

@@ -1,0 +1,101 @@
+<form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+
+  <fieldset>
+    <legend>Thông tin tìm kiếm</legend>
+    <div class="row">
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">Trạng thái</span>
+          <select class="form-control" formControlName="statusContact"></select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">Đại lý</span>
+          <select class="form-control" formControlName="supplier"></select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group span-102">
+        <tmss-datepicker text="Liên hệ từ ngày" formControlName="contactDate"></tmss-datepicker>
+      </div>
+      <div class="col-md-3 form-group span-102">
+        <tmss-datepicker text="Đến ngày" formControlName="toDate"></tmss-datepicker>
+      </div>
+      <!-- br-->
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">CVDV</span>
+          <select class="form-control" formControlName="cvdv"></select>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">BKS</span>
+          <input class="form-control" formControlName="bks">
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">Vin</span>
+          <input class="form-control" formControlName="vin">
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="102px">Chưa quay lại</span>
+          <input class="form-control" formControlName="notBackIn">
+          <span class="input-group-addon">(Tháng)</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-right mb-2">
+      <button class="btn btn-blue" (click)="search()">
+        <i class="fa fa-search"></i>
+        Tìm kiếm
+      </button>
+      <button class="btn btn-blue ml-2">
+        <i class="fa fa-refresh"></i>
+        Làm mới
+      </button>
+    </div>
+  </fieldset>
+
+  <div class="row">
+    <div class="col-md-4 mt-3">
+      <div class="panel panel-default">
+        <grid-table [fieldGrid]="fieldGrid"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        >
+        </grid-table>
+      </div>
+
+    </div>
+    <div class="col-md-8 mt-3">
+      <track-customer-not-back-content></track-customer-not-back-content>
+    </div>
+  </div>
+
+  <div class="text-right mt-custom">
+    <button type="button" class="btn btn-blue ml-2">
+      <i class="clip-history"></i>
+      Lịch sử LH
+    </button>
+    <button type="button" class="btn btn-blue ml-2">
+      <i class="fa fa-clock-o"></i>
+      Lịch sử SC
+    </button>
+    <button type="button" class="btn btn-blue ml-2">
+      <i class="clip-user-5"></i>
+      KH tiềm năng
+    </button>
+    <button type="button" class="btn btn-blue ml-2">
+      <i class="clip-download"></i>
+      Xuất Excel
+    </button>
+    <button type="button" class="btn btn-blue ml-2">
+      <i class="fa fa-save"></i>
+      Lưu lại
+    </button>
+  </div>
+</form>

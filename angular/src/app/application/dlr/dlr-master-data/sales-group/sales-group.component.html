@@ -1,0 +1,66 @@
+<div pageTitle="Sales Group Management">
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Sales Group
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGroupList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridGroup"
+                  (callbackGrid)="callbackGridGroup($event)"
+                  (getParams)="getParamsGroup()"
+                  [showPagination]="false"
+                  [height]="'300px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+
+        <button class="btn btn-blue mr-2" (click)="salesGroupModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateGroup()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedGroup || salesData " (click)="deleteGroup()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Sales Team
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshTeamList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridTeam"
+                  overlayLoadingTemplate="Choose one sale group!"
+                  (callbackGrid)="callbackGridTeam($event)"
+                  (getParams)="getParamsTeam()"
+                  [showPagination]="false"
+                  [height]="'300px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addTeam()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateTeam()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedTeam" (click)="deleteTeam()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<sales-group-modal #salesGroupModal (close)="refreshGroupList()"></sales-group-modal>
+<sales-team-modal #salesTeamModal (close)="refreshTeamList()"></sales-team-modal>

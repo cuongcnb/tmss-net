@@ -1,0 +1,19 @@
+<div class="panel panel-default mb-3">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Request Purchasing Delivery
+    <div class="panel-tools">
+      <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="onAddRow()">
+        <i class="fa fa-plus"></i>
+      </button>
+      <button role="button" class="btn btn-xs btn-link panel-refresh" [attr.disabled]="!selectedDelivery ? true : null" (click)="removeSelectedRow()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <grid-table [fieldGrid]="fieldGridRequestDelivery" [height]="'300px'"
+              (callbackGrid)="callbackGridRequestDelivery($event)"
+              (getParams)="getParams()"
+              (cellDoubleClicked)="agCellDoubleClicked($event)"></grid-table>
+</div>
+<fleet-edit-grid-dlr #fleetEditGridDlr (close)="setFleetModalData($event)"></fleet-edit-grid-dlr>

@@ -1,0 +1,74 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <form [formGroup]="searchForm" *ngIf="searchForm">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Nhận hàng tự động</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" hasError="invoiceno">
+                  <div class="input-group">
+                    <span class="input-group-addon required"> Số hóa đơn</span>
+                    <input type="text" class="form-control" formControlName="invoiceno">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="90px"> Số đơn hàng</span>
+                  <input type="text" class="form-control" formControlName="orderno">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <tmss-datepicker text="Ngày xuất Invoice" formControlName="shipdate"
+                                 addOnMinWidth="113px"></tmss-datepicker>
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="90px"> Số PGH </span>
+                    <input type="text" class="form-control" formControlName="sVourcher">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <tmss-datepicker text="Ngày nhận hàng" formControlName="modifydate"
+                                   addOnMinWidth="113px"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="grid-table-area mt-3">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i class="fa fa-info"></i>
+                </div>
+                <grid-table *ngIf="modal.isShown"
+                            [fieldGrid]="fieldPartsList"
+                            (callbackGrid)="callbackParts($event)"
+                            (cellDoubleClicked)="cellPartsDoubleClicked($event)"
+                            height="300px"
+                ></grid-table>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="btns-group text-center">
+            <button class="btn btn-blue px-4 mr-2" (click)="receiveParts()"><i class="fa fa-sign-in"></i> Nhận hàng
+            </button>
+            <button class="btn btn-light-grey  px-4" (click)="modal.hide()"><i class="fa fa-times"></i> Quay về</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

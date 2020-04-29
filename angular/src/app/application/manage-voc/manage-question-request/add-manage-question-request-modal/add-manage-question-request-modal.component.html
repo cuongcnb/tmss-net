@@ -1,0 +1,294 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5
+            class="modal-title">{{editModal ? 'Chi tiết thắc mắc/yêu cầu [Cập nhật]' : 'Chi tiết thắc mắc/yêu cầu [Thêm mới]'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Thông tin chung về thắc mắc
+              </div>
+              <div class="panel-body span-custom">
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Đại lý tiếp nhận</span>
+                      <select class="form-control" formControlName="supplierReception">
+                        <option [ngValue]="1">123</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3 form-group input-date-custom">
+                    <tmss-datepicker text="Ngày tiếp nhận" formControlName="dateReception"></tmss-datepicker>
+                  </div>
+                  <div class="col-md-1 form-group">
+                    <tmss-timepicker formControlName="timeReception"></tmss-timepicker>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Trạng thái</span>
+                      <select class="form-control" formControlName="status"></select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Số thứ tự</span>
+                      <input class="form-control" formControlName="stt">
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group input-date-custom">
+                    <tmss-datepicker text="Ngày tạo" formControlName="dateCreate"></tmss-datepicker>
+                  </div>
+                  <div class="col-md-3 form-group input-date-custom">
+                    <tmss-datepicker text="Ngày hoàn thành" formControlName="dateFinish"></tmss-datepicker>
+                  </div>
+                  <div class="col-md-1 form-group">
+                    <tmss-timepicker formControlName="timeFinish"></tmss-timepicker>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Nguồn tiếp nhận</span>
+                      <select class="form-control" formControlName="sourceReception"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Phương tiện tiếp cận số Hotline</span>
+                      <select class="form-control" formControlName="approachMeans"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <checkbox text="Yêu cầu TMV tham gia" formControlName="requestTMV"></checkbox>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <tmss-datepicker text="Ngày gửi -> TMV" formControlName="dateSendToTMV"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-external-link-square"></i>
+                    Thông tin khách hàng
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="input-group span-custom-kh">
+                        <span class="input-group-addon">Tên khách hàng</span>
+                        <input class="form-control" formControlName="customerName">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group span-custom-kh">
+                        <span class="input-group-addon">Địa chỉ</span>
+                        <textarea class="form-control textarea-fix" formControlName="customerAddress"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group span-custom-kh">
+                        <span class="input-group-addon">Điện thoại</span>
+                        <input class="form-control" formControlName="customerPhone">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-external-link-square"></i>
+                    Thông tin xe
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-6 form-group span-90">
+                        <div class="input-group">
+                          <span class="input-group-addon">Loại xe</span>
+                          <select class="form-control"></select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-sm-8 col-md-8 form-group span-80">
+                            <div class="input-group">
+                              <span class="input-group-addon">Biển số xe</span>
+                              <input class="form-control" formControlName="licensePlate">
+                            </div>
+                          </div>
+                          <div class="col-sm-4 col-md-4 text-right">
+                            <button class="btn btn-blue" (click)="openCSLPModal()">Lấy thông tin</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <div class="col-sm-8 col-md-8 span-90 form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Vin</span>
+                              <input class="form-control" formControlName="vin">
+                            </div>
+                          </div>
+                          <div class="col-sm-4 col-md-4 text-right">
+                            <button class="btn btn-blue" (click)="openCSVModal()">Lấy thông tin</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-group date-span-80">
+                        <tmss-datepicker text="Ngày mua" formControlName="dateBuy"></tmss-datepicker>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Đại lý bán xe</span>
+                          <select class="form-control" formControlName="supplierSell"></select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-group span-80">
+                        <div class="input-group">
+                          <span class="input-group-addon">Km</span>
+                          <input class="form-control" formControlName="km">
+                        </div>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Đại lý làm dịch vụ</span>
+                          <select class="form-control" formControlName="supplierService"></select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Thắc mắc - yêu cầu
+              </div>
+
+              <grid-table [fieldGrid]="fieldGrid"
+                          (callbackGrid)="callbackGrid($event)"
+                          [height]="'200px'"
+                          (getParams)="getParams()"
+                          (cellDoubleClicked)="clickQuestionField($event)"
+              ></grid-table>
+              <button class="btn btn-blue mr-2" (click)="onAddRow()">
+                <i class="fa fa-plus"></i>
+                Thêm
+              </button>
+              <button class="btn btn-blue mr-2" (click)="onDeleteRow()">
+                <i class="fa fa-trash-o"></i>
+                Xóa
+              </button>
+
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Các chỉ số KPI
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <i class="fa fa-external-link-square"></i>
+                        Thời gian giải quyết
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-7">
+                            <checkbox text="Trả lời trong cuộc gọi đầu" formControlName="firstCall"></checkbox>
+                            <div class="row">
+                              <div class="col-sm-6 col-md-6">
+                                <checkbox text="Trả lời trong vòng 4 tiếng" formControlName="inFourHours"></checkbox>
+                              </div>
+                              <div class="col-sm-6 col-md-6">
+                                <tmss-timepicker formControlName="inFourHoursTime"></tmss-timepicker>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6 col-md-6">
+                                <checkbox text="Khác" formControlName="another"></checkbox>
+                              </div>
+                              <div class="col-sm-6 col-md-6">
+                                <tmss-timepicker formControlName="anotherTime"></tmss-timepicker>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <checkbox text="Thắc mắc khó" formControlName="hardQuestion"></checkbox>
+                            <span>Thời gian chuyển thắc mắc khó đến phòng ban liên quan</span>
+                            <tmss-timepicker formControlName="transferToRelaventDepartment"></tmss-timepicker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <i class="fa fa-external-link-square"></i>
+                        Đánh giá của khách hàng
+                      </div>
+                      <div class="panel-body">
+                        <div class="row form-group">
+                          <div class="col-md-6 form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Mức độ hài lòng</span>
+                              <select class="form-control"></select>
+                            </div>
+                          </div>
+                          <div class="col-md-6 form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Đại lý giải quyết</span>
+                              <select class="form-control"></select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Lý do</span>
+                            <textarea class="form-control textarea-fix"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<choose-supplier-modal #chooseSupplierModal (dataOutput)="addData($event)"></choose-supplier-modal>
+<question-request-modal #questionRequestModal (questionData)="outputQuestionData($event)"></question-request-modal>
+
+<search-data-grid-modal></search-data-grid-modal>

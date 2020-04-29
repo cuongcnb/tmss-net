@@ -1,0 +1,72 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Cập nhật thông tin</h5>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+          <div class="row">
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên khách hàng</span>
+                <input type="text" class="form-control" formControlName="customerName">
+              </div>
+            </div>
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Địa chỉ</span>
+                <input type="text" class="form-control" formControlName="customerAdd">
+              </div>
+            </div>
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Số điện thoại</span>
+                <input type="text" class="form-control" formControlName="phoneNumber">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Người liên hệ</span>
+                <input type="text" class="form-control" formControlName="contactName">
+              </div>
+            </div>
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Số điện thoại</span>
+                <input type="text" class="form-control" formControlName="contactPhoneNumber">
+              </div>
+            </div>
+            <div class="col-sm-4 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <input type="text" class="form-control" formControlName="agency">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <tmss-datepicker text="Ngày tạo" formControlName="dayCreateQuestion"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <tmss-datepicker text="Ngày khảo sát" formControlName="daySurvey"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="save()"><i class="fa fa-check"></i> Lưu</button>
+        <button class="btn btn-light-grey" (click)="modal.hide()"><i class="fa fa-times"></i> Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>

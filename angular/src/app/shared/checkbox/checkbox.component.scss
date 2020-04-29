@@ -1,0 +1,35 @@
+.checkbox {
+  input {
+    display: none;
+  }
+}
+
+@media print {
+  #checkBoxPrint {
+    display: inline;
+    margin-top: 0px;
+  }
+  .icheckbox_minimal-grey {display: none;}
+}
+
+.icheckbox_minimal-grey {
+  border: solid 1px lightgrey;
+  background-color: #ffffff;
+}
+.no-margin {
+  margin: 0 !important;
+}
+
+.checkbox-text {
+  white-space: nowrap;
+}
+
+.text-bold-disable {
+  color: black !important;
+  cursor: not-allowed;
+}
+
+.text-bold {
+  font-weight: bold;
+  color: black !important;
+}

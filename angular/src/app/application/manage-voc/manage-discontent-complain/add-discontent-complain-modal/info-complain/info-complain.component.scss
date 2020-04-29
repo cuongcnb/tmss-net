@@ -1,0 +1,51 @@
+.span-110{
+  .input-group-addon{
+    min-width: 110px;
+  }
+}
+.span-115{
+  .input-group-addon{
+    min-width: 115px;
+  }
+}
+::ng-deep.span-110{
+  .input-group-addon:first-child{
+    min-width: 110px!important;
+  }
+}
+.span-95{
+  .input-group-addon{
+    min-width: 95px;
+  }
+}
+.span-65{
+  .input-group-addon{
+    min-width: 65px;
+  }
+}
+.span-80{
+  .input-group-addon{
+    min-width: 80px;
+  }
+}
+::ng-deep.span-80{
+  .input-group-addon:first-child{
+    min-width: 80px!important;
+  }
+}
+.span-140{
+  .input-group-addon{
+    min-width: 140px;
+  }
+}
+.span-130{
+  .input-group-addon{
+    min-width: 130px;
+  }
+}
+::ng-deep.span-130{
+  .input-group-addon:first-child{
+    min-width: 130px!important;
+  }
+}
+

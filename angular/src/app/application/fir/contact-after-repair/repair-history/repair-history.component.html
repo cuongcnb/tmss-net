@@ -1,0 +1,44 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="refresh()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Lịch sử liên hệ</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">VIN</span>
+                  <input type="text" class="form-control" formControlName="vin" readonly>
+                </div>
+              </div>
+              <div class="col-md-4 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Biển kiểm soát</span>
+                  <input type="text" class="form-control" formControlName="licensePlate" readonly>
+                </div>
+              </div>
+              <div class="col-md-4 form-group">
+                <div class="input-group">
+                  <div class="btn btn-blue">Xuất Excel</div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <grid-table [fieldGrid]="fieldGrid"
+                      [height]="'300px'"
+                      (callbackGrid)="callbackGrid($event)"
+                      (getParams)="getParams()"
+          ></grid-table>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,81 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="search()">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <tmss-datepicker formControlName="fromDate" [text]="'Áp dụng từ'"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <tmss-datepicker formControlName="toDate" [text]="'Đến Ngày'"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Đời xe</span>
+          <select class="form-control" formControlName="doixe">
+            <input type="text" placeholder="choose">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let type of listModelName" [ngValue]="type.doixe">{{type.doixe}}</option>
+          </select>
+        </div>
+        <!-- select option -->
+        <!-- <div class="input-group form-group">
+          <span class="input-group-addon">Đời xe</span>
+          <ngx-select-dropdown [config]="config" [options]="listModelName">
+          </ngx-select-dropdown>
+        </div> -->
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Trạng thái</span>
+          <select class="form-control" formControlName="status">
+            <option value="Y">Có hiệu lực</option>
+            <option value="N">Hết hiệu lực</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6 search-group" hasError="campaignName">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Tên chiến dịch</span>
+          <input type="text" class="form-control" formControlName="campaignName">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'maxLength'">Tối đa 250 kí tự</div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách chiến dịch
+    </div>
+    <grid-table [fieldGrid]="campaignField" (callbackGrid)="callbackCampaignGrid($event)" (getParams)="getRowCampaign()"
+      [height]="'400px'"></grid-table>
+  </div>
+
+  <div class="text-right">
+    <button class="btn btn-blue mr-2" (click)="addCampaign()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" (click)="updateCampaign()">
+      <i class="fa fa-pencil"></i> Sửa
+    </button>
+  </div>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách dòng xe, đời xe
+    </div>
+    <grid-table [fieldGrid]="carField" [paginationTotalsData]="carTotalsData" (callbackGrid)="callbackCarGrid($event)"
+      [height]="'200px'"></grid-table>
+  </div>
+</div>
+<campaign-dlr-modal #campaignDlrModal (close)="search($event)"></campaign-dlr-modal>

@@ -1,0 +1,25 @@
+.input-group-addon {
+  min-width: 75px;
+}
+
+@media print {
+  #claimPrintNone {
+    display: none;
+    overflow: hidden;
+  }
+  .modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    visibility: visible;
+    /**Remove scrollbar for printing.**/
+    overflow: hidden !important;
+  }
+  .modal-dialog {
+    visibility: visible !important;
+    /**Remove scrollbar for printing.**/
+    overflow: hidden !important;
+  }
+}

@@ -1,0 +1,79 @@
+.registerNo-style {
+  color: black;
+  font-size: 29px !important;
+  font-weight: bold;
+  text-align: center;
+  height: 55px;
+  text-transform: uppercase;
+}
+
+.modal-dialog {
+  width: 800px !important;
+}
+
+.car-out {
+  padding-right: 10px
+}
+
+.modal-footer {
+  border-top: unset !important;
+  background-color: white !important;
+}
+
+.info-car-out {
+  float: right;
+  padding-right: 10px;
+}
+
+.main-container * .row {
+  margin: 0 0px !important;
+}
+
+#customer {
+  margin-left: 5px !important;
+}
+
+#form-car-out {
+  padding-top: 25px;
+}
+
+.row {
+  margin: 0 !important;
+}
+
+.close {
+  padding-right: 5px;
+}
+
+.panel-default {
+  border: none;
+}
+
+.panel-footer {
+  border: none;
+  background: none;
+}
+
+.car-in {
+  border-right: 1px #e2e2e2 solid;
+}
+
+.car-firt-in {
+  color: red;
+  visibility: visible;
+}
+
+.car-not-firt-in {
+  visibility: hidden;
+  color: white;
+}
+
+.have-appointment {
+  visibility: visible;
+  color: red;
+}
+
+.no-appointment {
+  visibility: hidden;
+  color: white;
+}

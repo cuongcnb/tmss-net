@@ -1,0 +1,54 @@
+<div>
+  <div class="row">
+    <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <tmss-datepicker text="Ngày giao xe từ" formControlName="dayIn"></tmss-datepicker>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <tmss-datepicker text="Đến ngày" formControlName="dayOut"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <button class="btn btn-blue" type="button" (click)="searchHandle()">
+          <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+        <button class="btn btn-blue ml-2" type="button" (click)="refresh()">
+          <i class="fa fa-refresh"></i> Làm mới
+        </button>
+      </div>
+    </form>
+  </div>
+  <div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+      </div>
+      <div class="panel-heading">
+        {{webHandle ? '[Web]-' : ''}} Xử lý khách hàng khảo sát SSI
+      </div>
+      <grid-table
+        [fieldGrid]="ssiSurveyHandle"
+        (cellDoubleClicked)="insertData($event)"
+        (callbackGrid)="callBackGridHandle($event)"
+        (getParams)="getParamsHandle()"
+      ></grid-table>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-blue ml-2" type="button" (click)="deleteHandle()">
+        <i class="fa fa-remove"></i> Loại bỏ KH
+      </button>
+      <button class="btn btn-blue ml-2" type="button">
+        <i class="fa fa-file-excel-o"></i> Xuất Excel
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<remove-type #removeType></remove-type>
+<insert-modal #modal (close)="insertDataOutput($event)"></insert-modal>

@@ -1,0 +1,44 @@
+<div pageTitle="Dealer Group">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Dealer's Balance Management
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  [rowClassRules]="rowClassRules"
+                  [height]="'450px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridDealerBalance($event)"
+                  (cellDoubleClicked)="agCellDoubleClicked($event)"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  (getParams)="getSelectedDealerBalance()">
+      </grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue" [disabled]="changedRows.length < 1" (click)="save()">
+          <i class="fa fa-save"></i> Save
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="selectedDealerBalance">
+    <div class="details">
+      <div class="col-md-6">
+        <p>Tổng số tiền chưa được duyệt:
+          <i class="ml-2">{{amountNotApprove}}</i>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p>Số tiền còn lại khi trừ:
+          <i class="ml-2">{{remainAmountTfs}}</i>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<dealer-balance-edit-modal #dealerBalanceEditModal (close)="setDataToRow($event)"></dealer-balance-edit-modal>

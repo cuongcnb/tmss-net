@@ -1,0 +1,66 @@
+<div class="modal fade" bsModal #pendingModal="bs-modal" 
+  [config]="{ignoreBackdropClick : 'Disable'}" [ngClass]="state == ProgressState.complete ? 'disable-input' : ''">
+  <form novalidate autocomplete="off" [formGroup]="form" *ngIf="form">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Tạo kế hoạch sửa chữa</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Khoang sửa chữa
+                <div class="panel-tools">
+                  <button type="button" class="fa btn-collapse"
+                          [ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+                          (click)="isCollapsedWS = !isCollapsedWS"
+                          [attr.aria-expanded]="!isCollapsedWS" aria-controls="collapseEventOther">
+                  </button>
+                </div>
+              </div>
+              <div id="isCollapsedWS"
+                    [collapse]="isCollapsedWS">
+                  <div class="panel-body">
+                    <div class="form-group col-sm-3 mw-63">
+                      <div class="input-group">
+                        <span class="input-group-addon">Khoang</span>
+                        <select class="form-control" formControlName="wshopId" (change)="getEmploylistInWs()">
+                          <option [ngValue]="null"></option>
+                          <option *ngFor="let shop of shops" [value]="shop.id">
+                            {{shop.wsCode}}
+                          </option>
+                        </select>
+        
+                      </div>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                      <tmss-datepicker [hasTimepicker]="true"
+                        [text]="'TG bắt đầu'"
+                        formControlName="fromTime"
+                        [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                    </div>
+
+                    <button class="btn btn-blue float-right mr-2"
+                            (click)="createJobScc()" >Tạo kế hoạch
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+              
+        
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- <repair-arise-modal #repairAriseModal></repair-arise-modal> -->
+<employee-list-modal #employeeListModal (new_employee)="getEmployee($event)"></employee-list-modal>

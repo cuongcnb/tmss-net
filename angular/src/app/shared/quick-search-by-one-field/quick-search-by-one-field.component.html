@@ -1,0 +1,9 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="form-group">
+    <div class="input-group">
+      <label class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="textLabel">{{textLabel}}</label>
+      <input class="form-control" [formControlName]="fieldSearch"
+             [placeholder]=" textLabel? 'Tìm kiếm nhanh theo biển số xe' : 'Tìm kiếm nhanh'">
+    </div>
+  </div>
+</form>

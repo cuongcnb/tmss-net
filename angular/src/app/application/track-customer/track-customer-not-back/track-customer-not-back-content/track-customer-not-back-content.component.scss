@@ -1,0 +1,28 @@
+.info-customer {
+  .input-group-addon {
+    min-width: 102px!important;
+  }
+}
+.info-update {
+  .input-group-addon {
+    min-width: 102px!important;
+  }
+}
+::ng-deep.span-105{
+  .input-group-addon:first-child{
+    min-width: 105px!important;
+  }
+}
+.textarea-custom {
+  height: 26px;
+}
+.check-custom {
+  display: inherit;
+  margin-top: -5px;
+  margin-left: -27px;
+}
+::ng-deep.datepicker-custom {
+  .input-group-addon:first-child {
+    min-width: 102px!important;
+  }
+}

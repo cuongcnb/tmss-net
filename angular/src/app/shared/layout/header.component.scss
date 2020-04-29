@@ -1,0 +1,47 @@
+
+.min-width {
+  text-align: right;
+  min-width: 125px;
+}
+
+.modal-content {
+  font-size: 11px !important;
+
+  .modal-body {
+    padding: 5px 10px !important;
+  }
+
+  .input-group-addon {
+    font-size: 11px !important;
+  }
+
+  .btn {
+    font-size: 11px !important;
+  }
+
+  .form-group {
+    margin-bottom: 5px !important;
+  }
+
+  input:not([type='radio']), select {
+    height: 26px;
+    padding: 0 5px !important;
+
+    &.required:not([disabled]) {
+      background: #FFFFCC !important;
+    }
+  }
+
+  .modal-footer {
+    margin-top: 0;
+    padding: 10px 15px !important;
+  }
+
+  .input-group .form-control {
+    font-size: 11px;
+  }
+
+  .required {
+    background: #FFFFCC;
+  }
+}

@@ -1,0 +1,73 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Bổ sung
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseCusRef"
+        aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseCusRef" class="panel-collapse collapse">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form">
+      <div class="row">
+        <div class="form-group col-sm-3" hasError="name">
+          <div class="input-group">
+            <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+              title="Người mang xe đến">Người MXĐ</span>
+            <input type="text" class="form-control required" formControlName="name">
+            <span class="input-group-addon btn btn-light-grey" (click)="removeCustomerReferInfo()">
+              <i class="fa fa-trash-o"></i>
+            </span>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bạn phải nhập người mang xe đến</div>
+            <div *ifError="'maxLength'">Tối đa 100 ký tự</div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-2" hasError="type">
+          <div class="input-group">
+            <span class="input-group-addon">Vai trò</span>
+            <select class="form-control" formControlName="type">
+              <option value="1">Chủ xe</option>
+              <option value="2">Quản lý xe</option>
+              <option value="3">Lái xe</option>
+              <option value="9">Khác</option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'"> Bạn phải nhập số vai trò</div>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-2" hasError="tel">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="75px">Điện thoại</span>
+            <input type="text" class="form-control required" formControlName="tel">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'"> Bạn phải nhập số điện thoại</div>
+<!--            <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>-->
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input type="text" class="form-control" formControlName="address" maxlength="100">
+          </div>
+        </div>
+        <div class="form-group col-sm-2" hasError="email">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="75px">Email</span>
+            <input type="text" class="form-control" formControlName="email" maxlength="50">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+      </div>
+      <button class="ghost" #submitBtn></button>
+    </form>
+  </div>
+</div>

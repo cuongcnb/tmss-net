@@ -1,0 +1,73 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="97px">Số đơn hàng</span>
+              <input type="text" class="form-control" formControlName="numberDH">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <tmss-datepicker text="Ngày đặt hàng" formControlName="dateTime"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="97px">Người đặt</span>
+              <input type="text" class="form-control" formControlName="isPerson">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="97px">Đặt lên ĐL</span>
+              <input type="text" class="form-control" formControlName="sortAgency">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="97px">ĐL ghi chú</span>
+              <input type="text" class="form-control" formControlName="agencyNote">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="97px">Loại đặt hàng</span>
+              <select class="form-control" formControlName="isType">
+                <option>Loại hàng 1</option>
+                <option>Loại hàng 2</option>
+                <option>Loại hàng 3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+    <div class="panel-footer">
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        Xem đơn hàng
+      </button>
+    </div>
+  </div>
+</form>

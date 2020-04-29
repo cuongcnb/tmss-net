@@ -1,0 +1,100 @@
+<div class="modal fade" bsModal #modifyFleetSchemes="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Fleet Schemes</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Fleet Schemes</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" hasError="min">
+            <label class="required">Min</label>
+            <input type="text" class="form-control" formControlName="min">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Min is required</div>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="max">
+            <label class="required">Max</label>
+            <input type="text" class="form-control" formControlName="max">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Max is required</div>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="available">
+            <label class="required">Available</label>
+            <input type="text" class="form-control" formControlName="available">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Available is required</div>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="fwsp">
+            <label class="required">FWSP</label>
+            <input type="text" class="form-control" formControlName="fwsp">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">FWSP is required</div>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="frsp">
+            <label class="required">FRSP</label>
+            <input type="text" class="form-control" formControlName="frsp">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">FRSP is required</div>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="holdbackAmount">
+            <label>Holdback Amount</label>
+            <input type="text" class="form-control" formControlName="holdbackAmount">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="discount">
+            <label>Discount</label>
+            <input type="text" class="form-control" formControlName="discount">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="marginPercent">
+            <label>Margin(%)</label>
+            <input type="text" class="form-control" formControlName="marginPercent">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="margin">
+            <label>Margin</label>
+            <input type="text" class="form-control" formControlName="margin">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="description">
+            <label>Description</label>
+            <input type="text" class="form-control" formControlName="description">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'min'">Must be a positive value</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

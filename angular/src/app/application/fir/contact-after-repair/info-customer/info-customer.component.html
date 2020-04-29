@@ -1,0 +1,108 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span>Thông tin khách hàng</span>
+  </div>
+  <div class="panel-body">
+    <form class="row" *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tên chủ xe</span>
+              <input type="text" class="form-control" formControlName="carownerName">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tel</span>
+              <input type="text" class="form-control" formControlName="phoneNumber">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Công ty</span>
+              <input type="text" class="form-control" formControlName="companyName">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <input type="text" class="form-control" formControlName="email">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input type="text" class="form-control" formControlName="address">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số</span>
+              <input type="text" class="form-control" formControlName="licensePlate">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Model</span>
+              <input type="text" class="form-control" formControlName="moDel">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tên xe</span>
+              <input type="text" class="form-control" formControlName="carName">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Người m/x đến</span>
+              <input type="text" class="form-control" formControlName="namecarCome">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số KM</span>
+              <input type="text" class="form-control" formControlName="sumKm">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Vai trò</span>
+              <input type="text" class="form-control" formControlName="roleName">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">VIN</span>
+              <input type="text" class="form-control" formControlName="vinNo">
+            </div>
+          </div>
+          <div class="col-xs-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tel</span>
+              <input type="text" class="form-control" formControlName="phoneNumber">
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">Địa chỉ</span>
+          <input type="text" class="form-control" formControlName="address">
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

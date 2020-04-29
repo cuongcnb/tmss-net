@@ -1,0 +1,172 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog lg-width" *ngIf="modal.isShown">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Khai báo gói công việc</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Thông tin xe và gói công việc
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapse" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapse" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <div class="row pt-2">
+                    <div class=" col-sm-6 form-group">
+                      <div class="input-group" *ngIf="carFamListDefault">
+                        <span class="input-group-addon min-width">Kiểu xe</span>
+                        <multi-column-select-control formControlName="carFamId"
+                                                     displayField="cfCode"
+                                                     dataField="id"
+                                                     [fieldGrid]="carFamField"
+                                                     [list]="carFamListDefault"
+                                                     [enableFilter]="true"
+                                                     [isClear]="false"
+                        ></multi-column-select-control>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                      <div class="input-group" *ngIf="carModelList">
+                        <span class="input-group-addon min-width">Đời xe</span>
+                        <multi-column-select-control formControlName="carModelId"
+                                                     displayField="doixe"
+                                                     dataField="id"
+                                                     [fieldGrid]="carModelField"
+                                                     [list]="carModelList"
+                                                     [enableFilter]="true"
+                                                     [isClear]="false"
+                        ></multi-column-select-control>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-sm-6" hasError="gjCode">
+                      <div class="input-group">
+                        <label class="input-group-addon min-width">Mã gói CV</label>
+                        <input type="text" class="form-control required" formControlName="gjCode">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Yêu cầu phải nhập</div>
+                        <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                        <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                        <div *ifError="'validateInputText'">Không được phép chứa kí tự có dấu</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-6" hasError="gjName">
+                      <div class="input-group">
+                        <label class="input-group-addon min-width">Tên gói CV</label>
+                        <input type="text" class="form-control required" formControlName="gjName">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Yêu cầu phải nhập</div>
+                        <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                        <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-sm-6" hasError="jobType">
+                      <div class="input-group">
+                        <label class="input-group-addon min-width">Loại gói</label>
+                        <select class="form-control" formControlName="jobType">
+                          <option *ngFor="let type of listJobGroupJobType"
+                                  [ngValue]="type.dataValue">{{type.dataNameVn}}</option>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-6" hasError="remark">
+                      <div class="input-group">
+                        <label class="input-group-addon min-width">Ghi chú</label>
+                        <input type="text" class="form-control" formControlName="remark">
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="row">-->
+                    <!--<div class="form-group col-sm-6">-->
+                      <!--<div class="input-group">-->
+                        <!--<label class="input-group-addon min-width">Trạng thái</label>-->
+                        <!--<select class="form-control" formControlName="deleteFlag">-->
+                          <!--<option *ngFor="let type of listState" [ngValue]="type.dataValue">{{type.dataNameVn}}</option>-->
+                        <!--</select>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách công việc
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapseJobGroupCombo" aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseJobGroupCombo" class="panel-collapse collapse in">
+              <grid-table [fieldGrid]="jobGroupField"
+                          (callbackGrid)="callbackGridJG($event)"
+                          (getParams)="getParamsJG()"
+                          [showPagination]="false"
+                          [height]="'200px'"
+                          [footerData]="repairJobFooter"
+              ></grid-table>
+              <div class="panel-footer">
+                <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-blue float-right mr-2" (click)="onBtnDelJob()">Xoá</button>
+
+                  <button type="button" class="btn btn-blue float-right mr-2" (click)="searchJob.open({searchKeyword:null})">
+                    <i class="fa fa-search"></i> Chọn công việc có sẵn
+                  </button>
+
+                  <button type="button" class="btn btn-blue  float-right mr-2"
+                          (click)="copyJob.open( form.value.carModelId, form.value.carFamId, form.value.deleteFlag)">
+                    <i class="fa fa-copy"></i> Sao chép từ gói
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue" type="button"
+                (click)="save()">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+        <button class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modify-job-group-modal #updateJobGroup (close)="refreshJG()"></modify-job-group-modal>
+
+<search-data-grid-modal #searchJob
+                        [headerText]="'Chọn công việc'"
+                        [apiCall]="callSearchRepairJob.bind(this)"
+                        (close)="patchRepairJob($event)"
+                        [fieldGrid]="repairJobField"
+></search-data-grid-modal>
+
+<copy-job-from-group-job #copyJob (close)="patchRepairJobs($event)"></copy-job-from-group-job>
+<apply-job-for-car #applyJobForCar (closeModal)="resetData()"></apply-job-for-car>

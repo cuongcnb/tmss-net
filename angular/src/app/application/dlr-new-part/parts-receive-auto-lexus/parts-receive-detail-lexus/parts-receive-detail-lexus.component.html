@@ -1,0 +1,108 @@
+<!--<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          Thông tin bảo hiểm
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <grid-table [fieldGrid]="fieldInvoiceList" [height]="'150px'" [showPagination]="false"
+                            (callbackGrid)="callbackInvoice($event)"
+                            (getParams)="getParamsInvoice()"
+                ></grid-table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <grid-table [fieldGrid]="fieldPartsList" [height]="'150px'" [showPagination]="false"
+                            (callbackGrid)="callbackParts($event)"
+                            (getParams)="getParamsParts()"
+                ></grid-table>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="btns-group text-center">
+            <button class="btn btn-blue btn-primary px-4" (click)="partsReceiveDeliveryLexus.open()"><i class="fa fa-eye"></i> Xem số phiếu  giao hàng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>-->
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Nhận hàng tự động</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="mt-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapsePartReceiveDetailLexusInfo" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapsePartReceiveDetailLexusInfo" class="panel-collapse collapse in">
+                <grid-table *ngIf="modal.isShown"
+                            [fieldGrid]="fieldInvoiceList"
+                            (callbackGrid)="callbackInvoice($event)"
+                            (getParams)="getParamsInvoice($event)"
+                            height="250px"
+                            [isSuppressHorizontalScroll]="true"
+                ></grid-table>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapsePartReceiveDetailLexusPart" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapsePartReceiveDetailLexusPart" class="panel-collapse collapse in">
+
+                <grid-table *ngIf="modal.isShown"
+                            [fieldGrid]="fieldPartsList"
+                            (callbackGrid)="callbackParts($event)"
+                            suppressRowClickSelection="true"
+                            (getParams)="getParamsParts()"
+                            (cellValueChanged)="cellPartsValueChange($event)"
+                            height="250px"
+                            rowSelection="multiple"
+                ></grid-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="btns-group text-center">
+          <button class="btn btn-blue btn-blue px-4" (click)="showDeliveryOrder()"><i class="fa fa-eye"></i> Xem số
+            phiếu đơn hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<parts-receive-delivery-lexus #partsReceiveDeliveryLexus (receive)="refreshData()"></parts-receive-delivery-lexus>

@@ -1,0 +1,17 @@
+.checkbox {
+  input[type="checkbox"] {
+    display: none;
+  }
+}
+
+.icheckbox_minimal-grey {
+  border: solid 1px lightgrey;
+  background-color: #ffffff;
+}
+.no-margin {
+  margin: 0 !important;
+}
+
+.checkbox-text {
+  white-space: nowrap;
+}

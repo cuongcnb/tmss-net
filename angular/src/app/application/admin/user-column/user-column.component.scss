@@ -1,0 +1,28 @@
+div.btn.btn-link {
+  cursor: default;
+
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+  input[type='checkbox']:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.panel-tools {
+  top: 5px;
+  div.btn.btn-xs.btn-link {
+    position: relative;
+    width: 70px;
+    span {
+      position: absolute;
+      top: -10px;
+      left: 15px;
+    }
+    input[type=checkbox] {
+      position: absolute;
+      top: -20px;
+      left: 0;
+    }
+  }
+}

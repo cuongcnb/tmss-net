@@ -1,0 +1,40 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Lựa chọn điều kiện tìm kiếm
+    </div>
+    <div class="panel-body">
+      <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+        <div class="row">
+          <div class="col-sm-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Đại lý</span>
+              <select formControlName="agency" class="form-control"></select>
+            </div>
+          </div>
+          <div class="col-sm-3 form-group">
+            <div class="input-group">
+              <tmss-datepicker text="Ngày khảo sát" formControlName="daySurvey"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-sm-3 form-group">
+            <div class="input-group">
+              <tmss-datepicker text="đến" formControlName="dayEnd"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i> Tìm kiếm</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <grid-table
+      [fieldGrid]="fieldGrid"
+      (callbackGrid)="callBackGrid($event)"
+      (getParams)="getParams()"
+    ></grid-table>
+    <div class="panel-footer">
+      <button class="btn btn-blue"><i class="clip-file-excel"></i> Xuất Excel</button>
+    </div>
+  </div>
+</div>

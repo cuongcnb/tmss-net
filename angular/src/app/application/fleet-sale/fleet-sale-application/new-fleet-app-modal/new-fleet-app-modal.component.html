@@ -1,0 +1,40 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">New Fleet Application</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-7" hasError="refNo">
+              <div class="form-group input-group">
+                <span class="input-group-addon">Ref No (DLR)</span>
+                <input type="text" class="form-control required" formControlName="refNo" autoFocusField>
+              </div>
+              <span class="help-block mb-0"><b>Dealer Name - SPL - YYMM</b> &nbsp; <small>(example: TTHC-SPL-1810)</small></span>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Ref No is required</div>
+                <div *ifError="'maxLength'">Ref No's maximum length is 50 characters</div>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <tmss-datepicker-sale [text]="'Fleet Date'" formControlName="fleetAppDate"></tmss-datepicker-sale>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

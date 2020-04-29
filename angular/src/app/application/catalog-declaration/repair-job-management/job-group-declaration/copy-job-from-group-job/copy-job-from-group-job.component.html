@@ -1,0 +1,50 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog" *ngIf="modal.isShown">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Sao chép từ gói</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Gói công việc
+            </div>
+            <grid-table [fieldGrid]="jobGroupGridField"
+                        (callbackGrid)="callbackGridJG($event)"
+                        (getParams)="getParamsJG()"
+                        [showPagination]="false"
+                        [height]="'200px'"
+            ></grid-table>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách công việc
+            </div>
+            <grid-table [fieldGrid]="repairJobGridField"
+                        (callbackGrid)="callbackGridRJ($event)"
+                        (getParams)="getParamsRJ()"
+                        [suppressRowClickSelection]="true"
+                        [rowSelection]="'multiple'"
+                        [showPagination]="false"
+                        [height]="'200px'"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-blue" (click)="choose()">
+          <i class="fa fa-check"></i> Đồng ý
+        </button>
+        <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

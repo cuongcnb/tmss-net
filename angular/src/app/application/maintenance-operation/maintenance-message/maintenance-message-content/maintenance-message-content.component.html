@@ -1,0 +1,191 @@
+<form *ngIf="form" [formGroup]="form" (submit)="onSubmit()" novalidate autocomplete="off">
+  <div class="panel panel-default car-info">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Thông tin xe
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số</span>
+            <input class="form-control" formControlName="licensePlate">
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Model</span>
+            <input class="form-control" formControlName="model">
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Vinno</span>
+            <input class="form-control" formControlName="vinno">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default customer-info">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Thông tin khách hàng
+    </div>
+    <div class="panel-body">
+      <!--Khách hàng-->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="input-group customer-info">
+            <span class="input-group-addon">Tên chủ xe</span>
+            <input class="form-control" formControlName="driversName">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input class="form-control" formControlName="driversAddress">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Điện thoại</span>
+            <input class="form-control" formControlName="driversPhone">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Email</span>
+            <input class="form-control" formControlName="driversEmail">
+          </div>
+        </div>
+      </div>
+      <!--Công ty-->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Tên Công ty</span>
+            <input class="form-control" formControlName="companyName">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input class="form-control" formControlName="companyAddress">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Điện thoại</span>
+            <input class="form-control" formControlName="companyPhone">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+        </div>
+      </div>
+      <!--Người mang xe-->
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Người mang xe</span>
+            <input class="form-control" formControlName="carrierName">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input class="form-control" formControlName="carrierAddress">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Điện thoại</span>
+            <input class="form-control" formControlName="carrierPhone">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Email</span>
+            <input class="form-control" formControlName="carrierEmail">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default content-sc">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Nội dung lần sửa chữa gần nhất
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6 form-group datepicker-custom">
+          <tmss-datepicker text="Ngày vào" formControlName="dateIn"></tmss-datepicker>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Km</span>
+            <input class="form-control" formControlName="km">
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Mốc BD tiếp theo</span>
+            <input class="form-control" formControlName="milestonesBD">
+          </div>
+        </div>
+        <div class="col-md-6 form-group datepicker-custom">
+          <tmss-datepicker text="Ngày BD dự tính" formControlName="expectedDateBD"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">CVDV</span>
+            <input class="form-control" formControlName="cvdv">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Nội dung SC</span>
+          <textarea class="form-control textarea-fix" formControlName="contentSC"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default content-sck">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Nội dung lần sửa chữa gần nhất tại đại lý khác
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-4 form-group datepicker-custom-ver1">
+          <tmss-datepicker text="Ngày vào" formControlName="dateInK"></tmss-datepicker>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Đại lý</span>
+            <input class="form-control" formControlName="supplier">
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Km</span>
+            <input class="form-control" formControlName="kmK">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Nội dung SC</span>
+          <textarea class="form-control textarea-fix" formControlName="contentSCK"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,80 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Đồng sơn
+    <div class="panel-tools">
+      <button type="button" class="fa btn-collapse" [ngClass]="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'"
+              (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEventAcc">
+      </button>
+    </div>
+  </div>
+  <div id="collapseEventAcc" [collapse]="isCollapsed">
+    <grid-table [fieldGrid]="fieldGrid" #gridTable
+                [frameworkComponents]="frameworkComponents"
+                [isSuppressHorizontalScroll]="true"
+                [showPagination]="false"
+                (getParams)="getParams()"
+                [height]="'200px'"
+                (cellEditingStarted)="cellEditingStarted($event)"
+                (cellEditingStopped)="cellEditingStopped($event)"
+                (cellDoubleClicked)="cellDoubleClicked($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+                (callbackGrid)="callbackGrid($event)"
+                [tabToNextCell]="tabToNextCell.bind(this)"
+                (keyup)="agKeyUp($event)"
+    ></grid-table>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="text-right mt-2 money-style">
+          <!--<div class="form-group inline mr-2">-->
+          <!--T/tiền trước thuế:-->
+          <!--</div>-->
+          <!--<div class="form-group inline fix-width">-->
+          <!--<strong>{{moneyFormat(footerData?.beforeTax)}}</strong>-->
+          <!--</div>-->
+          <!--<div class="form-group inline mr-2">-->
+          <!--Giảm giá:-->
+          <!--</div>-->
+          <!--<div class="form-group inline fix-width">-->
+          <!--<strong>{{moneyFormat(footerData?.discount)}}</strong>-->
+          <!--</div>-->
+          <!--<div class="form-group inline mr-2">-->
+          <!--Tổng tiền thuế:-->
+          <!--</div>-->
+          <!--<div class="form-group inline fix-width">-->
+          <!--<strong>{{moneyFormat(footerData?.taxRate)}}</strong>-->
+          <!--</div>-->
+          <div class="form-group inline mr-2">
+            Tổng tiền:
+          </div>
+          <div class="form-group inline fix-width">
+            <strong>{{moneyFormat(footerData?.total)}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-blue mr-2"
+                [disabled]="roState && disabledBtnAdd.includes(roState.toString())" (click)="addWork()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue"
+                [disabled]="state && !disableBtnDel.includes(state.toString()) && selectedNode && selectedNode.data.quotationprintVersion"
+                (click)="removeWork()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<search-data-grid-modal
+  #searchWorkCodeModal
+  [headerText]="'Chọn CV'"
+  [apiCall]="getWorkCodeList.bind(this)"
+  (close)="modifyWork($event)"
+  [fieldGrid]="fieldGridWorkCode"
+></search-data-grid-modal>

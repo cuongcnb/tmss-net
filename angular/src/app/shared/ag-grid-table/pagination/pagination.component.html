@@ -1,0 +1,41 @@
+<label class="btn btn-xs ag-pagination-select" style="position: absolute; bottom: 2px; color: rgba(0, 0, 0, 0.54);">Hiển
+  thị&nbsp;
+  <select class="ag-paging-select" [disabled]="disablePagination" (change)="onPageSizeChanged()" #agPageSize>
+    <option *ngIf="tenTotal" value="10" selected>10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+    <option value="500">500</option>
+    <option value="1000">1000</option>
+    <option value="5000">5000</option>
+    <option value="10000">10000</option>
+    <option value="100000" *ngIf="morePageSize">100000</option>
+  </select>
+  &nbsp;dòng
+</label>
+
+<div class="ag-theme-balham">
+  <div class="ag-paging-panel ag-font-style">
+    <span ref="eSummaryPanel" class="ag-paging-row-summary-panel">
+      <span ref="lbFirstRowOnPage">{{currentFirstRow}}</span> đến
+      <span ref="lbLastRowOnPage">{{currentLastRow}}</span>
+      trong tổng <span ref="lbRecordCount">{{totalData}}</span>
+    </span>
+
+    <span class="ag-paging-page-summary-panel">
+      <button type="button" class="ag-paging-button" ref="btFirst" [disabled]="(currentPage <= 0 ? true : null) || disablePagination"
+        (click)="goFirstPage()"><i class="ag-icon ag-icon-first"></i></button>
+      <button type="button" class="ag-paging-button" ref="btPrevious" [disabled]="(currentPage <= 0 ? true : null) || disablePagination"
+        (click)="goPreviousPage()" style="padding-left: 0"><i class="ag-icon ag-icon-previous"></i></button>
+      &nbsp;Trang <span ref="lbCurrent">{{currentPage < 0 ? (totalData > 0 ? 1 : 0) : currentPage + 1}}</span> / <span
+        ref="lbTotal">{{totalPages}}</span>&nbsp;
+      <button type="button" class="ag-paging-button" ref="btNext"
+        [disabled]="(currentPage + 1 === totalPages ? true : null) || disablePagination" (click)="goNextPage()" style="padding-right: 0"><i
+          class="ag-icon ag-icon-next"></i></button>
+      <button type="button" class="ag-paging-button" ref="btLast"
+        [disabled]="(currentPage + 1 === totalPages ? true : null) || disablePagination" (click)="goLastPage()"><i
+          class="ag-icon ag-icon-last"></i></button>
+    </span>
+
+  </div>
+</div>

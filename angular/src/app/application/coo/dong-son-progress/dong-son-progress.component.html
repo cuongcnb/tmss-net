@@ -1,0 +1,231 @@
+<ng-container>
+  <label class="mouse-time" [style.top.px]="positionTop - 100" [style.left.px]="positionLeft">&nbsp;</label>
+  <label *ngIf="showMouseTime" class="mouse-time" [style.top.px]="positionTop - 72" [style.left.px]="positionLeft">{{timeMouseXDisplay | date:'HH:mm'}}</label>
+  <div class="row style-top" *ngIf="form">
+    <form [formGroup]="form">
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Từ ngày" formControlName="fromDateTime" class="dong-son-height"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Đến ngày" formControlName="toDateTime" class="dong-son-height"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-1 pl-0 text-center w-5-percent">
+        <button class="btn btn-blue pt-3 pb-2 float-left-button" (click)="refreshSearch()"><i class="fa fa-search mb-1"> </i></button>
+      </div>
+    
+
+      <div class="col-md-2">
+        <div class="form-group dong-son-height" (keydown.enter)="$event.preventDefault()">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số xe</span>
+            <input-search [isKeepFocus]="true" (onSearch)="searchByRegisterNo($event)"
+                          placeholder="Nhập biển số xe"
+                          formControlName="keyword"></input-search>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-1">
+        <button class="btn btn-blue text-search" (click)="searchByRegisterNo(form.value.keyword)">Go to</button>
+      </div>
+    </form>
+    <!-- <div class="col-md-2">
+      <div class="form-group dong-son-height">
+        <div class="input-group">
+          <span class="input-group-addon">Reload (min)</span>
+          <select [(ngModel)]="timeReload">
+            <option *ngFor="let time of listTimeReload" [ngValue]="time">{{time}}</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+    
+  </div>
+
+  <div class="mb-2 row">
+    <div class="col-sm-12" style="padding-bottom: 5px !important;">
+      <!-- <div class="panel panel-default">
+        <div class="panel-body"> -->
+          <div class="float-left mr-2 mt-2 cursor-pointer" *ngFor="let it of listDsDefault" [style.color]="'white'"
+              (click)="onClickBtn(it.id)"
+              [style.background]="it.color"
+              [class.border-selected]="it.id == typeDs">{{it.name}}</div>
+          <div class="input-group view-style">
+            <span class="input-group-addon text-bold" style="color: black;">Khung nhìn</span>
+            <select [(ngModel)]="functionCode" (change)="changeView()">
+              <option *ngFor="let view of listTimeView" [ngValue]="view.functionCode">{{view.name}}</option>
+            </select>
+          </div>
+        <!-- </div>
+      </div> -->
+    </div>
+
+    <div class="col-sm-5">
+      <div class="panel panel-default">
+        <div class="panel-body" style="padding-bottom: 7.5px !important;">
+          <div class="float-left mr-2 mt-2 ">Đang thực hiện: {{getStateCount(StateCount.performing)}}</div>
+          <div class="float-left mr-2 mt-2 ">Đang dừng: {{getStateCount(StateCount.stopping)}}</div>
+          <div class="float-left mr-2 mt-2 ">Xe trễ: {{getStateCount(StateCount.lateCar)}}</div>
+          <div class="float-left mr-2 mt-2 ">Xe hẹn: {{getStateCount(StateCount.appointment)}}</div>
+          <div class="float-left mr-2 mt-2">* : Xe ưu tiên</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-7">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- <div class="float-left m-1 border-around">Kế hoạch</div> -->
+          <div class="float-left m-1 border-around"><i class="fa fa-paperclip"></i> Chờ thực hiện</div>
+          <div class="float-left m-1 border-around"><i class="fa fa-gear"></i> Đang thực hiện</div>
+          <div class="float-left mt-1 border-around"><i class="fa fa-flag"></i> Đang dừng</div>
+          <div class="float-left m-1 border-around"><i class="fa fa-clock-o"></i> Xe trễ</div>
+          <div class="float-left m-1 border-around"><i class="fa fa-dot-circle-o"></i> Đã thực hiện</div>
+          <div class="float-left m-1 border-around"><i class="fa fa-check"></i> Hoàn thành</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-12">
+      <checkbox text="Hiển thị xe hoàn thành" textClassName="text-bold" [(ngModel)]="viewCompleteCar"
+        [labelWidth]="'155px'" (change)="showCompleteCar()"></checkbox>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+<!--  <div class="mb-2 progress-status">-->
+<!--    <div class="float-left m-1"><i class="fa fa-paperclip"></i> Kế hoạch: {{getStateCount(ProgressState.plan)}}</div>-->
+<!--    <div class="float-left m-1"><i class="fa fa-gear"></i> Đang thực hiện: {{getStateCount(ProgressState.actual)}}</div>-->
+<!--    <div class="float-left mt-1"><i class="fa fa-flag"></i> Đang dừng: {{getStateCount(ProgressState.stopInside)}}</div>-->
+<!--    <div class="float-left m-1"><i class="fa fa-clock-o"></i> Xe trễ: {{delayVehicles + delayPlanVehicles}}</div>-->
+<!--&lt;!&ndash;    <div class="float-left m-1"><i class="fa fa-circle-o "></i> Kế hoạch trễ: {{delayPlanVehicles}}</div>&ndash;&gt;-->
+<!--    <div class="float-left m-1"><i class="fa fa-check"></i> Hoàn thành: {{getStateCount(ProgressState.complete)}}</div>-->
+<!--    <div class="float-left m-1">* Xe ưu tiên</div>-->
+<!--    <div class="float-left m-1">Xe chờ: {{getStateCount(ProgressState.wait)}}</div>-->
+<!--    <div class="float-left m-1"><i class="fa clip-lamp"></i>Suggest: {{getStateCount(ProgressState.autoSuggest)}}</div>-->
+<!--    <div class="float-left m-1 quotation-manual-suggest">Manual báo giá: {{getStateCount(ProgressState.manualSuggest)}}</div>-->
+<!--    <div class="clearfix"></div>-->
+<!--  </div>-->
+
+  <div class="panel panel-default">
+    <!-- <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Bảng tiến độ Đồng sơn
+
+      <div class="panel-tools">
+        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.hour"
+             (click)="changeViewType(ProgessViewType.minute)" placement="left" [tooltip]="'Hiển thị theo tiếng'">
+          <i class="fa fa-crosshairs"></i>
+        </div>
+
+        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.minute"
+             (click)="changeViewType(ProgessViewType.hour)" placement="left" [tooltip]="'Hiển thị theo phút'">
+          <i class="fa fa-bar-chart-o"></i>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="panel-body">
+      <div class="progress-coo">
+        <div class="panel-additional-info not-working-emp ds-waiting-vehicle">
+          <div class="header wait-car">Xe chờ</div>
+          <div class="body body-ds-waiting-vehicle" dragula="ds-waiting-vehicle-bag">
+            <div class="vehicle-waiting-ds background" *ngFor="let vehicle of waitingVehicles" [id]="'' + vehicle.wpId"
+                 [attr.data-wpId]="vehicle.wpId"
+                 [ngClass]="[( arrayVehiclesSearch && arrayVehiclesSearch.includes(vehicle.registerno)) ? 'ds-focus-vehicle-wait' : '', vehicle.state === ProgressState.manualSuggest ? 'quotation-manual-suggest' : '']"
+                 (dblclick)="createPlanModal.open(vehicle)"
+                 (mouseenter)="displayTooltip(vehicle, 'waitingVehicleElem')"
+                 (mouseleave)="displayTooltip(null, 'waitingVehicleElem')"
+                 [contextMenuSubject]="vehicle"
+                 [contextMenu]="basicMenu"
+                 data-toggle="tooltip" data-placement="bottom" [title]="vehicle?.registerno">
+              {{vehicle?.registerno}} <i *ngIf="!vehicle.hasPlan" class="fa fa-star"></i><i *ngIf="vehicle.complete" class="fa fa-check"></i><i *ngIf="vehicle.appId"><img class="size-img" src="/assets/images/h.svg"/>
+            </i> 
+            </div>
+          </div>
+        </div>
+
+        <div class="main-table">
+          <div class="table-header group-header">
+            <div class="emp" style="padding-top: 6px;"><span>Tổ/nhóm</span></div>
+          </div>
+
+          <div class="table-body ds-tbody">
+            <div class="progress-area ds-left" [style.height.%]="100 * (bpGroups.length + 1)">
+              <div [style.width.%]="100 * columns.length">
+                <div class="progress-overflow" id="style"
+                     [style.max-width.%]="100 / columns.length"
+                     [style.height.px]="progressOverflowHeight">
+
+                  <div class="progress-area-header">
+                    <ng-container *ngFor="let col of columns">
+                      <div class="d-inline-block">
+                        <div class="col-xs-12">{{col.day}}</div>
+                        <div class="col-xs-12">
+                          <span *ngFor="let data of col.workTimes"
+                                [style.width]="100 / col.workTimes.length+ '%'">
+                            {{data.minute === 0 ? data.hour : '|'}}
+                          </span>
+                        </div>
+                        <div class="seperate-line"
+                             [ngStyle]="{'height': 'calc(100% + ' + (33 * shops.length) + 'px)'}"></div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="tracking-line" [style.margin-left.%]="offsetLeft"
+                       [style.height.%]="100 * (bpGroups.length + 1)" *ngIf="offsetLeft"></div>
+
+                  <div class="progress-area-body" [style.width.%]="100 * columns.length"
+                       (scroll)="onScroll($event, 'body-content')" (wheel)="currentScroll = 'progress-area-body'">
+                    <div class="ds-td" *ngFor="let bpGroup of bpGroups; let idx = index">
+                      <div class="ds-progress-area" [attr.data-id]="bpGroup.id" dragula="ds-waiting-vehicle-bag"
+                           [attr.data-index]="idx" style="border-bottom: 1px solid #BDC3C7"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="body-content" (scroll)="onScroll($event, 'progress-area-body')"
+                 (wheel)="currentScroll = 'body-content'">
+              <div *ngFor="let bpGroup of bpGroups" class="none-border">
+                <div class="emp border-bottom" data-toggle="tooltip" data-placement="bottom"
+                    [title]="bpGroup.groupName" [class.border-bottom]="(bpGroup.last && !bpGroup.first) || (bpGroup.last && bpGroup.first)">
+                  <div *ngIf="(bpGroup.show_name)" class="title-group">{{bpGroup.groupCode}}</div>
+                </div>
+                <div class="prg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-additional-info pending-vehicle col132 ds-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<tmss-tooltip [contentElem]="waitingVehicleElem" *ngIf="waitingVehicleElem">
+  Tên chủ xe: {{vehicleChoosing?.carownername}} <br/>
+  Tên người mang xe đến: {{vehicleChoosing?.name || vehicleChoosing?.carownername}}
+</tmss-tooltip>
+
+<dong-son-progress-modal #dongsonModal (refreshList)="getData()"
+                         (refreshRoNoPlanList)="refreshRoNoPlanList()"></dong-son-progress-modal>
+
+<create-plan-modal #createPlanModal (refreshList)="search(true)"
+(refreshRoNoPlanList)="refreshRoNoPlanList()"></create-plan-modal>
+
+<complete-plan-modal #completePlanModal (refreshList)="search(true)"
+(refreshRoNoPlanList)="refreshRoNoPlanList()"></complete-plan-modal>
+
+<context-menu>
+  <ng-template contextMenuItem let-vehicle (execute)="completePlanModal.open($event.item)">
+    <span style="font-size: 11px !important;">Kết thúc sửa chữa</span>
+  </ng-template>
+</context-menu>

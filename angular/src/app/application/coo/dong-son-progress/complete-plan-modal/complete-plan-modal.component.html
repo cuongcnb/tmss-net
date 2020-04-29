@@ -1,0 +1,53 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Hoàn thành kế hoạch</h5>
+        </div>
+        <div class="modal-body">
+          <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+            <div class="modal-body">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i class="fa fa-external-link-square"></i>
+                  Chi tiết
+                  <div class="panel-tools">
+                    <button type="button" class="fa btn-collapse"
+                            [ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+                            (click)="isCollapsedWS = !isCollapsedWS"
+                            [attr.aria-expanded]="!isCollapsedWS" aria-controls="collapseEventOther">
+                    </button>
+                  </div>
+                </div>
+                <div id="isCollapsedWS"
+                      [collapse]="isCollapsedWS">
+                    <div class="panel-body">
+                      <div class="form-group col-sm-12 mw-63">
+                        <tmss-datepicker [hasTimepicker]="true"
+                          [text]="'TG hoàn thành'"
+                          formControlName="toTime"
+                          [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                      </div>
+
+                      <div class="form-group col-sm-12 mw-63">
+                        <button class="btn btn-blue mt-3 float-right ml-10" (click)="close()">Đóng</button>
+                        <button class="btn btn-blue mt-3 float-right" (click)="completePlan()">Hoàn thành</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+          
+            </div>
+          </perfect-scrollbar>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<vehicle-in-progress-modal #vehicleInProgressModal></vehicle-in-progress-modal>

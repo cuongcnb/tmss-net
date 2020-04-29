@@ -1,0 +1,30 @@
+<div pageTitle="Check Vehicles Logs">
+  <div class="row">
+    <div class="col-md-4 col-sm-6 col-sx-8">
+      <div class="form-group input-group">
+        <span class="input-group-addon">TMSS_No or Frame_No</span>
+        <input type="text" class="form-control" [(ngModel)]="searchKey">
+      </div>
+    </div>
+    <div class="col-md-8 col-sm-6 col-sx-4">
+      <button class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"></i> Search</button>
+      <button class="btn btn-blue" (click)="export()"><i class="fa fa-download"></i> Export</button>
+    </div>
+  </div>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Check Vehicles Logs
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackCheckLog($event)"
+                  [overlayLoadingTemplate]="'Search to show data'"
+                  [paginationTotalsData]="paginationTotalsData"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [showPagination]="false"
+                  [height]="'450px'"
+      ></grid-table>
+    </div>
+  </div>
+</div>

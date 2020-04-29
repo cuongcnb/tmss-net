@@ -1,0 +1,61 @@
+<div pageTitle="Model List Management">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Model Information
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshModelList()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [enableFilter]="true" [fieldGrid]="fieldGridModel"
+                [showPagination]="false"
+                [height]="'300px'"
+                (callbackGrid)="callbackGridModel($event)"
+                (getParams)="getParamsModel()"></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="modelListModal.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button class="btn btn-blue mr-2" (click)="updateModelData()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedGrade" (click)="deleteModel()">
+        <i class="fa fa-trash-o"></i> Delete
+      </button>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Grade Marketing Information
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGradeList()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [enableFilter]="true" [fieldGrid]="fieldGridGrade"
+                [showPagination]="false"
+                [height]="'200px'"
+                (callbackGrid)="callbackGridGrade($event)"
+                (getParams)="getParamsGrade()"
+                overlayLoadingTemplate="Please choose a model to show grade">
+    </grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="addGrade()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button class="btn btn-blue mr-2" (click)="updateGrade()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedGrade" (click)="deleteGrade()">
+        <i class="fa fa-trash-o"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<model-list-modal #modelListModal (close)="refreshModelList()"></model-list-modal>
+<grade-list-modal #gradeListModal (close)="refreshGradeList()"></grade-list-modal>

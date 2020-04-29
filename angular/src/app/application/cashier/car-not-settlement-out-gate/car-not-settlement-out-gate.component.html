@@ -1,0 +1,84 @@
+<div>
+  <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" focusField>
+    <div class="row">
+      <div class="col-sm-4 form-group" hasError="registerNo">
+        <div class=" input-group">
+          <span class="input-group-addon">Biển số xe</span>
+          <input type="text" formControlName="registerNo" class="form-control required">
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Yêu cầu phải nhập</div>
+          <div *ifError="'minLength'">Nhập tối thiểu 3 kí tự</div>
+        </div>
+      </div>
+      <div class="col-sm-4 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Số VIN</span>
+          <input type="text" formControlName="vinNo" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <button type="submit" class="btn btn-blue mr-2 mb-3" (click)="search()">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <form class="in-out-gate-form" [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+      <div class="col-md-4 mb-2">
+        <grid-table [fieldGrid]="carGridField"
+                    (callbackGrid)="callbackCar($event)"
+                    (getParams)="getParamsCar()"
+                    [showPagination]="false"
+                    [height]="'320px'"
+        ></grid-table>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group" hasError="reason">
+          <div class="input-group">
+            <label class="input-group-addon">Lý do in giấy ra cổng</label>
+            <textarea class="form-control textarea-fix {{checkRequiredTextArea}}" rows="3" formControlName="reason"></textarea>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Tối đa 500 kí tự</div>
+          </div>
+        </div>
+        <div class="form-group" hasError="picName">
+          <div class="input-group">
+            <label class="input-group-addon">Người bảo lãnh</label>
+            <input-search formControlName="picName"
+                          [showBtn]="true"
+                          [isReadonly]="true"
+                          [isRequired]="checkRequired"
+                          (onSearch)="getEmp()"
+            ></input-search>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải chọn</div>
+          </div>
+        </div>
+        <grid-table [fieldGrid]="repairOrderGridField"
+                    (callbackGrid)="callbackRO($event)"
+                    [showPagination]="false"
+                    [height]="'195px'"
+        ></grid-table>
+        <div class="mt-2">
+          <button type="submit" class="btn btn-blue" (click)="reportTypeModal.open(1)" [disabled]="!carSelected">
+            <i class="fa fa-print"></i> In giấy ra cổng
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<search-data-grid-modal #searchGuarantor
+                        [headerText]="'Chọn Người bảo lãnh'"
+                        (close)="patchGuarantor($event)"
+                        [fieldGrid]="guarantorGridField"
+                        [isHideSearchField]="true"
+                        [showPagination]="false"
+></search-data-grid-modal>
+<report-type-modal #reportTypeModal (close)="printOutGate($event)"></report-type-modal>

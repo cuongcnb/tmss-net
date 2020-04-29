@@ -1,0 +1,232 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Lập kế hoạch sửa chữa</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <ng-container *ngIf="!stopPosition">
+              <div class="row">
+                <div class="form-group col-sm-3 mw-78">
+                  <div class="input-group">
+                    <span class="input-group-addon">BKS</span>
+                    <input class="form-control" formControlName="registerno">
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-63">
+                  <div class="input-group">
+                    <span class="input-group-addon">R/O</span>
+                    <input class="form-control" formControlName="repairorderno">
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-63">
+                  <div class="input-group">
+                    <span class="input-group-addon">CVDV</span>
+                    <input class="form-control" formControlName="empName">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <checkbox class="float-left" text="Xe ưu tiên" formControlName="isPriority"></checkbox>
+                </div>
+              </div>
+
+              <!--table-->
+              <div class="row">
+                <div class="col-sm-6 mw-78">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Tên khách</span>
+                          <input class="form-control" formControlName="cusName">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <checkbox formControlName="cuswait" text="Khách chờ lấy xe"></checkbox>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Điện thoại</span>
+                          <input class="form-control" formControlName="mobil">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input class="form-control" formControlName="tel">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="panel panel-default">
+                    <grid-table
+                      [fieldGrid]="jobFieldGrid"
+                      [showPagination]="false"
+                      (callbackGrid)="callbackGridJob($event)"
+                      [height]="'120px'">
+                    </grid-table>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 pl-0 mw-63">
+                  <div class="row">
+                    <div class="form-group col-sm-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">Kiểu xe</span>
+                        <input class="form-control" formControlName="cmName">
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">Kế hoạch giao xe</span>
+                        <input disabled class="form-control" value="{{repairPlanData.information ? dataFormatService.parseTimestampToFullDate( repairPlanData.information.cardelivery) : null}}" >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Số km</span>
+                          <input class="form-control" formControlName="km">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <button class="btn btn-blue w-100" (click)="removePlan()" [attr.disabled]="form.value.roWshopActId">
+                        Giải phóng khỏi bảng tiến độ
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="panel panel-default">
+                    <grid-table
+                      [fieldGrid]="partFieldGrid"
+                      [showPagination]="false"
+                      (callbackGrid)="callbackGridPart($event)"
+                      [height]="'120px'">
+                    </grid-table>
+                  </div>
+                </div>
+              </div>
+
+              <!--button-->
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-6 mw-86">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">T/g vào</span>
+                          <input class="form-control" formControlName="getInDate">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Giờ in lệnh</span>
+                          <input class="form-control" formControlName="printDate">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Giờ giao DK</span>
+                          <input class="form-control" formControlName="gxDate">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <checkbox text="Rửa xe" formControlName="ruaxe"></checkbox>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6 mw-63">
+                      <div class="form-group">
+                        <tmss-datepicker text="BĐSC" [dateInputFormat]="'DD/MM/YYYY HH:mm'" [hasTimepicker]="true"
+                                         formControlName="fromDatetime" [addOnMinWidth]="'63px'"></tmss-datepicker>
+                      </div>
+                      <div class="form-group">
+                        <tmss-datepicker text="KTSC" [dateInputFormat]="'DD/MM/YYYY HH:mm'" [hasTimepicker]="true"
+                                         formControlName="toDatetime" [addOnMinWidth]="'63px'"></tmss-datepicker>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Khoang</span>
+                          <select class="form-control" formControlName="wshopId">
+                            <option *ngFor="let shop of shops" [ngValue]="shop.id">{{shop.wsName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon">Ktv</span>
+                          <input class="form-control" formControlName="ktv">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <button class="btn btn-blue w-100" (click)="startJob()" [disabled]="!canStart">Bắt đầu</button>
+                      <ng-container *ngIf="!isFromWaitingList">
+                        <button class="btn btn-blue w-100 mt-2" (click)="freePlanScc()" [disabled]="state !== ProgressState.plan ">Đưa về DS xe chờ</button>
+                      </ng-container>
+                      <ng-container *ngIf="isFromWaitingList">
+                        <button class="btn btn-blue w-100 mt-2" (click)="activePlanScc()" [disabled]="state !== ProgressState.plan ">Đưa khỏi DS xe chờ</button>
+                      </ng-container>
+                      <button class="btn btn-blue w-100 mt-2" [disabled]="state === ProgressState.complete" (click)="repairAriseModal.open(repairPlanData.information)">Công việc PS</button>
+                    </div>
+                    <div class="col-sm-6">
+                      <button class="btn btn-blue w-100" (click)="finishJob()" [disabled]="state !== ProgressState.actual">Kết thúc</button><br/>
+                      <button class="btn btn-blue w-100 mt-2" (click)="updatePlan()"   [disabled]="state === ProgressState.complete">Cập nhật kế hoạch</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <!--dừng công việc-->
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Theo dõi dừng công việc
+              </div>
+              <form *ngIf="reasonForm" [formGroup]="reasonForm" novalidate autocomplete="off" class="row p-2">
+                <div class="col-sm-6">
+                  <h5 class="mt-1">Lý do dừng</h5>
+                  <checkbox-list *ngIf="reasons" formControlName="reason" [textValue]="repairPlanData?.information?.pendingReasonText"
+                                 [placeholder]="'Lý do khác'" [dataList]="reasons"></checkbox-list>
+                </div>
+                <div class="col-sm-6">
+                  <checkbox text="Giải phóng khoang lúc dừng" formControlName="isRelease"></checkbox>
+                </div>
+                <div class="col-sm-12 form-group mt-3">
+                  <div class="input-group">
+                    <span class="input-group-addon">Nội dung</span>
+                    <textarea class="form-control" formControlName="description"></textarea>
+                  </div>
+                </div>
+              </form>
+              <div class="panel-footer text-right">
+                <button class="btn btn-blue" [disabled]="!canStop" (click)="stopJob()">Dừng</button>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </form>
+</div>
+<repair-arise-modal #repairAriseModal ></repair-arise-modal>

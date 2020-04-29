@@ -1,0 +1,84 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{!selectedJob ? 'Thêm' : 'Sửa'}} công việc</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6 form-group mw-repair" hasError="rccode">
+                <div class="input-group">
+                  <label class="input-group-addon">Mã công việc</label>
+                  <input class="form-control required" formControlName="rccode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                  <div *ifError="'validateInputText'">Không được phép chứa kí tự có dấu</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group mw-repair" hasError="rcname">
+                <div class="input-group">
+                  <label class="input-group-addon">Tên công việc</label>
+                  <input class="form-control required" formControlName="rcname">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 150 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group mw-repair">
+                <div class="input-group">
+                  <label class="input-group-addon">Internal</label>
+                  <select class="form-control" formControlName="internal">
+                    <option>Y</option>
+                    <option>N</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group mw-repair" hasError="remark">
+                <div class="input-group">
+                  <label class="input-group-addon">Ghi chú</label>
+                  <input class="form-control" formControlName="remark">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group mw-repair">
+                <div class="input-group">
+                  <label class="input-group-addon">Loại công việc</label>
+                  <select class="form-control" formControlName="jobgroup">
+                    <option [ngValue]=""></option>
+                    <option *ngFor="let type of jobGroupTypes" [ngValue]="type.id">{{type.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

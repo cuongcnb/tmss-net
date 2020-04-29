@@ -1,0 +1,156 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOrderPrePlanSearch" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapseOrderPrePlanSearch" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate focusField>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Số KH</span>
+                <input type="text" class="form-control" formControlName="planNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Mã đại lý</span>
+                <select class="form-control" formControlName="dlrId">
+                  <ng-container *ngIf="!currentUser.isAdmin">
+                    <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="currentUser.isAdmin">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.code}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Trạng thái</span>
+                <select class="form-control" formControlName="status">
+                  <option [ngValue]="1">Đại lý mới hỏi</option>
+                  <option [ngValue]="2">Đang trao đổi</option>
+                  <option [ngValue]="3">Từ chối</option>
+                  <option [ngValue]="4">Hoàn thành</option>
+                  <option [ngValue]="5">Tất cả trạng thái</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-blue mr-2" (click)="searchOrder()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Order List -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Kế hoạch
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOrderPrePlanPlan" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapseOrderPrePlanPlan" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGridOrder" [height]="'200px'" [showPagination]="false"
+                  (callbackGrid)="callBackGridOrder($event)"
+                  (getParams)="getParamsOrder()" (cellDoubleClicked)="updatePlan()"></grid-table>
+
+    </div>
+    <div class="panel-footer">
+      <div class="text-right mb-2">
+        <ng-container *ngIf="!currentUser.isAdmin">
+          <button type="button" class="btn btn-blue mr-2" (click)="newOrderPlanModal.open()">
+            <i class="fa fa-plus"></i> Tạo đơn hàng
+          </button>
+          <button type="button" class="btn btn-blue mr-2" (click)="updatePlan()"
+                  [disabled]="!selectedOrder || (selectedOrder.status == 3 || selectedOrder.status == 4)">
+            <i class="fa fa-edit"></i> {{currentUser.isAdmin ? 'Duyệt đơn hàng' : 'Sửa đơn hàng'}}
+          </button>
+          <button type="button" class="btn btn-blue" (click)="deletePlan()">
+            <i class="fa fa-trash-o"></i> Xóa đơn hàng
+          </button>
+        </ng-container>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Part of Order -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Chi tiết
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOrderPrePlanDetail" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapseOrderPrePlanDetail" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGridParts" [height]="'300px'" [showPagination]="false"
+                  (callbackGrid)="callBackGridParts($event)"></grid-table>
+
+    </div>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+          <div class="form-group text-right">
+            Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group text-right">
+            + Thuế: <strong>{{taxOnly}}</strong>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group text-right">
+            = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<new-order-plan-modal #newOrderPlanModal (close)="refreshAfterEdit($event)"></new-order-plan-modal>

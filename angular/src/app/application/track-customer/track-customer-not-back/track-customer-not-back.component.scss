@@ -1,0 +1,23 @@
+::ng-deep.span-102 {
+  .input-group-addon:first-child {
+    min-width: 102px!important;
+  }
+}
+
+.mt-custom {
+  margin-top: 10px !important;
+}
+
+fieldset {
+  border: 1px solid silver;
+  padding: 1rem;
+
+  legend {
+    width: auto;
+    margin-bottom: 5px;
+    font-size: 15px;
+    border: none;
+  }
+}
+
+

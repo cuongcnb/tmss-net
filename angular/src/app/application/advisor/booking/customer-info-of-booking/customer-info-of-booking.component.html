@@ -1,0 +1,142 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin khách hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link collapse in" data-toggle="collapse"
+              data-target="#collapseCustomerInfoOfBookingInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseCustomerInfoOfBookingInfo" class="panel-collapse collapse in">
+  <perfect-scrollbar class="ps" [style.max-height.px]="190">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <!--customerD-->
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Vai trò</span>
+            <select class="form-control" formControlName="type" (change)="changedType()">
+              <option value="1">Chủ xe</option>
+              <option value="2">Quản lý xe</option>
+              <option value="3">Lái xe</option>
+              <option value="9">Khác</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px" data-toggle="tooltip" data-placement="bottom" title="Người liên hệ">Ng.LH</span>
+            <input class="form-control required" formControlName="name" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="63px">Email</span>
+              <input class="form-control" formControlName="email" >
+            </div>
+          </div>
+          <div class="col-sm-5 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="44px">Tel</span>
+              <input class="form-control required" formControlName="tel" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Đ/c</span>
+            <input class="form-control" formControlName="address" >
+          </div>
+        </div>
+
+        <!--customer-->
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Tên KH</span>
+            <input class="form-control required" formControlName="carownername" >
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Tên Cty</span>
+            <input class="form-control" formControlName="orgname" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="63px">Loại</span>
+              <select class="form-control" formControlName="custypeId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let type of customerTypes" [ngValue]="type.id">{{type.cusTypeName}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-5 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="44px">Tel</span>
+              <input class="form-control required" formControlName="carownermobil" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Đ/c</span>
+            <input class="form-control" formControlName="carowneradd" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7 form-group">
+            <div class="input-group">
+                <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                title="Tỉnh/Thành phố" addonWidth="63px" style="max-width: 63px;">Tỉnh/TP *</span>
+              <select class="form-control" formControlName="provinceId">
+                <option value=""></option>
+                <option *ngFor="let province of provinces" [ngValue]="province.id">
+                  {{province.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-5 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                    title="Quận/Huyện" addonWidth="44px" style="max-width: 44px !important">Q/H *</span>
+              <select class="form-control" formControlName="districtId">
+                <option value=""></option>
+                <option *ngFor="let district of districts" [ngValue]="district.id">
+                  {{district.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-7 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="63px">Email</span>
+              <input class="form-control" formControlName="carowneremail" >
+            </div>
+          </div>
+          <div class="col-sm-5 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="44px">Fax</span>
+              <input class="form-control" formControlName="carownerfax" >
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">G/chú</span>
+            <textarea class="form-control" formControlName="cusNote" ></textarea>
+          </div>
+        </div>
+
+        <button class="ghost" #submitBtn></button>
+      </form>
+    </div>
+  </perfect-scrollbar>
+  </div>
+</div>

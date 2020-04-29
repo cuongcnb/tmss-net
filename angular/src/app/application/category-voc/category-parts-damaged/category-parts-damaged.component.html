@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách {{phenomenaDamaged? 'hiện tượng hư hỏng/Quy trình phụ' : 'bộ phận hư hỏng/Quy trình'}}
+  </div>
+  <grid-table [fieldGrid]="fieldGrid"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+  ></grid-table>
+</div>
+<div class="text-right">
+  <button class="btn btn-blue mb-2 ml-2" (click)="openAddModal()">
+    <i class="fa fa-plus"></i>
+    Thêm
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="openEditModal()">
+    <i class="fa fa-edit"></i>
+    Sửa
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="onDelRow()">
+    <i class="fa fa-trash-o"></i>
+    Xóa
+  </button>
+  <button class="btn btn-blue mb-2 ml-2">
+    <i class="clip-download"></i>
+    Xuất excel
+  </button>
+</div>
+
+<category-parts-damaged-modal #partsDamagedModal></category-parts-damaged-modal>
+<category-phenomena-damaged-modal #phenomenaDamagedModal></category-phenomena-damaged-modal>

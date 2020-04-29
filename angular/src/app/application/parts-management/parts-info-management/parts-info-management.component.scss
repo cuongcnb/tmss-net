@@ -1,0 +1,19 @@
+.same-addon-width-search {
+  min-width: 65px;
+}
+
+.same-addon-width {
+  min-width: 100px;
+}
+
+::ng-deep .ag-row.ag-row-selected:not(.row-gray) .ag-cell {
+  background-color: #B7E4FF !important;
+}
+
+::ng-deep .ag-theme-balham .ag-cell {
+  background-color: #EFEFEF;
+}
+
+::ng-deep .ag-row.ag-row-focus:not(.row-gray) .ag-cell {
+  background-color: rgb(188, 225, 248) !important;
+}

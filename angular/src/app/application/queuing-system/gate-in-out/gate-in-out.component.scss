@@ -1,0 +1,36 @@
+.w-span {
+  .input-group-addon {
+    min-width: 74px !important;
+  }
+}
+
+::ng-deep .is-appointment {
+  background: #ff8042 !important;
+}
+
+::ng-deep .is-warranty {
+  background: green !important;
+}
+
+::ng-deep .is-reRepair {
+  background: yellow !important;
+}
+
+::ng-deep .is-1K {
+  background: black !important;
+}
+
+// ::ng-deep .firtInColor {
+//   background-color: red !important;
+// }
+
+::ng-deep .ag-row.ag-row-selected:not(.row-gray) .ag-cell {
+  background-color: #B7E4FF !important;
+}
+
+::ng-deep .ag-theme-balham .ag-cell {
+  background-color: #EFEFEF;
+}
+::ng-deep.ag-row.firtInColor .ag-cell {
+  background-color: #d4cdcd;
+}

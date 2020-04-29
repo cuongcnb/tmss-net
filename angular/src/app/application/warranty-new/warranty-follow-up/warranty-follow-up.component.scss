@@ -1,0 +1,13 @@
+  .input-group {
+  .delay {
+    background-color: #ff7f7f !important;
+
+    &[attribute^="disabled"] {
+      background-color: #ff7f7f !important;
+    }
+  }
+}
+
+.same-addon-width {
+  min-width: 65px;
+}

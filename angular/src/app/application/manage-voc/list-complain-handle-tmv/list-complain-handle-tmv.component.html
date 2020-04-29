@@ -1,0 +1,58 @@
+<form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+  <fieldset>
+    <legend>Thông tin tìm kiếm</legend>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Ngày tiếp nhận từ" formControlName="dateReception"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Đến" formControlName="toDate"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Người liên hệ</span>
+            <input class="form-control" formControlName="contacter">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số xe</span>
+            <input class="form-control" formControlName="licensePlate">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-blue ml-2">
+        <i class="fa fa-search"></i>
+        Tìm kiếm
+      </button>
+      <button class="btn btn-blue ml-2">
+        <i class="fa fa-refresh"></i>
+        Làm mới
+      </button>
+    </div>
+  </fieldset>
+</form>
+
+<div class="mt-3">
+  <grid-table [fieldGrid]="fieldGrid"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+  ></grid-table>
+</div>
+
+<div class="text-right">
+  <button class="btn btn-blue">
+    <i class="clip-download"></i>
+    Xuất excel
+  </button>
+
+</div>

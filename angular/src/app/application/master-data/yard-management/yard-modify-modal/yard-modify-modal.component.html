@@ -1,0 +1,97 @@
+<div class="modal fade" bsModal #yardModifyModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="save()" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Yard</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Yard</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="code">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Code</label>
+                <input type="text" formControlName="code" class="form-control required" autoFocusField>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Code is required</div>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="name">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Yard Name</label>
+                <input type="text" formControlName="name" class="form-control required">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Name is required</div>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="address">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Address</label>
+                <textarea type="text" formControlName="address" class="form-control resize-vertical"
+                          rows="4"></textarea>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 255</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="ordering">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Ordering</label>
+                <input type="text" formControlName="ordering" class="form-control">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormat'">Ordering must be a number and greater than 0</div>
+                <div *ifError="'maxLength'">Max length is 4</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="yardLocationId">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Yard Location</label>
+                <select formControlName="yardLocationId" class="form-control required">
+                  <option value=""></option>
+                  <option *ngFor="let item of locations" [ngValue]="item.id">{{item.name}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Yard location is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Status</label>
+                <select formControlName="status" class="form-control">
+                  <option value="Y">Enabled</option>
+                  <option value="N">Disabled</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" hasError="description">
+              <div class="input-group">
+                <label addonWidth="90px" class="input-group-addon">Description</label>
+                <textarea formControlName="description" class="form-control resize-vertical" rows="4"></textarea>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 2000</div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

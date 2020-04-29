@@ -1,0 +1,55 @@
+<div>
+  <form [formGroup]="form" *ngIf="form">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group input-group">
+          <span class="input-group-addon">Biển số xe</span>
+          <input type="text" formControlName="registerNo" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group input-group">
+          <span class="input-group-addon">VIN</span>
+          <input type="text" formControlName="vinNo" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group input-group">
+          <span class="input-group-addon">RO</span>
+          <input type="text" formControlName="ro" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-blue mr-2" (click)="searchQuotation()"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Tìm kiếm thông tin báo giá
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseCusInfo" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseCusInfo" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [paginationTotalsData]="paginationTotalsData"
+                  [height]="'350px'"
+      ></grid-table>
+    </div>
+  </div>
+  <button class="btn btn-blue float-right" (click)="openStorageQuotationDetail()">
+    <i class="fa fa-eye"></i> Xem chi tiết
+  </button>
+  <button class="btn btn-blue mr-2 float-right" (click)="reportTypeModal.open()" [disabled]="!selectedStorageQuotation">
+    <i class="fa fa-print"></i> In
+  </button>
+</div>
+<proposal-print #proposalPrintModal></proposal-print>
+<report-type-modal #reportTypeModal (close)="downloadReport($event)"></report-type-modal>

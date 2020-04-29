@@ -1,0 +1,5 @@
+<div class="dropdown" [ngClass]="className ? className : ''">
+  <input type="text" class="form-control" [(ngModel)]="selectedValue" #datepicker="bsDatepicker"
+         [disabled]="isDisabled ? true : null"
+         bsDatepicker (bsValueChange)="onValueChange($event)" (onShown)="onShown($event)">
+</div>

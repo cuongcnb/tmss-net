@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    <div class="panel-tools">
+      <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="getDlrPutAccessaryLexus()">
+        <i class="fa fa-refresh"></i>
+      </button>
+    </div>
+  </div>
+  <grid-table
+    [fieldGrid]="fieldGrid" [showPagination]="false"
+    (callbackGrid)="callBackGrid($event)"
+    [frameworkComponents]="frameworkComponents"
+    (cellValueChanged)="cellValueChanged($event)"
+    [enableFilter]="true"
+  ></grid-table>
+</div>

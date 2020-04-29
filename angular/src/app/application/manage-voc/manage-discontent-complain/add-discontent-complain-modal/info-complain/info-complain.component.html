@@ -1,0 +1,338 @@
+<form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Thông tin chung về khiếu nại
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-4 form-group span-110">
+          <tmss-datepicker text="Ngày tạo" formControlName="dateCreate"></tmss-datepicker>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Đại lý giải quyết khiếu nại</span>
+            <select class="form-control" formControlName="supplierReception"></select>
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <checkbox text="Yêu cầu TMV tham gia" formControlName="requestTMV"></checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group span-110">
+          <tmss-datepicker text="Ngày tiếp nhận" formControlName="dateReception"></tmss-datepicker>
+        </div>
+        <div class="col-md-4 form-group span-115">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="150px">Đại lý bán xe</span>
+            <select class="form-control" formControlName="supplierSell"></select>
+          </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <tmss-datepicker text="Ngày gửi -> TMV" formControlName="dateSendToTMV"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group span-110">
+          <div class="input-group">
+            <span class="input-group-addon">Nguồn tiếp nhận</span>
+            <select class="form-control" formControlName="sourceReception"></select>
+          </div>
+        </div>
+        <div class="col-md-4 form-group span-115">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="150px">Đại lý làm dịch vụ</span>
+            <select class="form-control" formControlName="supplierService"></select>
+          </div>
+        </div>
+        <div class="col-md-4 form-group span-110">
+          <div class="input-group">
+            <span class="input-group-addon">Trạng thái</span>
+            <select class="form-control" formControlName="status"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Thông tin khách hàng
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6 form-group span-95">
+              <div class="input-group">
+                <span class="input-group-addon">Người liên hệ</span>
+                <input class="form-control" formControlName="contacter">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Chủ xe</span>
+                <input class="form-control" formControlName="driversName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 form-group span-95">
+              <div class="input-group">
+                <span class="input-group-addon">Số điện thoại</span>
+                <input class="form-control" formControlName="driversPhone">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <checkbox text="Khách hàng đặc biệt" formControlName="specialCustomer"></checkbox>
+            </div>
+          </div>
+          <div class="form-group span-95">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <textarea class="form-control textarea-fix" formControlName="driversAddress"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Thông tin thêm về khách hàng</span>
+              <textarea class="form-control textarea-fix" formControlName="otherCustomerInfo"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Thông tin xe
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-7 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="65px">Vin</span>
+                    <input class="form-control" formControlName="vin">
+                  </div>
+                </div>
+                <div class="col-md-5 form-group text-right">
+                  <button class="btn btn-blue" (click)="openCSLPModal()">
+                    Lấy thông tin
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-7 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="80px">Biển số</span>
+                    <input class="form-control" formControlName="licensePlate">
+                  </div>
+                </div>
+                <div class="col-md-5 form-group text-right">
+                  <button class="btn btn-blue" (click)="openCSVModal()">
+                    Lấy thông tin
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-65">
+              <div class="input-group">
+                <span class="input-group-addon">Loại xe</span>
+                <select class="form-control" formControlName="carType"></select>
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-80">
+              <tmss-datepicker text="Ngày mua" formControlName="dateBuy"></tmss-datepicker>
+            </div>
+            <div class="col-md-6 form-group span-65">
+              <div class="input-group">
+                <span class="input-group-addon">Đời xe</span>
+                <input class="form-control" formControlName="model">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-80">
+              <div class="input-group">
+                <span class="input-group-addon">NVBH</span>
+                <input class="form-control" formControlName="salesStaff">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-65">
+              <div class="input-group">
+                <span class="input-group-addon">CVDV</span>
+                <input class="form-control" formControlName="cvdv">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-80">
+              <div class="input-group">
+                <span class="input-group-addon">Tổ BH</span>
+                <input class="form-control" formControlName="salesTeam">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-65">
+              <div class="input-group">
+                <span class="input-group-addon">KTV</span>
+                <input class="form-control" formControlName="technicians">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-80">
+              <div class="input-group">
+                <span class="input-group-addon">Số km</span>
+                <input class="form-control" formControlName="km">
+              </div>
+            </div>
+            <div class="col-md-6 form-group span-65">
+              <div class="input-group">
+                <span class="input-group-addon">Tổ KTV</span>
+                <input class="form-control" formControlName="techniciansTeam">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Khiếu nại - yêu cầu
+    </div>
+    <grid-table [fieldGrid]="fieldGridRequest"
+                (callbackGrid)="callbackGridRequest($event)"
+                (getParams)="getParamsRequest()"
+                [height]="'200px'"
+                (cellDoubleClicked)="clickRequestField($event)"
+    ></grid-table>
+    <button class="btn btn-blue my-2 mr-2" (click)="onAddRowRequest()">
+      <i class="fa fa-plus"></i>
+      Thêm
+    </button>
+    <button class="btn btn-blue my-2 mr-2" (click)="onDeleteRowRequest()">
+      <i class="fa fa-trash-o"></i>
+      Xóa
+    </button>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Các thông tin cần thiết
+    </div>
+    <grid-table [fieldGrid]="fieldGridInfo"
+                (callbackGrid)="callbackGridInfo($event)"
+                (getParams)="getParamsInfo()"
+                [height]="'200px'"
+                [frameworkComponents]="frameworkComponents"
+    ></grid-table>
+    <button class="btn btn-blue my-2 mr-2" (click)="onAddRowInfo()">
+      <i class="fa fa-plus"></i>
+      Thêm
+    </button>
+    <button class="btn btn-blue my-2 mr-2" (click)="onDelRowInfo()">
+      <i class="fa fa-trash-o"></i>
+      Xóa
+    </button>
+  </div>
+
+  <div class="form-group span-140">
+    <div class="input-group">
+      <span class="input-group-addon">Nguyên nhân khiếu nại</span>
+      <textarea class="form-control textarea-fix" formControlName="reasonComplain"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group span-140">
+    <div class="input-group">
+      <span class="input-group-addon">Hướng giải quyết</span>
+      <textarea class="form-control textarea-fix" formControlName="solution"></textarea>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Tiến trình giải quyết
+    </div>
+    <grid-table [fieldGrid]="fieldGridProcess"
+                (callbackGrid)="callbackGridProcess($event)"
+                (getParams)="getParamsProcess()"
+                [height]="'200px'"
+                [frameworkComponents]="frameworkComponents"
+    ></grid-table>
+    <button class="btn btn-blue my-2 mr-2" (click)="onAddRowProcess()">
+      <i class="fa fa-plus"></i>
+      Thêm
+    </button>
+    <button class="btn btn-blue my-2 mr-2" (click)="onDelRowProcess()">
+      <i class="fa fa-trash-o"></i>
+      Xóa
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Mức độ nghiêm trọng</span>
+          <select class="form-control" formControlName="severity"></select>
+        </div>
+      </div>
+      <div class="form-group span-130">
+        <div class="input-group">
+          <span class="input-group-addon">Trách nhiệm</span>
+          <select class="form-control" formControlName="responsibility"></select>
+        </div>
+      </div>
+      <div class="form-group span-130">
+        <div class="input-group">
+          <span class="input-group-addon">Lý do</span>
+          <textarea class="form-control textarea-fix" formControlName="reason"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 form-group">
+          <checkbox text="Trường hợp non-Fix" formControlName="nonFix"></checkbox>
+        </div>
+        <div class="col-md-4 form-group">
+          <checkbox text="Khiếu nại lặp lại" formControlName="complainRepeat"></checkbox>
+        </div>
+        <div class="col-md-4 form-group">
+          <checkbox text="Áp dụng thiện chí" formControlName="supportGoodwill"></checkbox>
+        </div>
+      </div>
+      <div class="form-group span-130">
+        <tmss-datepicker text="Ngày đề xuất" formControlName="dateSuggest"></tmss-datepicker>
+      </div>
+      <div class="form-group span-130">
+        <tmss-datepicker text="Ngày phê duyệt" formControlName="dateApproved"></tmss-datepicker>
+      </div>
+      <div class="form-group span-130">
+        <div class="input-group">
+          <span class="input-group-addon">Chi tiết thiện chí</span>
+          <textarea class="form-control textarea-fix" formControlName="detailGoodwill"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<choose-supplier-modal #chooseSupplierModal (dataOutput)="addData($event)"></choose-supplier-modal>
+
+<request-modal #requestModal (requestData)="requestData($event)"></request-modal>
+<parts-modal #partsModal (partsData)="requestData($event)"></parts-modal>
+
+<!--<search-data-grid-modal #requestModal-->
+<!--[apiCall]="searchPartsApi.bind(this)" [fieldGrid]="fieldGridSearchPartGrid"-->
+<!--(close)="setDataToRow($event)">-->
+<!--</search-data-grid-modal>-->
+

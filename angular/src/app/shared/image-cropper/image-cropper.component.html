@@ -1,0 +1,7 @@
+<div>
+  <a (click)="openCropperModal()">
+    <ng-content></ng-content>
+  </a>
+  <image-cropper-modal #cropperModal (saved)="onSaved($event)" [settings]="settings"></image-cropper-modal>
+  <input #inputFile type="file" (change)="open($event.target)" accept="image/*" class="ghost" />
+</div>

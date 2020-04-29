@@ -1,0 +1,141 @@
+<div>
+  <form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Thông tin tìm kiếm
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Đại lí</span>
+              <select class="form-control" formControlName="agency"></select>
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+              <tmss-datepicker text="Từ ngày" formControlName="dayIn"></tmss-datepicker>
+          </div>
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số</span>
+              <input type="text" class="form-control" formControlName="licensePlate">
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <input type="text" class="form-control" formControlName="serviceAdvisor">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Trạng thái</span>
+              <select class="form-control" formControlName="status"></select>
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+              <tmss-datepicker text="Đến ngày" formControlName="dayOut"></tmss-datepicker>
+          </div>
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">LSC</span>
+              <input type="text" class="form-control" formControlName="lcs">
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">VIN</span>
+              <input type="text" class="form-control" formControlName="vin">
+            </div>
+          </div>
+        </div>
+          <button class="btn btn-blue mr-2" type="button" (click)="inputData()"><i class="fa fa-search"></i> Tìm kiếm
+          </button>
+          <button class="btn btn-blue mr-2" type="button"><i class="fa fa-refresh"></i> Làm mới</button>
+          <button class="btn btn-blue mr-2" type="button">Xuất Excel</button>
+          <button class="btn btn-blue mr-2" type="button">?</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Thông tin xe
+        </div>
+        <grid-table [fieldGrid]="fieldGrid"
+                    [showPagination]="false"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+        <div class="panel-footer">Lần SC tiếp theo(sau 3 ngày)</div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <info-customer [detailData]="selectRowGrid">
+      </info-customer>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Thông tin tham khảo
+        </div>
+        <div class="panel-body">
+          <info-refer [detailData]="selectRowGrid"></info-refer>
+          <div class="tabtable">
+            <ul class="nav nav-tabs tab-space-3 tab-blue">
+              <li *ngFor="let item of tabs"
+                  [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+                <a data-toggle="tab" class="tab-item text-capitalize">
+                  {{item}}
+                </a>
+              </li>
+            </ul>
+            <div class="mt-4">
+              <repair-request [tabDisplay]="selectedTab === tabs[0]"></repair-request>
+              <work-done [tabDisplay]="selectedTab === tabs[1]" [detailData]="selectRowGrid"></work-done>
+              <accessary [tabDisplay]="selectedTab === tabs[2]"></accessary>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <info-report></info-report>
+  <contact-customer></contact-customer>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="input-group">
+        <span>Khách hàng sửa chữa lại</span>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" value="option1"> Có
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="inlineRadioOptions" value="option2"> Không
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <button class="btn btn-blue mr-1" type="button">Lưu</button>
+      <button class="btn btn-blue mr-1" type="button"  (click)="nodeContact.open()">Ghi chú</button>
+      <button class="btn btn-blue mr-1" type="button" (click)="updateContactModal.open(selectRowGrid)"
+              [disabled]="!selectRowGrid">lịch sử liên hệ
+      </button>
+      <button class="btn btn-blue mr-1" type="button">Xuất BC Claim</button>
+      <button class="btn btn-blue mr-1" type="button" (click)="vocCode.open(selectRowGrid)">Mã VOC</button>
+    </div>
+    <div class="col-md-7">
+      <checkbox text="Xem xét và trả lời khách hàng"></checkbox>
+      <checkbox text="rút kinh nghiệm trong những lần sau cải thiện. Đề nghị không gọi cho KH"></checkbox>
+      <checkbox text="Gửi thông tin tiến trình giải quyết khiếu nại của KH cho phòng cs trong 24h"></checkbox>
+    </div>
+  </div>
+</div>
+<contact-history #updateContactModal (close)="refresh()"></contact-history>
+<node-info #nodeContact (close)="refresh()"></node-info>
+<voc-code #vocCode (close)="refresh()"></voc-code>

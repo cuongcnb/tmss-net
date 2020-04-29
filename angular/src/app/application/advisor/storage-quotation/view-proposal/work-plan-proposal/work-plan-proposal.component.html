@@ -1,0 +1,184 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" class="row">
+  <div class="col-sm-5">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i> Yêu cầu khác
+        <div class="panel-tools">
+          <button type="button" class="fa btn-collapse"
+                  [ngClass]="isCollapsedOther ? 'fa-chevron-down' : 'fa-chevron-right' "
+                  (click)="isCollapsedOther = !isCollapsedOther"
+                  [attr.aria-expanded]="!isCollapsedOther" aria-controls="collapseEventOther">
+          </button>
+        </div>
+      </div>
+      <div id="collapseEventOther"
+           [collapse]="isCollapsedOther">
+
+        <div class="panel-body">
+          <div class="row pt-1">
+            <div class="col-sm-3">
+              <checkbox text="KH đợi" formControlName="isCusWait"></checkbox>
+
+            </div>
+            <div class="col-sm-3">
+              <checkbox text="Rửa xe" formControlName="isCarWash"></checkbox>
+
+            </div>
+            <div class="col-sm-3">
+              <checkbox text="Lấy phụ tùng" formControlName="isTakeParts"></checkbox>
+
+            </div>
+            <div class="col-sm-3">
+              <checkbox text="Ưu tiên" formControlName="isPriority"></checkbox>
+
+            </div>
+          </div>
+          <div class="form-group pt-3" hasError="qcLevel">
+            <label class="required">Cấp QC</label>
+            <div class="row">
+              <div class="col-sm-4">
+                <input type="radio" formControlName="qcLevel" [value]="1"> 1
+              </div>
+              <div class="col-sm-4">
+                <input type="radio" formControlName="qcLevel" [value]="2"> 2
+              </div>
+              <div class="col-sm-4">
+                <input type="radio" formControlName="qcLevel" [value]="3"> 3
+              </div>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc nhập Cấp QC</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-7">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Kế hoạch công việc
+        <div class="panel-tools">
+          <button type="button" class="fa btn-collapse" [ngClass]="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'"
+                  (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEvent">
+          </button>
+        </div>
+      </div>
+      <div id="collapseEvent" [collapse]="isCollapsed">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <tmss-datepicker data-toggle="tooltip" data-placement="bottom" title="Dự kiến sữa chữa"
+                               formControlName="startRepairTime" dateInputFormat="DD/MM/YYYY HH:mm" addOnMinWidth="88px"
+                               text="DK sửa chữa" [ignoredCalender]="true"></tmss-datepicker>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" hasError="estimateTime">
+                <div class="input-group">
+                  <span data-toggle="tooltip" data-placement="bottom" title="Thời gian sữa chữa"
+                        class="input-group-addon" addonWidth="88px">TGSC</span>
+                  <input type="text" class="required text-right form-control" formControlName="estimateTime">
+                  <span class="text-left input-group-addon" addonWidth="1px">-</span>
+                  <select addonWidth="70px" class="form-control" formControlName="typeEstimateTime">
+                    <option [ngValue]="0">Phút</option>
+                    <option [ngValue]="1">Giờ</option>
+                    <option [ngValue]="2">Ngày</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bắt buộc nhập</div>
+                  <div *ifError="'numberFormat'">Giá trị phải là số nguyên dương</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <tmss-datepicker data-toggle="tooltip" data-placement="bottom" title="Dự kiến rửa xe"
+                               formControlName="startCarWashTime" dateInputFormat="DD/MM/YYYY HH:mm" addOnMinWidth="88px"
+                               text="DK rửa xe" [ignoredCalender]="true"></tmss-datepicker>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <span data-toggle="tooltip" data-placement="bottom" title="Dự kiến giao xe"
+                        class="input-group-addon" addonWidth="88px">DK giao xe</span>
+                  <input type="text" class="form-control" readonly formControlName="carDeliveryTime">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i> Thành tiền
+        <div class="panel-tools">
+          <button type="button" class="fa btn-collapse"
+                  [ngClass]="isCollapsedMoney ? 'fa-chevron-right' : 'fa-chevron-down'"
+                  (click)="isCollapsedMoney = !isCollapsedMoney"
+                  [attr.aria-expanded]="!isCollapsedMoney" aria-controls="collapseEventMoney">
+          </button>
+        </div>
+      </div>
+      <div id="collapseEventMoney"
+           [collapse]="isCollapsedMoney">
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="108px">T.Tiền trước thuế</span>
+                <input class="form-control text-right"
+                       [value]="moneyFormat((repairMoney?.beforeTax||0) + (partMoney?.beforeTax||0))"
+                       readonly>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="108px">Giảm giá</span>
+                <input class="form-control text-right"
+                       [value]="moneyFormat((repairMoney?.discount||0) + (partMoney?.discount || 0))"
+                       readonly>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="108px">Chiết khấu theo chiến dịch</span>
+                <input class="form-control text-right" [value]="moneyFormat(campaignMoney)" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="108px">Tổng thuế</span>
+                <input class="form-control text-right"
+                       [value]="moneyFormat((repairMoney?.taxRate||0) + (partMoney?.taxRate || 0))" readonly>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="108px">Tổng tiền</span>
+                <input class="form-control text-right"
+                       [value]="moneyFormat((repairMoney?.total||0) + (partMoney?.total || 0) - campaignMoney)"
+                       readonly>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="ghost" #submitBtn></button>
+</form>
+<working-plan #workingPlan (close)="setValue($event)" [advisors]="advisors"></working-plan>

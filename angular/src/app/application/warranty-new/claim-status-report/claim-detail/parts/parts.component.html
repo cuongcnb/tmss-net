@@ -1,0 +1,124 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="rows">
+    <div class="inline-block no-border-right">
+      Pay Code
+    </div>
+    <div class="inline-block w-5 no-border-right">
+      O.F.P
+    </div>
+    <div class="inline-block w-10 no-border-right">
+      Local
+    </div>
+    <div class="inline-block w-15 no-border-right">
+      Part No
+    </div>
+    <div class="inline-block">
+      Part Name
+    </div>
+    <div class="inline-block no-border-right">
+      Qty
+    </div>
+    <div class="inline-block no-border-right">
+      Amount
+    </div>
+    <div class="inline-block w-10 no-border-right">
+      <button type="button" class="btn btn-link p-0" (click)="addParts()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="rows" *ngIf="!partsArray.controls.length">
+    <div class="inline-block no-border-right" >
+      <select *ngIf="sourceTable=='STWC'" class="form-control"
+              disabled></select>
+    </div>
+    <div class="inline-block w-5 pt-1 no-border-right">
+      <div class="inline-checkbox">
+        <checkbox ngClass="checkbox-claim" [isDisabled]="true"></checkbox>
+      </div>
+    </div>
+    <div class="inline-block w-10 no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block w-15 no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <!--<div class="inline-block w-25">-->
+      <!--<input class="form-control" disabled>-->
+    <!--</div>-->
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block w-10 no-border-right">
+    </div>
+  </div>
+  <ng-container *ngIf="partsArray.controls.length" formArrayName="warrantyClaimPartsDTOs">
+    <ng-container
+      *ngFor="let val of partsArray.controls; let i = index">
+      <div class="rows" formGroupName="{{i}}">
+        <div class="ng-container">
+          <div class="inline-block no-border-right">
+            <select *ngIf="isTMV" class="form-control" formControlName="payCode">
+              <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">{{payCode.paycode}}</option>
+            </select>
+          </div>
+          <div class="inline-block w-5 pt-1 no-border-right">
+            <div class="inline-checkbox">
+              <checkbox ngClass="checkbox-claim" formControlName="opeMFlagCtl" (click)="this.isCheck = true;"></checkbox>
+            </div>
+          </div>
+          <div class=" inline-block w-10 no-border-right">
+            <input class="form-control" formControlName="localFlag" readonly>
+          </div>
+          <div class=" inline-block w-15 no-border-right" hasError="partsCode">
+            <input class="form-control" formControlName="partsCode" (dblclick)="searchParts($event,i)"
+                   maxlength="15">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'partsCode'">Mã phụ tùng sai</div>
+              <div *ifError="'required'">Bắt buộc</div>
+            </div>
+          </div>
+          <div class=" inline-block no-border-right">
+            <input class="form-control" formControlName="partsNameVn" readonly>
+          </div>
+          <!--<div class="inline-block w-25">-->
+            <!--<input class="form-control" formControlName="partsName" readonly>-->
+          <!--</div>-->
+          <div class="inline-block no-border-right" hasError="qty">
+            <input class="form-control" formControlName="qty" maxlength="3">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Sai định dạng</div>
+              <div *ifError="'required'">Bắt buộc</div>
+            </div>
+          </div>
+          <div class="inline-block no-border-right">
+            <warranty-amount-input formControlName="amount"
+                                   [isReadOnly]="true"
+                                   [showThousandOnly]="false"
+                                   [hideDecimal]="true"
+            ></warranty-amount-input>
+            <!--<input class="form-control" formControlName="amount" readonly>-->
+          </div>
+          <div class="inline-block w-10 no-border-right">
+            <button type="button" class="btn btn-link p-0">
+              <i class="fa fa-trash-o" (click)="deleteParts(i)"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <button class="ghost" #submitBtn></button>
+</form>
+<search-data-grid-modal #findPartsModal
+                        [headerText]="'List Parts'"
+                        [fieldGrid]="fieldParts"
+                        [apiCall]="apiPartsCall.bind(this)"
+                        (close)="setPartsDataToRow($event)"
+></search-data-grid-modal>

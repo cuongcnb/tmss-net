@@ -1,0 +1,491 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined"
+  [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Chi tiết thông tin sửa chữa</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <ng-container *ngIf="showAllTab()">
+              <div class="row">
+                <div class="form-group col-sm-2 mw-63">
+                  <div class="input-group">
+                    <span class="input-group-addon">CVDV</span>
+                    <input [disabled]="disabled_form" class="form-control" placeholder="Admin"
+                      formControlName="empName">
+
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-78">
+                  <div class="input-group">
+                    <span class="input-group-addon">Biển số xe</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="registerno">
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-78">
+                  <div class="input-group">
+                    <span class="input-group-addon">Số RO</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="repairorderno">
+                  </div>
+                </div>
+
+                <div class="form-group mw-63 col-sm-3">
+                  <div class="input-group">
+                    <span class="input-group-addon">DKGX</span>
+                    <input [disabled]="disabled_form" disabled class="form-control"
+                      value="{{dataPlan ? dataFormatService.parseTimestampToFullDate( dataPlan.cardelivery) : null}}">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group col-sm-2 mw-63">
+                  <div class="input-group">
+                    <span class="input-group-addon">Kiểu xe</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="cmName">
+
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-78">
+                  <div class="input-group">
+                    <span class="input-group-addon">Tên KH</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="cusName">
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-78">
+                  <div class="input-group">
+                    <span class="input-group-addon">Điện thoại</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="mobil">
+                  </div>
+                </div>
+                <div class="form-group col-sm-3 mw-63">
+                  <div class="input-group">
+                    <span class="input-group-addon">Số km</span>
+                    <input [disabled]="disabled_form" class="form-control" formControlName="km">
+                  </div>
+                </div>
+
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i class="fa fa-external-link-square"></i>
+                  Yêu cầu khác
+                  <div class="panel-tools">
+                    <button type="button" class="fa btn-collapse"
+                      [ngClass]="isCollapsedOther ? 'fa-chevron-right' : 'fa-chevron-down'"
+                      (click)="isCollapsedOther = !isCollapsedOther" [attr.aria-expanded]="!isCollapsedOther"
+                      aria-controls="collapseEventOther" [disabled]="disabled_form">
+                    </button>
+                  </div>
+                </div>
+                <div id="collapseEventOther" [collapse]="isCollapsedOther">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-1">
+                        <checkbox text="KH đợi" formControlName="isCusWait" isDisabled=true
+                          textClassName='text-bold-disable'></checkbox>
+                      </div>
+                      <div class="col-sm-1">
+                        <checkbox text="Rửa xe" formControlName="isCarWash" isDisabled=true
+                          textClassName='text-bold-disable'></checkbox>
+                      </div>
+                      <div class="col-sm-2 width-12">
+                        <checkbox text="Lấy phụ tùng" formControlName="isTakeParts" isDisabled=true
+                          textClassName='text-bold-disable'></checkbox>
+                      </div>
+                      <div class="col-sm-1 mr-80">
+                        <checkbox class="float-left" text="Xe ưu tiên" formControlName="isPriority" isDisabled=true
+                          textClassName='text-bold-disable'></checkbox>
+                      </div>
+                      <div class="form-inline" hasError="qcLevel">
+                        <label class="radio-inline col-sm-1 mt-7 required text-bold">Cấp QC</label>
+                        <div class="col-sm-1 mt-2">
+                          <input [attr.disabled]="disabled_form ? '' : null" type="radio" formControlName="qcLevel"
+                            [value]="1" class="radio-inline"> 1
+                        </div>
+                        <div class="col-sm-1 mt-2">
+                          <input [attr.disabled]="disabled_form ? '' : null" type="radio" formControlName="qcLevel"
+                            [value]="2" class="radio-inline"> 2
+                        </div>
+                        <div class="col-sm-1 mt-2">
+                          <input [attr.disabled]="disabled_form ? '' : null" type="radio" formControlName="qcLevel"
+                            [value]="3" class="radio-inline"> 3
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc nhập Cấp QC</div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div style="width: 50%; display: inline-block; padding-right: 10px;">
+                  <grid-table [fieldGrid]="jobFieldGrid" [showPagination]="false"
+                    (callbackGrid)="callbackGridJob($event)" [height]="'121px'">
+                  </grid-table>
+                </div>
+
+                <div style="width: 50% ; display: inline-block; padding-left: 10px;">
+                  <grid-table [fieldGrid]="partFieldGrid" [showPagination]="false"
+                    (callbackGrid)="callbackGridPart($event)" [height]="'121px'">
+                  </grid-table>
+                </div>
+              </div>
+
+
+            </ng-container>
+            <div class="panel panel-default" *ngIf="bpGroups && (changePlanToWorking || showAllTab())">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Khoang sửa chữa
+                <div class="panel-tools">
+                  <button type="button" class="fa btn-collapse"
+                    [ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+                    (click)="isCollapsedWS = !isCollapsedWS" [attr.aria-expanded]="!isCollapsedWS"
+                    aria-controls="collapseEventOther">
+                  </button>
+                </div>
+              </div>
+              <div id="isCollapsedWS" [collapse]="isCollapsedWS">
+                <div class="panel-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Khoang</th>
+                        <th addonWidth="100px">Tổ nhóm</th>
+                        <th addonWidth="150px">TG bắt đầu (kế hoạch)</th>
+                        <th addonWidth="150px">TG kết thúc (kế hoạch)</th>
+                        <th addonWidth="150px">TG bắt đầu (thực tế)</th>
+                        <th addonWidth="150px">TG kết thúc (thực tế)</th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td title="{{getWshopName()}}">
+
+                          <select class="form-control" formControlName="wshopId" [(ngModel)]="wshop.wshopId"
+                            [attr.disabled]="(disabled_form) ? '' : null">
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let shop of listWhopFree" [ngValue]="shop.wshopId" title="{{shop.wsCode}}"
+                              [ngClass]="{'busy': shop.busy}">
+                              {{shop.wsCode}}
+                            </option>
+                          </select>
+                        </td>
+
+                        <td>
+                          <select class="form-control" formControlName="bpGroupId"
+                            [attr.disabled]="(disabled_form) ? '' : null">
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let bpGroup of listBpGroups" [ngValue]="bpGroup.id">
+                              {{bpGroup.groupCode}}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" [addOnMinWidth]="'135px'" formControlName="pfromTime"
+                            [disable]="disabled_form || state === ProgressState.actual"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="false" [addOnMinWidth]="'135px'" formControlName="ptoTime"
+                            [disable]="disabled_form || state === ProgressState.actual"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" formControlName="afromTime"
+                            [disable]="disabled_form || state === ProgressState.actual"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" formControlName="atoTime" [disable]="disabled_form"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <th>
+                          <button class="btn btn-blue" (click)="startJob()"
+                            [disabled]="bpGroups.afromTime || disabled_form">Bắt đầu</button>
+                        </th>
+                        <th>
+                          <button class="btn btn-blue" (click)="finishJob()"
+                            [disabled]="!bpGroups.afromTime || (bpGroups.afromTime && bpGroups.atoTime) || disabled_form">Kết
+                            thúc</button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-blue float-left ml-2" [disabled]="disabled_form" *ngIf="state === ProgressState.actual"
+                    (click)="changeWshopAndBpGroup()">Thay đổi khoang/tổ nhóm
+                  </button>
+                  <button class="btn btn-blue float-right mr-2" [disabled]="disabled_form || bpGroups.afromTime"
+                    (click)="changePlanDs()">Lưu kế hoạch sửa chữa
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default" *ngIf="bpGroups && completeWorking">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Khoang sửa chữa
+                <div class="panel-tools">
+                  <button type="button" class="fa btn-collapse"
+                    [ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+                    (click)="isCollapsedWS = !isCollapsedWS" [attr.aria-expanded]="!isCollapsedWS"
+                    aria-controls="collapseEventOther">
+                  </button>
+                </div>
+              </div>
+              <div id="isCollapsedWS" [collapse]="isCollapsedWS">
+                <div class="panel-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Khoang</th>
+                        <th addonWidth="100px">Tổ nhóm</th>
+                        <th addonWidth="150px">TG bắt đầu (kế hoạch)</th>
+                        <th addonWidth="150px">TG kết thúc (kế hoạch)</th>
+                        <th addonWidth="150px">TG bắt đầu (thực tế)</th>
+                        <th addonWidth="150px">TG kết thúc (thực tế)</th>
+                        <th>
+                        </th>
+                        <th>
+                        </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td title="{{getWshopName()}}">
+
+                          <select class="form-control" formControlName="wshopId" [(ngModel)]="wshop.wshopId" disabled>
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let shop of listWhopFree" [ngValue]="shop.wshopId" title="{{shop.wsCode}}">
+                              {{shop.wsCode}}
+                            </option>
+                          </select>
+                        </td>
+
+                        <td>
+                          <select class="form-control" formControlName="bpGroupId" disabled>
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let bpGroup of listBpGroups" [ngValue]="bpGroup.id">
+                              {{bpGroup.groupCode}}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          {{ form.value.pfromTime | date: 'dd/MM/yyyy HH:mm' }}
+                          <!-- <tmss-datepicker [hasTimepicker]="true"
+                            [addOnMinWidth]="'135px'"
+                            formControlName="pfromTime"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker> -->
+                        </td>
+                        <td>
+                          {{ form.value.ptoTime | date: 'dd/MM/yyyy HH:mm' }}
+                          <!-- <tmss-datepicker [hasTimepicker]="false"
+                          [addOnMinWidth]="'135px'"
+                          formControlName="ptoTime"
+                          [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker> -->
+                        </td>
+                        <td>
+                          {{ form.value.afromTime | date: 'dd/MM/yyyy HH:mm' }}
+                          <!-- <tmss-datepicker [hasTimepicker]="true"
+                            formControlName="afromTime"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker> -->
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" formControlName="atoTime"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <th>
+                          <button class="btn btn-blue" (click)="startJob()"
+                            [disabled]="bpGroups.afromTime || disabled_form">Bắt đầu</button>
+                        </th>
+                        <th>
+                          <button class="btn btn-blue" (click)="finishJob()"
+                            [disabled]="!bpGroups.afromTime || (bpGroups.afromTime && bpGroups.atoTime) || disabled_form">Kết
+                            thúc</button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- <button class="btn btn-blue float-right mr-2"
+                    [disabled]="disabled_form"
+                    (click)="changePlanDs()">Lưu thông tin
+                  </button> -->
+                </div>
+              </div>
+            </div>
+
+
+            <!--dừng công việc-->
+            <div class="panel panel-default" *ngIf="showAllTab() || stopWorking">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Dừng sửa chữa
+                <div class="panel-tools">
+                  <button type="button" class="fa btn-collapse"
+                    [ngClass]="isCollapsedFollow ? 'fa-chevron-right' : 'fa-chevron-down'"
+                    (click)="isCollapsedFollow = !isCollapsedFollow" [attr.aria-expanded]="!isCollapsedFollow"
+                    aria-controls="collapseEventOther">
+                  </button>
+                </div>
+              </div>
+              <div id="isCollapsedFollow" [collapse]="isCollapsedFollow">
+                <form *ngIf="reasonForm" [formGroup]="reasonForm" novalidate autocomplete="off" class="row p-2">
+                  <!-- <div class="col-sm-6">
+                    <h5 class="mt-1">Lý do dừng</h5>
+                    <checkbox-list *ngIf="reasons" formControlName="pendingReasonId"
+                                   [dataList]="reasons"></checkbox-list>
+                  </div> -->
+                  <div class="col-sm-4 ml-2px">
+                    <checkbox text="Dừng giải phóng khoang" textClassName="text-bold" formControlName="isRelease"
+                      [rightCheckbox]=true [labelWidth]="'155px'" [isDisabled]="disabled_form"></checkbox>
+                  </div>
+                  <div class="col-sm-8 row">
+                    <span class="radio-inline text-bold col-sm-3 stop-time">Thời gian bắt đầu dừng:</span>
+                    <tmss-datepicker [hasTimepicker]="true" class="col-sm-4" formControlName="fromDateTime"
+                      [disable]="disabled_form" [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                  </div>
+
+                  <div id="isCollapsedFollow" [collapse]="isCollapsedFollow">
+                    <div class="row p-2">
+                      <div class="col-sm-12 ml-14">
+                        <h5 class="text-bold col-sm-2 w-10-percent mt-6px">Lý do dừng</h5>
+                        <checkbox-list *ngIf="reasons" formControlName="pendingReasonType" [textClassName]="'col-sm-2'"
+                          [isDisabled]="disabled_form" [dataList]="reasons"></checkbox-list>
+                      </div>
+
+                      <div class="col-sm-12 form-group mt-3">
+                        <div class="input-group">
+                          <span class="input-group-addon">Ghi chú</span>
+                          <textarea class="form-control" formControlName="pendingReasonNote"
+                            [attr.disabled]="disabled_form ? '' : null"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="panel-footer text-right">
+                <button class="btn btn-blue mr-10 " (click)="stopJob()" [disabled]="disabled_form">Dừng SC</button>
+
+                <button class="btn btn-blue float-right mr-2"
+                  [disabled]="[ProgressState.complete, ProgressState.autoAppointment, ProgressState.autoSuggest].includes(state) || disabled_form"
+                  *ngIf="!stopPosition" (click)="jobAriseModal.open(val, this.form.value.wshopId)">Công việc PS
+                </button>
+              </div>
+            </div>
+
+            <div class="panel panel-default" *ngIf="bpGroups && continueWorking">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Tiếp tục công việc
+                <div class="panel-tools">
+                  <button type="button" class="fa btn-collapse"
+                    [ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+                    (click)="isCollapsedWS = !isCollapsedWS" [attr.aria-expanded]="!isCollapsedWS"
+                    aria-controls="collapseEventOther">
+                  </button>
+                </div>
+              </div>
+              <div id="isCollapsedWS" [collapse]="isCollapsedWS">
+                <div class="panel-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Khoang</th>
+                        <th addonWidth="100px">Tổ nhóm</th>
+                        <th addonWidth="150px">TG bắt đầu (kế hoạch)</th>
+                        <th addonWidth="150px">TG kết thúc (kế hoạch)</th>
+                        <th addonWidth="150px">TG tiếp tục</th>
+                        <th>
+                        </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td title="{{getWshopName()}}">
+
+                          <select class="form-control" formControlName="wshopId" [(ngModel)]="wshop.wshopId"
+                            [attr.disabled]="state === ProgressState.stopInside ? '' : null">
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let shop of listWhopFree" [ngValue]="shop.wshopId" title="{{shop.wsCode}}">
+                              {{shop.wsCode}}
+                            </option>
+                          </select>
+                        </td>
+
+                        <td>
+                          <select class="form-control" formControlName="bpGroupId">
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let bpGroup of listBpGroups" [ngValue]="bpGroup.id">
+                              {{bpGroup.groupCode}}
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" [addOnMinWidth]="'135px'" [disable]="true"
+                            formControlName="pfromTime" [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="false" [addOnMinWidth]="'135px'" formControlName="ptoTime"
+                            [disable]="true" [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <td>
+                          <tmss-datepicker [hasTimepicker]="true" formControlName="new_afromTime"
+                            [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+                        </td>
+                        <th>
+                          <button class="btn btn-blue" (click)="continueJob()">Tiếp tục</button>
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- <div class="modal fade" id="warningEmployeeRepairModal" tabindex="-1" role="dialog" aria-labelledby="warningEmployeeRepairModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Thông báo</h5>
+      </div>
+      <div class="modal-body">
+        {{ messeage_notification }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<job-stop-modal #jobStopModal (choose)="onChoose($event)"></job-stop-modal>
+<job-arise-modal #jobAriseModal></job-arise-modal>

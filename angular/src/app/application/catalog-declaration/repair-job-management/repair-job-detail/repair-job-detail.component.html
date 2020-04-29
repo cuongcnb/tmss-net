@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Gói Công Việc
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRepairJobDetailCombo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRepairJobDetailCombo" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="jobGroupField"
+                (callbackGrid)="callbackGridJG($event)"
+                (getParams)="getParamsJG()"
+                [showPagination]="false"
+                [height]="'200px'"
+    ></grid-table>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-blue mr-2"
+                (click)="jobGroupDeclaration.open(jobGroupSelected, repairJobList)"
+                [disabled]="!jobGroupSelected || jobGroupSelected.length < 1 || jobGroupSelected?.dlrId !== currentDlrId">
+          <i class="fa fa-plus"></i> Sửa
+        </button>
+        <button type="button" class="btn btn-blue" (click)="onBtnDeleteJobGroup()"
+                [disabled]="!jobGroupSelected || jobGroupSelected.length < 1 || jobGroupSelected?.dlrId !== currentDlrId">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách công việc
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRepairJobDetailList" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRepairJobDetailList" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="repairJobField"
+                (callbackGrid)="callbackGridRJ($event)"
+                (getParams)="getParamsRJ()"
+                [footerData]="repairJobFooter"
+                [showPagination]="false"
+                [height]="'200px'"
+    ></grid-table>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRepairJobDetailPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRepairJobDetailPart" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="partField"
+                (callbackGrid)="callbackGridParts($event)"
+                [footerData]="partFooter"
+                [showPagination]="false"
+                [height]="'200px'"
+    ></grid-table>
+  </div>
+</div>
+<job-group-declaration (closeModal)="getWorkGroupByModel()" #jobGroupDeclaration></job-group-declaration>

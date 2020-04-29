@@ -1,0 +1,80 @@
+<div class="modal fade" bsModal #vehicleArrivalDatePickerModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <label>{{headerName}}</label>
+          <div class="form-group" *ngIf="fieldName.indexOf('Date') >= 0">
+            <tmss-datepicker-sale formControlName="date"></tmss-datepicker-sale>
+          </div>
+          <div class="form-group timepicker" *ngIf="fieldName.indexOf('Time') >= 0">
+            <input type="text" formControlName="hours"> : <input type="text" formControlName="minutes">
+            <div hasError="minutes">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormat'">Minutes must be a number</div>
+                <div *ifError="'max'">Minutes must be a number between 0 and 59</div>
+              </div>
+            </div>
+            <div hasError="hours">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormat'">Hours must be a number</div>
+                <div *ifError="'max'">Hours must be a number between 0 and 23</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.dealerRequestColor.fieldName">
+            <select class="form-control" formControlName="colorRequest">
+              <option value=""></option>
+              <option *ngFor="let color of colorList" [ngValue]="color.colorId">{{color.code}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.paymentBy.fieldName">
+            <select class="form-control" formControlName="paymentBy">
+              <option value="TFS">TFS</option>
+              <option value="Dealer">Dealer</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.dlrDeliveryAt.fieldName">
+            <select class="form-control" formControlName="dlrDeliveryAt">
+              <option value=""></option>
+              <option *ngFor="let deliveryAt of deliveryAtArr" [ngValue]="deliveryAt.id">{{deliveryAt.address}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.selfDrivingTripRequest.fieldName">
+            <select class="form-control" formControlName="selfDrivingTripRequest">
+<!--              <option value=""></option>-->
+              <option *ngFor="let selfDrivingTripRequest of selfDrivingTripRequestArr"
+                      [value]="selfDrivingTripRequest.value">{{selfDrivingTripRequest.value}}</option>
+            </select>
+          </div>
+          <!--          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.selfDrivingTripRequest.fieldName"-->
+          <!--               hasError="selfDrivingTripRequest">-->
+          <!--            <input type="text" class="form-control" formControlName="selfDrivingTripRequest">-->
+          <!--            <div class="error-messages" errorMessage>-->
+          <!--              <div *ifError="'numberFormat'">Giá trị bạn nhập phải là số</div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.dlrRemark.fieldName">
+            <textarea type="text" class="form-control resize-vertical" formControlName="dlrRemark" rows="4"></textarea>
+          </div>
+
+          <div class="form-group" *ngIf="fieldName === vehicleArrivalDatepicker.documentArrivalRemark.fieldName">
+            <textarea type="text" class="form-control resize-vertical" formControlName="documentArrivalRemark"
+                      rows="4"></textarea>
+          </div>
+          <div class="mt-3 text-right">
+            <button type="submit" class="btn btn-blue mr-2" (click)="confirm()">
+              <i class="fa fa-check"></i> OK
+            </button>
+            <button type="submit" class="btn btn-blue mr-2" *ngIf="fieldName.indexOf('Date') >= 0" (click)="delete()">
+              <i class="fa fa-times"></i> Delete
+            </button>
+            <button type="button" class="btn btn-blue" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

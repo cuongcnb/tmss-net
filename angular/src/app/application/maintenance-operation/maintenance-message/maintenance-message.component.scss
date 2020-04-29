@@ -1,0 +1,19 @@
+::ng-deep {
+  .input-mtms {
+    .input-group-addon:first-child {
+      min-width: 80px !important;
+    }
+  }
+}
+
+fieldset {
+  border: 1px solid silver;
+  padding: 1rem;
+
+  legend {
+    width: auto;
+    margin-bottom: 5px;
+    font-size: 15px;
+    border: none;
+  }
+}

@@ -1,0 +1,82 @@
+
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form && !loadingData" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật tổ nhóm': 'Thêm mới tổ nhóm' }}</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group span-110" hasError="groupCode">
+            <div class="input-group">
+              <span class="input-group-addon">Mã tổ</span>
+              <input type="text" formControlName="groupCode" class="form-control required">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+              <div *ifError="'required'">Mã tổ là bắt buộc</div>
+              <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+            </div>
+          </div>
+          <div class="form-group span-110" hasError="groupName">
+            <div class="input-group">
+              <span class="input-group-addon text-center">Tên tổ</span>
+              <input type="text" formControlName="groupName" class="form-control">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+              <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+            </div>
+          </div>
+          <div class="form-group span-110" hasError="description">
+            <div class="input-group">
+              <span class="input-group-addon text-center">Mô tả</span>
+              <input type="text" formControlName="groupDesc" class="form-control">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+            </div>
+          </div>
+
+          <div class="form-group span-110" hasError="ordering">
+            <div class="input-group">
+              <span class="input-group-addon text-center">Thứ tự</span>
+              <input type="text" formControlName="ordering" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group span-110" id="selecteEmployees">
+            <multi-checkbox-select text="Chọn nhân viên"
+                                    placeHolder="Chọn nhân viên"
+                                    [data]="employeeData"
+                                    [id]="'id'"
+                                    [content]="'empName'"
+                                    formControlName="empIds"
+                                    [maxHeight]="200"
+            ></multi-checkbox-select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal #searchDivision [headerText]="'Chọn tổ phụ trách'"
+                        (close)="patchDivision($event)"
+                        [fieldGrid]="nestGridField"
+                        [isHideSearchField]="true"
+></search-data-grid-modal>
+

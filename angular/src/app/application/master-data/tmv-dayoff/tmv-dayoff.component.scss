@@ -1,0 +1,51 @@
+// Reusable
+%weekColGrid {
+  width: calc(99.99% / 7);
+  float: left;
+}
+
+$border: solid 1px #ddd;
+
+// Style
+.month-picker-area {
+  max-width: 300px;
+  margin-left: -15px;
+}
+
+.calendar {
+  .calendar-header {
+    background-image: linear-gradient(#e2e2e2, #ffffff, #e2e2e2);
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000064ff;
+
+    .col {
+      @extend %weekColGrid;
+    }
+  }
+  .calendar-body {
+    .calendar-column {
+      @extend %weekColGrid;
+
+      .calendar-cell {
+        border: $border;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        ::ng-deep checkbox > label {
+          padding-left: 55%;
+        }
+      }
+
+      &:last-child .calendar-cell {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+.month-picker-area{
+  margin-left: -5px;
+  width: 200px
+}

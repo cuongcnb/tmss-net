@@ -1,0 +1,158 @@
+<div class="modal fade" bsModal #followDetailModal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Follow Detail</h5>
+      </div>
+      <div class="modal-body">
+        <div class="grid-table-area mb-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-external-link-square"></i>
+              Follow Up Details
+              <div class="panel-tools">
+                <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshDetail()">
+                  <i class="fa fa-refresh"></i>
+                </button>
+              </div>
+            </div>
+            <grid-table [fieldGrid]="fieldGridDetail"
+                        (callbackGrid)="callbackGridDetail($event)"
+                        (getParams)="getParamsDetail()"></grid-table>
+          </div>
+        </div>
+        <form [formGroup]="form" *ngIf="form">
+          <div class="form-group">
+            <label>Dealer</label>
+            <input type="text" class="form-control" formControlName="dealer">
+          </div>
+          <div class="form-group">
+            <label>TMV Ref No</label>
+            <input type="text" class="form-control" formControlName="tmvRefNo">
+          </div>
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" class="form-control" formControlName="customerName">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Fleet App Date</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #fleetAppDate="bsDatepicker" bsDatepicker readonly
+                         formControlName="fleetAppDate"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="fleetAppDate.toggle()"
+                        [attr.aria-expanded]="fleetAppDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Approve Date</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #approveDate="bsDatepicker" bsDatepicker readonly
+                         formControlName="approveDate"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="approveDate.toggle()"
+                        [attr.aria-expanded]="approveDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Volume Range</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #volumeRange="bsDatepicker" bsDatepicker readonly
+                         formControlName="volumeRange"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="volumeRange.toggle()"
+                        [attr.aria-expanded]="volumeRange.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #expiryDate="bsDatepicker" bsDatepicker readonly
+                         formControlName="expiryDate"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="expiryDate.toggle()"
+                        [attr.aria-expanded]="expiryDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Contract No</label>
+            <input type="text" class="form-control" formControlName="contractNo">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Wod Date</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #wodDate="bsDatepicker" bsDatepicker readonly
+                         formControlName="wodDate"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="wodDate.toggle()"
+                        [attr.aria-expanded]="wodDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Deposit Date</label>
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         #depositDate="bsDatepicker" bsDatepicker readonly
+                         formControlName="depositDate"
+                  >
+                  <span class="input-group-addon btn btn-blue" (click)="depositDate.toggle()"
+                        [attr.aria-expanded]="depositDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue">
+          <i class="fa fa-check"></i> OK
+        </button>
+        <button type="button" class="btn btn-blue" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

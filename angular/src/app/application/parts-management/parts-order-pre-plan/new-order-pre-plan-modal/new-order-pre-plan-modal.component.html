@@ -1,0 +1,170 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"
+     [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">
+          {{selectedOrder ? currentUser.isAdmin ? 'Phản hồi đơn hàng kế hoạch' : 'Sửa đơn hàng kế hoạch' : 'Tạo mới đơn hàng kế hoạch'}}
+        </h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Số kế hoạch</span>
+                    <input type="text" class="form-control" formControlName="planNo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="planName">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Tên kế hoạch</span>
+                    <input type="text" class="required form-control" formControlName="planName">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Tên kế hoạch</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Người tạo</span>
+                    <input type="text" class="form-control" formControlName="createdPerson">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Ghi chú</span>
+                    <input type="text" class="form-control" formControlName="remark">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Trạng thái</span>
+                    <select class="form-control" formControlName="status">
+                      <option value="1">Đại lý mới hỏi</option>
+                      <option value="2">Đang trao đổi</option>
+                      <option value="3">Từ chối</option>
+                      <option value="4">Hoàn thành</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-blue mr-2" (click)="viewOrder()" *ngIf="currentUser.isAdmin">
+                  <i class="fa fa-shopping-cart"></i> Gửi phản hồi
+                </button>
+                <ng-container *ngIf="!currentUser.isAdmin">
+                  <button type="button" class="btn btn-blue mr-2" (click)="onAddRow()">
+                    <i class="fa fa-plus"></i> Thêm PT
+                  </button>
+                  <button type="button" class="btn btn-blue mr-2" (click)="deleteRow()">
+                    <i class="fa fa-trash-o"></i> Xóa PT
+                  </button>
+                  <button type="submit" class="btn btn-blue" (click)="viewOrder()">
+                    <i class="fa fa-eye"></i> Xem đơn hàng
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+          </form>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách phụ tùng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapseNewOrderPrePlanPart" aria-expanded="true" >
+                </button>
+              </div>
+            </div>
+            <div id="collapseNewOrderPrePlanPart" class="panel-collapse collapse in">
+
+              <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                          (callbackGrid)="callBackGrid($event)"
+                          (getParams)="getParams()"
+                          (cellEditingStarted)="cellEditingStarted($event)"
+                          (cellEditingStopped)="cellEditingStopped($event)"
+                          (keyup)="agKeyUp($event)"
+                          [frameworkComponents]="frameworkComponents"></grid-table>
+            </div>
+          </div>
+
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-7 col-sm-5">
+            <div *ngIf="!currentUser.isAdmin" class="text-left">
+              <p>
+                <small><i>* Click vào grid và nhấn mũi tên xuống để thêm dòng mới</i></small>
+              </p>
+              <p>
+                <small><i>* Nhập mã phụ tùng và ấn enter/tab để bắt đầu tìm kiếm</i></small>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-5 col-sm-7">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<parts-pre-plan-checking-modal #partsPrePlanCheckingModal
+                               (close)="modal.hide(); close.emit($event)"></parts-pre-plan-checking-modal>
+<search-data-grid-modal #searchDataGridModal
+                        [headerText]="'Chọn phụ tùng'"
+                        [apiCall]="searchPartApiCall.bind(this)" [fieldGrid]="fieldGridSearchDataGrid"
+                        (close)="setDataToRow($event)" (cancel)="cancelSearchParts()"></search-data-grid-modal>

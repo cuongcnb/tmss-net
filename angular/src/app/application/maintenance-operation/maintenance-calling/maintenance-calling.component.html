@@ -1,0 +1,122 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="98px">Đại lý</span>
+          <select class="form-control" formControlName="sortAgency">
+            <option>TGP-ND</option>
+            <option>THTL</option>
+            <option>TTG</option>
+            <option>THHC</option>
+            <option>THKC</option>
+            <option>TGP</option>
+            <option>TGP_PV</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển kiểm soát</span>
+              <input type="text" class="form-control" formControlName="licensePlates">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="98px">VIN</span>
+              <input type="text" class="form-control" formControlName="errorVin">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker text="Từ ngày" formControlName="dateTime"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="98px">Trạng thái</span>
+              <select class="form-control" formControlName="errorStatus">
+                <option>L/H chưa thành công</option>
+                <option>L/H không thành công</option>
+                <option>(Select All)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Cố vấn dịch vụ</span>
+              <select class="form-control" formControlName="serviceAdvisor">
+                <option>Tất cả</option>
+                <option>Bùi Công Diệu</option>
+                <option>Ngô Văn Tuyên</option>
+                <option>Phan Viết Hộ</option>
+                <option>Phạm Trung Toản</option>
+                <option>Phạm Đức Dũng</option>
+                <option>Trần Mạnh Cương</option>
+                <option>Trần Thị Thúy</option>
+                <option>Võ Văn Trường</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker text="Đến ngày" formControlName="dateTime"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        <i class="fa fa-refresh"></i> Làm mới
+      </button>
+      <button type="button" class="btn btn-blue mb-2 mr-2" (click)="searchMaintenance()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <grid-table [fieldGrid]="fieldGrid" [height]="'420px'" [showPagination]="false"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+      ></grid-table>
+    </div>
+    <div class="col-md-9">
+      <perfect-scrollbar class="ps pr-3 maintenance-border-gray" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <maintenance-infomation [detailData]="selectedRowGrid"></maintenance-infomation>
+        <successful-contact></successful-contact>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <tmss-datepicker text="Ngày hẹn gọi lại cho KH" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+  <maintenance-detail></maintenance-detail>
+</form>
+
+
+

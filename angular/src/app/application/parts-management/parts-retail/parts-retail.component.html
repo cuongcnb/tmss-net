@@ -1,0 +1,101 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm đơn hàng
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã đơn hàng</span>
+              <input type="text" class="form-control" formControlName="orderNo" autofocus>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="65px">Mã KH</span>
+              <input type="text" class="form-control" formControlName="customerCode">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="65px">Tên KH</span>
+              <input type="text" class="form-control" formControlName="customerName">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group search-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="65px">SĐT</span>
+              <input type="text" class="form-control" formControlName="mobile">
+              <button type="submit" class="btn btn-blue" (click)="search()">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<perfect-scrollbar class="ps pr-3" [style.max-height.px]="screenHeight" (window:resize)="onResize()">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Danh sách đơn hàng
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartRetailOrder" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartRetailOrder" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="orderListGrid" [height]="'150px'"
+                  (callbackGrid)="callBackOrderList($event)"
+                  (getParams)="getParamsOrderList()"
+                  (cellDoubleClicked)="updateOrder()"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [paginationTotalsData]="paginationTotalsData"></grid-table>
+      <div class="text-right mb-2">
+        <button type="button" class="btn btn-blue mr-2" (click)="openTab()">
+          <i class="fa fa-plus"></i> Tạo ĐH
+        </button>
+        <button type="button" class="btn btn-blue mr-2"
+                [disabled]="this.selectedOrder && this.selectedOrder.csstate === '6'" (click)="updateOrder()">
+          <i class="fa fa-edit"></i> Sửa ĐH
+        </button>
+        <button type="button" class="btn btn-blue" (click)="deleteSelectedOrder()" [disabled]="this.selectedOrder && this.selectedOrder.csstate === '6'">
+          <i class="fa fa-trash-o"></i> Xóa ĐH
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =======
+      Order detail
+  ============ -->
+  <parts-retail-detail #partRetailDetail (orderDetailChanged)="getOrderDetail(selectedOrder.id)"
+                       (newOrderCreated)="search()" (printOrder)="search()"
+                       [selectedOrder]="selectedOrder" [orderDetailData]="orderDetailData"></parts-retail-detail>
+</perfect-scrollbar>
+<div class="text-right">
+  <button class="btn btn-blue mr-2" [disabled]="!selectedOrder" (click)="reportTypeModal.open(3)">In báo giá
+  </button>
+  <button class="btn btn-blue mr-2" [disabled]="!selectedOrder" (click)="reportTypeModal.open(1)">In lệnh xuất PT
+  </button>
+  <button class="btn btn-blue" [disabled]="!selectedOrder" (click)="reportTypeModal.open(2)">In quyết toán
+  </button>
+</div>
+
+<parts-retail-new-order #newOrderModal (close)="refreshAfterEdit($event)" [customerTypeArr]="customerTypeArr"
+                        [bankArr]="bankArr"></parts-retail-new-order>
+<report-type-modal #reportTypeModal (close)="print($event)"></report-type-modal>

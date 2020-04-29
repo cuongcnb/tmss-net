@@ -1,0 +1,53 @@
+<div>
+  <form [formGroup]="filterForm">
+    <div class="row">
+      <div class="form-group col-md-2">
+        <div class="input-group">
+          <label class="input-group-addon">DLR</label>
+          <select class="form-control" formControlName="dlrId">
+            <option [ngValue]="dealer.id" *ngFor="let dealer of dealers">
+              {{ dealer.id == 1 ? "Tất cả" : dealer.abbreviation }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="input-group">
+          <label class="input-group-addon"
+            >Từ ngày</label
+          >
+          <div>
+            <tmss-datepicker formControlName="fromDate" [dateInputFormat]="'MM/DD/YYYY'"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="input-group">
+          <label class="input-group-addon"
+            >Đến ngày</label
+          >
+          <div>
+            <tmss-datepicker formControlName="toDate" [dateInputFormat]="'MM/DD/YYYY'"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="input-group">
+          <label addonWidth="95px" class="input-group-addon"
+            >Tên chiến dịch</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="campaignName"
+          />
+        </div>
+      </div>
+      <div class="col-md-1 text-right">
+        <button (click)="search()" class="btn btn-blue">
+          Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

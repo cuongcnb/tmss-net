@@ -1,0 +1,164 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Phiếu xuất phụ tùng tổng hợp</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin khách hàng
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Kiểu</span>
+                        <select type="text" class="form-control" formControlName="reqtype">
+                          <option *ngFor="let type of exportTypeArr" [ngValue]="type.key">{{type.value}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Số RO</span>
+                        <input type="text" class="form-control" formControlName="ro">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Khách hàng</span>
+                        <input type="text" class="form-control" formControlName="customerName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Biển số xe</span>
+                        <input type="text" class="form-control" formControlName="plate">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Mã số thuế</span>
+                        <input type="text" class="form-control" formControlName="taxNo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Model</span>
+                        <input type="text" class="form-control" formControlName="model">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Địa chỉ</span>
+                        <input type="text" class="form-control" formControlName="address">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">CVDV</span>
+                        <input type="text" class="form-control" formControlName="advisor">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <div class="input-group-addon same-addon-width">Lần xuất</div>
+                      <select class="form-control" formControlName="shippingNumber">
+                        <option *ngFor="let shippingTime of numberOfShipping" [ngValue]="shippingTime">
+                          {{shippingTime}}
+                        </option>
+                      </select>
+                      <span role="button" class="input-group-addon btn-blue" (click)="printSlip()">In phiếu xuất</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin khách hàng
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'300px'"
+                        (callbackGrid)="callBackGrid($event)"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row text-right">
+          <div class="col-sm-9">
+            <div class="form-group">
+              Tổng tiền trước thuế:
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              {{totalPriceBeforeTax}}
+            </div>
+          </div>
+
+          <div class="col-sm-9">
+            <div class="form-group">
+              Tổng tiền thuế:
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              {{taxOnly}}
+            </div>
+          </div>
+
+          <div class="col-sm-9">
+            <div class="form-group">
+              Tổng tiền sau thuế:
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              {{totalPriceIncludeTax}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<part-select-print-format-modal #partSelectPrintFormatModal></part-select-print-format-modal>

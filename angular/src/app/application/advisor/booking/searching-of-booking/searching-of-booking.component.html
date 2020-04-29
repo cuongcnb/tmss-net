@@ -1,0 +1,66 @@
+<ng-container *ngIf="form">
+  <form [formGroup]="form" novalidate autocomplete="off">
+    <div class="form-group">
+      <tmss-datepicker formControlName="startDate" text="Từ ngày"></tmss-datepicker>
+    </div>
+    <div class="form-group">
+      <tmss-datepicker formControlName="endDate" text="Đến ngày"></tmss-datepicker>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">CVDV</span>
+        <select class="form-control" formControlName="advisorId">
+          <option [ngValue]="null"></option>
+          <option *ngFor="let emp of advisors" [ngValue]="emp.id">{{emp.empName}}</option>
+        </select>
+        <span class="input-group-addon btn btn-blue" (click)="submit()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </span>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Sửa chữa chung
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseSearchOfBookingGeneral" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseSearchOfBookingGeneral" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  [showPagination]="false"
+                  [isSuppressHorizontalScroll]="true"
+                  [rowClassRules]="rowClassRules"
+                  (getParams)="getParams($event)"
+                  (callbackGrid)="callbackGridSCC($event)"
+                  height="180px"
+      ></grid-table>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Đồng Sơn
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseSearchOfBookingDs" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseSearchOfBookingDs" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  [isSuppressHorizontalScroll]="true"
+                  [showPagination]="false"
+                  [rowClassRules]="rowClassRules"
+                  (getParams)="getParams($event)"
+                  (callbackGrid)="callbackGridDS($event)"
+                  height="180px"
+      ></grid-table>
+    </div>
+  </div>
+</ng-container>

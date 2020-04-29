@@ -1,0 +1,56 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-sm-3 form-group">
+        <div class="form-group">
+          <tmss-datepicker formControlName="fromDate" text="Thời điểm dừng từ"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-3 form-group">
+        <div class="form-group">
+          <tmss-datepicker formControlName="toDate" text="Thời điểm dừng đến"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Kiểu RO</span>
+          <select class="form-control" formControlName="roType">
+            <option value="1">BP</option>
+            <option value="2">SCC</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-3 form-group pl-0">
+        <button class="btn btn-blue row-style d-small" type="submit" (click)="search()"><i class="fa fa-search"> </i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách dừng theo ngày
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseVehicleHistory" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseVehicleHistory" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()">
+      </grid-table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="input-group">
+        <span class="input-group-addon">Tổng</span>
+        <input class="form-control" value="2" readonly>
+      </div>
+    </div>
+  </div>
+</div>

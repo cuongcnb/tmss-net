@@ -1,0 +1,291 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin yêu cầu
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseRequiredInfoOfBooking"
+              aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRequiredInfoOfBooking" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row has-border">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-7 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon mw-78" data-toggle="tooltip" data-placement="bottom"
+                        title="Loại công việc">Loại CV</span>
+                  <select class="form-control required" formControlName="apptype">
+                    <option value="2">Sửa chữa chung</option>
+                    <option value="1">Đồng sơn</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-5 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon mw-63">Báo giá</span>
+                  <select class="form-control" formControlName="roId">
+                    <option va="null"></option>
+                    <option *ngFor="let ro of this.roList" [ngValue]="ro.id">{{ro.repairorderno ? ro.repairorderno : 'Báo giá tạm'}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-7 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon mw-78">Nội dung</span>
+                  <textarea class="form-control required" rows="4" formControlName="reqdesc"></textarea>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class=" form-group" hasError="jobsMoney" [ignoreCss]="['required']">
+                  <tmss-money-input text="Tiền CV"  formControlName="jobsMoney" data-toggle="tooltip"
+                                    data-placement="bottom" title="Tiền công việc" [addOnMinWidth]="'59px'"
+                                    fieldAccessor="input">
+                  </tmss-money-input>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Sai định dạng số</div>
+                  </div>
+                </div>
+
+                <div class=" form-group" hasError="partsMoney" [ignoreCss]="['required']">
+                  <tmss-money-input text="Tiền PT" formControlName="partsMoney"
+                                    data-toggle="tooltip" data-placement="bottom" title="Tiền phụ tùng"
+                                    [addOnMinWidth]="'59px'"
+                                    fieldAccessor="input"></tmss-money-input>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Sai định dạng số</div>
+                  </div>
+                </div>
+
+                <div class="form-group" hasError="estimateMoney" [ignoreCss]="['required']">
+                  <tmss-money-input text="Tiền DK"  formControlName="estimateMoney"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom" title="Tiền dự kiến" [addOnMinWidth]="'59px'"
+                                    fieldAccessor="input">
+                  </tmss-money-input>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Sai định dạng số</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-sm-12">
+                <!--                <div class="input-group">-->
+                <!--                  <span data-toggle="tooltip" data-placement="bottom" title="Thời gian sữa chữa" addonWidth="90px"-->
+                <!--                    class="input-group-addon" style="text-align: center">TGSC</span>-->
+                <!--                  <input type="text" class=" text-right required form-control" maxlength="2" formControlName="mm"-->
+                <!--                    oninput="if(this.value > 59) this.value = this.value.slice(0, this.value.length -1)">-->
+                <!--                  <span class="text-left input-group-addon">Phút</span>-->
+                <!--                  <input type="text" class="text-right required form-control" maxlength="2" formControlName="hh"-->
+                <!--                    oninput="if(this.value > 59) this.value = this.value.slice(0, this.value.length -1)">-->
+                <!--                  <span class="text-left input-group-addon">Giờ</span>-->
+                <!--                  <input type="text" class="text-right required form-control" formControlName="dd">-->
+                <!--                  <span class="text-left input-group-addon">Ngày</span>-->
+                <!--                </div>-->
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon mw-63" data-toggle="tooltip" data-placement="bottom"
+                      title="Cố vấn dịch vụ">CVDV</span>
+                <select class="form-control required" formControlName="saId">
+                  <option *ngFor="let emp of advisors" [ngValue]="emp.id">{{emp.empName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon mw-63">Khoang</span>
+                <input class="form-control" formControlName="wshopName">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                      style="min-width: 63px !important;"
+                      title="Kỹ thuật viên">KTV</span>
+                <input class="form-control" formControlName="technicalName">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
+        </div>
+
+        <div class="has-border">
+          <div class="row pt-2">
+            <div class="col-sm-4">
+              <checkbox formControlName="partBooking" text="Đặt PT"></checkbox>
+            </div>
+            <div class="col-sm-8 text-right">
+              <button type="button" class="btn btn-blue" [disabled]="!form.value.partBooking"
+                      (click)="openPartsBooking()">
+                Chi tiết
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="73px" data-toggle="tooltip" data-placement="bottom"
+                      title="Người bảo lãnh">Người BL</span>
+                <input class="form-control" formControlName="sponsor"
+                       [ngClass]="!form.value.partBooking ? '' : 'required'">
+              </div>
+            </div>
+            <div class="form-group col-sm-4" hasError="deposits">
+              <tmss-money-input text="Đã ĐC" formControlName="deposits" data-toggle="tooltip" data-placement="bottom"
+                                title="Đã đặt cọc" [isRequired]="!form.value.partBooking ? false : true"
+                                [addOnMinWidth]="'73px'" fieldAccessor="input"></tmss-money-input>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormat'">Sai định dạng số</div>
+              </div>
+            </div>
+            <div class="form-group col-sm-4">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="73px" data-toggle="tooltip" data-placement="bottom"
+                      title="Ngày về dự kiến">NVDK</span>
+                <input class="form-control" formControlName="receiveceDate">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4 form-group">
+              <tmss-datepicker formControlName="lh1" placement="top left" [hasTimepicker]="true"
+                               [dateInputFormat]="'DD/MM/YYYY HH:mm'" text="LH lần 1" data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Liên hệ lần 1" addOnMinWidth="73px"></tmss-datepicker>
+              <input class="form-control mt-2" formControlName="lh1Note">
+            </div>
+            <div class="col-sm-4 form-group">
+              <tmss-datepicker formControlName="lh2" placement="top left" [hasTimepicker]="true"
+                               [dateInputFormat]="'DD/MM/YYYY HH:mm'" text="LH lần 2" data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Liên hệ lần 2" addOnMinWidth="73px"></tmss-datepicker>
+              <input class="form-control mt-2" formControlName="lh2Note">
+            </div>
+            <div class="col-sm-4 form-group">
+              <tmss-datepicker formControlName="lh3" placement="top right" [hasTimepicker]="true"
+                               [dateInputFormat]="'DD/MM/YYYY HH:mm'" text="LH lần 3" data-toggle="tooltip"
+                               data-placement="bottom"
+                               title="Liên hệ lần 3" addOnMinWidth="73px"></tmss-datepicker>
+              <input class="form-control mt-2" formControlName="lh3Note">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-7">
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <checkbox formControlName="confirm" text="Xác nhận"></checkbox>
+              </div>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input class="form-control" [value]="formatDate(form.get('dateconfirm').value)" readonly>
+                  <span class="input-group-addon">-</span>
+                  <input class="form-control" formControlName="notes">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <checkbox formControlName="cancel" text="Hủy hẹn"></checkbox>
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" formControlName="cancelreason">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-3">
+                <checkbox formControlName="noShow" text="No-show"></checkbox>
+              </div>
+              <div class="col-sm-9">
+                <input class="form-control" formControlName="kqNoshow">
+              </div>
+            </div>
+
+            <!--<div class="form-group">-->
+            <!--<div class="input-group">-->
+            <!--<span class="input-group-addon" addonWidth="80px">Dự kiến KT</span>-->
+            <!--<input class="form-control" formControlName="wshopto">-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<div class="input-group">-->
+            <!--<span class="input-group-addon" addonWidth="80px">Bắt đầu SC</span>-->
+            <!--<input class="form-control" formControlName="wshopfrom">-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="text-left">
+              <span class="pr-2 app-changer-count"
+                    *ngIf="form && form.value.appchangercount">Số lần thay đổi: {{form.value.appchangercount}}</span>
+              <button type="button" class="btn btn-blue mb-3" (click)="change()" [disabled]="!form.getRawValue().appoinmentId">
+                Dời hẹn
+              </button>
+              <br><br>
+            </div>
+          </div>
+
+          <div class="col-sm-5">
+            <div hasError>
+              <div class="form-group">
+                <tmss-datepicker formControlName="cusarr" data-toggle="tooltip" data-placement="bottom"
+                                 title="Thời gian hẹn" [dateInputFormat]="'DD/MM/YYYY HH:mm'" placement="top left"
+                                 text="TG hẹn"
+                                 [className]="'check-invalid'"
+                                 [hasTimepicker]="true" [isRequired]="true" addOnMinWidth="91px" fieldAccessor="input">
+                </tmss-datepicker>
+              </div>
+              <div class="form-group" hasError="estimateTime">
+                <div class="input-group">
+                  <span data-toggle="tooltip" data-placement="bottom" title="Thời gian sữa chữa"
+                        class="input-group-addon" addonWidth="80px">TG sửa chữa</span>
+                  <input type="text" class="required text-right form-control" formControlName="estimateTime">
+                  <span class="text-left input-group-addon" addonWidth="1px">-</span>
+                  <select addonWidth="70px" class="form-control ingnore-valid" formControlName="typeEstimateTime">
+                    <option [ngValue]="0">Phút</option>
+                    <option [ngValue]="1">Giờ</option>
+                    <option [ngValue]="2">Ngày</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bắt buộc nhập</div>
+                  <div *ifError="'numberFormat'">Giá trị phải là số nguyên dương</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <tmss-datepicker formControlName="cardelivery" data-toggle="tooltip" data-placement="bottom"
+                                 title="Thời gian giao xe" [dateInputFormat]="'DD/MM/YYYY HH:mm'" placement="top left"
+                                 text="TG giao xe"
+                                 [className]="'check-invalid'"
+                                 [hasTimepicker]="true" [isRequired]="true" addOnMinWidth="91px" fieldAccessor="input">
+                </tmss-datepicker>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'compareDate'">Thời gian hẹn phải nhỏ hơn thời gian giao xe</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="ghost" #submitBtn></button>
+      </form>
+    </div>
+  </div>
+</div>
+<part-booking-detail [form]="form" #partBookingDetail (saveParts)="saveParts($event)"
+                     (closeup)="patchAccessory($event)"></part-booking-detail>

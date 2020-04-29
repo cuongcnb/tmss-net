@@ -1,0 +1,30 @@
+<div pageTitle="Dealer List">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Dealer list management
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridDealerList" [height]="'500px'"
+                  (callbackGrid)="callbackGridDealer($event)"
+                  (getParams)="getParamsDealer($event)"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="modifyModal.open(dealerList)">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue" (click)="updateDealer()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<modify-dealer-modal #modifyModal [isDeliveryAddressRoute]="isDeliveryAddressRoute"
+                     (close)="refreshList()"></modify-dealer-modal>

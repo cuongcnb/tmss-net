@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-xs-4 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Ngày xe vào</span>
+      <tmss-datepicker></tmss-datepicker>
+    </div>
+  </div>
+  <div class="col-xs-4 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Ngày xe ra</span>
+      <tmss-datepicker></tmss-datepicker>
+    </div>
+  </div>
+  <div class="col-xs-4 ">
+    <button class="btn btn-blue" (click)="repairHistory.open(selectedData)" [disabled]="!selectedData">Lịch sử sửa chữa</button>
+  </div>
+</div>
+
+<repair-history #repairHistory (close)="refresh()"></repair-history>

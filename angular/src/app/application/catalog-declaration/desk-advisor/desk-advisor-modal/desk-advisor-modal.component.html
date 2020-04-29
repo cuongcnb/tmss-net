@@ -1,0 +1,76 @@
+<div class="modal fade" bsModal #deskAdvisorModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật ' : 'Thêm mới '}} bàn cố vấn dịch vụ</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="deskName">
+              <div class="input-group w-span">
+                <span class="input-group-addon">Tên bàn</span>
+                <input type="text" class="form-control required" formControlName="deskName">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Yêu cầu phải nhập</div>
+                <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group w-span">
+                <span class="input-group-addon">Mã cố vấn dịch vụ</span>
+                <input type="text" class="form-control" formControlName="advisorCode">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên cố vấn dịch vụ</span>
+                <multi-column-select-control formControlName="advisorId"
+                                             displayField="empName"
+                                             dataField="id"
+                                             [fieldGrid]="gridField"
+                                             [list]="advisors"
+                                             *ngIf="advisors"
+                ></multi-column-select-control>
+              </div>
+            </div>
+            <div class="form-group" hasError="description">
+              <div class="input-group w-span">
+                <span class="input-group-addon">Ghi chú</span>
+                <input type="text" formControlName="description" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group w-span">
+                <span class="input-group-addon">Trạng thái</span>
+                <select formControlName="status" class="form-control">
+                  <option value="Y">Còn Hiệu Lực</option>
+                  <option value="N">Hết Hiệu Lực</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

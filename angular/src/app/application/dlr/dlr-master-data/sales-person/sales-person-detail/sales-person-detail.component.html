@@ -1,0 +1,160 @@
+<div class="modal fade" bsModal #salesPersonModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header" *ngIf="!salesPersonData">Add New Sales Person</h5>
+          <h5 class="title-header" *ngIf="salesPersonData">Update Sales Person</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4" hasError="salesGroupId" autoFocusField>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Group</span>
+                  <select formControlName="salesGroupId" class="required form-control">
+                    <option *ngFor="let group of salesGroupList " [ngValue]="group.id">{{group.groupName}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Group name is required</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="saleTeamId">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Team</span>
+                  <select formControlName="saleTeamId" class="required form-control">
+                    <option *ngFor="let team of saleTeamByGroup " [ngValue]="team.id">{{team.teamName}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Team name is required</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="fullName">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Full Name</span>
+                  <input type="text" class="form-control required" formControlName="fullName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Full name is required</div>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="ordering">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Order</span>
+                  <input type="text" class="form-control" formControlName="ordering">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Order must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="birthday">
+                <tmss-datepicker-sale [addOnMinWidth]="'90px'" [text]="'Birth Day'" formControlName="birthday"></tmss-datepicker-sale>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'futureDate'">Birth Day can not be in the future</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="position">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Position</span>
+                  <input type="text" class="form-control" formControlName="position">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="abbreviation">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Abbreviation</span>
+                  <input type="text" class="form-control" formControlName="abbreviation">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Status</span>
+                  <select class="form-control" formControlName="status">
+                    <option value="Y">Enable</option>
+                    <option value="N">Disable</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Gender</span>
+                  <select class="form-control" formControlName="gender">
+                    <option value="1" selected>Male</option>
+                    <option value="0">Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="phone">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Phone</span>
+                  <input type="text" class="form-control" formControlName="phone">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Phone invalidate</div>
+                  <div *ifError="'phoneLength'">Phone must not be less than 10 charactor</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="email">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Email</span>
+                  <input type="text" class="form-control" formControlName="email">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'emailFormat'">Email invalidate</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="address">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Address</span>
+                  <input type="text" class="form-control" formControlName="address">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-12" hasError="description">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Description</span>
+                  <textarea rows="4" class="form-control resize-vertical" formControlName="description"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 2000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

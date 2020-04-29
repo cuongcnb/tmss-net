@@ -1,0 +1,13 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+  <span class="input-group-addon" *ngIf="text">{{text}}</span>
+  <ng-multiselect-dropdown
+    [(ngModel)]="selectedItem"
+    [placeholder]="placeHolder"
+    [data]="data"
+    [disabled]="isDisabled"
+    [settings]="dropDownSettings"
+    (onSelect)="onItemSelect()"
+    (onDeSelect)="onItemDeSelect()"
+    (onSelectAll)="onSelectAll()"
+  ></ng-multiselect-dropdown>
+</div>

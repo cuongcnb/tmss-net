@@ -1,0 +1,166 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>{{ selectedData ? 'Cập nhật' : 'Thêm mới' }}</strong></h5>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <!--Vendor Code-->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="venCode">
+              <label class="required">Vendor Code</label>
+              <input formControlName="venCode" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Vendor Code is required</div>
+              </div>
+            </div>
+
+            <!--Vendor Name-->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label>Vendor Name (VN)</label>
+              <input formControlName="venNameVn" class="form-control">
+            </div>
+
+            <!--Vendor Name-->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label>Vendor Name (ENG)</label>
+              <input formControlName="venNameEng" class="form-control">
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- PWR Change Date -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label>PWR Change Date</label>
+              <tmss-datepicker formControlName="pwrChangeDate"></tmss-datepicker>
+            </div>
+
+            <!-- PWR1 -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="pwr1">
+              <label class="required">PWR1</label>
+              <input formControlName="pwr1" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">PWR1 is required</div>
+              </div>
+            </div>
+
+            <!-- PWR 2 -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="pwr2">
+              <label class="required">PWR2</label>
+              <input formControlName="pwr2" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">PWR2 is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- PWR 3 -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label class="required">PWR3</label>
+              <input formControlName="pwr3" class="form-control">
+            </div>
+
+            <!-- PWR 1 New -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="pwr1New">
+              <label class="required">PWR1 New</label>
+              <input formControlName="pwr1New" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">PWR1 New is required</div>
+              </div>
+            </div>
+
+            <!-- PWR 2 New -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="pwr2New">
+              <label class="required">PWR2 New</label>
+              <input formControlName="pwr2New" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">PWR2 New is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- PWR 3 New -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label class="required">PWR3 New</label>
+              <input formControlName="pwr3New" class="form-control">
+            </div>
+
+            <!-- TWC Currency Code -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="twcCurrencyCode">
+              <label class="required">TWC CurrencyCode</label>
+              <input formControlName="twcCurrencyCode" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">TWC CurrencyCode is required</div>
+              </div>
+            </div>
+
+            <!-- TWC Labor Currency Code -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="twcLaborCode">
+              <label class="required">TWC Labor Currency Code</label>
+              <input formControlName="twcLaborCode" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">TWC Labor Currency Code is required</div>
+              </div>
+            </div>
+          </div>
+
+         <div class="row">
+           <!-- TWC Jud System -->
+           <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="twcJudSystem">
+             <label class="required">TWC JudSystem</label>
+             <input formControlName="twcJudSystem" class="form-control">
+             <div class="error-messages" errorMessage>
+               <div *ifError="'required'">TWC JudSystem is required</div>
+             </div>
+           </div>
+
+           <!--TACT Vendor Code-->
+           <div class="form-group col-md-4 col-sm-6 col-xs-12">
+             <label class="required">TACT Vendor Code</label>
+             <input formControlName="tactVenCode" class="form-control">
+           </div>
+
+           <!--Vendor Name ABBR-->
+           <div class="form-group col-md-4 col-sm-6 col-xs-12">
+             <label class="required">Vendor Name ABBR</label>
+             <input formControlName="venNameAbbr" class="form-control">
+           </div>
+         </div>
+
+          <div class="row">
+            <!--Vendor Name ABBR-->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12">
+              <label class="required">Dist Code</label>
+              <input formControlName="distCode" class="form-control">
+            </div>
+
+            <!-- PRR -->
+            <div class="form-group col-md-4 col-sm-6 col-xs-12" hasError="prr">
+              <label class="required">PRR</label>
+              <input formControlName="prr" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">PRR is required</div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

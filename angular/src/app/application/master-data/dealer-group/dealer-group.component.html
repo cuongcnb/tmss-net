@@ -1,0 +1,34 @@
+<div pageTitle="Dealer Group">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Dealer Group Management
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridDealerGroups($event)"
+                  (getParams)="getParamsDealerGroup()"
+                  [showPagination]="false"
+                  [height]="'400px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="dealerGroupModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateDealerGroup()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedDealerGroup" (click)="deleteDealerGroup()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dealer-group-modal #dealerGroupModal (close)="refreshList()"></dealer-group-modal>

@@ -1,0 +1,30 @@
+<div class="modal fade mt-3" bsModal #modal="bs-modal" (onHidden)="reset()"
+     [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Danh sách công việc cần làm sớm</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group">
+              <textarea formControlName="notes" class="form-control"></textarea>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="addNotes()">
+            Lưu
+          </button>
+          <button type="submit" class="btn btn-light-grey" (click)="modal.hide()">
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

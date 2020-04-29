@@ -1,0 +1,386 @@
+::ng-deep * {
+  .vehicle-pending-scc{
+    color: white;
+    background: #5e5e5e;
+  }
+  .mouse-time{
+    position: relative;
+    z-index: 1000000;
+  }
+  .background {
+    background: bisque !important;
+    color: black !important;
+  }
+
+  .panel-additional-info-scc {
+    width: 75px !important;
+    left: 0 !important;
+  }
+
+  .fa-info {
+    height: 25px !important;
+  }
+
+  .car-wait {
+    background: #000000;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .quotation-auto-suggest {
+    background: #a221cc;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .quotation {
+    background: #01a579;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 10;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .appointment {
+    background: #01a579;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 10;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .appointment-manual-suggest {
+    background: #00b965;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .planning-vehicle {
+    background: #B4C7E7;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 10;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .fixing-vehicle {
+    background: #4473C5;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 11;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .stopping-vehicle {
+    background: #7F807B;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 12;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+  
+  .complete-vehicle {
+    background: #008000;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 13;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .performed-vehicle {
+    background: #304D65;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 13;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .priority-vehicle {
+    background: #ff9c00;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .delay-vehicle {
+    background: #EC1A22;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 13;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .delay-plan-vehicle {
+    background: #f76969e8;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .focus-vehicle {
+    background: #20b5ae;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .scc-focus-vehicle {
+    background: #20b5ae !important;
+  }
+
+  .scc-focus-vehicle-wait {
+    background: #20b5ae !important;
+  }
+
+  .text-search {
+    font-size: 15px !important;
+  }
+
+  .number {
+    padding-bottom: 1px;
+  }
+}
+
+.panel-default {
+  height: calc(100% - 150px);
+
+  .panel-heading {
+    overflow: inherit;
+  }
+
+  .panel-body {
+    height: calc(100% - 25px);
+  }
+}
+
+.main-table {
+  padding-right: 70px;
+
+  .table-header {
+    & > div {
+      height: 52px;
+    }
+
+    .shop {
+      padding-left: 81px;
+    }
+  }
+
+  .table-body {
+    .shop {
+      padding: 10px 0 10px 75px;
+      font-size: 10px !important;
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .emp {
+      padding: 5px;
+      overflow: auto;
+
+      .ktv {
+        font-size: 15px !important;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 1px !important;
+      }
+    }
+
+    .car_actual {
+      font-size: 10px !important;
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      // background-color: #d7effa !important;
+      padding-top: 15px !important;
+      padding-left: 9px !important;
+    }
+
+    .progress-area {
+      width: calc(95% - 306px);
+      left: calc(5% + 217px);
+    }
+
+    .scc-progress-area {
+      height: 100%;
+    }
+
+    .scc-td {
+      position: relative;
+      height: 43px;
+      top: 0;
+    }
+  }
+
+  .shop {
+    float: left;
+    //width: 25%;
+    border-right: 1px solid #BDC3C7;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 130px;
+  }
+
+  .emp {
+    padding: 0 !important;
+    margin: 0 !important;
+    float: left;
+    width: calc(5% + 20px);
+    border-right: 1px solid #BDC3C7 !important;
+  }
+
+  .car_actual {
+    padding: 0 !important;
+    margin: 0 !important;
+    float: left;
+    width: 70px;
+    border-right: 1px solid #BDC3C7 !important;
+    text-overflow: ellipsis;
+  }
+
+  .prg {
+    position: relative;
+    float: left;
+    width: 60%;
+  }
+}
+
+.float-left {
+  padding: 5px;
+  font-size: 11px !important;
+}
+
+::ng-deep.general-repair .input-group-addon {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair input:not([type='radio']) {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair select {
+  height: 30px !important;
+}
+
+.body-scc-waiting-vehicle {
+  overflow-y: auto;
+}
+
+.body-general-repair-employee {
+  overflow-y: auto;
+}
+
+.progress-coo {
+  .main-table {
+    .table-body {
+      .body-content {
+        & > div {
+          height: 43px;
+
+          & > div {
+            height: 43px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.img-responsive {
+  margin-top: 2px;
+  border: 1px solid #e1c800;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.div-responsive {
+  margin-top: 2px;
+  border: 1px solid #e1c800;
+  height: 40px !important;
+  text-align: center;
+  padding-top: 12px;
+}
+
+.ktv :hover {
+  -ms-transform: scale(2);
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
+  z-index: 999;
+}
+
+.ktv :active {
+  -ms-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
+  z-index: 999;
+}
+
+.size-img {
+  max-width: 17px;
+  margin-top: -5px;
+  margin-left: 5px;
+}
+
+.height-reload {
+  height: 38px !important;
+}
+.non-hover:hover {  
+  background: #5E5E5E !important;
+}
+
+.non-hover-delay:hover {
+  background: #EC1A22 !important;
+}
+
+.ml-8-percent {
+  margin-left: 8%;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}

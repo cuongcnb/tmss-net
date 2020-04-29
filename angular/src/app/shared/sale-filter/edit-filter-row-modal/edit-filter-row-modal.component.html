@@ -1,0 +1,93 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">{{!selectedFilter ? 'Add Filter' : 'Update Filter'}}</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6" hasError="field">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Field Description</label>
+                <select type="text" class="form-control required" formControlName="field">
+                  <option value=""></option>
+                  <option *ngFor="let field of filterFieldArr" [ngValue]="field">{{field.fieldDescription}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Field Description is required</div>
+              </div>
+            </div>
+            <div class="col-sm-6" hasError="condition">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Condition</label>
+                <select type="text" class="form-control required" formControlName="condition">
+                  <option value=""></option>
+                  <option *ngFor="let condition of conditionArr" [ngValue]="condition">{{condition}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Condition is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="col-sm-6" *ngIf="!isDateField" hasError="value">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Value</label>
+                <input type="text" class="form-control" formControlName="value">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div> -->
+            <!-- <div class="col-sm-6" *ngIf="isDateField" hasError="value"> -->
+            <div class="col-sm-6">
+              <div class="input-group form-group">
+                <span class="input-group-addon min-width">Loại Value</span>
+                <select class="form-control" formControlName="typeValue">
+                  <option [ngValue]="0">Text</option>
+                  <option [ngValue]="1">Date</option>
+                </select></div>
+            </div>
+            <div class="col-sm-6" hasError="value" *ngIf="form.value.typeValue === 0">
+              <div class="form-group input-group">
+                <label class="input-group-addon  min-width">Value</label>
+                <input class="form-control" formControlName="value">
+              </div>
+            </div>
+            <div class="col-sm-6" hasError="value" *ngIf="form.value.typeValue === 1">
+              <tmss-datepicker-sale addOnMinWidth="105px" text="Value"
+                               formControlName="value"></tmss-datepicker-sale>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Connective</label>
+                <select type="text" class="form-control" formControlName="connective">
+                  <option value=""></option>
+                  <option *ngFor="let connective of connectiveArr" [ngValue]="connective">{{connective}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- isDateField? -->
+          <div class="form-group"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="submit()">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

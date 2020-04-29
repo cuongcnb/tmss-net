@@ -1,0 +1,42 @@
+<div pageTitle="Dealer CBU Order">
+  <form [formGroup]="form" *ngIf="form && currentDealerId" class="row" focusErrorField>
+    <div class="col-sm-3 mb-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Dealer</span>
+        <select formControlName="dealerId" class="form-control">
+          <option *ngFor="let dlr of dealers" [ngValue]="dlr.id">{{dlr.abbreviation}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3 mb-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Tháng</span>
+        <month-picker  [model]="selectedDate" (modelChange)="generateDay($event)"></month-picker>
+      </div>
+    </div>
+    <div class="col-sm-3 mb-3">
+      <button class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"> Search</i></button>
+      <button class="btn btn-blue mr-2" (click)="save()"><i class="fa fa-save"> Save</i></button>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="grid-table-area my-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            CBU Order
+            <div class="panel-tools">
+              <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="search()">
+                <i class="fa fa-refresh"></i>
+              </button>
+            </div>
+          </div>
+          <grid-table [fieldGrid]="fielGridCbuOrder" [showPagination]="false"
+                      (callbackGrid)="callbackGridCbuOrder($event)">
+          </grid-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

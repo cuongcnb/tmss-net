@@ -1,0 +1,134 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"
+  [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Phiếu đặt hàng</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin đơn hàng
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="form" *ngIf="form">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Số đơn hàng</span>
+                        <input type="text" class="form-control" formControlName="ro">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Người đặt hàng</span>
+                        <input type="text" class="form-control" formControlName="userName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Mã ĐL</span>
+                        <input type="text" class="form-control" formControlName="dealerName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <tmss-datepicker formControlName="requestDate" addOnMinWidth="105px" text="Ngày yêu cầu">
+                      </tmss-datepicker>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- GRID BY SEA -->
+          <ng-container *ngIf="modal.isShown">
+            <div class="panel panel-default mb-0">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Danh sách phụ tùng (loại: Khác phụ kiện)
+              </div>
+              <grid-table [fieldGrid]="fieldGrid" [height]="'250px'" [showPagination]="false"
+                (callbackGrid)="callbackGridPartsNotY($event)"></grid-table>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-xs-4 detail">
+                    Trước thuế: <strong>{{footerDetail.partsNotY.totalPriceBeforeTax}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    + Thuế: <strong>{{footerDetail.partsNotY.taxOnly}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    = Sau thuế: <strong>{{footerDetail.partsNotY.totalPriceIncludeTax}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-blue mr-2" [disabled]="!partsWithTypeCodeNotY.length" (click)="confirmPartsNotY()">
+                <i class="fa fa-save"></i> Xác nhận
+              </button>
+              <button type="button" class="btn btn-light-grey" [disabled]="!partsWithTypeCodeNotY.length"
+                (click)="abortPartsNotY()">
+                <i class="fa fa-times"></i> Hủy bỏ
+              </button>
+            </div>
+          </ng-container>
+          <br>
+          <!-- GRID BY AIR -->
+          <ng-container *ngIf="modal.isShown">
+            <div class="panel panel-default mb-0">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Danh sách phụ tùng (loại: Phụ kiện)
+              </div>
+              <grid-table [fieldGrid]="fieldGrid" [height]="'250px'" [showPagination]="false"
+                (callbackGrid)="callbackGridPartsY($event)"></grid-table>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-xs-4 detail">
+                    Trước thuế: <strong>{{footerDetail.partsY.totalPriceBeforeTax}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    + Thuế: <strong>{{footerDetail.partsY.taxOnly}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    = Sau thuế: <strong>{{footerDetail.partsY.totalPriceIncludeTax}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button class="btn btn-blue mr-2" [disabled]="!partsWithTypeCodeY.length" (click)="confirmPartsY()">
+                <i class="fa fa-save"></i> Xác nhận
+              </button>
+              <button type="button" class="btn btn-light-grey" [disabled]="!partsWithTypeCodeY.length"
+                (click)="abortPartsY()">
+                <i class="fa fa-times"></i> Hủy bỏ
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

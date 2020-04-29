@@ -1,0 +1,134 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết đơn hàng BO </h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin RO
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Số RO</span>
+                        <input type="text" class="form-control" formControlName="ro">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Biển số xe</span>
+                        <input type="text" class="form-control" formControlName="registerNo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <tmss-datepicker addOnMinWidth="100px" text="Ngày yêu cầu" formControlName="requestDate"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Tên KH</span>
+                        <input type="text" class="form-control" formControlName="customerName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Loại</span>
+                        <select class="form-control" formControlName="reqtype">
+                          <option [ngValue]="0">Đặt hàng BO cho lệnh sửa chữa</option>
+                          <option [ngValue]="1">Đặt hàng BO cho bán lẻ</option>
+                          <option [ngValue]="2">Đặt hẹn</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Model</span>
+                        <input type="text" class="form-control" formControlName="model">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Người yêu cầu</span>
+                        <input type="text" class="form-control" formControlName="advisorName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-width-addon">Địa chỉ</span>
+                        <input type="text" class="form-control" formControlName="customerAddress">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default mb-0" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách phụ tùng
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                        (callbackGrid)="callbackGrid($event)"
+                        (cellEditingStopped)="cellEditingStopped($event)"
+                        (getParams)="getParams()"></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-xs-4 detail">
+                Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+              </div>
+              <div class="col-xs-4 detail">
+                + Thuế: <strong>{{taxOnly}}</strong>
+              </div>
+              <div class="col-xs-4 detail">
+                = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <button class="btn btn-blue mr-2" (btnClickDebounce)="sendRequest()">
+            <i class="fa fa-save"></i> Gửi đơn hàng
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<bo-order-slip-modal #boOrderSlipModal (close)="hideModalWhenComplete($event)"></bo-order-slip-modal>

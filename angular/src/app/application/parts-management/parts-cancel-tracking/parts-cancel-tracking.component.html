@@ -1,0 +1,139 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Tìm kiếm
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="searchForm" *ngIf="searchForm" (submit)="resetPaginationParams();search()">
+      <!-- User this for task #19873 -->
+      <!--<div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số LSC</span>
+              <input type="text" class="form-control" formControlName="pwnNo">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Trạng thái</span>
+              <input type="text" class="form-control" formControlName="reqState">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Mã PT</span>
+              <input type="text" class="form-control" formControlName="partscode">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tên PT</span>
+              <input type="text" class="form-control" formControlName="partsnamevn">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Thông tin ĐH</span>
+              <input type="text" class="form-control" formControlName="orderStr">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" addOnMinWidth="90px" text="Từ ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <tmss-datepicker formControlName="toDate" addOnMinWidth="90px" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-blue">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+        </div>
+      </div>-->
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số lệnh</span>
+              <input type="search" class="form-control" formControlName="pwnNo">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Mã PT</span>
+              <input type="search" class="form-control" formControlName="partCode">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">Số đơn hàng</span>
+            <input type="search" class="form-control" formControlName="orderNum">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" addOnMinWidth="90px" text="Từ ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="toDate" addOnMinWidth="90px" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-blue"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Theo dõi phụ tùng
+      </div>
+      <div class="panel-body">
+        <grid-table [fieldGrid]="fieldPartsList"
+                    [rowClassRules]="rowClassRules"
+                    [paginationTotalsData]="paginationTotalsData"
+                    [frameworkComponents]="frameworkComponents"
+                    [suppressHorizontalScroll]="true"
+                    [suppressRowClickSelection]="true"
+                    (callbackGrid)="callbackParts($event)"
+                    (getParams)="getParamsParts()"
+                    (changePaginationParams)="changePaginationParams($event)"
+                    (cellValueChanged)="cellValueChanged($event)"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 text-right">
+    <button class="btn btn-blue" (click)="export()" [disabled]="!partListForExport.length">
+      <i class="fa fa-download"></i> Download
+    </button>
+  </div>
+</div>
+<tmss-export [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>

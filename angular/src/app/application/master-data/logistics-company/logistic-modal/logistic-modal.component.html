@@ -1,0 +1,145 @@
+<div class="modal fade" bsModal #logisticModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Logistic</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Logistic</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="code">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Code</label>
+                  <input type="text" class="form-control required" formControlName="code" autoFocusField>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Code is required</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="vnName">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Vietnamese Name</label>
+                  <input type="text" class="form-control required" formControlName="vnName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Vietnamese Name is required</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="enName">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">English Name</label>
+                  <input type="text" class="form-control required" formControlName="enName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">English Name is required</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="ordering">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Order</label>
+                  <input class="form-control" formControlName="ordering">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Order must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="contactPerson">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Contact Person</label>
+                  <input type="text" class="form-control" formControlName="contactPerson">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Status</label>
+                  <select class="form-control" formControlName="status">
+                    <option value="Y">Enable</option>
+                    <option value="N">Disable</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="taxCode">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Tax Code</label>
+                  <input type="text" class="form-control" formControlName="taxCode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'taxFormat'">Your input is not a Tax Code</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="bankNo">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Bank No</label>
+                  <input type="text" class="form-control" formControlName="bankNo">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Bank No must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="tel">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Tel</label>
+                  <input type="text" class="form-control" formControlName="tel" maxlength="11">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                  <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="fax">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Fax</label>
+                  <input type="text" class="form-control" formControlName="fax">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Your input is not a fax number</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-12" hasError="address">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Address</label>
+                  <textarea class="form-control resize-vertical" formControlName="address" rows="3"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 2000</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

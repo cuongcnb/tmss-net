@@ -1,0 +1,123 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Thông tin phụ tùng
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Điều kiện tìm kiếm
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="81px">Đại lý</span>
+                        <select class="form-control" formControlName="sortAgency">
+                          <option>TGP-ND</option>
+                          <option>THTL</option>
+                          <option>TTG</option>
+                          <option>THHC</option>
+                          <option>THKC</option>
+                          <option>TGP</option>
+                          <option>TGP_PV</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Ngày LH" formControlName="dateTime"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số vin</span>
+                        <input type="text" class="form-control" formControlName="errorVin">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Loại PT/PK</span>
+                        <input type="text" class="form-control" formControlName="accessoriesType">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Đến" formControlName="dateTime"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="56px">BKS</span>
+                        <input type="text" class="form-control" formControlName="licensePlates">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-blue">
+                  <i class="fa fa-search"></i>
+                  Tìm kiếm
+                </button>
+              </div>
+            </div>
+            <div>
+              <grid-table [fieldGrid]="gridInsurrance" [height]="'150px'" [showPagination]="false"
+                          (callbackGrid)="callbackGrid($event)"
+                          (getParams)="getParams()"
+              ></grid-table>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-9 text-left">
+              <button type="button" class="btn btn-blue" (click)="newAccsessary.open()">
+                <i class="fa fa-plus mr-2"></i>
+                Mới
+              </button>
+              <button type="button" class="btn btn-blue" (click)="editNewCar()">
+                <i class="fa fa-pencil mr-2"></i>
+                Sửa
+              </button>
+              <button type="button" class="btn btn-blue" (click)="deleteAccessary()">
+                <i class="fa fa-trash-o mr-2"></i>
+                Xóa
+              </button>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+                <i class="fa fa-power-off mr-2"></i>
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<new-accessory-car #newAccsessary
+                   (close)="selectedData? updateNewCar($event):addNewCar($event)"
+></new-accessory-car>
+
+
+
+

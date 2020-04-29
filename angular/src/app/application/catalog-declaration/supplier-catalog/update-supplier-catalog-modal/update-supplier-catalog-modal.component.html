@@ -1,0 +1,180 @@
+<div class="modal fade" bsModal #supplierModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật Thông tin nhà cung cấp' : 'Thêm mới nhà cung cấp'}}</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="supplierCode">
+                <div class="input-group">
+                  <label class="input-group-addon">Mã NCC</label>
+                  <input type="text" class="form-control required" formControlName="supplierCode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Mã nhà cung cấp là bắt buộc</div>
+                  <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép nhập các kí tự đặc biệt</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-8" hasError="supplierName">
+                <div class="input-group">
+                  <label class="input-group-addon">Tên NCC</label>
+                  <input type="text" class="form-control" formControlName="supplierName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="address">
+                <div class="input-group">
+                  <label class="input-group-addon">Địa chỉ</label>
+                  <input type="text" class="form-control" formControlName="address">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="tel">
+                <div class="input-group">
+                  <label class="input-group-addon">Tel</label>
+                  <input type="text" class="form-control" formControlName="tel">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">>Sai định dạng, phải là số từ 10-15 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="fax">
+                <div class="input-group">
+                  <label class="input-group-addon">Fax</label>
+                  <input type="text" class="form-control" formControlName="fax">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">>Sai định dạng, phải là số từ 10-15 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="leadTime">
+                <div class="input-group">
+                  <label class="input-group-addon">Độ trễ</label>
+                  <input type="text" class="form-control required" formControlName="leadTime">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải nhập độ trễ</div>
+                  <div *ifError="'maxLength'">Tối đa 19 kí tự</div>
+                  <div *ifError="'floatNumberFormat'">Giá trị phải là số dương chỉ có 2 số sau dấu chấm</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="taxcode">
+                <div class="input-group">
+                  <label class="input-group-addon">Tax code</label>
+                  <input type="text" class="form-control" formControlName="taxcode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'taxFormat'">Sai định dạng mã số thuế</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="contryId">
+                <div class="input-group">
+                  <label class="input-group-addon">Quốc gia</label>
+                  <select class="form-control" formControlName="contryId">
+                    <option value=""></option>
+                    <option *ngFor="let country of countryList" [ngValue]="country.id">
+                      {{country.ctCode}} - {{country.ctName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="email">
+                <div class="input-group">
+                  <label class="input-group-addon">Email</label>
+                  <input type="text" class="form-control" formControlName="email">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                  <div *ifError="'emailFormat'">Sai định dạng email</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="accNo">
+                <div class="input-group">
+                  <label class="input-group-addon">Số tài khoản</label>
+                  <input type="text" class="form-control" formControlName="accNo">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="bankId">
+                <div class="input-group">
+                  <label class="input-group-addon">Mã ngân hàng</label>
+                  <select class="form-control" formControlName="bankId">
+                    <option value=""></option>
+                    <option *ngFor="let bank of bankList" [ngValue]="bank.id">
+                      {{bank.bankName}} - {{bank.bankCode}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 19 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="pic">
+                <div class="input-group">
+                  <label class="input-group-addon">Phụ trách</label>
+                  <input type="text" class="form-control" formControlName="pic">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="picMobi">
+                <div class="input-group">
+                  <label class="input-group-addon">DĐ NLH</label>
+                  <input type="text" class="form-control" formControlName="picMobi">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">>Sai định dạng, phải là số từ 10-15 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="picTel">
+                <div class="input-group">
+                  <label class="input-group-addon">ĐT NLH</label>
+                  <input type="text" class="form-control" formControlName="picTel">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

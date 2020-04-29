@@ -1,0 +1,73 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!userData">Thêm người dùng</h5>
+          <h5 class="modal-title" *ngIf="userData">Sửa thông tin người dùng</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group" hasError="dealerId">
+            <label class="required">TMV/Dealer</label>
+            <select formControlName="dealerId" class="form-control">
+              <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.code}} {{dealer.vnName}}</option>
+            </select>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập TMV/Dealer</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="userName">
+            <label class="required">Tên người dùng</label>
+            <input type="text" formControlName="userName" class="form-control">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập Tên người dùng</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" formControlName="fullUserName" class="form-control">
+          </div>
+          <div class="form-group" hasError="password">
+            <label class="required">Mật khẩu</label>
+            <input type="password" formControlName="password" class="form-control">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập Mật khẩu</div>
+              <div *ifError="'requiredPassword'">Mật khẩu phải có chữ thường, chữ hoa, chữ số và ký tự đặc biệt: #?!@$%^&* và có thấp nhất 6 ký tự</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="confirmPassword">
+            <label class="required">Xác nhận Mật khẩu</label>
+            <input type="password" formControlName="confirmPassword" class="form-control">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập xác nhận mật khẩu</div>
+              <div *ifError="'requiredPassword'">Mật khẩu phải có chữ thường, chữ hoa, chữ số và ký tự đặc biệt: #?!@$%^&* và có thấp nhất 6 ký tự</div>
+              <div *ifError="'fieldMatch'">Mật khẩu không khớp</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Employee</label>
+            <multi-column-select-control formControlName="employeeId"
+                                         displayField="empName"
+                                         dataField="employeeId"
+                                         [enableFilter]="true"
+                                         [fieldGrid]="fieldGridEmployeeList"
+                                         [list]="employeeList"
+            ></multi-column-select-control>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

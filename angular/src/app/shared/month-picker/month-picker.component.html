@@ -1,0 +1,21 @@
+<div class="input-group fdms-mp-input">
+  <div class="input-group-addon" *ngIf="text" [style.minWidth]="addOnMinWidth">{{text}}</div>
+  <input type="text" readonly value="{{model|date: 'MM/yyyy'}}" class="form-control" placeholder="{{config?.placeHolder || ''}}" />
+  <span class="input-group-addon month" (click)="onCalendarIconClick()"><i class="fa fa-calendar"></i></span>
+  <span class="input-group-addon btn btn-dark-grey" (click)="removeSelected()" *ngIf="removable">
+    <i class="fa fa-times"></i></span>
+  <div class="fdms-month-picker" *ngIf="monthPicker.state=='open'">
+    <div class="col-md-12 d-title">{{monthPicker.selectedMonth}}, {{monthPicker.selectedYear}}</div>
+    <div class="col-md-12 d-nav d-flex">
+      <div class="col-md-3"><span (click)="onPrevYearSelection()"><</span></div>
+      <div class="col-md-6"><span (click)="switchToYearMode()">{{monthPicker.displayYear}}</span></div>
+      <div class="col-md-3"><span (click)="onNextYearSelection()">></span></div>
+    </div>
+    <div class="col-md-12 d-selection-wraper d-flex flex-wrap">
+      <div class="col-md-3 d-selection-item" *ngFor="let item of monthPicker.selectionItems">
+        <span (click)="onselectionItemClick(item)">{{item.text}}</span></div>
+    </div>
+    <div class="col-md-12 d-actions">
+      <span class="d-action d-action-cancel" (click)="onCancel()">Hủy</span></div>
+  </div>
+</div>

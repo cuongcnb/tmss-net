@@ -1,0 +1,36 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="confirm()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Update Dealer Balance</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" hasError="adjustment">
+            <div class="input-group">
+              <label class="input-group-addon">Adjustment</label>
+              <input type="text" class="form-control required text-right" formControlName="adjustment" autoFocusField
+                     (input)="dataFormatService.formatMoneyForm(this.form, 'adjustment')">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Adjustment is required</div>
+              <div *ifError="'posAndNegInt'">Adjustment must be a number</div>
+              <div *ifError="'maxLength'">Max length is 12 characters</div>
+            </div>
+          </div>
+          <div class="mt-3 text-right">
+            <button type="submit" class="btn btn-blue mr-2">
+              <i class="fa fa-check"></i> OK
+            </button>
+            <button type="button" class="btn btn-blue" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

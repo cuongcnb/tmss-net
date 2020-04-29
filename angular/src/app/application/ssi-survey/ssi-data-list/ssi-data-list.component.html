@@ -1,0 +1,54 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Lựa chọn điều kiện tìm kiếm
+    </div>
+    <div class="panel-body">
+      <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+        <div class="row">
+          <div class="col-sm-2 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Loại khảo sát</span>
+              <select formControlName="surveyType" class="form-control">
+                <option value="1">SSI</option>
+                <option value="1">CSI</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Cột dữ liệu</span>
+              <select formControlName="colData" class="form-control">
+                <option value="1">Tất cả</option>
+                <option value="2">2</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Loại dữ liệu</span>
+              <select formControlName="dataType" class="form-control">
+                <option value="1">SSI</option>
+                <option value="2">CSI</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-blue" (click)="searchData()"><i class="fa fa-search"></i> Tìm kiếm</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <grid-table
+      [fieldGrid]="fieldGridDataList"
+      (callbackGrid)="callBackGridDataList($event)"
+      (getParams)="getParamsDataList()"
+    ></grid-table>
+    <div class="panel-footer">
+      <button class="btn btn-blue" (click)="copyDataList.open(selectedRowData)"><i class="fa fa-copy"></i> Sao chép</button>
+      <button class="btn btn-blue ml-2"><i class="clip-download"></i> Xuất Excel</button>
+    </div>
+  </div>
+</div>
+
+<copy-black-list (close)="copyData($event)" #copyDataList ></copy-black-list>

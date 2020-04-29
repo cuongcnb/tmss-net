@@ -1,0 +1,330 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"
+     [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">{{selectedOrder ? 'Cập nhật đơn hàng' : 'Tạo đơn hàng bán lẻ'}}</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin KH
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapseNewPartRetailCusInfo" aria-expanded="true" >
+                </button>
+              </div>
+            </div>
+            <div id="collapseNewPartRetailCusInfo" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Số ĐH</span>
+                          <div class="double-input-7-3">
+                            <input type="text" class="form-control" formControlName="orderNo">
+                            <input class="form-control" formControlName="orderType">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon same-addon-width">Loại KH</span>
+                              <select class="form-control" formControlName="customerTypeId">
+                                <option [ngValue]="null"></option>
+                                <option *ngFor="let customerType of customerTypeArr" [ngValue]="customerType.id">
+                                  {{customerType.cusTypeName}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group" hasError="mobile">
+                            <div class="input-group">
+                              <span class="input-group-addon same-addon-width">DĐ</span>
+                              <input type="text" class="required form-control" formControlName="mobile">
+                            </div>
+                            <div class="error-messages" errorMessage>
+                              <div *ifError="'required'">Bắt buộc nhập DĐ</div>
+                              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <tmss-datepicker [text]="'Ngày bán'" formControlName="salesdate"></tmss-datepicker>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Mã KH</span>
+                          <input-search formControlName="customerCode" [alwaysEnableBtn]="true"
+                                        [showBtn]="true" (onSearch)="searchCustomer('customerCode')"></input-search>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group" hasError="phone">
+                            <div class="input-group">
+                              <span class="input-group-addon same-addon-width">SĐT</span>
+                              <input class="form-control" formControlName="phone">
+                            </div>
+                            <div class="error-messages" errorMessage>
+                              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group" hasError="fax">
+                            <div class="input-group">
+                              <span class="input-group-addon same-addon-width">FAX</span>
+                              <input type="text" class="form-control" formControlName="fax">
+                            </div>
+                            <div class="error-messages" errorMessage>
+                              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group" hasError="account">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Tài khoản</span>
+                          <input type="text" class="form-control" formControlName="account">
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'numberFormat'">Chỉ được phép nhập số</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group" hasError="customerName">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Tên KH</span>
+                          <input-search formControlName="customerName" [isRequired]="true" [alwaysEnableBtn]="true"
+                                        [showBtn]="true" (onSearch)="searchCustomer()"></input-search>
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc nhập tên KH</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Tên Cty</span>
+                          <input type="text" class="form-control" formControlName="companyName">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Tên NH</span>
+                          <select class="form-control" formControlName="bankId">
+                            <option [ngValue]="null"></option>
+                            <option *ngFor="let bank of bankArr" [ngValue]="bank.id">{{bank.bankCode}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group" hasError="address">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Địa chỉ</span>
+                          <input type="text" class="form-control required" formControlName="address">
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc nhập địa chỉ</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group" hasError="taxNo">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">MST</span>
+                          <input type="text" class="form-control" formControlName="taxNo">
+                        </div>
+<!--                        <div class="error-messages" errorMessage>-->
+<!--                          <div *ifError="'taxFormat'">Sai định dạng mã số thuế</div>-->
+<!--                        </div>-->
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-sm-6" hasError="discountPercent">
+                          <div class="input-group">
+                            <span class="input-group-addon same-addon-width">Giảm giá</span>
+                            <input type="text" class="form-control" formControlName="discountPercent">
+                            <span class="input-group-addon percent-addon">%</span>
+                          </div>
+                          <div class="error-messages" errorMessage>
+                            <div *ifError="'floatNumberFormat0'">Sai định dạng số</div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6" hasError="discountPrice">
+                          <input type="text" class="form-control" formControlName="discountPrice">
+                          <div class="error-messages" errorMessage>
+                            <div *ifError="'numberFormat'">Sai định dạng số</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 text-right">
+                      <button type="button" class="btn btn-blue mr-2" (click)="onAddRow()">
+                        <i class="fa fa-plus"></i> Thêm PT
+                      </button>
+                      <button type="button" class="btn btn-blue mr-2" (click)="deletePart()">
+                        <i class="fa fa-trash-o"></i> Xóa PT
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách đặt hàng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapseNewPartRetailPart" aria-expanded="true" >
+                </button>
+              </div>
+            </div>
+            <div id="collapseNewPartRetailPart" class="panel-collapse collapse in">
+              <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                          (callbackGrid)="callBackGrid($event)"
+                          (getParams)="getParams()"
+                          (cellEditingStopped)="cellEditingStopped($event)"
+                          (cellEditingStarted)="cellEditingStarted($event)"
+                          (keyup)="agKeyUp($event)"></grid-table>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <button type="button" class="btn btn-blue mr-2">
+            <i class="fa fa-plus"></i> In báo giá
+          </button>
+          <button type="button" class="btn btn-blue mr-2">
+            <i class="fa fa-trash-o"></i> In LXPT
+          </button>
+          <button type="button" class="btn btn-blue mr-2">
+            <i class="fa fa-trash-o"></i> In QT
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-8 col-sm-6">
+            <div class="text-left">
+              <p>
+                <small><i>* Click vào grid và nhấn mũi tên xuống để thêm dòng mới</i></small>
+              </p>
+              <p>
+                <small><i>* Nhập mã phụ tùng và ấn enter/tab để bắt đầu tìm kiếm</i></small>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Giảm giá:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{discount}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<parts-retail-checking-modal #checkingModal (close)="modal.hide(); close.emit($event);"
+                             [bankArr]="bankArr" [customerTypeArr]="customerTypeArr"
+></parts-retail-checking-modal>
+<search-data-grid-modal #searchPartGridModal
+                        [headerText]="'Danh sách phụ tùng'"
+                        [apiCall]="searchPartsApi.bind(this)" [fieldGrid]="fieldGridSearchPartGrid"
+                        (close)="setDataToRow($event)"></search-data-grid-modal>
+<search-data-grid-modal #searchCustomerNameModal
+                        [headerText]="'Danh sách khách hàng - Tìm kiếm theo Tên'"
+                        [apiCall]="searchCustomerByNameApi.bind(this)" [fieldGrid]="fieldGridSearchCustomer"
+                        (close)="setFormData($event)">
+</search-data-grid-modal>
+<search-data-grid-modal #searchCustomerCodeModal
+                        [headerText]="'Danh sách khách hàng - Tìm kiếm theo Mã KH'"
+                        [apiCall]="searchCustomerByCusNo.bind(this)" [fieldGrid]="fieldGridSearchCustomer"
+                        (close)="setFormData($event)"></search-data-grid-modal>

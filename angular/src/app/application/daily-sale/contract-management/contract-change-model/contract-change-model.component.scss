@@ -1,0 +1,26 @@
+.after-change {
+  position: relative;
+  .is-admin {
+    &.form-control {
+      width: calc(100% - 90px) !important;
+    }
+  }
+  ::ng-deep .is-admin {
+    .form-control {
+      width: calc(100% - 52px) !important;
+    }
+  }
+  ::ng-deep tmss-datepicker.hide-datepicker-btn {
+    span.input-group-addon {
+      visibility: hidden;
+    }
+  }
+  button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+.min-width{
+  min-width: 130px;
+}

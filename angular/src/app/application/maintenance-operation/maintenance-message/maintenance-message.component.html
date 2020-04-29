@@ -1,0 +1,85 @@
+<div>
+  <div class="input-mtms">
+    <form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+      <fieldset>
+        <legend>Thông tin tìm kiếm</legend>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Đại lý</span>
+              <select class="form-control" formControlName="supplier">
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">BKS</span>
+              <input class="form-control" formControlName="bks">
+            </div>
+          </div>
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">VIN</span>
+              <input class="form-control" formControlName="vin">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <tmss-datepicker text="Ngày nhắc" formControlName="remindDate"></tmss-datepicker>
+          </div>
+          <div class="col-md-4 form-group">
+            <tmss-datepicker text="Đến ngày" formControlName="toDate"></tmss-datepicker>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-blue mr-2" (click)="search()">
+              <i class="fa fa-search"></i>
+              Tìm kiếm
+            </button>
+            <button class="btn btn-blue">
+              <i class="fa fa-refresh"></i>
+              Làm mới
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mt-3">
+      <div class="panel panel-default">
+        <grid-table [fieldGrid]="fieldGrid"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+                    height="568px"
+        ></grid-table>
+      </div>
+
+    </div>
+
+    <div class="col-md-8 mt-3">
+        <maintenance-message-content
+          [dataSearch]="selectedRowGrid"
+        ></maintenance-message-content>
+    </div>
+  </div>
+
+  <div class="row text-right mt-2">
+    <button class="btn btn-blue mr-2" type="submit">
+      <i class="fa fa-save"></i>
+      Lưu
+    </button>
+    <button class="btn btn-blue mr-2" (click)="openLSSCModal()">
+      <i class="fa fa-clock-o"></i>
+      Lịch sử sửa chữa
+    </button>
+    <button class="btn btn-blue mr-2">
+      <i class="clip-download"></i>
+      Xuất Excel
+    </button>
+  </div>
+
+</div>
+
+<maintenance-message-modal #maintenanceMessageModal></maintenance-message-modal>

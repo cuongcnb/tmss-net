@@ -1,0 +1,42 @@
+<div pageTitle="Gắn cột dữ liệu cho form">
+  <div class="grid-table-area mt-3">
+    <div class="row my-3">
+      <div class="col-sm-3">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Form</span>
+          <select class="form-control" [(ngModel)]="selectedFormId" (change)="onChangeForm()">
+            <option [ngValue]="undefined" selected="selected">--Please choose a Form--</option>
+            <option *ngFor="let form of forms" [ngValue]="form.id">{{form.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Form Column
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="gridField"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [showPagination]="false"
+                  [height]="'400px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addData()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue" (click)="updateData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<modify-form-column-modal #modifyFormColumnModal (close)="refreshList()"></modify-form-column-modal>

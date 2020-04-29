@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin xe
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseVehicleInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseVehicleInfo" class="panel-collapse collapse in">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form">
+      <div class="row">
+        <div class="form-group col-md-7 col-sm-7" hasError="vinno">
+          <div class="input-group">
+            <span class="input-group-addon">Số VIN</span>
+            <input-search formControlName="vinno" (onSearch)="searchVehicle()" [isRequired]="true"
+                          fieldAccessor="input" [maxLength]="180"></input-search>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-5" hasError="dlrAbbreviation">
+          <div class="input-group">
+            <span class="input-group-addon">Dealer Code</span>
+            <input type="text" class="required form-control" formControlName="dlrAbbreviation">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4 col-sm-4" hasError="colorNo">
+          <div class="input-group">
+            <span class="input-group-addon">Color No</span>
+            <input type="text" class="required form-control" formControlName="colorNo">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="engineNo">
+          <div class="input-group">
+            <span class="input-group-addon">Engine No</span>
+            <input type="text" class="required form-control" formControlName="engineNo">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="lineOffDate">
+          <tmss-datepicker text="Line Off Date" [isRequired]="true" formControlName="lineOffDate"></tmss-datepicker>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4 col-sm-4">
+          <tmss-datepicker text="Delivery Date" formControlName="deliveryDate"></tmss-datepicker>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="saleDate">
+          <tmss-datepicker [isRequired]="true" text="Sale Date" formControlName="saleDate"></tmss-datepicker>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="pdsDate">
+          <tmss-datepicker [isRequired]="true" text="Sale Date" formControlName="saleDate"></tmss-datepicker>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

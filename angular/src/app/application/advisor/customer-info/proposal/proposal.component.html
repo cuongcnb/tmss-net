@@ -1,0 +1,346 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" #content [attr.data-dirty]="form.dirty"
+      [attr.data-state]="form.value.rostate"
+      (keydown.enter)="$event.preventDefault()" focusField>
+  <div [style.max-height.px]="screenHeight" (window:resize)="onResize()" class="over-size">
+    <div class="header-form">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="input-group">
+                  <span data-toggle="tooltip" data-placement="bottom" title="Cố vấn dịch vụ"
+                        class="input-group-addon" addonWidth="64px">CVDV</span>
+            <input type="text" class="form-control" readonly formControlName="cvdv">
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">RO#</span>
+            <!--<input class="form-control" formControlName="roNo">-->
+            <select class="form-control" formControlName="roId" (change)="onSelectRo()" (keydown)="keyDown($event)">
+              <option value=""></option>
+              <option *ngFor="let it of listRoNo"
+                      [ngValue]="it.roId">{{it.roNo}} {{it.roNo ? '-' : ''}} {{it.roName}}</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-sm-3 form-group">
+          <tmss-datepicker formControlName="date" text="Ngày" addOnMinWidth="64px" [ignoredCalender]="true"
+                           readonly [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+        </div>
+        <!--<div class="col-sm-2  form-group">-->
+        <!--<div class="input-group">-->
+        <!--<span class="input-group-addon" addonWidth="44px">TT</span>-->
+        <!--<select class="form-control" formControlName="rostate">-->
+        <!--<option value=""></option>-->
+        <!--<option *ngFor="let state of RoState" [ngValue]="state.id">{{state.name}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="col-sm-2 form-group">
+          <div class="float-left">
+            <checkbox text="PDS" formControlName="pds"></checkbox>
+          </div>
+          <div class="form-group">
+            <div class="float-right">
+              <button class="btn btn-blue" (click)="reload(true)" placement="left" [tooltip]="'Refresh'"><i class="fa fa fa-rotate-right"></i></button>
+            </div>
+            <!--          <div class="float-right btn-group">-->
+            <!--&lt;!&ndash;            <button class="btn btn-blue" (click)="getPreviousRo()"><i class="fa fa-backward"></i></button>&ndash;&gt;-->
+            <!--&lt;!&ndash;            <button class="btn btn-blue" (click)="getNextRo()"><i class="fa fa fa-forward"></i></button>&ndash;&gt;-->
+            <!--            -->
+            <!--          </div>-->
+            <!--          <div class="clearfix">-->
+
+            <!--          </div>-->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">Loại hình SC</span>
+            <select class="form-control" formControlName="rotype" (change)="changeType($event.target.value)">
+              <option [ngValue]="'2'">S/C chung</option>
+              <option [ngValue]="'1'">Đồng sơn</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">HT thanh toán</span>
+            <select class="form-control" formControlName="rctypeId">
+              <option *ngFor="let type of rcTypes" [ngValue]="type.id"
+                      [ngClass]="(type.rctypename) === claimVehicleOld ? 'opacity' : ''">{{type.rctypename}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">Biển số</span>
+            <input class="form-control required" formControlName="registerno" readonly>
+          </div>
+        </div>
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="44px">VIN</span>
+            <input class="form-control" formControlName="vinno" readonly>
+          </div>
+        </div>
+        <!--        <div class="col-sm-1 form-group w-20">-->
+        <!--          <div class="input-group">-->
+        <!--            <span class="input-group-addon">Số lần in báo giá</span>-->
+        <!--            <input class="form-control" formControlName="quotationprint" readonly>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-7">
+        <cus-info-of-proposal #cusInfoOfProposal [form]="form" [isSubmit]="isSubmit"></cus-info-of-proposal>
+      </div>
+      <div class="col-sm-5">
+        <car-info-of-proposal [kmBefore]="kmBefore" [form]="form"
+                              [cmListByType]="cmListByType"></car-info-of-proposal>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="form-group" hasError="reqdesc">
+          <div class="input-group">
+            <span class="input-group-addon">Yêu cầu KH</span>
+            <input class="form-control required" #firstFocus formControlName="reqdesc" (focusout)="onFocusOut($event)">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group" hasError="km" [ignoreCss]="['required']">
+          <tmss-money-input [kmBefore]="kmBefore" [maxLength]="7" text="KM vào" [isRequired]="true"
+                            [addOnMinWidth]="'80px'" formControlName="km"
+                            fieldAccessor="input"></tmss-money-input>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'maxLength'">Số có độ dài 6 ký tự</div>
+            <div *ifError="'numberFormat'">Sai định dạng</div>
+          </div>
+        </div>
+      </div>
+<!--      <div class="col-sm-2">-->
+<!--        <div class="form-group">-->
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-addon" [addonWidth]="'80px'">Chiến dịch</span>-->
+<!--            <select class="form-control" formControlName="campaignId">-->
+<!--              <option *ngFor="let it of listCampaign"-->
+<!--                      [ngValue]="it.id">{{it.campaignName ? it.campaignName : ''}}-->
+<!--              </option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <!--<div class="col-sm-2">-->
+        <!--<div class="form-group">-->
+          <!--<div class="input-group"-->
+               <!--*ngIf="form.getRawValue().rotype === '2' || form.getRawValue() .roTypeTemp === '2'">-->
+            <!--<span class="input-group-addon" [addonWidth]="'80px'">Gói CV</span>-->
+            <!--<select class="form-control" formControlName="packageJob" (change)="changeSelectJobGroup()">-->
+              <!--<option [ngValue]="null"></option>-->
+              <!--<option *ngFor="let it of listJobGroupFilter"-->
+                      <!--[ngValue]="it.id">{{it.gjName}}-->
+              <!--</option>-->
+            <!--</select>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="col-sm-1">-->
+        <!--<button (click)="addStorageJobPackage.open(customerInfo.carModel)" type="button"-->
+                <!--class="btn text-right btn-blue"-->
+                <!--data-toggle="tooltip" data-placement="bottom"-->
+                <!--title="Đề xuất gói công việc"-->
+                <!--[disabled]="!form.getRawValue().roNo || !enableBtnRepairHistory.includes(form.getRawValue().rostate)">-->
+          <!--ĐX-->
+          <!--GCV&nbsp;&nbsp;-->
+        <!--</button>-->
+      <!--</div>-->
+    </div>
+
+    <div class="row">
+      <!--      <div class="col-sm-1 text-right">-->
+      <!--        <button class="btn btn-success">Chọn</button>-->
+      <!--      </div>-->
+    </div>
+
+    <repair-of-proposal
+      [dataGeneralRepair]="arrObjGeneralRepair"
+      [dataBpRepair]="arrObjBpRepair"
+      [cmId]="form ? form.value.cmId : ''"
+      [isRefresh]="isRefresh"
+      (partByJob)="changePartByJob($event)"
+      [state]="form.getRawValue().rostate"
+      [proposalForm]="form"
+      [rotype]="form && form.getRawValue().rotype ? form.getRawValue().rotype : null"
+      (countMoney)="getRepairMoney($event)"
+      [dsCurredJob]="dsCurredJob"
+      [sccCurredJob]="sccCurredJob"
+      [roState]="roState"
+      (chosenJob)="findPart($event)"
+    ></repair-of-proposal>
+    <accessory-of-proposal *ngIf="form" [isRefresh]="isRefresh" [state]="form.getRawValue().rostate"
+                           [data]="arrObjPart"
+                           (countMoney)="getPartMoney($event)" (selectAppointment)="selectAppointment()"
+                           [proposalForm]="form" [roId]="form.getRawValue().roId"
+    ></accessory-of-proposal>
+    <work-plan-of-proposal *ngIf="form"
+                           [timeStartComponent]="timeStartComponent"
+                           [form]="form" [isSubmit]="isSubmit"
+                           [campaign]="campaign"
+                           (reload)="reload(true)"
+                           [customerInfo]="customerInfo"
+                           [repairMoney]="repairMoney ? repairMoney : {}"
+                           [partMoney]="partMoney"></work-plan-of-proposal>
+  </div>
+  <div class="py-1 float-right">
+    <button type="button"
+            class="btn btn-blue mr-2"
+            (click)="refresh()"
+            [disabled]="(form.getRawValue().rostate=== State.cancel || form.getRawValue().roId)">
+      Refresh
+    </button>
+    <div class="btn-group dropup mr-2">
+      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        1. Báo giá <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <button class="btn btn-link" (click)="createQuotationTmp()"
+                  [disabled]="!enableBtnQuotationTmp.includes(form.getRawValue().rostate) || !isAdvisor">
+            1.1. Báo giá tạm
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-link" [disabled]="!enableBtnQuotation.includes(form.getRawValue().rostate)
+          || ((form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate)) && !stateCVDV.includes(form.getRawValue().rostate))
+          || !isAdvisor"
+                  (click)="storeQuotation()">1.2. Lưu báo giá
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-link" [disabled]="!enableBtnQuotation.includes(form.getRawValue().rostate)
+          || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+          || !isAdvisor"
+                  (click)="createQuotation('1')">1.3. In và xuất RO
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-link"
+                  data-toggle="tooltip" data-placement="bottom"
+                  title="Hủy báo giá"
+                  [disabled]="!enableBtnCancelRo.includes(form.getRawValue().rostate)
+                  || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+                  || !isAdvisor"
+                  (click)="cancelRo()">
+            1.4. Hủy BG
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-link">1.5. Bảo hiểm Toyota</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="btn-group dropup mr-2">
+      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+              [disabled]="(form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+              || !isAdvisor"
+              aria-haspopup="true" aria-expanded="false">
+        2. LXPT & LSC <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <button class="btn btn-link"
+                  [disabled]="!(this.form.get('partList').value && enableBtnPrintLXPT.includes(form.getRawValue().rostate))
+                  || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+                  || !isAdvisor"
+                  (click)="onBtnLXPT()" data-toggle="tooltip" data-placement="bottom"
+                  title="Lệnh xuất phụ tùng">
+            2.1. LXPT
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-link"
+                  data-toggle="tooltip" data-placement="bottom"
+                  title="Lệnh sửa chữa"
+                  [disabled]="!form.getRawValue().roNo || !enableBtnPrintLSC.includes(form.getRawValue().rostate)
+                  || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+                  || !isAdvisor"
+                  (click)="onBtnLSC()">
+            2.2 LSC
+          </button>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-blue mr-2"
+            [disabled]="!enableBtnFinishRo.includes(form.getRawValue().rostate)
+            || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+            || !isAdvisor"
+            (click)="finishRo()">
+      3. Hoàn thành
+    </button>
+
+    <div class="btn-group dropup mr-2">
+      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+              [disabled]="(form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+              || !isAdvisor"
+              aria-haspopup="true" aria-expanded="false">
+        4. Quyết toán <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <button class="btn btn-link" (click)="workNeedFast.open(form.getRawValue())"
+                  data-toggle="tooltip" data-placement="bottom"
+                  title="Công việc cần làm sớm"
+                  [disabled]="!form.getRawValue().roNo || !enableBtnWorkNeedFast.includes(form.getRawValue().rostate) || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+                  || !isAdvisor">
+            4.1. CVCLS
+          </button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-link"
+                  data-toggle="tooltip" data-placement="bottom"
+                  title="In quyết toán"
+                  [disabled]="!form.getRawValue().roNo || !enableBtnProposalPrint.includes(form.getRawValue().rostate) || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+                  || !isAdvisor"
+                  (click)="proposalPrintModal.open(form.getRawValue())">
+            4.2 In QT
+          </button>
+        </li>
+
+      </ul>
+    </div>
+    <button class="btn btn-blue mr-2" data-toggle="tooltip" data-placement="bottom"
+            title="Lịch sử sửa chữa"
+            (click)="openRepairHistory()">
+      5. LSSC
+    </button>
+    <button class="btn btn-blue mr-2"
+            data-toggle="tooltip" data-placement="bottom"
+            title="Công việc phát sinh"
+            [disabled]="!form.getRawValue().roNo || !enableBtnWorkIncurred.includes(form.getRawValue().rostate) || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
+            || !isAdvisor"
+            (click)="openWorkIncurred()">
+      6. CVPS
+    </button>
+  </div>
+</form>
+<proposal-print #proposalPrintModal [isAdvisor]="true" (onPrint)="onPrint($event) "></proposal-print>
+<work-need-fast #workNeedFast (close)="form.patchValue($event)"></work-need-fast>
+<work-incurred #workIncurred (onClose)="addInCurredJob($event)"></work-incurred>
+<repair-history #repairHistory></repair-history>
+<storage-modal #storageModal [form]="form"></storage-modal>
+<report-type-modal #reportTypeModal (close)="downloadReport($event)"></report-type-modal>
+<add-storage-job-package [formD]="form" #addStorageJobPackage></add-storage-job-package>

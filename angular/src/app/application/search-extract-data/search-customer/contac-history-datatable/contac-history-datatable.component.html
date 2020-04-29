@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Lịch sử liên hệ
+  </div>
+  <grid-table [fieldGrid]="fieldGrid" [height]="'100px'" [showPagination]="false"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"></grid-table>
+</div>

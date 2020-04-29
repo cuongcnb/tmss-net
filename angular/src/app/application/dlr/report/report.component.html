@@ -1,0 +1,78 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog" [ngClass]="reportFunction.indexOf('Date') >= 0 && dealerList ? 'modal-xl' : ''">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Delivery</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-4" hasError="dealerId" *ngIf="reportFunction.indexOf('Date') >= 0 && dealerList">
+              <div class="form-group input-group">
+                <span class="input-group-addon required">Dealer</span>
+                <select class="form-control" formControlName="dealerId">
+                  <ng-container *ngIf="reportFunction.indexOf('dlr') < 0">
+                    <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="reportFunction.indexOf('dlr') >= 0">
+                    <option [ngValue]="currentDealer.id">{{currentDealer.abbreviation}}</option>
+                  </ng-container>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Dealer is required</div>
+              </div>
+            </div>
+            <div [ngClass]="reportFunction.indexOf('Date') >= 0 && dealerList ? 'col-sm-4' : 'col-sm-6'" hasError="fromDate">
+              <div class="form-group ">
+                <!--<span class="required input-group-addon">From Date</span>-->
+                <!--<div class="input-group">-->
+                  <!--<input type="text" class="form-control" formControlName="fromDate"-->
+                         <!--#fromDate="bsDatepicker" bsDatepicker readonly>-->
+                  <!--<span class="input-group-addon btn btn-blue" (click)="fromDate.toggle()"-->
+                        <!--[attr.aria-expanded]="fromDate.isOpen">-->
+                        <!--<i class="fa fa-calendar"></i>-->
+                    <!--</span>-->
+                <!--</div>-->
+                <tmss-datepicker-sale [text]="'From Date'"
+                                 formControlName="fromDate"></tmss-datepicker-sale>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">From Date is required</div>
+              </div>
+            </div>
+            <div [ngClass]="reportFunction.indexOf('Date') >= 0 && dealerList ? 'col-sm-4' : 'col-sm-6'" hasError="toDate">
+              <div class="form-group ">
+                <!--<span class="required input-group-addon">To Date</span>-->
+                <!--<div class="input-group">-->
+                  <!--<input type="text" class="form-control" formControlName="toDate"-->
+                         <!--#toDate="bsDatepicker" bsDatepicker readonly>-->
+                  <!--<span class="input-group-addon btn btn-blue" (click)="toDate.toggle()"-->
+                        <!--[attr.aria-expanded]="toDate.isOpen">-->
+                <!--<i class="fa fa-calendar"></i>-->
+              <!--</span>-->
+                <!--</div>-->
+                <tmss-datepicker-sale [text]="'To Date'"
+                                 formControlName="toDate"></tmss-datepicker-sale>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">To Date is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="submit()">
+            <i class="fa fa-download"></i> Export
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

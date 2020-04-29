@@ -1,0 +1,55 @@
+<form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate class="row" focusField>
+  <div class="col-md-4 col-sm-6 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Mã công việc</span>
+      <input class="form-control" formControlName="searchKeyword">
+    </div>
+  </div>
+  <div class="col-md-1 col-sm-3 form-group">
+    <div class="input-group">
+      <checkbox text="BP" formControlName="isBp"></checkbox>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-6 form-group">
+    <div class="input-group">
+      <button type="button" class="btn btn-blue mr-2 mb-1" (click)="getAllListJob()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+  </div>
+</form>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách công Việc
+    <div class="panel-tools">
+      <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="getAllListJob()">
+        <i class="fa fa-refresh"></i>
+      </button>
+    </div>
+  </div>
+  <grid-table [fieldGrid]="fieldGrid"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [paginationTotalsData]="paginationTotalsData"
+              (changePaginationParams)="changePaginationParams($event)"
+  ></grid-table>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-blue mr-2" (click)="addUpdateJobModal.open()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!selectData || currentDlrId !== selectData?.dlrId"
+                (click)="addUpdateJobModal.open(selectData)">
+          <i class="fa fa-plus"></i> Sửa
+        </button>
+        <button type="button" class="btn btn-blue" [disabled]="!selectData || currentDlrId !== selectData?.dlrId"
+                (click)="onBtnDelete()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<add-update-job-modal (close)="getAllListJob()" #addUpdateJobModal></add-update-job-modal>

@@ -1,0 +1,28 @@
+<div class="modal fade mt-3" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Danh sách công việc phát sinh</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <grid-table [fieldGrid]="fieldGrid" *ngIf="modal.isShown"
+                      [showPagination]="false"
+                      [height]="'250px'"
+                      (callbackGrid)="callbackGrid($event)"
+                      [frameworkComponents]="frameworkComponents">
+          </grid-table>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" (click)="close()">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

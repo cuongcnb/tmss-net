@@ -1,0 +1,54 @@
+<div pageTitle="Yard Region Management">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Yard List
+        <div class="panel-tools">
+          <a role="button" class="btn btn-xs btn-link panel-refresh" href="#" (click)="refreshYard()">
+            <i class="fa fa-refresh"></i>
+          </a>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridYard"
+                  (callbackGrid)="callbackGridYard($event)"
+                  (getParams)="getParamsYard()"
+                  [showPagination]="false"
+                  [height]="'200px'"
+      ></grid-table>
+    </div>
+  </div>
+
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Area Of Yard
+        <div class="panel-tools">
+          <a role="button" class="btn btn-xs btn-link panel-refresh" href="#" (click)="refreshRegion()">
+            <i class="fa fa-refresh"></i>
+          </a>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridRegion"
+                  (callbackGrid)="callbackGridRegion($event)"
+                  (getParams)="getParamsRegion()"
+                  [showPagination]="false"
+                  [height]="'300px'"
+                  overlayLoadingTemplate="Please choose a yard to show area">
+      </grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addRegion()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateRegionData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedRegion" (click)="deleteRegionData()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<yard-area-modal #yardRegionModal (close)="refreshRegion()"></yard-area-modal>

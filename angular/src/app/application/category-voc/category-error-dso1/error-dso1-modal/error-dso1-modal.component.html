@@ -1,0 +1,70 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Danh mục loại lỗi 1 DSO {{selectedRowData? '[Cập nhật]' : '[Thêm mới]'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Mã loại lỗi DSO 1</span>
+                <input class="form-control" formControlName="codeDSO1">
+              </div>
+            </div>
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Tên loại lỗi DSO 1 (VN)</span>
+                <input class="form-control" formControlName="nameDSO1VN">
+              </div>
+            </div>
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Tên loại lỗi DSO 2 (EN)</span>
+                <input class="form-control" formControlName="nameDSO1EN">
+              </div>
+            </div>
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái</span>
+                <select class="form-control" formControlName="status"></select>
+              </div>
+            </div>
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Số thứ tự</span>
+                <input class="form-control" formControlName="stt">
+              </div>
+            </div>
+            <div class="form-group span-140">
+              <div class="input-group">
+                <span class="input-group-addon">Mô tả</span>
+                <textarea class="form-control textarea-fix" formControlName="description"></textarea>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue">
+            <i class="fa fa-save"></i>
+            Lưu
+          </button>
+          <button class="btn btn-blue" (click)="resetForm()">
+            <i class="fa fa-refresh"></i>
+            Làm mới
+          </button>
+          <button class="btn btn-light-grey" (click)="close()">
+            <i class="fa fa-times"></i>
+            Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

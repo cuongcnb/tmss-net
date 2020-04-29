@@ -1,0 +1,97 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}"
+>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>{{selectedData ? 'Sửa thông tin' : 'Thêm mới'}} tham số giờ công bảo hành</strong></h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="dealercode">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="100px">Dealer Code</label>
+                <select class="form-control required" formControlName="dealercode">
+                  <option *ngFor="let dlr of dealers" [ngValue]="dlr.code">{{dlr.code}} - {{dlr.abbreviation}} -
+                    {{dlr.vnName}}
+                  </option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Yêu cầu phải chọn</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="laborRate">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Labor Rate</label>
+                  <input class="form-control required" formControlName="laborRate">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'floatNumberFormat'">Giá trị nhập vào phải là số thập phân theo sau 2 kí tự</div>
+                  <div *ifError="'maxLength'">Tối đa 53 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="freePm">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">FREE PM</label>
+                  <input class="form-control" formControlName="freePm">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Giá trị nhập vào phải là số thập phân theo sau 2 kí tự</div>
+                  <div *ifError="'maxLength'">Tối đa 53 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group" hasError="descvn">
+                <label class="input-group-addon" addonWidth="100px">Desc VN</label>
+                <textarea rows="3" class="form-control" formControlName="descvn"></textarea>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="pwrdlr">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">PWRDLR</label>
+                  <input class="form-control" formControlName="pwrdlr">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Giá trị nhập vào phải là số thập phân theo sau 2 kí tự</div>
+                  <div *ifError="'maxLength'">Tối đa 53 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="prr">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">PRRDLR</label>
+                  <input class="form-control" formControlName="prr">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Giá trị nhập vào phải là số thập phân theo sau 2 kí tự</div>
+                  <div *ifError="'maxLength'">Tối đa 53 kí tự</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

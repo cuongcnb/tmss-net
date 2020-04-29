@@ -1,0 +1,99 @@
+<form [formGroup]="form" autocomplete="off" novalidate focusField (keydown.enter)="$event.preventDefault()">
+  <perfect-scrollbar class="ps pr-3" [style.max-height.px]="screenHeight" (window:resize)="onResize()">
+    <div class="row">
+      <div class="col-sm-4 w-30 pr-0">
+        <searching-of-booking
+          #searchingOfBooking
+          (chooseDetail)="onChooseDetail($event)"
+          [bookingForm]=form
+          [customerInfo]="customerInfo"
+          [appointment]="appointmentDetail"
+        ></searching-of-booking>
+      </div>
+      <div class="col-sm-8 w-70">
+        <!--<form class="col-sm-8 w-70" *ngIf="form" [formGroup]="form" autocomplete="off" novalidate focusField>-->
+        <div class="row">
+          <div class="col-sm-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search [maxLength]="13" formControlName="registerNo" [focus]="firstFocus" (onSearch)="search()"
+                [isRequired]="true" (change)="verifyRegisterNo(form)" (onFocus)="onFocus()" fieldAccessor="input"
+              ></input-search>
+            </div>
+            <button type="button" class="btn btn-blue mr-2 mb-1 mt-2" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+            <button type="button" class="btn btn-blue mr-2 mb-1 mt-2" (click)="clearForm()">
+              <i class="fa fa-refresh"></i> Làm mới
+            </button>
+          </div>
+          <div class="col-sm-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Khách hàng gọi">KH gọi</span>
+              <input class="form-control" [value]="formatDate(form.get('createDate').value)" readonly>
+            </div>
+          </div>
+          <div class="col-sm-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số phiếu hẹn</span>
+              <input class="form-control" formControlName="appointmentno">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 pr-0">
+            <customer-info-of-booking [form]="form" [isSubmit]="isSubmit" (onChangeType)="onChangeType()"></customer-info-of-booking>
+          </div>
+          <div class="col-sm-6">
+            <car-info-of-booking [form]="form" [isSubmit]="isSubmit"></car-info-of-booking>
+          </div>
+          <div class="col-sm-12 mt-2">
+            <required-info-of-booking [form]="form" [isSubmit]="isSubmit"
+                                      [appoinmentId]="this.customerInfo ? this.customerInfo.customer.appointmentId : null"
+                                      [cusvsId]="this.customerInfo ? this.customerInfo.customer.cusvsId : null"
+                                      (cancel)="checkDisable()"></required-info-of-booking>
+          </div>
+        </div>
+        <div style="text-align: right">
+<!--          <button type="button" class="btn text-right btn-blue mr-2 mt-2" (click)="creatNewBooking()">Tạo mới-->
+<!--          </button>-->
+          <button
+            [disabled]="form.value.apptype === '1' || !form.value.appoinmentId ||(form.value.appstatus === BookingStatus.APP_TMP && form.value.deleteflag !== 'Y')"
+            type="button" class="btn text-right btn-blue mr-2 mt-2" (click)="autoCheck(2)">Bảng tiến độ
+          </button>
+          <button
+            [disabled]="form.value.apptype === '1'|| !form.value.appoinmentId || form.value.appstatus === BookingStatus.APP_TMP && form.value.deleteflag !== 'Y'"
+            type="button" class="btn text-right btn-blue mr-2 mt-2" (click)="autoCheck(1)">Tự động quét
+          </button>
+          <!--          <button type="button" class="btn btn-blue mr-2 pt-2" (click)="openRepairProcess()">-->
+          <!--            Bảng tiến độ-->
+          <!--          </button>-->
+          <button type="button" class="btn btn-blue mr-2 mt-2" (click)="openReportModal()"
+                  [disabled]="!form.value.appoinmentId">
+            In phiếu hẹn
+          </button>
+          <button class="btn btn-blue mr-2 mt-2" [disabled]="!(form.get('cusvsId').value && cusVisit && cusVisit.meetcus)" (click)="openProposal()">
+            Báo giá
+          </button>
+          <button class="btn btn-blue mr-2 mt-2" (click)="openCarQueuingTicket()">
+            Phiếu khám xe
+          </button>
+          <button type="button" class="btn btn-blue mr-2 mt-2" (click)="openRepairProcess()" [disabled]="customerInfo">
+            Kế hoạch CVDV
+          </button>
+          <span>
+            <button class="btn btn-blue mt-2 mr-2" (click)="save()">
+              <i class="fa fa-save"></i> Lưu thông tin
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </perfect-scrollbar>
+  <div class="col-sm-4 w-30"></div>
+</form>
+
+<car-queuing-ticket #carQueuingTicket
+                    (close)="form.patchValue({cusvsId:$event ? $event.id : null }); cusVisit = $event"></car-queuing-ticket>
+<report-type-modal #reportTypeModal (close)="printAppoinment($event)"></report-type-modal>
+<vehicle-search #vehicleSearch (change)="onChange($event)"></vehicle-search>

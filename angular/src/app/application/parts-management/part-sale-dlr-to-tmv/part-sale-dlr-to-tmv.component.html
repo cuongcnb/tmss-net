@@ -1,0 +1,79 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Tìm kiếm
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="searchForm" *ngIf="searchForm">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Mã PT</span>
+              <input type="search" class="form-control" formControlName="partCode" (change)="replaceSpecial($event.target.value)">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh sách phụ tùng
+      </div>
+      <div class="panel-body">
+        <grid-table [fieldGrid]="fieldPartsList"
+                    [showPagination]="false"
+                    [frameworkComponents]="frameworkComponents"
+                    (callbackGrid)="callbackParts($event)"
+                    (getParams)="getParamsParts()"
+                    (keyup)="agKeyUp($event)"
+                    (cellEditingStopped)="cellEditingStopped($event)"
+                    (cellValueChanged)="cellValueChanged($event)"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <label class="pt-3">Tổng: {{focusCellIndex ? focusCellIndex + 1 : 0}}</label>
+    <button class="btn btn-blue float-right m-1" data-toggle="tooltip" data-placement="bottom"
+            title="Biên bản giao hàng" (click)="reportModal.open(3)"> Biên bản GH
+    </button>
+    <button class="btn btn-blue float-right m-1" data-toggle="tooltip" data-placement="bottom"
+            title="Bảng kê kèm hóa đơn" (click)="reportModal.open(2)"> Bảng kê kèm HĐ
+    </button>
+    <button class="btn btn-blue float-right m-1" data-toggle="tooltip" data-placement="bottom"
+            title="Bảng tổng hợp đặt hàng" (click)="reportModal.open(1)">Bảng tổng hợp ĐH
+    </button>
+    <button disabled class="btn btn-blue float-right m-1" data-toggle="tooltip" data-placement="bottom"
+            title="Xuất dữ liệu" (click)="export()"> Xuất DL
+    </button>
+    <button class="btn btn-blue float-right m-1" data-toggle="tooltip" data-placement="bottom"
+            title="Bán lẻ phụ tùng" (click)="onBtnPartsRetailOrder()">Bán lẻ PT
+    </button>
+    <button class="btn btn-blue float-right m-1" (click)="removePart()"> Xóa
+    </button>
+    <button class="btn btn-blue float-right m-1" (click)="addParts()"> Thêm
+    </button>
+    <button class="btn btn-blue float-right m-1" (click)="saveParts()"> Lưu
+    </button>
+  </div>
+</div>
+<tmss-export [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>
+<report-modal #reportModal (close)="print($event)"></report-modal>
+<reject-modal #rejectModal (close)="confirmReject($event)"></reject-modal>
+<parts-retail-order #partsRetailOrder></parts-retail-order>
+<search-data-grid-modal #searchPartsModal
+                        (cancel)="cancelPart()"
+                        [headerText]="'Chọn phụ tùng'"
+                        [apiCall]="searchPartApiCall.bind(this)" [fieldGrid]="fieldPartsSearch"
+                        (close)="setDataToRow($event)"></search-data-grid-modal>
+
+

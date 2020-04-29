@@ -1,0 +1,248 @@
+<div class="row">
+  <form [formGroup]="searchForm" *ngIf="searchForm">
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="padding: 1px 5px;">
+      <div fxLayout="row" fxLayoutGap="10px">
+        <div class="form-group receptionist-search-box">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số</span>
+            <input type="text" class="form-control" formControlName="registerNo">
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-blue" (click)="findCar()"><i class="fa fa-search"> </i></button>
+        </div>
+      </div>
+      <div class="form-group text-center">
+        <!--      <span>{{ moment().format('DD/MM/YYYY') }}</span>-->
+        <tmss-datepicker formControlName="date" [dateInputFormat]="'DD/MM/YYYY'"></tmss-datepicker>
+      </div>
+      <div class="form-group">
+        <div class="text-right">
+          <button class="btn btn-blue" (click)="receptionistVehicle.open()"><i class="fa fa-plus"></i> Thêm xe ra
+            vào
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="row" style="padding: 0 5px !important;">
+  <div fxLayout="row" fxLayoutGap="10px">
+    <div class="mt-2 guests-list" fxLayout="column">
+      <div class="panel panel-default customer-list">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Khách chờ
+        </div>
+        <div class="panel-body no-padding">
+          <div class="cars-list waiting-list no-padding" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+              <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                <div id="guest-cars" class="cars" cdkDropList
+                     [cdkDropListConnectedTo]="dropListConnectedIds"
+                     [cdkDropListData]="guestCars" (cdkDropListDropped)="drop($event)">
+                  <div class="car-box" *ngFor="let car of guestCars"
+                       cdkDrag [cdkDragDisabled]="!isToday()"
+                       (dblclick)="modifyVehicle(car)"
+                       [ngClass]="{'is-first-in': car.isFirstIn === 'Y' && getDuration(car) <= moment.duration(warningTime).asMinutes(),
+                              'in-wait-time': car.isFirstIn !== 'Y' && getDuration(car) <= moment.duration(warningTime).asMinutes(),
+                              'out-wait-time': getDuration(car) > moment.duration(warningTime).asMinutes(),
+                              'before-today': !isToday()}">
+                    <strong class="register-no" fxFlex="45%">{{car.registerNo}}</strong>
+                    <img src="assets/imgs/h.png" alt="Khach hen" *ngIf="car.isAppointment === 'Y'">
+                    <div class="car-info" fxFlex="40%" fxLayout="column" fxLayoutAlign="space-between end"
+                         fxLayoutGap="2px"
+                         *ngIf="car.isAppointment === 'Y'">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ getDuration(car) }} ph</strong>
+                    </div>
+                    <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end" fxLayoutGap="2px"
+                         *ngIf="car.isAppointment !== 'Y'">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ getDuration(car) }} ph</strong>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default customer-list">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Khách hẹn
+        </div>
+        <div class="panel-body no-padding">
+          <div class="cars-list appointment-list no-padding" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+              <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                <div id="appointment-cars" class="cars">
+                  <div class="car-box" *ngFor="let car of appointmentCars" style="cursor: default;">
+                    <strong class="register-no" fxFlex="50%">{{car.registerNo}}</strong>
+                    <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end" fxLayoutGap="2px">
+                      <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                      <strong>{{ !!car.cusArr ? moment(car.cusArr).format('HH:mm') : '' }}</strong>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-2" fxLayout="column" fxFlex>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i> Cố vấn
+        </div>
+
+        <div class="panel-body no-padding" cdkDropListGroup>
+          <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+            <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+              <div class="advisers-list" fxLayout="row wrap" fxLayoutAlign="stretch">
+
+                <!-- danh sách các cố vấn -->
+                <div class="m-2 adviser" fxLayout="column" fxLayoutAlign="end stretch"
+                     *ngFor="let adviser of advisers$ | async" [ngClass]="{'adviser-disabled': adviser.status !== 'Y'}">
+                  <div class="adviser-info" fxLayout="row" fxLayoutAlign="space-between stretch">
+                    <div class="adviser-table" fxFlex="45px" fxLayout="row" fxLayoutAlign="center center">
+                      {{ adviser.deskName }}
+                    </div>
+                    <div class="adviser-name" fxFlex fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2px">
+                      <span>{{ adviser.advisorName }}</span>
+                      <span>{{ adviser.advisorTitle }}</span>
+                    </div>
+                    <div class="waiting-number" fxFlex="25px" fxLayout="row" fxLayoutAlign="center center"
+                         data-toggle="tooltip" title="Số lượng khách hàng đang tư vấn">
+                      {{ adviser.waitingQty }}
+                    </div>
+                    <div class="consulted-number" fxFlex="25px" fxLayout="row" fxLayoutAlign="center center"
+                         data-toggle="tooltip" title="Số lượng khách hàng đã tư vấn">
+                      {{ adviser.receivedQty }}
+                    </div>
+                  </div>
+
+                  <!-- xe đang tư vấn -->
+                  <div class="cars-list car-current">
+                    <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%"
+                         *ngIf="adviser.status === 'Y'">
+                      <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                        <div id="consulting-cars-adviser-{{adviser.advisorId}}" class="cars"
+                             cdkDropList [cdkDropListData]="adviser.consultingCars">
+                          <div class="car-box" *ngFor="let car of adviser.consultingCars" cdkDrag
+                               [cdkDragDisabled]="true"
+                               [ngStyle]="adviser.consultingCars ? {'background':'#66B55D' } : ''"
+                               [ngClass]="{ 'before-today': !isToday() }">
+                            <strong class="register-no" fxFlex="50%">{{car.registerNo}}</strong>
+                            <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end"
+                                 fxLayoutGap="2px">
+                              <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                              <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                              <strong>{{ !!car.startMeetcusDate ? moment(car.startMeetcusDate).format('HH:mm') : '' }}</strong>
+                            </div>
+                          </div>
+                        </div>
+                      </perfect-scrollbar>
+                    </div>
+                  </div>
+
+                  <!-- xe đang chờ tư vấn -->
+                  <div class="cars-list car-waiting-consult-list" fxFlex data-toggle="tooltip"
+                       title="Khách hàng chờ tư vấn">
+                    <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%"
+                         *ngIf="adviser.status === 'Y'">
+                      <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                        <div id="waiting-consult-cars-adviser-{{adviser.advisorId}}" class="cars" cdkDropList
+                             [cdkDropListConnectedTo]="['guest-cars']"
+                             [cdkDropListData]="adviser.waitingConsultCars"
+                             (cdkDropListDropped)="drop($event, adviser)">
+                          <div class="car-box" *ngFor="let car of adviser.waitingConsultCars" cdkDrag
+                               [cdkDragDisabled]="!car.id || !isToday()"
+                               [ngClass]="{ 'in-wait-time': getDuration(car) <= moment.duration(warningTime).asMinutes() && !car.isCall,
+                                        'out-wait-time': getDuration(car) > 2 * moment.duration(warningTime).asMinutes() && !car.isCall,
+                                        'before-today': !isToday(), 'car-box-blink': car.isCall }">
+                            <strong class="register-no" fxFlex="45%">{{car.registerNo}}</strong>
+                            <img src="assets/imgs/h.png" alt="Khach hen" *ngIf="car.isAppointment === 'Y' || (car.isAppointment !== 'Y' && !car.id)">
+                            <div class="car-info" fxFlex="40%" fxLayout="column" fxLayoutAlign="space-between end"
+                                 fxLayoutGap="2px"
+                                 *ngIf="car.isAppointment === 'Y'">
+                              <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                              <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                              <strong>
+                                <span *ngIf="!!car.id">{{ getDuration(car) }} ph</span>
+                                <span
+                                  *ngIf="!car.id">{{ !!car.cusArr ? moment(car.cusArr).format('HH:mm') : '' }}</span>
+                              </strong>
+                            </div>
+                            <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end"
+                                 fxLayoutGap="2px"
+                                 *ngIf="car.isAppointment !== 'Y'">
+                              <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                              <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                              <strong>
+                                <span *ngIf="!!car.id">{{ getDuration(car) }} ph</span>
+                                <span
+                                  *ngIf="!!car.cusarr">{{ !!car.cusarr ? moment(car.cusarr).format('HH:mm') : '' }}</span>
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                      </perfect-scrollbar>
+                    </div>
+                  </div>
+                  <!-- xe đã tư vấn -->
+                  <accordion [isAnimated]="true" *ngIf="adviser.status === 'Y' && adviser.consultedCars.length">
+                    <accordion-group>
+                      <div class="clearfix" style="cursor: pointer;" accordion-heading
+                           (click)="adviser.isOpen = !adviser.isOpen">
+                    <span class="float-right pull-right">
+                      <i class="fa fa-chevron-down" aria-hidden="true" *ngIf="adviser.isOpen"></i>
+                      <i class="fa fa-chevron-up" aria-hidden="true" *ngIf="!adviser.isOpen"></i>
+                    </span>
+                      </div>
+                      <div class="cars-list car-consulted-list" data-toggle="tooltip" title="Khách hàng đã được tư vấn">
+                        <div class="scrollable-container" fxLayout="row" fxLayoutAlign="stretch" fxFlex="100%">
+                          <perfect-scrollbar fxFlex="auto" [config]="config" [scrollIndicators]="true">
+                            <div id="consulted-cars-adviser-{{adviser.advisorId}}" class="cars" cdkDropList
+                                 [cdkDropListData]="adviser.consultedCars">
+                              <div class="car-box" *ngFor="let car of adviser.consultedCars" cdkDrag
+                                   [cdkDragDisabled]="true">
+                                <strong class="register-no" fxFlex="45%">{{car.registerNo}}</strong>
+                                <!--                            <img src="assets/imgs/h.png" alt="Khach hen" *ngIf="car.isAppointment === 'Y'">-->
+                                <img src="assets/imgs/cup.png" alt="Khach cho lay xe" *ngIf="car.isCusWait === 'Y'">
+                                <div class="car-info" fxFlex="40%" fxLayout="column" fxLayoutAlign="space-between end"
+                                     fxLayoutGap="2px"
+                                     *ngIf="car.isCusWait === 'Y'">
+                                  <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                                  <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                                  <strong>{{ !!car.carDeliveryTime ? moment(car.carDeliveryTime).format('HH:mm') : '' }}</strong>
+                                </div>
+                                <div class="car-info" fxFlex fxLayout="column" fxLayoutAlign="space-between end"
+                                     fxLayoutGap="2px"
+                                     *ngIf="car.isCusWait !== 'Y'">
+                                  <strong>{{ !!car.vehicleStatus ? commonFunctionsService.getCarStatus(car) : '' }}</strong>
+                                  <strong>{{ commonFunctionsService.getCarJobs(car) }}</strong>
+                                  <strong>{{ !!car.carDeliveryTime ? moment(car.carDeliveryTime).format('HH:mm') : '' }}</strong>
+                                </div>
+                              </div>
+                            </div>
+                          </perfect-scrollbar>
+                        </div>
+                      </div>
+                    </accordion-group>
+                  </accordion>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<vehicle-in-modal #receptionistVehicle (close)="forceReload()"></vehicle-in-modal>

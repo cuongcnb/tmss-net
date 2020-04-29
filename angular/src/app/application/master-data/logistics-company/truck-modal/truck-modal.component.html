@@ -1,0 +1,129 @@
+<div class="modal fade" bsModal #truckModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Truck</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Truck</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="registerNo">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="85px">Register No</label>
+                  <input type="text" class="form-control required" formControlName="registerNo" autoFocusField>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Register No is required</div>
+                  <div *ifError="'maxLength'">Max length is 20</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="transportationTypeId">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="120px">Means of Transport</label>
+                  <select type="text" class="form-control required" formControlName="transportationTypeId">
+                    <option value=""></option>
+                    <option *ngFor="let transportType of transportTypes" [value]="transportType.id">
+                      {{transportType.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Means of Transport is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="productionYear">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="85px">Pro Year</label>
+                  <input class="form-control" formControlName="productionYear">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Production Year must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="120px">Owner Type</label>
+                  <select class="form-control" formControlName="ownerType">
+                    <option value="O">Owner</option>
+                    <option value="R">Rental</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="driverName">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="85px">Driver Name</label>
+                  <input type="text" class="form-control" formControlName="driverName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="driverPhone">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="120px">Driver Phone</label>
+                  <input type="text" class="form-control" formControlName="driverPhone" maxlength="11">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                  <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="ordering">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="85px">Order</label>
+                  <input class="form-control" formControlName="ordering">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Order must be a positive number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="120px">Status</label>
+                  <select class="form-control" formControlName="status">
+                    <option value="Y">Enable</option>
+                    <option value="N">Disable</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-12" hasError="description">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="85px">Description</label>
+                  <textarea type="text" class="form-control resize-vertical" rows="4"
+                            formControlName="description"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button class="btn btn-blue" type="button" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

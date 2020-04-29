@@ -1,0 +1,63 @@
+<div class="row">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="col-sm-4 mb-2" *ngIf="cavitiesTypes">
+      <div class="input-group">
+        <span class="input-group-addon" addonWidth="103px">Mã kiểu khoang</span>
+        <multi-column-select-control formControlName="wsTypeId"
+                                     [fieldGrid]="cavitiesGridField"
+                                     dataField="id"
+                                     displayField="wsTypeCode"
+                                     [list]="cavitiesTypes"
+                                     [isClear]="false"
+        ></multi-column-select-control>
+      </div>
+    </div>
+    <div class="mb-2" [ngClass]="cavitiesTypes? 'col-sm-4' : 'col-sm-6'">
+      <div class="input-group">
+        <span class="input-group-addon" addonWidth="103px">Tên kiểu khoang</span>
+        <input type="text" class="form-control" formControlName="wsTypeName">
+      </div>
+    </div>
+    <div class="mb-2" [ngClass]="cavitiesTypes? 'col-sm-4' : 'col-sm-6'">
+      <div class="input-group">
+        <span class="input-group-addon" addonWidth="103px">Mô tả</span>
+        <input type="text" class="form-control" formControlName="description">
+      </div>
+    </div>
+  </form>
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh Mục Khoang Sửa Chữa
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseRepairCavity" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseRepairCavity" class="panel-collapse collapse in">
+
+        <grid-table [fieldGrid]="gridField"
+                    (callbackGrid)="callbackCavity($event)"
+                    (getParams)="getParamsCavity()"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 text-right">
+    <button class="btn btn-blue mr-2"
+            (click)="repairCavityModal.open(form.value.wsTypeId)"
+            [disabled]="!form.value.wsTypeId">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" (click)="updateCavity()" [disabled]="!form.value.wsTypeId">
+      <i class="fa fa-pencil"></i> Sửa
+    </button>
+    <button class="btn btn-blue" (click)="deleteCavity()">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+</div>
+
+<repair-cavity-modal #repairCavityModal (close)="refreshCavity()"></repair-cavity-modal>

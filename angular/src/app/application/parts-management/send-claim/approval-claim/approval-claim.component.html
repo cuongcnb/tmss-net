@@ -1,0 +1,241 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    <span>Thông tin tìm kiếm</span>
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseApprovalClaimSearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseApprovalClaimSearch" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" class="row mb-3">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">Mã đại lý</span>
+              <select class="form-control" formControlName="dlrId">
+                <ng-container *ngIf="currentUser.isAdmin">
+                  <option [ngValue]="null">Tất cả</option>
+                  <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.code}}</option>
+                </ng-container>
+                <ng-container *ngIf="!currentUser.isAdmin">
+                  <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <tmss-datepicker text="Ngày Cl" formControlName="claimDate"></tmss-datepicker>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">Số Cl</span>
+              <input type="text" class="form-control" formControlName="claimNo">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">TT 1</span>
+              <select class="form-control" formControlName="statusHeader">
+                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="1">Chưa giải quyết</option>
+                <option [ngValue]="2">Đang giải quyết</option>
+                <option [ngValue]="3">Chấp nhận</option>
+                <option [ngValue]="4">Từ chối</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">Mã PT</span>
+              <input type="text" class="form-control" formControlName="partsCode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <tmss-datepicker text="Từ ngày" formControlName="fromDate"></tmss-datepicker>
+          </div>
+          <div class="col-sm-3">
+            <tmss-datepicker text="Đến ngày" formControlName="toDate"></tmss-datepicker>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">SPGH</span>
+              <input type="text" class="form-control" formControlName="sVourcher">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group input-group">
+              <span class="input-group-addon same-addon-width-header">TT 2</span>
+              <select class="form-control" formControlName="statusDetail">
+                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="1">Chưa giải quyết</option>
+                <option [ngValue]="2">Đang giải quyết</option>
+                <option [ngValue]="3">Chấp nhận</option>
+                <option [ngValue]="4">Từ chối</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-2 text-right">
+            <button class="btn btn-blue" (click)="search()">Tìm kiếm</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="pt-2">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          <span>Danh sách</span>
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseApprovalClaimList" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseApprovalClaimList" class="panel-collapse collapse in">
+
+          <grid-table [fieldGrid]="fieldClaim"
+                      (callbackGrid)="callbackClaim($event)"
+                      (getParams)="getParamsClaim()"
+                      [paginationTotalsData]="paginationTotalsData"
+                      (changePaginationParams)="changePaginationParams($event)"
+                      height="250px"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          <span>Chi tiết</span>
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseApprovalClaimDetail" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseApprovalClaimDetail" class="panel-collapse collapse in">
+
+          <div class="panel-body">
+            <form [formGroup]="claimForm" *ngIf="claimForm" novalidate autocomplete="off" class="row mb-3">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">Mã DL</div>
+                    <input type="text" class="form-control" formControlName="dlrCode">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">TT 1</div>
+                    <select
+                      class="form-control"
+                      formControlName="claimStatus"
+                      (change)="checkHeaderChange()"
+                    >
+                      <option [ngValue]="null"></option>
+                      <option [ngValue]="1">Chưa giải quyết</option>
+                      <option [ngValue]="2">Đang giải quyết</option>
+                      <option [ngValue]="3">Chấp nhận</option>
+                      <option [ngValue]="4">Từ chối</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <tmss-datepicker text="Ngày Claim" formControlName="claimDate"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">SPGH</div>
+                    <input type="text" class="form-control" formControlName="sVoucher">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">Số HD Đỏ</div>
+                    <input type="text" class="form-control" formControlName="invoiceNo">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <tmss-datepicker text="Ngày Nhận" formControlName="shipDate"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">
+                      ĐL <br> ghi chú
+                    </div>
+                    <textarea class="form-control" rows="4" formControlName="dlrRemark"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group input-group">
+                    <div class="input-group-addon same-addon-width-claim">
+                      Ghi chú
+                    </div>
+                    <textarea class="form-control" rows="4" formControlName="tmvRemark"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row text-right">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue mr-2" (click)="attachedFileModal.open(selectedClaim.claimId)">File đính kèm</button>
+                  <button class="btn btn-blue mr-2" (click)="saveClaim()">Lưu</button>
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        <span>Phụ tùng</span>
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseApprovalClaimPart" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseApprovalClaimPart" class="panel-collapse collapse in">
+
+        <grid-table [fieldGrid]="fieldParts" [height]="'300px'"
+                    (callbackGrid)="callBackParts($event)"
+                    (getParams)="getParamsParts()"
+                    (cellEditingStopped)="cellEditingStopped()"
+                    [showPagination]="false"
+                    [frameworkComponents]="frameworkComponents"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<send-claim-attached-file-modal #attachedFileModal 
+  (listFile)="$event"
+  (search)="search()"
+  (save)="saveClaim()"
+></send-claim-attached-file-modal>

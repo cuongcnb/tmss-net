@@ -1,0 +1,14 @@
+<grid-table [fieldGrid]="fieldGrid" *ngIf="tabDisplay"
+            [height]="'200px'" [frameworkComponents]="frameworkComponents"
+            [showPagination]="false"
+            (callbackGrid)="callbackGrid($event)"
+            (getParams)="getParams()"
+            (cellEditingStopped)="cellEditingStopped($event)"
+></grid-table>
+
+<div class="text-right mt-1">
+  <button type="button" class="btn btn-blue mr-2"
+          [disabled]="disabledReturnBtn" (click)="returnAllPart()">Trả hết</button>
+  <button type="button" class="btn btn-blue"
+          [disabled]="disabledExportBtn" (click)="exportAllPart()">Xuất hết</button>
+</div>

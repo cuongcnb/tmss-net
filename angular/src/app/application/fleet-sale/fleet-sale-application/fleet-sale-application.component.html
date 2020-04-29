@@ -1,0 +1,378 @@
+<div pageTitle="Fleet Sale Application">
+  <form [formGroup]="fleetHeaderForm" *ngIf="fleetHeaderForm" class="fleet-sale-header">
+    <div class="row">
+      <div class="col-sm-4">
+        <tmss-datepicker-sale [addOnMinWidth]="'80px'" formControlName="fromDate" text="From Date"></tmss-datepicker-sale>
+      </div>
+      <div class="col-sm-4">
+        <tmss-datepicker-sale [addOnMinWidth]="'80px'" formControlName="toDate" text="To Date"></tmss-datepicker-sale>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-sm-4">
+        <div class="form-group input-group">
+          <span class="input-group-addon min-width-header">Dealer</span>
+          <select class="form-control" formControlName="dealerId">
+            <ng-container *ngIf="!isDlr">
+              <option [ngValue]="currentUser.dealerId">All</option>
+              <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+            </ng-container>
+            <ng-container *ngIf="isDlr">
+              <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group input-group">
+          <span class="input-group-addon min-width-header">Ref No.</span>
+          <input type="text" formControlName="refNo" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4 search-group">
+        <div class="form-group input-group ">
+          <span class="input-group-addon min-width-header">Status</span>
+          <select class="form-control" formControlName="status">
+            <option [ngValue]="null">All</option>
+            <option *ngIf="isDlr" value="PENDING">PENDING</option>
+            <option value="REQUEST">REQUEST</option>
+            <option value="APPROVE">APPROVE</option>
+            <option value="REJECT">REJECT</option>
+          </select>
+          <button type="button" class="btn btn-blue" (click)="onBtnSearch()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-lg-5 col-sm-9 pr-xl-3">
+      <div class="grid-table-area">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Fleet Sale Application
+          </div>
+          <grid-table [fieldGrid]="fieldGridFleetApp"
+                      [height]="'200px'"
+                      (callbackGrid)="callbackGridFleetApp($event)"
+                      (getParams)="getParamsFleetApp()"></grid-table>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7 col-sm-12 pl-xl-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Customer Information
+        </div>
+        <div class="panel-body">
+          <form [formGroup]="customerForm" *ngIf="customerForm">
+            <div class="row">
+              <div class="col-sm-6" hasError="customerName">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Customer Name</span>
+                  <div class="input-group " *ngIf="isDlr">
+                    <input type="text" class="required form-control" formControlName="customerName">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-blue" (click)="openTmvCustomerModal(false)"
+                              [attr.disabled]="disableSendBtn">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="customerName"
+                         *ngIf="!isDlr">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Customer Name is required</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group input-group" hasError="fleetCustomerName">
+                  <span class="input-group-addon min-width-customer">Name(TMV)</span>
+                  <div class="input-group" *ngIf="!isDlr">
+                    <input [class.required]="!isDlr" type="text" class="form-control"
+                           formControlName="fleetCustomerName">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-blue" (click)="openTmvCustomerModal(true)"
+                              [attr.disabled]="disableApproveRejectBtn">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                    </span>
+                  </div>
+                  <div *ngIf="!isDlr" class="error-messages" errorMessage>
+                    <div *ifError="'required'">Customer Name is required</div>
+                  </div>
+                  <input type="text" class="form-control" formControlName="fleetCustomerName" readonly
+                         *ngIf="isDlr">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3" hasError="tel">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Company Tel</span>
+                  <input type="text" class="form-control" formControlName="tel">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Tel is invalid</div>
+                </div>
+              </div>
+              <div class="col-sm-3" hasError="fax">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Fax</span>
+                  <input type="text" class="form-control" formControlName="fax">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Fax is invalid</div>
+                </div>
+              </div>
+              <div class="col-sm-3" hasError="taxCode">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Tax Code</span>
+                  <input type="text" class="form-control" formControlName="taxCode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'taxFormat'">Tax Code is invalid</div>
+                </div>
+              </div>
+              <div class="col-sm-3" hasError="businessField">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Business Field</span>
+                  <select type="text" class=" required form-control" formControlName="businessField">
+                    <option value=""></option>
+                    <option *ngFor="let businessField of businessFields" [ngValue]="businessField.id">
+                      {{businessField.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Business Field is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6" hasError="contactName">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Contact Name</span>
+                  <input type="text" class="required form-control" formControlName="contactName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 1020</div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Gender</span>
+                  <select type="text" class="form-control" formControlName="genderId">
+                    <option value=""></option>
+                    <option *ngFor="let gender of genderList" [ngValue]="gender.id">{{gender.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Age</span>
+                  <select type="text" class="form-control" formControlName="ageLeadTimeId">
+                    <option value=""></option>
+                    <option *ngFor="let ageLeadTime of ageLeadTimeArr" [ngValue]="ageLeadTime.id">{{ageLeadTime.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="customerAddress">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Company Addr</span>
+                  <input type="text" class="form-control" formControlName="customerAddress">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 2000</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="provinceId">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Province</span>
+                  <select type="text" class="form-control required" formControlName="provinceId">
+                    <option value=""></option>
+                    <option *ngFor="let province of provinces" [value]="province.id">{{province.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Province is required</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="contactAddress">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Contact Address</span>
+                  <input type="text" class="form-control" formControlName="contactAddress">
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="contactTel">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Contact Tel</span>
+                  <input type="text" class="form-control" formControlName="contactTel" maxlength="11">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                  <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="invoiceName">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Invoice Name</span>
+                  <input type="text" class="form-control" formControlName="invoiceName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="invoiceAddress">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Invoice Address</span>
+                  <input type="text" class="form-control" formControlName="invoiceAddress">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-12" hasError="remark">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width-customer">Remark</span>
+                  <input class="form-control" rows="3" formControlName="remark">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 512</div>
+                </div>
+              </div>
+
+            </div>
+            <button type="submit" #submitCustomerFormBtn class="d-none"></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="grid-table-area mt-3">
+      <div class="col-lg-6 col-sm-12 pr-lg-3">
+        <main-display-intention-grid [isDlrFleetSaleApplication]="isDlr"
+                                     [selectedFleetApp]="selectedFleetApp"
+                                     [gradeList]="gradeList"
+                                     [colorList]="colorList"
+                                     (displayedDataToSend)="displayedIntentionData = $event"></main-display-intention-grid>
+      </div>
+      <div class="col-lg-6 col-sm-12 pl-lg-3">
+        <main-display-delivery-grid [isDlrFleetSaleApplication]="isDlr"
+                                    [selectedFleetApp]="selectedFleetApp"
+                                    [gradeList]="gradeList"
+                                    [displayedIntentionData]="displayedIntentionData"
+                                    (displayedDataToSend)="displayedDeliveryData = $event"></main-display-delivery-grid>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-blue mr-2"
+              [attr.disabled]="!selectedFleetApp ? '' : null"
+              (click)="historyModal.open(selectedFleetApp, gradeList, colorList)"><i class="clip-history"></i> History
+      </button>
+      <button type="button" class="btn btn-blue mr-2"
+              (click)="changePurchasingDelivery.open(selectedFleetApp, gradeList, colorList, fleetIntentions, fleetDeliveries)"
+              *ngIf="isDlr"
+              [attr.disabled]="disableChangeBtn"><i class="fa fa-exchange"></i> Change Purchasing & Delivery
+      </button>
+      <button type="button" class="btn btn-blue"
+              *ngIf="!isDlr"
+              [attr.disabled]="disableApproveRejectBtn" (click)="confirmCancelFleet.show()"><i class="fa fa-times"></i>
+        Cancel
+      </button>
+    </div>
+    <div class="col-sm-6 text-right">
+      <ng-container *ngIf="!isDlr">
+        <button type="button" class="btn btn-blue mr-2"
+                [attr.disabled]="disableApproveRejectBtn"
+                (click)="fleetAppApprovalModal.open('reject', selectedFleetApp)"><i class="fa fa-ban"></i> Reject
+        </button>
+        <button type="button" class="btn btn-blue"
+                [attr.disabled]="disableApproveRejectBtn" (click)="openApproveModal()"><i class="fa fa-check"></i>
+          Approve
+        </button>
+      </ng-container>
+      <ng-container *ngIf="isDlr">
+        <button type="button" class="btn btn-blue mr-2" (click)="newFleetAppModal.open()"><i class="fa fa-plus"></i> New
+        </button>
+        <button type="button" class="btn btn-blue"
+                [attr.disabled]="disableSendBtn" (click)="dlrSendFleetApp()"><i class="fa fa-location-arrow"></i> Send
+        </button>
+      </ng-container>
+    </div>
+  </div>
+  <form [formGroup]="fleetFooterForm" *ngIf="fleetFooterForm">
+    <div class="row">
+      <div class="col-sm-2 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Total</span>
+          <input type="text" class="form-control" formControlName="total">
+        </div>
+      </div>
+      <div class="col-sm-2 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Approved</span>
+          <input type="text" class="form-control" formControlName="approved">
+        </div>
+      </div>
+      <div class="col-sm-2 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Reject</span>
+          <input type="text" class="form-control" formControlName="reject">
+        </div>
+      </div>
+      <div class="col-sm-2 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Pending</span>
+          <input type="text" class="form-control" formControlName="pending">
+        </div>
+      </div>
+      <div class="col-sm-4 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Status</span>
+          <input type="text" class="form-control" formControlName="status">
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="!isDlr">
+      <input type="text" class="form-control" formControlName="inContract">
+    </div>
+  </form>
+</div>
+<history-modal #historyModal [isDlrFleetSaleApplication]="isDlr"></history-modal>
+<change-purchasing-delivery #changePurchasingDelivery (close)="refreshFleetApp()"
+                            [isDlrFleetSaleApplication]="isDlr"></change-purchasing-delivery>
+<fleet-app-approve-modal #fleetAppApprovalModal (close)="refreshFleetApp()"></fleet-app-approve-modal>
+<new-fleet-app-modal #newFleetAppModal [currentUser]="currentUser" (close)="refreshFleetApp()"></new-fleet-app-modal>
+<fleet-customer-select-modal #fleetCustomerSelectModal
+                             (close)="setTmvCustomerInfo($event)"></fleet-customer-select-modal>
+<swal #confirmCancelFleet
+      title="Do you want to cancel this fleet"
+      type="warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      [showCancelButton]="true"
+      (confirm)="tmvConfirmCancel()"
+></swal>
+<swal #switchFleetAppWhileEditing
+      title="Do you want to save your works?"
+      text='Select another Fleet Application while editing will erase all unsaved data of the current ones. Click "Cancel" to continue anyway'
+      type="warning"
+      confirmButtonClass="btn btn-blue mr-2"
+      [showCancelButton]="true"
+      (confirm)="saveDraft()"
+      (cancel)="forceSwitchFleetApp()"
+></swal>

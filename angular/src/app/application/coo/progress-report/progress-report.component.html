@@ -1,0 +1,75 @@
+<div class="modal fade" bsModal #modal="bs-modal"       [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Báo cáo tiến độ</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên đại lý</span>
+                <input class="form-control" formControlName="dealerName">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+              </div>
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên đại lý</span>
+                <input class="form-control" formControlName="team">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Xưởng</span>
+                <select class="form-control" formControlName="factory">
+                  <option value="SCC">Sửa chữa chung</option>
+                  <option value="DC">Đồng sơn</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="radio">
+                <label class="form-check-inline">
+                  <input type="radio" formControlName="efficient" value="effTech">Hiệu suất làm việc theo KTV
+                </label>
+              </div>
+              <div class="radio">
+                <label class="form-check-inline">
+                  <input type="radio" formControlName="efficient" value="effTeam"> Hiệu suất làm việc theo tổ/nhóm
+                </label>
+              </div>
+              <div class="radio">
+                <label class="form-check-inline">
+                  <input type="radio" formControlName="efficient" value="effFact"> Hiệu suất làm việc toàn xưởng
+                </label>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

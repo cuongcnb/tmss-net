@@ -1,0 +1,27 @@
+<div pageTitle="Fleet Sale Application">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Fleet Customer
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshFleetCustomer()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridFleetCustomer"
+                  (callbackGrid)="callbackGridFleetCustomer($event)"
+                  (getParams)="getParamsFleetCustomer()"></grid-table>
+    </div>
+    <div class="my-3 text-right grid-table-btn">
+      <button type="button" class="btn btn-blue mr-2" (click)="modifyFleetCustomer.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button type="button" class="btn btn-blue" (click)="updateFleetCustomer()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+    </div>
+  </div>
+</div>
+<modify-fleet-customer #modifyFleetCustomer (close)="refreshFleetCustomer()"></modify-fleet-customer>

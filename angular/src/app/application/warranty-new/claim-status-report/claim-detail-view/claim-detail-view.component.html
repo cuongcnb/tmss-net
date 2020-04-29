@@ -1,0 +1,824 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title"> TOYOTA WARRANTY CLAIM</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <table *ngIf="modal.isShown">
+            <tbody>
+            <tr>
+              <td colspan="1">A0</td>
+              <td colspan="9">
+                <div class="inline-block">
+                  Dist.Code
+                  <input readonly class="form-control" [value]="claim?.distCode">
+                </div>
+                <div class="inline-block">
+                  TWC No
+                  <input readonly class="form-control" [value]="claim?.no">
+                </div>
+                <div class="inline-block w-10">
+                  SFX
+                  <input readonly class="form-control" [value]="claim?.sfx">
+                </div>
+                <div class="inline-block">
+                  Claimantcode
+                  <input readonly class="form-control" [value]="claim?.claimantcode">
+                </div>
+                <div class="inline-block">
+                  Invoice No.
+                  <input readonly class="form-control" [value]="claim?.invoiceNo">
+                </div>
+                <div class="inline-block w-30">
+                  Warranty Application Code
+                  <div class="inline-block w-100 no-border-right">
+                    <input readonly class="form-control inline w-20" placeholder="1">
+                    <input readonly class="form-control inline w-20" placeholder="2">
+                    <input readonly class="form-control inline w-20" placeholder="3">
+                    <input readonly class="form-control inline w-20" placeholder="4">
+                    <input readonly class="form-control inline w-20" placeholder="5">
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">A1</td>
+              <td colspan="9">
+                <div class="inline-block w-10">
+                  Dealer Code
+                  <input readonly class="form-control" [value]="claim?.dealerCode"
+                  >
+
+                </div>
+                <div class="inline-block w-30">
+                  Dealer Name
+                  <input readonly class="form-control" [value]="claim?.dealerName"
+                  >
+
+                </div>
+                <div class="inline-block">
+                  Dealer Claim No
+                  <input readonly class="form-control" [value]="claim?.dealerClaimNo"
+                  >
+
+                </div>
+
+                <div class="inline-block">
+                  Process Flag
+                  <input readonly class="form-control" [value]="claim?.processFlag">
+                </div>
+                <div class="inline-block">
+                  Currency
+                  <input readonly class="form-control">
+                </div>
+                <div class="inline-block">
+                  USEMonth
+                  <input readonly class="form-control" [value]="claim?.monthAge">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">A2</td>
+              <td colspan="9">
+                <div class="inline-block w-30">
+                  <div class="inline w-30"> W/T</div>
+                  <select class="form-control inline w-70" disabled>
+                    <option value="VE" selected>VE</option>
+                  </select>
+                </div>
+                <div class="inline-block w-40">
+                  <div class="inline w-20"> Franchise</div>
+                  <div class="inline w-30">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="1" [checked]="claim?.franchise==='1'?true:null" disabled>
+                    </div>
+                    <strong>TOYOTA</strong>
+                  </div>
+                  <div class="inline w-30">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="4" [checked]="claim?.franchise==='4'?true:null" disabled>
+                    </div>
+                    <strong>LEXUS</strong>
+                  </div>
+
+                </div>
+                <div class="inline-block w-30" *ngIf="isTMV">
+                  <div class="inline">Vender</div>
+                  <select type="text" class="form-control inline" [value]="claim?.venderCode" disabled>
+                    <option *ngFor="let vender of venderList" value="vender.vendercode"
+                            [selected]="claim?.venderCode===vender.vendercode?true :null">{{vender.vendernameeng}}
+                    </option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">A3</td>
+              <td colspan="9">
+                <div class="inline-block w-5">
+                  <checkbox styleClass="no-margin" text="NV" [selectedValue]="claim?.nvFlag"></checkbox>
+                  <checkbox styleClass="no-margin" text="FV" [selectedValue]="claim?.fvFlag"></checkbox>
+                </div>
+                <div class="inline-block w-10">
+                  WMI
+                  <input readonly class="form-control" [value]="claim?.wmi"
+                         maxlength="3">
+
+                </div>
+                <div class="inline-block w-10">
+                  VDS
+                  <input readonly class="form-control" [value]="claim?.vds"
+                         maxlength="6">
+
+                </div>
+                <div class="inline-block w-5">
+                  CD
+                  <input readonly class="form-control" [value]="claim?.cd"
+                         maxlength="1">
+
+                </div>
+                <div class="inline-block w-10">
+                  VIS
+                  <input readonly class="form-control" [value]="claim?.vis"
+                         maxlength="8">
+
+                </div>
+                <div class="inline-block">
+                  Line Off Date
+                  <input readonly type="text" class="form-control"
+                         [value]="formatDate(claim.lineOffDate)">
+                </div>
+                <div class="inline-block">
+                  Delivery Date
+                  <input readonly type="text" class="form-control"
+                         [value]="formatDate(claim.deliveryDate)">
+                </div>
+                <div class="inline-block">
+                  Repair Date
+                  <input readonly type="text" class="form-control"
+                         [value]="formatDate(claim.repairDate)">
+
+                </div>
+                <div class="inline-block">
+                  Odometer
+                  <input readonly class="form-control" [value]="claim?.odometer"
+                         maxlength="6">
+
+                </div>
+                <div class="inline-block">
+                  K/m Flag
+                  <select class="form-control" [value]="claim?.kmFlag" disabled>
+                    <option [ngValue]="'1'" [selected]="claim?.kmFlag==='1'">Km</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">A4</td>
+              <td colspan="9">
+                <div class="inline-block w-40 order-block">
+                  Current Order No
+                  <input readonly class="form-control inline-block" [value]="claim?.orderno">
+                  <button class="btn btn-blue" (click)="openRepairJobHistory()">...</button>
+                </div>
+                <div class="inline-block" *ngIf="!isTMV">
+                  Autho.
+                  <input readonly class="form-control" [value]="claim?.authoType">
+                </div>
+                <div class="inline-block " *ngIf="!isTMV">
+                  Autho. No
+                  <input readonly class="form-control" [value]="claim?.authoNo">
+                </div>
+                <div class="inline-block">
+                  DATA-ID
+                  <select type="text" class="form-control" disabled>
+                    <option *ngFor="let dataId of dataIdList" [ngValue]="dataId.key"
+                            [selected]="claim?.dataId===dataId.key?true:null">{{dataId.value}}
+                    </option>
+                  </select>
+                </div>
+                <div class="inline-block">
+                  T/C
+                  <select class="form-control" [value]="claim?.tc" disabled>
+                    <option [value]="tc.key" *ngFor="let tc of tcList" [selected]="tc.key===claim?.tc">{{tc.value}}
+                    </option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">B1</td>
+              <td colspan="9">
+                <!--labor-->
+                <div class="rows">
+                  <div class="inline-block no-border-right">
+                    Pay Code
+                  </div>
+                  <div class="inline-block w-5 no-border-right">
+                    Ope.M
+                  </div>
+                  <div class="inline-block w-40 no-border-right">
+                    Operation No.
+                  </div>
+                  <div class="inline-block no-border-right">
+                    Hour
+                  </div>
+                  <div class="inline-block no-border-right">
+                    Amount
+                  </div>
+                  <div class="inline-block w-10 no-border-right">
+                  </div>
+                </div>
+                <div class="rows" *ngIf="!claim?.warrantyClaimLaborDTOs?.length">
+                  <div class="inline-block no-border">
+                    <select *ngIf="sourceTable=='STWC'" class="form-control"
+                            disabled></select>
+                  </div>
+                  <div class="inline-block w-5 pt-1 no-border-right">
+                    <div class="inline-checkbox">
+                      <checkbox ngClass="checkbox-claim" [isDisabled]="true"></checkbox>
+                    </div>
+                  </div>
+                  <div class="inline-block w-40 no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block w-10 no-border-right">
+                  </div>
+                </div>
+                <ng-container *ngIf="claim?.warrantyClaimLaborDTOs?.length">
+                  <ng-container
+                    *ngFor="let item of claim?.warrantyClaimLaborDTOs; let i = index">
+                    <div class="rows">
+                      <div class="ng-container">
+                        <div class="inline-block no-border-right">
+                          <select *ngIf="sourceTable=='STWC'" class="form-control" [value]="item?.payCode" disabled>
+                            <option value=""></option>
+                            <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">
+                              {{payCode.paycode}}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="inline-block w-5 pt-1 no-border-right">
+                          <div class="inline-checkbox">
+                            <checkbox ngClass="checkbox-claim" [isDisabled]="true"
+                                      [selectedValue]="item?.opeMFlag==='1'"></checkbox>
+                          </div>
+                        </div>
+                        <div class="inline-block w-40 no-border-right">
+                          <input readonly class="form-control" [value]="item?.srvCode" maxlength="7">
+                        </div>
+                        <div class="inline-block no-border-right">
+                          <input readonly class="form-control" [value]="item?.hours" maxlength="6">
+                        </div>
+                        <div class="inline-block no-border-right">
+                          <input readonly class="form-control" [value]="formatDisplayValue(item?.amount, true)">
+                        </div>
+                        <div class="inline-block w-10 no-border-right">
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!--labor end-->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">B2</td>
+              <td colspan="9">
+                <div class="inline-block w-30 no-border-right bl-inline">
+                  LaborRate
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline" [value]="claim?.flatRateDlr">
+                </div>
+                <div class="inline-block no-border-right bl-inline">
+                  Labor total
+                </div>
+                <div class="inline-block no-border-right">
+                  <input readonly class="form-control inline w-100" [value]="claim?.laborTotalHour">
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline w-100"
+                         [value]="formatDisplayValue(claim?.sumLaborSubTotal, true)">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">C1</td>
+              <td colspan="9">
+                <!--sublet-->
+                <div class="rows">
+                  <div class="inline-block no-border-right">
+                    Pay Code
+                  </div>
+                  <div class="inline-block w-40 no-border-right">
+                    Sublet Type
+                  </div>
+                  <div class="inline-block w-20 no-border-right">
+                    Sublet Invoice No
+                  </div>
+                  <div class="inline-block no-border-right">
+                    Amount
+                  </div>
+                  <div class="inline-block w-10 no-border-right">
+                  </div>
+                </div>
+                <div class="rows" *ngIf="!claim?.warrantyClaimSubletDTOs?.length">
+                  <div class="inline-block no-border-right">
+                    <select *ngIf="sourceTable=='STWC'" class="form-control" disabled>
+                    </select>
+                  </div>
+                  <div class="inline-block w-40 no-border-right">
+                    <select class="form-control" disabled>
+                    </select>
+                  </div>
+                  <div class="inline-block w-20 no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block w-10 no-border-right">
+                  </div>
+                </div>
+                <ng-container *ngIf="claim.warrantyClaimSubletDTOs.length">
+                  <ng-container
+                    *ngFor="let item of claim.warrantyClaimSubletDTOs; let i = index">
+                    <div class="rows">
+                      <div class="inline-block no-border-right">
+                        <select *ngIf="sourceTable=='STWC'" class="form-control" [value]="item?.payCode" disabled>
+                          <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">
+                            {{payCode.paycode}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="inline-block w-40 no-border-right">
+                        <select class="form-control" [value]="item?.subletType" disabled>
+                          <ng-container *ngFor="let sublet of subletTypeList">
+                            <option value="{{sublet.sublettype}}" [selected]="item?.subletType===sublet.sublettype?true:null">
+                              {{sublet.desceng}}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      <div class="inline-block w-20 no-border-right">
+                        <input readonly class="form-control" [value]="item?.subletInvoiceNo" maxlength="7">
+                      </div>
+                      <div class="inline-block no-border-right">
+                        <input readonly class="form-control" [value]="formatDisplayValue(item?.cost, true)"
+                               maxlength="11">
+                      </div>
+                      <div class="inline-block w-10 no-border-right">
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!--sublet end-->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">C2</td>
+              <td colspan="9">
+                <div class="inline-block w-75 no-border-right bl-inline text-left">
+                  Sublet Total
+                </div>
+                <div class="inline-block border-left">
+                  <input readonly class="form-control inline w-100"
+                         [value]="formatDisplayValue(claim?.sumSubletSubTotal, true)">
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="1">D1</td>
+              <td colspan="9">
+                <div>
+                  <div class="inline-block no-border-right bl-inline text-left">
+                    Sublet Desc
+                  </div>
+                  <div class="inline-block w-75">
+                    <input readonly class="form-control inline w-100" [value]="claim?.subletDesc">
+                  </div>
+                </div>
+                <div>
+                  <div class="inline-block no-border-right bl-inline text-left">
+                    Condition
+                  </div>
+                  <div class="inline-block w-75 ">
+                    <input readonly class="form-control inline w-100" [value]="claim?.condition">
+                  </div>
+                </div>
+                <div>
+                  <div class="inline-block no-border-right bl-inline text-left">
+                    Cause
+                  </div>
+                  <div class="inline-block w-75">
+                    <input readonly class="form-control inline w-100" [value]="claim?.cause">
+                  </div>
+                </div>
+                <div>
+                  <div class="inline-block no-border-right bl-inline text-left">
+                    Remedy
+                  </div>
+                  <div class="inline-block w-75">
+                    <input readonly class="form-control inline w-100" [value]="claim?.remedy">
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!--</ng-template>-->
+            <tr>
+              <td colspan="1">E1</td>
+              <td colspan="9">
+                <!--t-code-->
+                <div class="inline-block w-10">
+                  T1Code
+                  <input readonly class="form-control" [value]="claim?.t1Code"
+                         maxlength="2">
+                </div>
+                <div class="inline-block w-10">
+                  T2Code
+                  <input readonly class="form-control" [value]="claim?.t2Code"
+                         maxlength="5">
+                </div>
+                <ng-container
+                  *ngFor="let item of claim.t3Codes; let i = index">
+                  <div class="inline-block w-10 no-border-right">
+                    <span [ngClass]="{'fade':i!=0}">T3Code</span>
+                    <input readonly class="form-control" [value]="item?.tcode" maxlength="5">
+                  </div>
+                </ng-container>
+                <!--t-code end-->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">F1</td>
+              <td colspan="9">
+                <!--parts-->
+                <div class="rows">
+                  <div class="inline-block no-border-right">
+                    Pay Code
+                  </div>
+                  <div class="inline-block w-5 no-border-right">
+                    O.F.P
+                  </div>
+                  <div class="inline-block w-10 no-border-right">
+                    Local
+                  </div>
+                  <div class="inline-block w-15 no-border-right">
+                    Part No
+                  </div>
+                  <div class="inline-block">
+                  Part Name
+                  </div>
+                  <div class="inline-block no-border-right">
+                    Qty
+                  </div>
+                  <div class="inline-block no-border-right">
+                    Amount
+                  </div>
+                </div>
+                <div class="rows" *ngIf="!claim?.warrantyClaimPartsDTOs?.length">
+                  <div class="inline-block no-border-right">
+                    <select *ngIf="sourceTable=='STWC'" class="form-control"
+                            disabled></select>
+                  </div>
+                  <div class="inline-block w-5 pt-1 no-border-right">
+                    <div class="inline-checkbox">
+                      <checkbox ngClass="checkbox-claim" [isDisabled]="true"></checkbox>
+                    </div>
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block w-25 no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <!--<div class="inline-block w-25">-->
+                  <!--<input readonly class="form-control" disabled>-->
+                  <!--</div>-->
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input readonly class="form-control" disabled>
+                  </div>
+                  <div class="inline-block w-10 ">
+                  </div>
+                </div>
+                <ng-container *ngIf="claim?.warrantyClaimPartsDTOs?.length">
+                  <ng-container
+                    *ngFor="let item of claim?.warrantyClaimPartsDTOs; let i = index">
+                    <div class="rows">
+                      <div class="inline-block no-border-right">
+                        <select *ngIf="sourceTable=='STWC'" class="form-control" [value]="item?.payCode" disabled>
+                          <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">
+                            {{payCode.paycode}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="inline-block w-5 pt-1 no-border-right">
+                        <div class="inline-checkbox">
+                          <checkbox ngClass="checkbox-claim" [selectedValue]="item?.opeMFlag=='1'"
+                                    [isDisabled]="true"></checkbox>
+                        </div>
+                      </div>
+                      <div class="inline-block w-10 no-border-right">
+                        <input readonly class="form-control" [value]="item?.localFlag">
+                      </div>
+                      <div class=" inline-block w-15 no-border-right">
+                        <input readonly class="form-control" [value]="item?.partsCode"
+                               maxlength="15">
+                      </div>
+                      <div class="inline-block">
+                        <input readonly class="form-control" [value]="item?.partsNameVn">
+                      </div>
+                      <div class="inline-block no-border-right">
+                        <input readonly class="form-control" [value]="item?.qty" maxlength="3">
+
+                      </div>
+                      <div class="inline-block no-border-right">
+                        <input readonly class="form-control" [value]="formatDisplayValue(item?.amount, true)">
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <!--parts end-->
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">F2</td>
+              <td colspan="9">
+                <div class="inline-block no-border-right bl-inline">
+                  Local
+                </div>
+                <div class="inline-block ">
+                  <input readonly class="form-control inline w-100" [value]="claim?.ofpLocalFlag">
+                </div>
+                <div class="inline-block no-border-right bl-inline">
+                  O.F.P No
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline w-100" [value]="claim?.ofpNo" maxlength="15"
+                  >
+
+                </div>
+                <div class="inline-block no-border-right bl-inline">
+                  Parts Sub-total
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline w-100"
+                         [value]="formatDisplayValue(claim?.sumPartsSubTotal, true)">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="sourceTable=='TWC'">
+              <td colspan="1">F3</td>
+              <td colspan="9">
+                <div class="inline-block text-right w-10 bl-inline">
+                  P.W.R
+                </div>
+                <div class="inline-block no-border-right w-10 bl-inline">
+                  <strong>Dealer</strong>
+                </div>
+                <div class="inline-block ">
+                  <input readonly class="form-control inline w-100" [value]="claim?.pwrDlr">
+                </div>
+                <div class="inline-block ">
+                  <input readonly class="form-control inline w-100" [value]="claim?.prrDlr">
+                </div>
+                <div class="inline-block w-10 bl-inline">
+                  <strong>DIST</strong>
+                </div>
+                <div class="inline-block no-border-right bl-inline  ">
+                  Parts Total
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline w-100"
+                         [value]="formatDisplayValue(claim?.partsTotal, true)">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="sourceTable=='STWC'">
+              <td colspan="1">F3</td>
+              <td colspan="9">
+                <div class="inline-block text-right w-10 bl-inline">
+                  P.W.R/P.R.R
+                </div>
+                <div class="inline-block no-border-right w-10 bl-inline">
+                  P.W.R1
+                </div>
+                <div class="inline-block w-15">
+                  <input readonly class="form-control inline w-100" [value]="claim?.pwr1">
+                </div>
+                <div class="inline-block w-10 bl-inline">
+                  P.W.R2
+                </div>
+                <div class="inline-block w-15">
+                  <input readonly class="form-control inline w-100" [value]="claim?.pwr2">
+                </div>
+                <div class="inline-block no-border-right bl-inline">
+                  Parts Total
+                </div>
+                <div class="inline-block">
+                  <input readonly class="form-control inline w-100" [value]="formatDisplayValue(claim?.partsTotal)">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">G1</td>
+              <td colspan="9">
+                <div class="inline-block w-75 no-border-right lb-inline vertical-middle">
+                  <strong>Total Claim Amount</strong>
+                </div>
+                <div class="inline-block no-border-right vertical-middle">
+                  <input readonly class="form-control inline w-100 " [value]="formatDisplayValue(claim?.total, true)">
+                </div>
+                <div class="inline-block w-10 border-left" *ngIf="isTMV && action!=='adjust'">
+                  SW104 Date
+                  <input readonly class="form-control inline w-100">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!isTMV">
+              <td colspan="1">G2</td>
+              <td colspan="9">
+                <div class="inline-block  no-border-right bl-inline">
+                  Dealer's Comment
+                </div>
+                <div class="inline-block w-75">
+                  <input readonly class="form-control inline w-100" [value]="claim?.dlrComment">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="isTMV && action!=='adjust'">
+              <td colspan="1">G2</td>
+              <td colspan="9">
+                <div class="inline-block  no-border-right bl-inline w-20">
+                  Dist's comment to Vendor
+                </div>
+                <div class="inline-block w-70">
+                  <input readonly class="form-control inline w-100" [value]="claim?.distComment" maxlength="50">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!isTMV">
+              <td colspan="1">H1</td>
+              <td colspan="9">
+                <div class="inline-block w-30">
+                  <div class="w-100">Dist's Claim Adjustment</div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="1" [checked]="claim?.state?.stateValue==='1'" disabled>
+                    </div>
+                    <strong>AP</strong>
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="3" [checked]="claim?.state?.stateValue==='3' " disabled>
+                    </div>
+                    <strong>DE</strong>
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="4" [checked]="claim?.state?.stateValue==='4'" disabled>
+                    </div>
+                    <strong>RE</strong>
+
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="2" [checked]="claim?.state?.stateValue==='2'" disabled>
+                    </div>
+                    <strong>AD</strong>
+                  </div>
+                </div>
+
+                <div class="inline-block">
+                  Labor(%)
+                  <input readonly class="form-control" [value]="claim?.laborAdj">
+                </div>
+                <div class="inline-block">
+                  Sublet(%)
+                  <input readonly class="form-control" [value]="claim?.subletAdj">
+                </div>
+                <div class="inline-block">
+                  Part(%)
+                  <input readonly class="form-control" [value]="claim?.partsAdj">
+                </div>
+                <div class="inline-block w-25">
+                  Reason Code
+                  <input readonly class="form-control" [value]="claim?.reasonCode">
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="isTMV ">
+              <td colspan="1">H1</td>
+              <td colspan="9">
+                <div class="inline-block w-30" *ngIf="action!='adjust'">
+                  <div class="w-100">Vender's Claim Adjustment</div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="1" [checked]="claim?.tmvState?.stateValue==='1'" disabled>
+                    </div>
+                    <strong>AP</strong>
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="3" [checked]="claim?.tmvState?.stateValue==='3'" disabled>
+                    </div>
+                    <strong>DE</strong>
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="4" [checked]="claim?.tmvState?.stateValue==='4'">
+                    </div>
+                    <strong>RE</strong>
+                  </div>
+                  <div class="inline w-25">
+                    <div class="inline-radio">
+                      <input readonly type="radio" value="2" [checked]="claim?.tmvState?.stateValue==='2'" disabled>
+                    </div>
+                    <strong>AD</strong>
+                  </div>
+                </div>
+                <div class="inline-block">
+                  Labor(%)
+                  <input readonly class="form-control" [value]="claim?.laborAdj">
+                </div>
+                <div class="inline-block">
+                  Sublet(%)
+                  <input readonly class="form-control" [value]="claim?.subletAdj">
+                </div>
+                <div class="inline-block">
+                  Part(%)
+                  <input readonly class="form-control" [value]="claim?.partsAdj">
+                </div>
+                <div class="inline-block w-25">
+                  Reason Code
+                  <input readonly type="text" class="form-control"
+                         [value]="claim?.reasonCode">
+                  <!--<reason-code *ngIf="claim" #parts [form]="claimForm" [isSubmit]="isSubmit" [claim]="claim"-->
+                  <!--[sourceTable]="sourceTable"></reason-code>-->
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!isTMV">
+              <td colspan="1">J1</td>
+              <td colspan="9">
+                <div class="inline-block no-border-right bl-inline">
+                  Dist's Comment
+                </div>
+                <div class="inline-block w-70">
+                  <input readonly class="form-control inline w-100" [value]="claim?.distComment">
+                </div>
+                <div class="inline-block">
+                  Dist. Signature
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="isTMV && action!=='adjust'">
+              <td colspan="1">J1</td>
+              <td colspan="9">
+                <div class="inline-block no-border-right bl-inline w-20">
+                  Vender's comment to Dist
+                </div>
+                <div class="inline-block w-70">
+                  <input readonly class="form-control inline w-100" maxlength="50">
+                </div>
+                <div class="inline-block w-10">
+                  Dist. Signature
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <!--<div class="row">-->
+        <!--<div class="col-sm-12 text-right">-->
+        <!--<button class="btn btn-blue mr-2"><i class="fa fa-print"></i> In</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="btn-group text-right">
+          <!-- <button class="btn btn-blue" (click)="viewPreviousClaim()"><i class="fa fa-backward"></i></button>
+          <button class="btn btn-blue" (click)="viewNextClaim()"><i class="fa fa fa-forward"></i></button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<repair-job-history #repairJobHistoryModal></repair-job-history>

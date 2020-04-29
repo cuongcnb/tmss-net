@@ -1,0 +1,37 @@
+.tmss-time-picker {
+  input:not([disabled]):-moz-read-only {
+    background-color: #FFFFFF;
+    cursor: pointer;
+    &.required {
+      background: #FFFFCC;
+    }
+  }
+
+  input:not([disabled]) {
+    background-color: #FFFFFF;
+    cursor: pointer;
+    &.required {
+      background: #FFFFCC;
+    }
+  }
+  .input-group {
+    .input-group-addon:last-child {
+      padding: 0 10px !important;
+      .fa {
+        color: #ffffff;
+        font-size: 14px !important;
+      }
+    }
+  }
+}
+
+.dropdown-timepicker {
+  box-shadow: 0 0 10px 0 #aaa;
+  border-color: grey;
+  position: absolute;
+  z-index: 1090;
+  .panel {
+    margin-bottom: 0 !important;
+    border-radius: 0;
+  }
+}

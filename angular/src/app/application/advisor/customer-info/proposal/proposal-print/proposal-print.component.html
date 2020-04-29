@@ -1,0 +1,74 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">In quyết toán</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <h4><strong>Vui lòng kiểm tra kĩ và tích chọn đầy đủ các thông tin sau</strong></h4>
+            <div class="form-group">
+              <label class="required">1.Công việc sửa chữa hiện tại là:</label>
+              <checkbox formControlName="isMa" text="Bảo dưỡng"></checkbox>
+              <checkbox formControlName="isMaPlus" text="Bảo dưỡng ++"></checkbox>
+              <checkbox formControlName="isNonMa" text="GJ/BP"></checkbox>
+            </div>
+
+            <div class="form-group" hasError="curMainLevelId">
+              <label class="required">Cấp BD hiện tại</label>
+              <select class="form-control" formControlName="curMainLevelId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let it of listCurMainLevel"
+                        [ngValue]="it.dataValue">{{it.dataNameVn}}
+                </option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Trường bắt buộc chọn</div>
+                <!--<div *ifError="'justNormalString'">Username cannot contain special characters or spaces</div>-->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>2. Công việc sửa chữa có được làm tại khoang EM hay không?</label>
+              <checkbox formControlName="isEM" text="Có"></checkbox>
+            </div>
+            <div class="form-group">
+              <label>3. Mốc BD tiếp theo (Km)</label>
+              <select class="form-control" formControlName="maintainValue">
+                <option *ngFor="let it of listMaintainValue"
+                        [ngValue]="it.dataValue">{{dataFormatService.formatMoney(it.dataValue)}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Cấp BD tiếp theo</label>
+              <select class="form-control" formControlName="nextMainLevelId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let it of listNextMainLevel"
+                        [ngValue]="it.dataValue">{{it.dataNameVn}}
+                </option>
+              </select>
+            </div>
+            <b class="text-danger">
+              Xin vui lòng tiến hành việc nhắc bảo dưỡng cho khách hàng
+            </b>
+            <br>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" #btn (click)="print()"><i class="fa fa-print"></i>
+            In
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            Quay lại
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<proposal-print-saving #proposalSaving></proposal-print-saving>

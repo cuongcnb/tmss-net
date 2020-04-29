@@ -1,0 +1,68 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Điều kiện tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Đại lý</span>
+                  <select class="form-control" formControlName="sortAgency">
+                    <option>TGP-ND</option>
+                    <option>THTL</option>
+                    <option>TTG</option>
+                    <option>THHC</option>
+                    <option>THKC</option>
+                    <option>TGP</option>
+                    <option>TGP_PV</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Vin</span>
+                  <input class="form-control" formControlName="errorVin">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Biển số</span>
+                  <input class="form-control" formControlName="licensePlates">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <button type="button" class="btn btn-blue mb-2 mr-2">
+            <i class="fa fa-refresh"></i> Làm mới
+          </button>
+          <button type="button" class="btn btn-blue mb-2 mr-2">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <grid-table [fieldGrid]="fieldGrid" [height]="'550px'"
+                      (callbackGrid)="callbackGrid($event)"
+                      (getParams)="getParams()"></grid-table>
+        </div>
+        <div class="col-md-9">
+          <general-info></general-info>
+          <contac-history-datatable></contac-history-datatable>
+          <info-history-datatable></info-history-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

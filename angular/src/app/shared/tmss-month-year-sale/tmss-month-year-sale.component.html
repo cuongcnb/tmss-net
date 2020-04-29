@@ -1,0 +1,15 @@
+<form>
+  <div class="input-group" [ngClass]="className ? className : ''">
+    <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+    <input [(ngModel)]="selectedValue" autocomplete="off" class="form-control" name="date" bsDatepicker
+           #datepicker="bsDatepicker"
+           [class.required]="isRequired"
+           [disabled]="isDisabled ? true : null"
+           [bsConfig]="{dateInputFormat: dateInputFormat}" (bsValueChange)="onValueChange($event)"
+           (onShown)="onOpenCalendar($event)">
+    <span class="input-group-addon btn btn-light-grey" (click)="!isDisabled ? datepicker.toggle(): undefined"
+          [attr.aria-expanded]="datepicker.isOpen">
+    <i class="fa fa-calendar"></i>
+  </span>
+  </div>
+</form>

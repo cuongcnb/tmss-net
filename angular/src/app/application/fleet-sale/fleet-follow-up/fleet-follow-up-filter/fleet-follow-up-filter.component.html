@@ -1,0 +1,128 @@
+<div class="modal fade" bsModal #fleetFollowUpFilter="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Fleet Follow Up Filter</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label">Month</label>
+            <div class="mb-2">
+              <month-picker [model]="selectedDate" (modelChange)="fillDatePicker($event)"></month-picker>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>Contract Date (from)</label>
+              <div class="input-group"></div>
+            </div>
+            <div class="form-group col-sm-6">
+              <div class="row position-relative">
+                <div class="col-xs-11">
+                  <label>Contract Date (to)</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="contractDateTo"
+                           #contractDateTo="bsDatepicker" bsDatepicker readonly>
+                    <span class="input-group-addon btn btn-blue" (click)="contractDateTo.toggle()"
+                          [attr.aria-expanded]="contractDateTo.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>
+                </div>
+                <div class="col-xs-1 pl-0 checkbox-filter-start-modal">
+                  <checkbox formControlName="selectContractDate"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>Expiry Date (from)</label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="expiryDateFrom" #expiryDateFrom="bsDatepicker"
+                       bsDatepicker readonly>
+                <span class="input-group-addon btn btn-blue" (click)="expiryDateFrom.toggle()"
+                      [attr.aria-expanded]="expiryDateFrom.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <div class="row position-relative">
+                <div class="col-xs-11">
+                  <label>Expiry Date (to)</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="expiryDateTo"
+                           #expiryDateTo="bsDatepicker"
+                           bsDatepicker readonly>
+                    <span class="input-group-addon btn btn-blue" (click)="expiryDateTo.toggle()"
+                          [attr.aria-expanded]="expiryDateTo.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>
+                </div>
+                <div class="col-xs-1 pl-0 checkbox-filter-start-modal">
+                  <checkbox formControlName="selectExpiryDate"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-6">
+              <label>Sales Date (from)</label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="salesDateFrom" #salesDateFrom="bsDatepicker"
+                       bsDatepicker readonly>
+                <span class="input-group-addon btn btn-blue" (click)="salesDateFrom.toggle()"
+                      [attr.aria-expanded]="salesDateFrom.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <div class="row position-relative">
+                <div class="col-xs-11">
+                  <label>Sales Date (to)</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="salesDateTo" #salesDateTo="bsDatepicker"
+                           bsDatepicker readonly>
+                    <span class="input-group-addon btn btn-blue" (click)="salesDateTo.toggle()"
+                          [attr.aria-expanded]="salesDateTo.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>
+                </div>
+                <div class="col-xs-1 pl-0 checkbox-filter-start-modal">
+                  <checkbox formControlName="selectSalesDate"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">=)))Fleet Customer</label>
+            <select type="text" class="form-control" formControlName="fleetCustomer">
+              <option value=""></option>
+              <option value="">Api</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue" (click)="confirm()">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

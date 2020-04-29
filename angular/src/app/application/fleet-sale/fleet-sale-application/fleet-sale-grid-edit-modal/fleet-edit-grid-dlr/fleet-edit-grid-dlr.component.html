@@ -1,0 +1,90 @@
+<div class="modal fade" bsModal #fleetEditGridDlr="bs-modal" (onHidden)="reset()" >
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row pt-2">
+            <div class="col-sm-6" hasError="gradeId">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">Grade</span>
+                <select class="form-control required" formControlName="gradeId" autoFocusField>
+                  <option *ngFor="let grade of gradeList" [ngValue]="grade.id">{{grade.marketingCode}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Grade is required</div>
+              </div>
+            </div>
+            <div class="col-sm-6" hasError="gradeProductionId">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">Grade Production</span>
+                <select class="form-control required" formControlName="gradeProductionId">
+                  <option *ngFor="let gradeProduct of gradeProductionList" [ngValue]="gradeProduct.id">{{gradeProduct.productionCode}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Grade Production is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6" hasError="colorId" *ngIf="isIntentionTable">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">Color</span>
+                <select class="form-control required" formControlName="colorId">
+                  <option *ngFor="let color of colorList" [ngValue]="color.colorId">{{color.code}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Color is required</div>
+              </div>
+            </div>
+            <div class="col-sm-6" hasError="quantity">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">Quantity</span>
+                <input type="text" class="form-control required" formControlName="quantity">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Quantity is required</div>
+                <div *ifError="'numberFormat'">Quantity must be a positive number</div>
+                <div *ifError="'maxLength'">Max length is 5</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6" *ngIf="!isIntentionTable" hasError="month">
+              <div class="form-group input-group" >
+                <span class="input-group-addon min-width">Month</span>
+                <select class="form-control required" formControlName="month">
+                  <option *ngFor="let month of monthArr" [ngValue]="month">{{month}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Month is required</div>
+              </div>
+            </div>
+            <div class="col-sm-6"  *ngIf="!isIntentionTable" hasError="year">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Year</label>
+                <select class="form-control required" formControlName="year">
+                  <option *ngFor="let year of getYearList" [ngValue]="year">{{year}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Year is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 text-right">
+            <button type="submit" class="btn btn-blue mr-2" (click)="confirm()">
+              <i class="fa fa-check"></i> OK
+            </button>
+            <button type="button" class="btn btn-blue" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

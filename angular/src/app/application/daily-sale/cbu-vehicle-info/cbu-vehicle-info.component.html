@@ -1,0 +1,140 @@
+<div [pageTitle]="pageTitle">
+  <div class="row">
+    <div class="col-lg-12 mb-3">
+      <!--      <button type="button" class="btn btn-blue mr-2" (click)="onSubmitSave()">-->
+      <!--        Save-->
+      <!--      </button>-->
+      <button type="button" class="btn btn-blue mr-2" (click)="cbuDisplayChoosingModal.open()">
+        <i class="fa fa-check-square-o"></i> Display
+      </button>
+      <button type="button" class="btn btn-blue mr-2"
+              (click)="saleFilter.open(isCbu ? filterFormCode.cbuVehicleInfo : filterFormCode.ckdVehicleInfo)">
+        <i class="fa fa-filter"></i> Filter
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="confirmExport()"><i class="fa fa-download"></i> Export
+      </button>
+      <!--      <div class="btn-group mr-2 dropright">-->
+      <!--        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"-->
+      <!--                aria-expanded="false">Import-->
+      <!--        </button>-->
+      <!--        <ul class="dropdown-menu">-->
+      <!--          <li class="dropdown-item" (click)="importExcel(importType.customerInfo)">Customer Info</li>-->
+      <!--          <li class="dropdown-item" (click)="importExcel(importType.deliveryRouteDLR)">Delivery Route DLR</li>-->
+      <!--          <li class="dropdown-item" (click)="importExcel(importType.fixPaymentDeadline)">Fix Payment Deadline</li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
+      <!--      <div class="btn-group dropright">-->
+      <!--        <button class="btn btn-blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"-->
+      <!--                aria-expanded="false">Download template-->
+      <!--        </button>-->
+      <!--        <ul class="dropdown-menu">-->
+      <!--          <li class="dropdown-item" (click)="getImportTemplate(importTemplate.cbuCustomerInfo)">Customer Info</li>-->
+      <!--          <li class="dropdown-item" (click)="getImportTemplate(importTemplate.cbuDeliveryRouteDlr)">Delivery Route DLR-->
+      <!--          </li>-->
+      <!--          <li class="dropdown-item" (click)="getImportTemplate(importTemplate.fixPaymentDeadline)">Fix Payment-->
+      <!--            Deadline-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
+    </div>
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="input-group form-group">
+            <span role="button" class="input-group-addon">Dealer</span>
+            <select type="text" class="form-control" [(ngModel)]="selectedDealer">
+              <option value=""></option>
+              <option *ngFor="let dealer of dealersAvailable" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="input-group form-group">
+            <span role="button" class="input-group-addon">
+              Grade
+            </span>
+            <select type="text" class="form-control" [(ngModel)]="selectedGrade">
+              <option value=""></option>
+              <option *ngFor="let grade of gradeList" [ngValue]="grade.id">{{grade.enName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group form-group search-group">
+            <span role="button" class="input-group-addon">Search</span>
+            <input type="text" class="form-control" [(ngModel)]="quickSearchKey"
+                   (change)="resetPaginationParams(); searchVehicles(isCbu ? currentCbuFilter : currentCkdFilter)"
+                   data-toggle="tooltip" data-placement="top"
+                   title="Quich search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address."
+                   placeholder="Quich search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address.">
+            <button class="btn btn-blue"
+                    (click)="resetPaginationParams(); searchVehicles(isCbu ? currentCbuFilter : currentCkdFilter)"><i
+              class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      {{ isCbu ? 'CBU' : 'CKD' }} Vehicle Information
+    </div>
+    <grid-table [fieldGrid]="fieldGridCustomInfo" *ngIf="gridLoaded && isCbu && fieldGridCustomInfo"
+                [enableFilter]="true"
+                [height]="'550px'"
+                [enterToSearch] = "true"
+                (cellDoubleClicked)="agCellDoubleClicked($event)"
+                (changePaginationParams)="changePaginationParams($event)"
+                (callbackGrid)="callbackGridCustomInfoCbu($event)"
+                [rowClassRules]="rowClassRules"
+                [paginationTotalsData]="paginationTotalsData"
+                [overlayLoadingTemplate]="' '"
+                [isResizeColumnToHeaderWidth]="true"
+                [morePageSize]="true"
+    >
+    </grid-table>
+    <grid-table [fieldGrid]="fieldGridCustomInfo" *ngIf="gridLoaded && !isCbu && fieldGridCustomInfo"
+                [enableFilter]="true"
+                [height]="'550px'"
+                [enterToSearch] = "true"
+                (cellDoubleClicked)="agCellDoubleClicked($event)"
+                (changePaginationParams)="changePaginationParams($event)"
+                (callbackGrid)="callbackGridCustomInfoCkd($event)"
+                [rowClassRules]="rowClassRules"
+                [paginationTotalsData]="paginationTotalsData"
+                [overlayLoadingTemplate]="' '"
+                [isResizeColumnToHeaderWidth]="true"
+                [morePageSize]="true"
+    >
+    </grid-table>
+  </div>
+</div>
+<div class="mt-3" *ngIf="bottomInfo">
+  <div class="row">
+    <div class="col-md-3">
+      Total: <i>{{bottomInfo.total}}</i>
+    </div>
+    <div class="col-md-3">
+      Assignment: <i>{{bottomInfo.nonAssignment}}</i>
+    </div>
+    <div class="col-md-3">
+      Payment: <i>{{bottomInfo.rfPayment}}</i>
+    </div>
+  </div>
+</div>
+<cbu-display-choosing-modal #cbuDisplayChoosingModal [isCbu]="isCbu"
+                            (submitFieldToDisplay)="getColumnsAuthorize()"></cbu-display-choosing-modal>
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>
+<cbu-ag-edit-modal #editModal (close)="setDataToRow($event)"></cbu-ag-edit-modal>
+<input type="file" ng2FileSelect [uploader]="uploader" #fileInput accept=".xlsx, .xls"
+       (change)="onChangeFile($event)" class="ghost"/>
+<tmss-export (getExportParams)="getExportParams($event)" [fieldGrid]="fieldGridCustomInfo"></tmss-export>
+
+<swal #confirmRejectModal
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn xuất dữ liệu?"
+      (confirm)="onBtnExport()"
+      [showCancelButton]="true">
+</swal>

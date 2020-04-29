@@ -1,0 +1,208 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Gán công việc BP cho xe</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Thông tin xe và công việc
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapseApplyJobForCarInfo" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapseApplyJobForCarInfo" class="panel-collapse collapse in">
+
+                <div class="panel-body">
+                  <div class="row pt-2">
+                    <div class=" col-sm-12 form-group" hasError="dlrId">
+                      <div class="input-group">
+                        <span class="input-group-addon min-width">Đại lý</span>
+                        <select class="form-control required" formControlName="dlrId">
+                          <ng-container *ngIf="!currentUser.isAdmin">
+                            <option [ngValue]="currentUser.dealerId">
+                              {{currentUser.dealerCode}}: {{currentUser.dealerVnName}}
+                            </option>
+                          </ng-container>
+                          <ng-container *ngIf="currentUser.isAdmin">
+                            <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">
+                              {{dealer.code}}: {{dealer.vnName}}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập Mã đại lý</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class=" col-sm-6 form-group">
+                      <div class="input-group" *ngIf="carFamListDefault">
+                        <span class="input-group-addon min-width">Kiểu xe</span>
+                        <multi-column-select-control formControlName="cfId"
+                                                     displayField="cfCode"
+                                                     dataField="id"
+                                                     [fieldGrid]="carFamField"
+                                                     [list]="carFamListDefault"
+                                                     [enableFilter]="true"
+                                                     [isClear]="false"
+                        ></multi-column-select-control>
+                      </div>
+                    </div>
+                    <!--<div class="col-sm-6 form-group">-->
+                    <!--<div class="input-group" *ngIf="carModelList">-->
+                    <!--<span class="input-group-addon min-width">Đời xe</span>-->
+                    <!--<multi-column-select-control formControlName="cmId"-->
+                    <!--displayField="doixe"-->
+                    <!--dataField="id"-->
+                    <!--[fieldGrid]="carModelField"-->
+                    <!--[list]="carModelList"-->
+                    <!--[enableFilter]="true"-->
+                    <!--[isClear]="false"-->
+                    <!--&gt;</multi-column-select-control>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 form-group mw-repair" hasError="rccode">
+                      <div class="input-group">
+                        <label class="input-group-addon">Mã công việc</label>
+                        <!--                        <input class="form-control required" formControlName="rccode">-->
+                        <input-search formControlName="rccode"
+                                      (onSearch)="searchJob.open({searchKeyword: form.get('rccode').value})"
+                                      [isReadonly]="true"
+                                      [showBtn]="true" [isRequired]="true" fieldAccessor="input"></input-search>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Yêu cầu phải nhập</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 form-group mw-repair" hasError="rcname">
+                      <div class="input-group">
+                        <label class="input-group-addon">Tên công việc</label>
+                        <input class="form-control required" formControlName="rcname">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Yêu cầu phải nhập</div>
+                        <div *ifError="'maxLength'">Tối đa 150 kí tự</div>
+                        <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 form-group mw-repair">
+                      <div class="input-group">
+                        <label class="input-group-addon">Internal</label>
+                        <select class="form-control" formControlName="internal">
+                          <option>Y</option>
+                          <option>N</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 form-group mw-repair" hasError="remark">
+                      <div class="input-group">
+                        <label class="input-group-addon">Ghi chú</label>
+                        <input class="form-control" formControlName="remark">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 form-group mw-repair" hasError="jobgroup">
+                      <div class="input-group">
+                        <label class="input-group-addon">Loại công việc</label>
+                        <select class="form-control" formControlName="jobgroup">
+                          <option *ngFor="let type of jobGroupTypes" [ngValue]="type.id">{{type.name}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'jobgroup'">Yêu cầu phải chọn</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 form-group mw-repair" hasError="price">
+                      <div class="input-group">
+                        <label class="input-group-addon">Thành tiền</label>
+                        <input class="form-control required" formControlName="price">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'floatNumberFormat'">Giá trị nhập vào phải là số</div>
+                        <div *ifError="'maxLength'">Tối đa 53 kí tự</div>
+                        <div *ifError="'required'">Yêu cầu phải nhập</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="type === 'part'" class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Danh sách phụ tùng
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapseApplyJobForCarPart" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapseApplyJobForCarPart" class="panel-collapse collapse in">
+                <grid-table [fieldGrid]="partGridField"
+                            [height]="'200px'"
+                            [showPagination]="false"
+                            (callbackGrid)="callbackPart($event)"
+                            (getParams)="getPartParams()"
+                            (cellEditingStopped)="cellEditingStopped($event)"
+                ></grid-table>
+                <div class="panel-footer">
+                  <button type="button" class="btn btn-sm btn-blue mr-2"
+                          (click)="searchParts.open({partsCode: null, status: 'Y'})">
+                    <i class="fa fa-plus"></i> Thêm PT
+                  </button>
+                  <button type="button" class="btn btn-sm btn-blue" [disabled]="!selectedPart"
+                          (click)="delPart()">
+                    <i class="fa fa-trash-o"></i> Xóa PT
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal #searchParts
+                        [headerText]="'Danh sách phụ tùng'"
+                        [apiCall]="callApiSearchPart.bind(this)"
+                        (close)="addPart($event)"
+                        [fieldGrid]="partSearchGridField"
+></search-data-grid-modal>
+<search-data-grid-modal #searchJob
+                        [headerText]="'Danh sách công việc'"
+                        [apiCall]="callApiSearchJob.bind(this)"
+                        (close)="addJob($event)"
+                        [fieldGrid]="fieldGridSearch"
+></search-data-grid-modal>

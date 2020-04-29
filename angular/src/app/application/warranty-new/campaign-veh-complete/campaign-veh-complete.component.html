@@ -1,0 +1,60 @@
+<div>
+  <form [formGroup]="filterForm">
+    <div class="row">
+      <div class="form-group col-md-2">
+        <div class="input-group">
+          <label class="input-group-addon">DLR</label>
+          <select class="form-control" formControlName="dlrId">
+            <option [ngValue]="dealer.id" *ngFor="let dealer of dealers">
+              {{ dealer.id == 1 ? "Tất cả" : dealer.abbreviation }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <div class="input-group">
+          <label class="input-group-addon"
+            >Vin</label
+          >
+          <input type="text" class="form-control" formControlName="vin" />
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <div class="input-group">
+          <label addonWidth="90px" class="input-group-addon"
+            >Mã công việc</label
+          >
+          <input type="text" class="form-control" formControlName="code" />
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <div class="input-group">
+          <label addonWidth="95px" class="input-group-addon"
+            >Tên chiến dịch</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="campaignName"
+          />
+        </div>
+      </div>
+      <div class="col-md-1 text-right">
+        <button (click)="search()" class="btn btn-blue">
+          Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </form>
+  <grid-table
+    [fieldGrid]="fieldGrid"
+    [isSuppressHorizontalScroll]="true"
+    (callbackGrid)="callbackGridParams($event)"
+    (changePaginationParams)="changePaginationParams($event)"
+  ></grid-table>
+</div>
+<div class="text-right">
+  <button class="btn btn-blue" (click)="download()">
+    Tải xuống 
+  </button>
+</div>

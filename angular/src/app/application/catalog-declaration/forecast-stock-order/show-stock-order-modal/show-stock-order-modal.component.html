@@ -1,0 +1,87 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"       [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-title" *ngIf="selectedList"><strong>Đặt hàng cho dự trữ tồn kho</strong></div>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon">Số đơn đặt hàng</span>
+                  <input class="form-control" formControlName="invoiceNo">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <tmss-datepicker formControlName="invoiceDate" text="Ngày đặt hàng"></tmss-datepicker>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon">Người đặt hàng</span>
+                  <input class="form-control" formControlName="invoicePerson">
+                </div>
+              </div>
+            </div>
+            <grid-table [fieldGrid]="gridField"
+                        (callbackGrid)="callbackGrid($event)"
+                        [showPagination]="false"
+                        [height]="'250px'"
+            ></grid-table>
+
+            <div class="row text-right mt-4">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  22
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  11
+                </div>
+              </div>
+
+              <div class="col-sm-8">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  33
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Đặt hàng
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+  <button *ngIf="buttonDef" type="button" class="ag-in-cell-button" (click)="customFunction()" [disabled]="disableButton">
+    <i *ngIf="buttonDef.iconName" class="{{buttonDef.iconName}}"></i> {{buttonDef.text}}
+  </button>
+  <button *ngIf="buttonDefTwo" type="button" class="ag-in-cell-button" (click)="customFunctionTwo()"
+          [disabled]="disableButtonTwo">
+    <i *ngIf="buttonDefTwo.iconName" class="{{buttonDefTwo.iconName}}"></i> {{buttonDefTwo.text}}
+  </button>
+</div>

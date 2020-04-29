@@ -1,0 +1,455 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="tabbable">
+      <ul class="nav nav-tabs tab-space-3 tab-blue">
+        <li *ngFor="let item of tabs"
+            [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+          <a data-toggle="tab" class="tab-item text-capitalize">
+            {{item}}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div [tabDisplay]="selectedTab === tabs[0]"
+         [style.display]="selectedTab === tabs[0]">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="repairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="registerno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <select class="form-control" formControlName="empId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="col-sm-4">-->
+        <!--<div class="form-group input-group">-->
+        <!--<span class="input-group-addon">CVDV</span>-->
+        <!--<select class="form-control" formControlName="advisorId">-->
+        <!--<option value=""></option>-->
+        <!--<option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="col-sm-3">
+          <button class="btn btn-blue mr-2" (click)="searchWaittingJobScc()"><i class="fa fa-search"> </i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="field"
+          (getParams)="getWaittingJobSccParams()"
+          (callbackGrid)="callbackWaittingJobScc($event)"
+          (cellDoubleClicked)="cellDoubleClickedSCC($event)"
+        ></grid-table>
+      </div>
+    </div>
+
+    <div [tabDisplay]="selectedTab === tabs[1]"
+         [style.display]="selectedTab === tabs[1]">
+
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="jobSccRepairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="jobSccRegisterno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <select class="form-control" formControlName="jobSccEmpId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">KTV</span>
+              <select class="form-control" formControlName="jobSccTechId">
+                <option value=""></option>
+                <option *ngFor="let item of division" [value]="item.id">{{item.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <button class="btn btn-blue mr-2" (click)="searchJobScc()"><i class="fa fa-search"> </i> Tìm kiếm</button>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="field"
+          (callbackGrid)="callbackJobScc($event)"
+          (getParams)="getJobScc()"
+          [isSuppressHorizontalScroll]="true"
+          (cellDoubleClicked)="cellDoubleClickedSCC($event)"
+        ></grid-table>
+      </div>
+    </div>
+    <div [tabDisplay]="selectedTab === tabs[2]"
+         [style.display]="selectedTab === tabs[2]">
+
+
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="waittingJobBpRepairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="waittingJobBpRegisterno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <select class="form-control" formControlName="waittingJobBpEmpId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <button class="btn btn-blue mr-2" (click)="searchWaittingJobBp()"><i class="fa fa-search"> </i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="field"
+          (callbackGrid)="callbackWaittingJobBp($event)"
+          (getParams)="getWaittingJobBpParams()"
+          [isSuppressHorizontalScroll]="true"
+          (cellDoubleClicked)="cellDoubleClickedDS($event)"
+        ></grid-table>
+      </div>
+    </div>
+    <div [tabDisplay]="selectedTab === tabs[3]"
+         [style.display]="selectedTab === tabs[3]">
+
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="progressBpRepairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="progressBpRegisterno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <select class="form-control" formControlName="progressBpEmpId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">KTV</span>
+              <select class="form-control" formControlName="progressBpTechId">
+                <option value=""></option>
+                <option *ngFor="let item of division" [value]="item.id">{{item.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <button class="btn btn-blue mr-2" (click)="searchProgressBp()"><i class="fa fa-search"> </i> Tìm kiếm</button>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="field"
+          (callbackGrid)="callbackProgressBp($event)"
+          (getParams)="getProgressBpParams()"
+          [isSuppressHorizontalScroll]="true"
+          (cellDoubleClicked)="cellDoubleClickedDS($event)"
+        ></grid-table>
+      </div>
+    </div>
+    <div [tabDisplay]="selectedTab === tabs[4]"
+         [style.display]="selectedTab === tabs[4]">
+
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="jobPendingRepairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="jobPendingRegisterno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+
+              <select class="form-control" formControlName="jobPendingEmpId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">KTV</span>
+              <select class="form-control" formControlName="jobPendingTechId">
+                <option value=""></option>
+                <option *ngFor="let item of division" [value]="item.id">{{item.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group input-group">
+            <span class="input-group-addon">Kiểu RO</span>
+            <select class="form-control" formControlName="jobPendingRoType">
+              <option value=""></option>
+              <option *ngFor="let item of listRoType" [value]="item">{{item}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-blue mr-2" (click)="searchJobPending()"><i class="fa fa-search"> </i> Tìm kiếm</button>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="fieldJob"
+          (callbackGrid)="callbackJobPending($event)"
+          (getParams)="getJobPendingParams()"
+          [isSuppressHorizontalScroll]="true"
+          (cellDoubleClicked)="cellDoubleClick($event)"
+        ></grid-table>
+        <div class="panel-footer">
+          <div class="row pt-2">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Chờ ý kiến KH</span>
+                  <input-search fieldAccessor="input" formControlName="customerReviews"></input-search>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Chờ phụ tùng</span>
+                  <input-search fieldAccessor="input" formControlName="waitPart"></input-search>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Chờ đồng sơn</span>
+                  <input-search fieldAccessor="input" formControlName="waitDs"></input-search>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Chờ thuê ngoài</span>
+                  <input-search fieldAccessor="input" formControlName="waitOutsource"></input-search>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Lý do khác</span>
+                  <input-search fieldAccessor="input" formControlName="reason"></input-search>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div [tabDisplay]="selectedTab === tabs[5]"
+         [style.display]="selectedTab === tabs[5]">
+
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input-search [maxLength]="17" formControlName="waitHandingRepairorderno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số xe</span>
+              <input-search formControlName="waitHandingRegisterno"
+                            fieldAccessor="input"></input-search>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">CVDV</span>
+              <select class="form-control" formControlName="waitHandingEmpId">
+                <option value=""></option>
+                <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">KTV</span>
+              <select class="form-control" formControlName="waitHandingTechId">
+                <option value=""></option>
+                <option *ngFor="let item of division" [value]="item.id">{{item.empName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group input-group">
+            <span class="input-group-addon">Kiểu RO</span>
+            <select class="form-control" formControlName="waitHandingRoType">
+              <option value=""></option>
+              <option *ngFor="let type of listRoType" [value]="type">{{type}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-blue mr-2" (click)="searchWaitHanding()"><i class="fa fa-search"> </i> Tìm kiếm</button>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+        </div>
+        <grid-table
+          [fieldGrid]="fieldJob"
+          (callbackGrid)="callbackWaitHanding($event)"
+          (getParams)="getWaitHandingParams()"
+          [isSuppressHorizontalScroll]="true"
+          (cellDoubleClicked)="cellDoubleClick($event)"
+        ></grid-table>
+      </div>
+    </div>
+
+    <dong-son-progress-modal #infoDongsonModal [openOnEvenbus]=false></dong-son-progress-modal>
+    <repair-plan-modal #infoGeneralRepairModal [openOnEvenbus]=false></repair-plan-modal>
+  </form>
+</div>
+

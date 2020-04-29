@@ -1,0 +1,73 @@
+<div class="modal fade" bsModal #modifyColumnListModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" *ngIf="!selectedData">Add New Column</h4>
+          <h4 class="modal-title" *ngIf="selectedData">Update Column</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" hasError="columnCode">
+            <div class="input-group">
+              <label addonWidth="105px" class="input-group-addon required">Column Code</label>
+              <input type="text" class="form-control" formControlName="columnCode" autoFocusField>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Column Code is required</div>
+              <div *ifError="'maxLength'">Column Code must has no more than 50 characters</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="columnName">
+            <div class="input-group">
+              <label addonWidth="105px" class="input-group-addon required">Column Name</label>
+              <input type="text" class="form-control" formControlName="columnName">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Column Name is required</div>
+              <div *ifError="'maxLength'">Column Name must has no more than 50 characters</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="columnWidth">
+            <div class="input-group">
+              <label addonWidth="105px" class="input-group-addon">Column Width</label>
+              <input type="text" class="form-control" formControlName="columnWidth">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Column width must be a number</div>
+              <div *ifError="'maxLength'">Column width must has no more than 18 characters</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="columnDes">
+            <div class="input-group">
+              <label addonWidth="105px" class="input-group-addon">Description</label>
+              <input type="text" class="form-control" formControlName="columnDes">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Column width must has no more than 50 characters</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <label addonWidth="105px" class="input-group-addon">Is in use</label>
+              <select formControlName="status" class="form-control">
+                <option value="Y">Enable</option>
+                <option value="N">Disable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

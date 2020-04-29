@@ -1,0 +1,16 @@
+<grid-table [fieldGrid]="fieldGrid"
+            (callbackGrid)="callbackGrid($event)"
+            (getParams)="getParams()"
+            [suppressRowClickSelection]="true"
+            [rowSelection]="'multiple'"
+            [showPagination]="false"
+            [height]="'200px'"
+></grid-table>
+
+<button type="button" class="btn btn-blue mt-2"
+        [disabled]="!cusSelected || !cusSelected.length"
+        (click)="standarizeCustomerInfoDetailModal.open(cusId,cusSelected)">
+  Chuẩn hoá thông tin chi tiết khách hàng
+</button>
+
+<standardize-cus-info-detail-modal #standarizeCustomerInfoDetailModal (close)="getVehicleOfCus($event)"></standardize-cus-info-detail-modal>

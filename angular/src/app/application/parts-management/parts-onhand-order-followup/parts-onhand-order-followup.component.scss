@@ -1,0 +1,15 @@
+::ng-deep .ag-row.ag-row-focus:not(.row-gray) .ag-cell {
+	background-color: rgb(188, 225, 248) !important;
+}
+
+// ::ng-deep .ag-theme-balham.row-gray .ag-cell {
+// 	background-color: #EFEFEF;
+// }
+
+::ng-deep .ag-row.row-gray .ag-cell {
+	background-color: #EFEFEF;
+}
+
+::ng-deep.ag-row.cancel-status .ag-cell {
+	background-color: #00e0e0;
+}

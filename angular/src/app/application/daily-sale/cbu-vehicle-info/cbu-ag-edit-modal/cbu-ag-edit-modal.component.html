@@ -1,0 +1,118 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form class="form-login" *ngIf="form" [formGroup]="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Vehicle Information</h4>
+        </div>
+        <div class="modal-body" *ngIf="column" hasError="{{column.field}}">
+          <div [ngClass]="editType === 'datePicker' || editType=== 'monthPicker' || editType === 'timePicker'
+          ? 'form-group' : 'form-group input-group'">
+            <label class="input-group-addon"
+                   *ngIf="column.headerName && !(editType === 'datePicker' || editType === 'monthPicker' || editType === 'timePicker')">
+              {{column.headerName}}
+            </label>
+            <!--Text-->
+            <input type="text" class="form-control" *ngIf="editType === 'text'" [formControlName]="column.field" autoFocusField>
+
+            <!--Number-->
+            <input type="text" class="form-control" [formControlName]="column.field" autoFocusField
+                   *ngIf="editType === 'number' && column.field !== 'payVnAmount' && column.field !== 'payUsdAmount'">
+
+            <input type="text" class="form-control" [formControlName]="column.field" autoFocusField
+                   (input)="dataFormatService.formatMoneyForm(form,column.field)"
+                   *ngIf="editType === 'number' && column.field === 'payVnAmount' || column.field === 'payUsdAmount'">
+
+            <!--List Option-->
+            <select class="form-control" *ngIf="editType === 'listOption' && isString()" autoFocusField
+                    formControlName="{{column.field}}">
+              <option *ngFor="let data of value" [ngValue]="data">
+                {{data}}
+              </option>
+            </select>
+
+            <select class="form-control" autoFocusField formControlName="{{column.field}}"
+                    *ngIf="(editType === 'listOption') && !isString()">
+              <option *ngFor="let data of value" [ngValue]="data.id">
+                {{data.value}}
+              </option>
+            </select>
+
+            <!--Select-->
+            <select class="form-control" *ngIf="(editType === 'select')" autoFocusField
+                    formControlName="{{column.fieldSubmit}}">
+              <option [ngValue]=null
+                      *ngIf="column.fieldSubmit === 'dealerId' || column.fieldSubmit === 'assChangeFrom'
+                             || column.fieldSubmit === 'mlOtherDlr' || column.fieldSubmit === 'pdiYardArea'">
+              </option>
+              <option *ngFor="let data of value" [ngValue]="data">
+                {{data[displayField]}}
+              </option>
+            </select>
+
+            <!--DatePicker-->
+            <div *ngIf="editType === 'datePicker'">
+              <tmss-datepicker-sale [formControlName]="column.field" [showDeleteBtn]="true"
+                               [minDate]="minDate" [maxDate]="maxDate"
+                               [text]="column.headerName"
+              ></tmss-datepicker-sale>
+            </div>
+
+            <!--Time Picker-->
+            <div *ngIf="editType=== 'timePicker'" class="timepicker" hasError="hours">
+              <div hasError="minutes">
+                <div class="input-group">
+                  <div class="input-group-addon" *ngIf="column.headerName">{{column.headerName}}</div>
+                  <input type="text" class="form-control" formControlName="hours" autoFocusField>
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon">:</span>
+                  <input type="text" class="form-control" formControlName="minutes">
+                </div>
+                <div class="clear-timepicker"></div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormatAcceptZero'">Giá trị của PHÚT phải là số</div>
+                  <div *ifError="'max'">PHÚT phải nhỏ hơn 60</div>
+                  <div *ifError="'maxLength'">PHÚT phải chỉ được nhập 2 chữ số</div>
+                </div>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormatAcceptZero'">Giá trị của GIỜ phải là số</div>
+                <div *ifError="'max'">GIỜ phải nhỏ hơn 24</div>
+                <div *ifError="'maxLength'">GIỜ phải chỉ được nhập 2 chữ số</div>
+              </div>
+            </div>
+
+            <!--Month Picker-->
+            <month-picker [model]="selectedDate" (modelChange)="fillDatePicker($event)" autoFocusField
+                          *ngIf="editType=== 'monthPicker'" [removable]="true"
+                          [text]="column.headerName"
+            ></month-picker>
+
+            <!--List-->
+            <div *ngIf="editType=== 'list'">
+              <multi-column-select-control formControlName="{{column.fieldSubmit}}"
+                                           displayField="{{displayField}}"
+                                           [fieldGrid]="gridField"
+                                           [apiCall]="getData.bind(this)">
+              </multi-column-select-control>
+            </div>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'maxLength'">Max length is {{column.maxLength}}</div>
+            <div *ifError="'specialCharacter'">Username cannot contain special characters or spaces</div>
+            <div *ifError="'numberFormat'">Giá trị bạn nhập cần phải là số</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

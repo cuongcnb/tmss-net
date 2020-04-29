@@ -1,0 +1,86 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Đề xuất gói công việc</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="gjCode">
+                <div class="input-group">
+                  <label class="input-group-addon">Mã gói CV</label>
+                  <input type="text" class="form-control required" formControlName="gjCode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="gjName">
+                <div class="input-group">
+                  <label class="input-group-addon">Tên gói CV</label>
+                  <input type="text" class="form-control" formControlName="gjName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="remark">
+                <div class="input-group">
+                  <label class="input-group-addon">Nhóm</label>
+                  <select class="form-control" formControlName="jobType">
+                    <option *ngFor="let type of jobGroupTypes" [ngValue]="type.id">{{type.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon">Ghi chú</label>
+                  <input type="text" class="form-control" formControlName="remark">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon">Dòng xe</label>
+                  <select disabled class="form-control" formControlName="cfId">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let val of cfList" [ngValue]="val.id">{{val.cfName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <label class="input-group-addon">Đời xe</label>
+                  <input readonly type="text" class="form-control" formControlName="doixe">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

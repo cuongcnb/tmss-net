@@ -1,0 +1,133 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{!selectedData ? 'Thêm phụ tùng' : 'Sửa phụ tùng'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label>Mã PT</label>
+                <input-search formControlName="partCode" (onSearch)="searchPartCodeModal.open()" [showBtn]="true"></input-search>
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Tên PT</label>
+                <input class="form-control" formControlName="partName">
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Đơn vị</label>
+                <input class="form-control" formControlName="unit">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-3">
+                <label>Đơn giá</label>
+                <input class="form-control" formControlName="price">
+              </div>
+
+              <div class="form-group col-sm-3">
+                <label>Số lượng tồn kho</label>
+                <input class="form-control" formControlName="stock">
+              </div>
+
+              <div class="form-group col-sm-3" hasError="required">
+                <label>Số lượng cần đặt</label>
+                <input class="form-control" formControlName="required">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số lượng phải là số</div>
+                  <div *ifError="'required'">Số lượng đặt bắt nhập</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-3">
+                <label>Số lượng nhận</label>
+                <input class="form-control" formControlName="receive">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="payment">
+                <label class="required">Thành tiền</label>
+                <input formControlName="payment" class="form-control" (input)="formatMoneyForm('payment')">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Tổng số tiền bắt buộc nhập</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-2">
+                <label>Thuế</label>
+                <select formControlName="tax" class="form-control">
+                  <option [ngValue]="10">10</option>
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="0">0</option>
+                </select>
+              </div>
+
+              <div class="form-group col-sm-3" hasError="percent">
+                <label>%</label>
+                <input formControlName="percent" class="form-control" (blur)="countValue()">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 3 ký tự</div>
+                  <div *ifError="'numberFormat'">% phải là số</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-3" hasError="value">
+                <label>Giá trị</label>
+                <input formControlName="value" class="form-control" (blur)="countPercent()" (input)="formatMoneyForm('value')">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Giá trị phải là số</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label>Ghi chú</label>
+                <input formControlName="note" class="form-control">
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Ver</label>
+                <input formControlName="ver" class="form-control">
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Sửa lại</label>
+                <checkbox formControlName="fix"></checkbox>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+
+          <button class="btn btn-light-grey" type="button" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal
+  #searchPartCodeModal
+  [headerText]="'Chọn phụ tùng'"
+  [apiCall]="getPartList.bind(this)"
+  (close)="form.patchValue($event); formatMoneyForm('price')"
+  [fieldGrid]="fieldGridPartCode"
+></search-data-grid-modal>
+

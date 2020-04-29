@@ -1,0 +1,97 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Thông tin tìm kiếm
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="75px">Đại lý</span>
+            <select class="form-control" formControlName="sortAgency">
+              <option>TGP-ND</option>
+              <option>THTL</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="75px">BKS</span>
+                <input type="text" class="form-control" formControlName="licensePlates">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="75px">VIN</span>
+                <input type="text" class="form-control" formControlName="errorVin">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker text="Từ ngày" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái</span>
+                <select class="form-control" formControlName="errorStatus">
+                  <option>L/H chưa thành công</option>
+                  <option>L/H không thành công</option>
+                  <option>(Select All)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="75px">CVDV</span>
+                <select class="form-control" formControlName="serviceAdvisor">
+                  <option>Tất cả</option>
+                  <option>Bùi Công Diệu</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker text="Đến ngày" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-blue mb-2 mr-2">
+          <i class="fa fa-refresh"></i> Làm mới
+        </button>
+        <button type="button" class="btn btn-blue mb-2 mr-2" (click)="search()">
+          <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <grid-table [fieldGrid]="fieldGrid" [height]="'380px'" [showPagination]="false"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+      </div>
+      <div class="col-md-9">
+        <perfect-scrollbar class="ps pr-3 contact-after-day-border" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <info-after-days15 [detailData]="selectedRowGrid"
+                             [isContactAfterDays15]=" isContactAfterDays15 "
+          ></info-after-days15>
+          <info-contact-after-days15></info-contact-after-days15>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <data-after-days15></data-after-days15>
+  </form>
+</div>

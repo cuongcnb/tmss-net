@@ -1,0 +1,30 @@
+<div class="cropper-container">
+  <div bsModal="bsModal" #modal="bs-modal" [config]="{ backdrop: 'static' }" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Cropper</h5>
+        </div>
+        <div class="modal-body">
+          <div class="cropper-container">
+            <div class="wrapper">
+              <div *ngIf="loadError" class="alert alert-warning">{{ loadImageErrorText }}</div>
+              <div class="cropper">
+                <img #image *ngIf="imageUrl" class="img-rounded" alt="image" [src]="imageUrl"
+                     (load)="imageLoaded($event)" crossorigin="anonymous"
+                     (error)="imageLoadError()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="exportCanvas()" type="button" class="btn btn-blue">Save</button>
+          <button (click)="dismiss.emit(); modal.hide()" type="button" class="btn btn-light-grey">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

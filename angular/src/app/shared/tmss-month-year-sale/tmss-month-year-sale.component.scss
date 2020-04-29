@@ -1,0 +1,22 @@
+::ng-deep {
+  .bs-datepicker {
+    height: 250px;
+  }
+  .bs-datepicker-container {
+    padding: 5px;
+  }
+  .bs-datepicker-head {
+    height: 30px;
+    padding: 2px 10px;
+  }
+  .bs-datepicker-body {
+    padding: 0;
+    min-height: auto;
+    min-width: auto;
+  }
+  .bs-datepicker-body table.days span {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+  }
+}

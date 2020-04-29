@@ -1,0 +1,65 @@
+form {
+  max-height: 167px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  padding:  5px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.address {
+  width: 100%;
+
+  & > div:nth-child(1) {
+    width: 55%;
+    float: left;
+    display: table;
+  }
+  & > div:nth-child(2) {
+    width: 45%;
+    float: left;
+    display: table;
+  }
+  & > div:not(:first-child) .input-group-addon {
+    border-radius: 0;
+    min-width: 0;
+  }
+}
+
+.address-cs {
+  width: 100%;
+
+  & > div:nth-child(1) {
+    width: 40%;
+    float: left;
+    display: table;
+  }
+  & > div:nth-child(2), div:nth-child(3) {
+    width: 30%;
+    float: left;
+    display: table;
+  }
+  & > div:not(:first-child) .input-group-addon {
+    border-radius: 0;
+    min-width: 0;
+  }
+}

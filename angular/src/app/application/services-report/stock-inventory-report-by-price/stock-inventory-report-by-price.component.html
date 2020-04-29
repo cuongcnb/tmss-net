@@ -1,0 +1,73 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="export()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{headerName}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="dealerCode">
+              <label class="required">Đại lý</label>
+              <select class="form-control" formControlName="dealerCode" [attr.disabled]="checkDisplay.isDisableDealer">
+                <option value="1">TTHC _ Đại lý Láng Hạ</option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn phải chọn đại lý</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mã phụ tùng</label>
+              <input type="text" class="form-control" formControlName="accessoryCode">
+            </div>
+            <div class="form-group">
+              <label>Vị trí lưu trữ</label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="localStorage">
+                <span class="input-group-addon">-</span>
+                <select class="form-control" formControlName="isStock">
+                  <option value="">All</option>
+                  <option value="y">Stock</option>
+                  <option value="n">Non Stock</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="checkDisplay.isHaveAccessoryType">
+              <label>Loại phụ tùng</label>
+              <select class="form-control" formControlName="accessoryType">
+                <option value="">All</option>
+                <option value="y">Toyota</option>
+                <option value="n">Non Toyota</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <checkbox formControlName="isZero" text="In cả những phụ tùng có số lượng bằng 0"></checkbox>
+            </div>
+            <div class="form-group">
+              <label>Định dạng file</label>
+              <select class="form-control" formControlName="formatFile">
+                <option value="pdf">PDF</option>
+                <option value="rtf">RTF</option>
+                <option value="excel">Excel</option>
+              </select>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="reportTypeModal.open(1)">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<report-type-modal #reportTypeModal (close)="downloadFile($event)"></report-type-modal>

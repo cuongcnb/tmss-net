@@ -1,0 +1,95 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="export()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{headerName}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="tabbable">
+              <ul class="nav nav-tabs tab-blue">
+                <li *ngFor="let item of usingTab"
+                    [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer">
+                  <a data-toggle="tab" class="tab-item text-capitalize">
+                    {{item.name}}
+                  </a>
+                </li>
+              </ul>
+              <div class="my-3">
+                <div *ngIf="selectedTab === 'year'" [tabDisplay]="selectedTab === 'year'">
+                  <div class="form-group">
+                    <label>Đại lý</label>
+                    <select class="form-control" formControlName="dealerCode">
+                      <option value="1">Công ty TNHH Toyota Láng Hạ</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Năm</label>
+                    <input type="text" class="form-control" formControlName="year">
+                  </div>
+                </div>
+                <div *ngIf="selectedTab === 'month'" [tabDisplay]="selectedTab === 'month'">
+                  <div class="form-group">
+                    <label>Đại lý</label>
+                    <select class="form-control" formControlName="dealerCode">
+                      <option value="1">Công ty TNHH Toyota Láng Hạ</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Tháng</label>
+                    <month-picker [model]="selectedDate" (modelChange)="fillMonthPicker($event)"></month-picker>
+                  </div>
+                </div>
+                <div *ngIf="selectedTab === 'date'" [tabDisplay]="selectedTab === 'date'">
+                  <div class="form-group">
+                    <label>Đại lý</label>
+                    <select class="form-control" formControlName="dealerCode">
+                      <option value="1">Công ty TNHH Toyota Láng Hạ</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Ngày</label>
+                    <tmss-datepicker formControlName="date"></tmss-datepicker>
+                  </div>
+                </div>
+                <div *ngIf="selectedTab === 'rangeDate'" [tabDisplay]="selectedTab === 'rangeDate'">
+                  <div class="form-group">
+                    <label>Đại lý</label>
+                    <select class="form-control" formControlName="dealerCode">
+                      <option value="1">Công ty TNHH Toyota Láng Hạ</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Từ ngày</label>
+                    <tmss-datepicker formControlName="fromDate"></tmss-datepicker>
+                  </div>
+                  <div class="form-group">
+                    <label>Đến ngày</label>
+                    <tmss-datepicker formControlName="toDate"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="reportTypeModal.open(1)">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<report-type-modal #reportTypeModal (close)="downloadFile($event)"></report-type-modal>
+

@@ -1,0 +1,198 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    <span>Thông tin khách hàng</span>
+    <div class="panel-tools">
+      <button type="button" class="fa btn-collapse" [ngClass]="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'"
+        (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEventCus">
+      </button>
+    </div>
+  </div>
+  <div id="collapseEventCus" [collapse]="isCollapsed">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-sm-8 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">Ng m/x</span>
+            <input type="text" class="form-control required" formControlName="name" maxlength="100">
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">Vai trò</span>
+            <select class="form-control" formControlName="type">
+              <option value="1">Chủ xe</option>
+              <option value="2">Quản lý xe</option>
+              <option value="3">Lái xe</option>
+              <option value="9">Khác</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="form-group col-sm-8" hasError="tel" [ignoreCss]="['required']">
+          <div class=" address">
+            <div hasError="tel" [ignoreCss]="['required']">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">ĐT</span>
+                <input type="text" class="form-control required" formControlName="tel">
+              </div>
+<!--              <div class="error-messages" errorMessage>-->
+<!--                <div *ifError="'phoneFormat'">Sai định dạng</div>-->
+<!--              </div>-->
+            </div>
+            <div hasError="tel2">
+              <div class="input-group">
+                <span class="input-group-addon">/</span>
+                <input type="text" class="form-control" formControlName="tel2">
+              </div>
+<!--              <div class="error-messages" errorMessage>-->
+<!--                <div *ifError="'phoneFormat'">Sai định dạng</div>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">Email</span>
+            <input type="text" class="form-control" formControlName="email" maxlength="50">
+          </div>
+          <!--<div class="error-messages" errorMessage>-->
+            <!--<div *ifError="'emailFormat'">Sai định dạng Email</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">Địa chỉ</span>
+            <input type="text" class="form-control" formControlName="address" maxlength="300">
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">G/gọi</span>
+            <select class="form-control" formControlName="calltime">
+              <option value="H">Hành chính</option>
+              <option value="N">Ngoài HC</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 form-group">
+          <div class="address">
+            <div>
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">Chủ xe</span>
+                <input type="text" class="form-control" formControlName="cusno">
+              </div>
+            </div>
+            <div>
+              <div class="input-group">
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control required" disabled formControlName="carownername" maxlength="180">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">Email</span>
+            <input type="text" class="form-control" formControlName="carowneremail" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 form-group">
+          <div class="address">
+            <div hasError="carownermobil">
+              <div class="input-group">
+                <span class="input-group-addon">DĐ/CĐ</span>
+                <input type="text" disabled class="form-control" formControlName="carownermobil">
+              </div>
+<!--              <div class="error-messages" errorMessage>-->
+<!--                <div *ifError="'phoneFormat'">Sai định dạng</div>-->
+<!--              </div>-->
+            </div>
+            <div hasError="carownertel">
+              <div class="input-group">
+                <span class="input-group-addon">/</span>
+                <input type="text" class="form-control " formControlName="carownertel">
+              </div>
+<!--              <div class="error-messages" errorMessage>-->
+<!--                <div *ifError="'phoneFormat'">Sai định dạng</div>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-sm-4" hasError="carownerfax">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">Fax</span>
+            <input type="text" class="form-control" formControlName="carownerfax">
+          </div>
+<!--          <div class="error-messages" errorMessage>-->
+<!--            <div *ifError="'phoneFormat'">Sai định dạng</div>-->
+<!--          </div>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">Tên Cty</span>
+            <input type="text" class="form-control" formControlName="orgname" maxlength="2000">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="56px" style="max-width: 56px">Loại</span>
+            <select class="form-control" formControlName="custypeId">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let type of customerTypes" [ngValue]="type.id">{{type.cusTypeName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group address-cs">
+            <div>
+              <span class="input-group-addon" addonWidth="63px" style="max-width: 63px">Đ/chỉ</span>
+              <input type="text" class="form-control required" formControlName="carowneradd">
+            </div>
+            <div>
+              <span class="input-group-addon">-</span>
+              <select class="form-control" formControlName="provinceId">
+                <option value=""></option>
+                <option *ngFor="let province of provinces" [ngValue]="province.id">
+                  {{province.name}}
+                </option>
+              </select>
+            </div>
+            <div>
+              <span class="input-group-addon">-</span>
+              <select class="form-control" formControlName="districtId">
+                <option value=""></option>
+                <option *ngFor="let district of districts" [ngValue]="district.id">
+                  {{district.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="63px">Ghi chú</span>
+            <textarea class="form-control" formControlName="cusNote" maxlength="1000"></textarea>
+          </div>
+        </div>
+      </div>
+      <button class="ghost" #submitBtn></button>
+    </form>
+  </div>
+</div>

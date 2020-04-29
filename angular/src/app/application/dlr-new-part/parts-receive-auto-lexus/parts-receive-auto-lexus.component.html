@@ -1,0 +1,58 @@
+<div class="mt-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin
+      <div class="panel-tools">
+        <button class="btn btn-link" (click)="resetPartPagination();refresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartReceiveAutoLexusInfo" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartReceiveAutoLexusInfo" class="panel-collapse collapse in">
+
+      <grid-table [fieldGrid]="fieldGridInvoice"
+                  (callbackGrid)="callbackInvoice($event)"
+                  (getParams)="getParamsInvoice()"
+                  (rowClicked)="rowInvoiceClicked($event)"
+                  (rowSelected)="rowInvoiceSelected($event)"
+                  [paginationTotalsData]="paginationTotalsData"
+                  [isSuppressHorizontalScroll]="true"
+                  suppressRowClickSelection="true"
+                  height="250px"
+                  rowSelection="multiple"
+      ></grid-table>
+    </div>
+  </div>
+</div>
+
+<div class="mt-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Danh sách phụ tùng
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartReceiveAutoLexusPart" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartReceiveAutoLexusPart" class="panel-collapse collapse in">
+
+      <grid-table [fieldGrid]="fieldPartsList"
+                  (callbackGrid)="callbackParts($event)"
+                  [height]="'250px'"
+                  [rowSelection]="'multiple'"
+      ></grid-table>
+    </div>
+  </div>
+
+</div>
+
+<div class="btns-group text-center">
+  <button class="btn btn-blue btn-blue px-4" (click)="showDetail()"><i class="fa fa-eye"></i> Xem chi tiết</button>
+</div>
+<parts-receive-detail-lexus #partsReceiveDetailLexus (refresh)="refresh()"></parts-receive-detail-lexus>

@@ -1,0 +1,47 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}"
+>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Báo cáo yêu cầu bảo hành</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12 form-group">
+                <tmss-datepicker formControlName="fromDate" [addOnMinWidth]="'88px'" text="Từ ngày"></tmss-datepicker>
+              </div>
+              <div class="col-md-6 col-sm-12 form-group">
+                <tmss-datepicker formControlName="toDate" [addOnMinWidth]="'88px'" text="Đến ngày"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" [addonWidth]="'88px'">Loại báo cáo</span>
+                    <select class="form-control" formControlName="extension">
+                      <option value="xls">XLS</option>
+                      <option value="doc">DOC</option>
+                      <option value="pdf">PDF</option>
+                      <option value="rtf">RTF</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="exportXls()">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

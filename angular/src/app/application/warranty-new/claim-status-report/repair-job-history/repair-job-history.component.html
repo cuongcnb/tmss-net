@@ -1,0 +1,169 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết sửa chữa</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <h5>Order No: <strong>{{repairJobHistory?.warrantyRoHistory?.repairorderno}}</strong></h5>
+            </div>
+            <div class="col-sm-4">
+              <h5>Model Code: <strong>{{repairJobHistory?.warrantyRoHistory?.cmCode}}</strong></h5>
+            </div>
+            <div class="col-sm-4">
+              <h5>Reception Date:
+                <strong>{{formatDate(repairJobHistory?.warrantyRoHistory?.orderdate)}}</strong></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5>Plate Number: <strong>{{repairJobHistory?.warrantyRoHistory?.platenumber}}</strong></h5>
+            </div>
+            <div class="col-sm-4">
+              <h5>Vin No: <strong>{{repairJobHistory?.warrantyRoHistory?.vinno}}</strong></h5>
+            </div>
+            <div class="col-sm-4">
+              <h5>Arrival Date: <strong>{{formatDate(repairJobHistory?.warrantyRoHistory?.orderdate)}}</strong></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-sm-8">
+                  <h5>Cus. Name: <strong>{{repairJobHistory?.warrantyRoHistory?.cusname}}</strong></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <h5>Tel. 1: <strong>{{repairJobHistory?.warrantyRoHistory?.tel1}}</strong></h5>
+                </div>
+                <div class="col-sm-6">
+                  <h5>Tel. 2: <strong>{{repairJobHistory?.warrantyRoHistory?.tel2}}</strong></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <table>
+                    <tr>
+                      <td>Total Sale Amount</td>
+                      <td>Repair Code</td>
+                      <td>Tax Amount</td>
+                      <td>Advance Payment</td>
+                    </tr>
+                    <tr>
+                      <td>{{repairJobHistory?.warrantyChangeAmount}}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <h5><strong>Repair Type Warranty</strong></h5>
+                </div>
+                <div class="col-sm-4">
+                  <h5>Mileage: <strong>{{repairJobHistory?.warrantyRoHistory?.odometer}}</strong></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <h5>Next Service Schedule</h5>
+                </div>
+                <div class="col-sm-4">
+                  <h5>Suggestion</h5>
+                </div>
+                <div class="col-sm-4">
+                  <h5>Customer Request</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <h5>SA: <strong>{{repairJobHistory?.warrantyRoHistory?.sa}}</strong></h5>
+                </div>
+                <div class="col-sm-4">
+                  <h5>Job Group</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <table>
+                <tr>
+                  <th colspan="2">{{repairJobHistory?.srvMDealer?.dlrName}}</th>
+                </tr>
+                <tr>
+                  <td>Zip Code</td>
+                  <td>{{repairJobHistory?.srvMDealer?.region}}</td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>{{repairJobHistory?.srvMDealer?.smdAdd}}</td>
+                </tr>
+                <tr>
+                  <td>Tel</td>
+                  <td>{{repairJobHistory?.srvMDealer?.tel}}</td>
+                </tr>
+                <tr>
+                  <td>Fax</td>
+                  <td>{{repairJobHistory?.srvMDealer?.fax}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <table style="width:100%">
+                <tr>
+                  <th colspan="3">Maintenace or Repair Detail</th>
+                </tr>
+                <tr>
+                  <th width="20%">Tax Rate</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="grid-table-area mt-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+              </div>
+              <grid-table *ngIf="modal.isShown"
+                          [fieldGrid]="fieldRepairJobList"
+                          [footerFieldGrid]="fieldRepairJobFooterList"
+                          [footerData]="repairJobFooter"
+                          [showPagination]="false"
+                          height="100px"
+                          (callbackGrid)="callbackRepairJob($event)"
+                          (callbackFooterGrid)="callbackRepairJobFooter($event)"
+              ></grid-table>
+            </div>
+          </div>
+          <div class="grid-table-area mt-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>Parts Detail
+              </div>
+              <grid-table *ngIf="modal.isShown"
+                          [fieldGrid]="fieldPartDetailList"
+                          [footerFieldGrid]="fieldPartDetailFooterList"
+                          [footerData]="partDetailFooter"
+                          [showPagination]="false"
+                          height="100px"
+                          (callbackGrid)="callbackPartDetail($event)"
+                          (callbackFooterGrid)="callbackPartDetailFooter($event)"></grid-table>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

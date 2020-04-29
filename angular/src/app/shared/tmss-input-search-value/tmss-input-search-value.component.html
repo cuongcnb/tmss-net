@@ -1,0 +1,8 @@
+<div class="input-group">
+  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+  <input [(ngModel)]="displayValue"
+         type="text" class="form-control"
+         [class.required]="isRequired"
+         [disabled]="isDisabled ? true : null"
+         (input)="onInput()">
+</div>

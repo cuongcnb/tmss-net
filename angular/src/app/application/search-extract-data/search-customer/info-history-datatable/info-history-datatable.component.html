@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin lịch sử sửa chữa
+  </div>
+  <grid-table [fieldGrid]="fieldGrid" [height]="'100px'" [showPagination]="false"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"></grid-table>
+</div>
+<button type="button" class="btn btn-blue mr-2">
+  <i class="clip-file-excel mr-2"></i>
+  Xuất Excel
+</button>
+<button type="button" class="btn btn-blue mr-2">
+  <i class="clip-pencil-2 mr-2"></i>
+  Ghi lại
+</button>

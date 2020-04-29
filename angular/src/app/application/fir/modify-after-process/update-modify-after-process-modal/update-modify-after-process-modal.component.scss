@@ -1,0 +1,39 @@
+.input-group-addon:first-child {
+  min-width: 60px !important;
+}
+
+.input-modal {
+  .input-group-addon {
+    min-width: 80px !important;
+  }
+}
+
+::ng-deep.input-ngayph {
+  .input-group-addon:first-child {
+    min-width: 110px !important;
+  }
+}
+
+.padding-contact {
+  padding: 10px;
+}
+
+.textarea-reasonNotBack {
+  height: 75px !important;
+}
+
+::ng-deep.datetime-customerBack {
+  .input-group-addon:first-child {
+    min-width: 65px !important;
+  }
+}
+
+.input-addon-infoNonFIRs {
+  height: 60px;
+}
+
+.textarea-infoNonFIR {
+  height: 60px!important;
+}
+
+

@@ -1,0 +1,163 @@
+<div class="row">
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form [formGroup]="recvSearchForm" *ngIf="recvSearchForm" autocomplete="off" novalidate>
+          <div class="form-group" hasError="receivedDate">
+            <tmss-datepicker text="Ngày nhận" [isRequired]="true"
+                             formControlName="receivedDate"></tmss-datepicker>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc nhập Ngày nhận</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <select class="form-control" formControlName="session">
+              <option [ngValue]="1">Phiên 1</option>
+              <option [ngValue]="2">Phiên 2</option>
+            </select>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-blue" (click)="searchRecv()">
+              <i class="fa fa-search"></i> Tìm kiếm RECV
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form [formGroup]="roSearchForm" *ngIf="roSearchForm" autocomplete="off" novalidate>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">Kiểu</span>
+                <select class="form-control" formControlName="requestType">
+                  <option [ngValue]="'-1'">Tất cả</option>
+                  <option [ngValue]="'0'">Lệnh sửa chữa</option>
+                  <option [ngValue]="'1'">Bán lẻ phụ tùng</option>
+                  <option [ngValue]="'2'">Đặt hẹn</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Mã phụ tùng">Mã PT</span>
+                <input type="text" class="form-control" formControlName="partsCode">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Biển số xe">BSX</span>
+                <input type="text" class="form-control" formControlName="vehicleNo">
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group input-group">
+                <span class="input-group-addon min-width">RO</span>
+                <input type="text" class="form-control" formControlName="ro">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <tmss-datepicker text="Từ" [isRequired]="true"
+                                 className="min-width" formControlName="fromDate"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <tmss-datepicker text="Đến" [isRequired]="true"
+                                 className="min-width" formControlName="toDate"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-blue" (click)="searchRo()">
+              <i class="fa fa-search"></i> Tìm kiếm RO
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="mt-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Phụ tùng đã nhận
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseListRoExportLackPart" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseListRoExportLackPart" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="fieldPartsList"
+                      (callbackGrid)="callbackParts($event)"
+                      [height]="'555px'"
+                      [isSuppressHorizontalScroll]="true"
+                      [showPagination]="false"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <div class="grid-table-area mt-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Danh sách RO
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseListRoExportLackListRo" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseListRoExportLackListRo" class="panel-collapse collapse in">
+
+          <grid-table [fieldGrid]="fieldRoList"
+                      (callbackGrid)="callbackRo($event)"
+                      [height]="'245px'"
+                      (getParams)="getParamsRo()"
+                      [isSuppressHorizontalScroll]="true"
+                      [showPagination]="false"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-blue " (click)="openShipping()"><i class="fa fa-mail-forward"></i> Mở Shipping</button>
+    </div>
+    <div class="grid-table-area mt-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Chi tiết RO
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseListRoExportLackDetailRo" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseListRoExportLackDetailRo" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="fieldRoDetailList"
+                      (callbackGrid)="callbackRoDetail($event)"
+                      [height]="'245px'"
+                      [isSuppressHorizontalScroll]="true"
+                      [showPagination]="false"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

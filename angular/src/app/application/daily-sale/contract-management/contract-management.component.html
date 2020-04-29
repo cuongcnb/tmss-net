@@ -1,0 +1,129 @@
+<ng-container pageTitle="Contract Management">
+  <div class="mb-1 mt-3 grid-table-btn">
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="addContractModal.open()">
+      <i class="fa fa-plus"></i> Add
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="modifyContract()"
+            [attr.disabled]="(isCancel(selectedContract)) ? true : null">
+      <i class="fa fa-edit"></i> Modify
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="addMultiContract()">
+      <i class="fa fa-plus-square"></i> Add multiple
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="contractSale()"
+            [attr.disabled]="(!isCanSale(selectedContract) || isCancel(selectedContract))? true : null">
+      <i class="fa fa-check"></i> Sales
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="cancelContract()"
+            [attr.disabled]="(currentUser.isAdmin && !isCanceled(selectedContract) && !isUndoCanceled(selectedContract)) ? true : null">
+      <i class="fa fa-times"></i> Cancel
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="changeContract()"
+            [attr.disabled]="((currentUser.isAdmin && !isChanged(selectedContract)) || isCancel(selectedContract)) ? true : null">
+      <i class="fa fa-exchange"></i> Change
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="changeDelivery()"
+            [attr.disabled]="!isCanDelivery(selectedContract) ? true : null">
+      <i class="fa fa-truck"></i> Delivery
+    </button>
+    <button type="button" class="btn btn-blue mb-2 mr-2" (click)="exportToExcel()">
+      <i class="fa fa-download"></i> Export
+    </button>
+    <button type="button" class="btn btn-blue mb-2" (click)="saleFilter.open(filterFormCode.contract)">
+      <i class="fa fa-filter"></i> Filter
+    </button>
+  </div>
+
+  <form *ngIf="searchForm" [formGroup]="searchForm" class="row" (submit)="submitSearch()">
+    <div class="col-sm-3">
+      <div class="input-group form-group">
+        <span role="button" class="input-group-addon">Dealer</span>
+        <select formControlName="dealerId" class="form-control" *ngIf="!isDlrContract">
+          <option value=""></option>
+          <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+        </select>
+
+        <select class="form-control" formControlName="dealerId" *ngIf="isDlrContract">
+          <option [value]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group form-group">
+        <span role="button" class="input-group-addon">Grade</span>
+        <multi-column-select-control formControlName="gradeControl"
+                                     displayField="marketingCode"
+                                     [fieldGrid]="fieldGradeList"
+                                     [list]="gradeList">
+        </multi-column-select-control>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="input-group form-group search-group">
+        <span role="button" class="input-group-addon">Search</span>
+        <input type="text" class="form-control" formControlName="searchKey"
+        data-toggle="tooltip" data-placement="top" title="Quick  search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address." placeholder="Search by frame no, contract no, customer (name, address), contact (name, address)">
+        <button class="btn btn-blue" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Contract Management
+    </div>
+    <grid-table-sale [fieldGrid]="fieldGridContract"
+                [rowClassRules]="rowClassRules"
+                [paginationTotalsData]="paginationTotalsData"
+                [height]="'450px'"
+                (changePaginationParams)="changePaginationParams($event)"
+                (callbackGrid)="callbackGridContract($event)"
+                (cellDoubleClicked)="agCellDoubleClicked($event)"
+                [overlayLoadingTemplate]="'No data to show'"
+                (getParams)="getParamsContract()"
+                (cellMouseOver)="cellMouseOver($event)"
+                (cellMouseOut)="cellMouseOut($event)"
+    ></grid-table-sale>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-sm-3">
+          <h5>Total: <i class="ml-2">{{totalNumber}}</i></h5>
+        </div>
+        <div class="col-sm-3">
+          <h5>Sale: <i class="ml-2">{{saleNumber}}</i></h5>
+        </div>
+        <div class="col-sm-3">
+          <h5>Cancel: <i class="ml-2">{{cancelNumber}}</i></h5>
+        </div>
+        <div class="col-sm-3">
+          <h5>Wait confirm: <i class="ml-2">{{waitConfirmNumber}}</i></h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<div class="custom-tooltip" #estimateDiffTool>
+  Sales Date - Estimated Date
+</div>
+<div class="custom-tooltip" #saleLeadtimeTool>
+  Sales Date - Actual Invoice Date
+</div>
+
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>
+<add-contract-modal #addContractModal (close)="refreshContract()"></add-contract-modal>
+<add-multi-contract-modal #addMultiContractModal (close)="refreshContract()"></add-multi-contract-modal>
+<contract-sale-modal #contractSaleModal (close)="refreshContract()"></contract-sale-modal>
+<cancel-contract-modal #cancelContractModal (close)="refreshContract()"></cancel-contract-modal>
+<contract-change-model #contractChangeModal (close)="refreshContract()"></contract-change-model>
+<change-delivery-date #changeDeliveryDateModal (close)="refreshContract()"></change-delivery-date>
+<tmss-export (getExportParams)="exportParams = $event" [fieldGrid]="fieldGridContract"></tmss-export>
+
+<ag-cell-edit-modal #agCellEditModal
+                    [apiCall]="rowEditApi.bind(this)"
+                    (close)="setDataToRow($event)"></ag-cell-edit-modal>
+<contract-color-edit-modal #contractColorEditModal
+                           [apiCall]="rowEditApi.bind(this)"
+                           (close)="setDataToRow($event)"></contract-color-edit-modal>

@@ -1,0 +1,195 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{!selectedData ? 'Thêm công việc' : 'Sửa công việc'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label>Mã CV</label>
+                <input-search formControlName="workCode" (onSearch)="searchWorkCodeModal.open()" [showBtn]="true"></input-search>
+              </div>
+
+              <div class="form-group col-sm-4" hasError="workName">
+                <label class="required">Tên CV</label>
+                <input formControlName="workName" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Tên CV bắt buộc nhập</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Kiểu CV thuê ngoài</label>
+                <select formControlName="roType" class="form-control">
+                  <option [ngValue]="1">ZZ</option>
+                  <option [ngValue]="2">WD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!isGeneralRepair">
+              <div class="form-group col-sm-4" hasError="workGroup">
+                <label class="required">Nhóm CV</label>
+                <select formControlName="workGroup" class="form-control">
+                  <option [ngValue]="1">Sơn tấm trong</option>
+                  <option [ngValue]="2">Sơn tấm ngoài</option>
+                </select>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Nhóm CV bắt buộc nhập</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>DT/Phạm vi</label>
+                <input-search formControlName="workRange" (onSearch)="searchWorkCodeRange.open()" [showBtn]="true"></input-search>
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Độ khó/Kiểu CV</label>
+                <input-search formControlName="workDiff" (onSearch)="searchWorkDiffModal.open()" [showBtn]="true"></input-search>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="dm">
+                <label>Giờ công (Đ/m)</label>
+                <input formControlName="dm" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số giờ phải là số</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-4" hasError="hs" *ngIf="isGeneralRepair">
+                <label>Giờ công (HS)</label>
+                <input formControlName="hs" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số giờ phải là số</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-4" hasError="tt">
+                <label>Giờ công (TT)</label>
+                <input formControlName="tt" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số giờ phải là số</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="!isGeneralRepair">
+              <div class="form-group col-sm-4" hasError="dmvt">
+                <label>Chi phí VT (Đ/m)</label>
+                <input formControlName="dmvt" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số giờ phải là số</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-4" hasError="ttvt">
+                <label>Chi phí VT (TT)</label>
+                <input formControlName="ttvt" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Số giờ phải là số</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="payment">
+                <label class="required">Thành tiền</label>
+                <input formControlName="payment" class="form-control" (input)="formatMoneyForm('payment')">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Tổng số tiền bắt buộc nhập</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-2">
+                <label>Thuế</label>
+                <select formControlName="tax" class="form-control">
+                  <option [ngValue]="10">10</option>
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="0">0</option>
+                </select>
+              </div>
+
+              <div class="form-group col-sm-3" hasError="percent">
+                <label>%</label>
+                <input formControlName="percent" class="form-control" (blur)="countValue()">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 3 ký tự</div>
+                  <div *ifError="'numberFormat'">% phải là số</div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-3" hasError="value">
+                <label>Giá trị</label>
+                <input formControlName="value" class="form-control" (blur)="countPercent()" (input)="formatMoneyForm('value')">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Giá trị phải là số</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label>Ghi chú</label>
+                <input formControlName="note" class="form-control">
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Ver</label>
+                <input formControlName="ver" class="form-control">
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label>Sửa lại</label>
+                <checkbox formControlName="fix"></checkbox>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+
+          <button class="btn btn-light-grey" type="button" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal
+  #searchWorkCodeModal
+  [headerText]="'Chọn CV'"
+  [apiCall]="getWorkCodeList.bind(this)"
+  (close)="form.patchValue($event); formatMoneyForm('payment')"
+  [fieldGrid]="fieldGridWorkCode"
+></search-data-grid-modal>
+
+<search-data-grid-modal
+  #searchWorkCodeRange
+  [headerText]="'Chọn phạm vi'"
+  [apiCall]="getWorkCodeRange.bind(this)"
+  (close)="form.patchValue($event)"
+  [fieldGrid]="fieldGridWorkDiff"
+></search-data-grid-modal>
+
+<search-data-grid-modal
+  #searchWorkDiffModal
+  [headerText]="'Danh sách kiểu sơn'"
+  [apiCall]="getWorkDiffList.bind(this)"
+  (close)="form.patchValue($event);"
+  [fieldGrid]="fieldGridWorkDiff"
+></search-data-grid-modal>

@@ -1,0 +1,19 @@
+<label style="display: flex;align-items: center;"[class]="styleClass? styleClass +' checkbox':'checkbox '">
+  <div class="checkbox-text" [ngClass]="textClassName" [style.color]="isDisabled ? 'lightgrey' : ''" *ngIf="rightCheckbox"
+    [addonWidth]="labelWidth">
+    {{text}}
+  </div>
+  <div class="icheckbox_minimal-grey"
+       #iCheckBox
+       [class.disabled]="isDisabled"
+       [class.checked]="selectedValue">
+    <input type="checkbox" [class.disabled]="isDisabled" class="grey" [checked]="selectedValue"
+           (change)="changeValue($event.currentTarget.checked)">
+    <ins class="iCheck-helper" [class.disabled]="isDisabled"></ins>
+  </div>
+  <input type="checkbox" [class.disabled]="isDisabled" id="checkBoxPrint" class="grey" [checked]="selectedValue"
+         (change)="changeValue($event.currentTarget.checked)">
+  <div class="checkbox-text" [ngClass]="textClassName" [style.color]="isDisabled ? 'lightgrey' : ''" *ngIf="!rightCheckbox">
+    {{text}}
+  </div>
+</label>

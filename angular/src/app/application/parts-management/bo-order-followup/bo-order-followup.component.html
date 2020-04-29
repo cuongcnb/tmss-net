@@ -1,0 +1,77 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm đơn hàng BO
+
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="input-group">
+            <div class="input-group-addon">Số RO</div>
+            <input type="text" class="form-control" formControlName="roNo">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="input-group">
+            <div class="input-group-addon">Biển số</div>
+            <input type="text" class="form-control" formControlName="plate">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-blue" (click)="resetPaginationParams(); searchOrder()">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Theo Dõi Tình Trạng Đơn Hàng BO
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseBoOrderFollowup" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapseBoOrderFollowup" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'400px'"
+                [sizeColumnToHeaderWidth]="true"
+                [groupMultiAutoColumn]="true"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                (changePaginationParams)="changePaginationParams($event)"
+                [paginationTotalsData]="paginationTotalsData"
+    ></grid-table>
+  </div>
+</div>
+
+<!--<div class="panel panel-default mb-0">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+  </div>
+  <grid-table [fieldGrid]="fieldGridPartList" [height]="'300px'"
+              (callbackGrid)="callbackPartList($event)"
+              (changePaginationParams)="changePaginationParamsPart($event)"
+              [paginationTotalsData]="paginationTotalPart"
+  ></grid-table>
+</div>-->
+
+<div class="row">
+  <div class="col-md-8 detail">
+    Thời gian cập nhật dữ liệu cuối cùng: <strong>{{lastUpdateTime}}</strong>
+  </div>
+  <div class="col-md-4 text-right">
+    <button class="btn btn-blue mr-3" [disabled]="!selectedBo"
+            (click)="viewDetail()">Xem chi tiết
+    </button>
+    <button class="btn btn-blue" (click)="refreshData()">Làm mới dữ liệu</button>
+  </div>
+</div>
+<bo-parts-followup-details #boPartsFollowupDetails></bo-parts-followup-details>

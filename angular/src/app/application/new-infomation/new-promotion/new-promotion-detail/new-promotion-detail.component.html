@@ -1,0 +1,78 @@
+<div class="modal fade" bsModal #modal="bs-modal">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Chi tiết
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="79px">Tên kiểu</span>
+                        <input type="text" class="form-control" formControlName="NewsType">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="79px">Tiêu đề</span>
+                        <input type="text" class="form-control" formControlName="title">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Ngày đăng" formControlName="times"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Trạng thái duyệt</span>
+                        <select formControlName="newsStatus" class="form-control">
+                          <option value="Y">Đã duyệt</option>
+                          <option value="N">Chưa duyệt</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Đại lý đăng</span>
+                        <input type="text" class="form-control" formControlName="enName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="79px">Nội dung</span>
+                    <tmss-text-editor formControlName="content"></tmss-text-editor>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-footer text-right">
+                <button class="btn btn-blue mr-2" type="submit" (click)=" save()">
+                  <i class="fa fa-save"></i> Lưu
+                </button>
+                <button class="btn btn-light-grey" (click)="modal.hide()">
+                  <i class="fa fa-times"></i> Hủy
+                </button>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </form>
+</div>
+

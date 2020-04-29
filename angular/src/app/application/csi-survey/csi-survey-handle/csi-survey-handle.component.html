@@ -1,0 +1,37 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{webCsiHandle ? '[Web]-' : ''}} Xử lý khách hàng khảo sát CSI
+    </div>
+    <div class="panel-body">
+      <form *ngIf="form" [formGroup]="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-sm-3 form-group">
+            <tmss-datepicker formControlName="deliveryDate" text="Ngày giao xe từ"></tmss-datepicker>
+          </div>
+          <div class="col-sm-3 form-group">
+            <tmss-datepicker formControlName="dayOut" text="Đến ngày"></tmss-datepicker>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i> Tìm kiếm</button>
+            <button class="btn btn-blue ml-2"><i class="fa fa-refresh"></i> Refresh</button>
+            <button class="btn btn-light-grey ml-2" (click)="deleteHandle()"><i class="fa fa-times"></i> Loại bỏ khách
+              hàng
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <grid-table
+      [fieldGrid]="fieldGridCsiHandle"
+      (callbackGrid)="callBackGridCsiHandle($event)"
+      (getParams)="getParamsCsiHandle()"
+      (cellDoubleClicked)="insertData($event)"
+    ></grid-table>
+    <div class="panel-footer">
+      <button class="btn btn-blue"><i class="clip-file-excel"></i> Xuất ra Excel</button>
+    </div>
+  </div>
+</div>
+<remove-customer-modal #removeModal></remove-customer-modal>
+<insert-data #insertDataModal (close)="getData($event)"></insert-data>

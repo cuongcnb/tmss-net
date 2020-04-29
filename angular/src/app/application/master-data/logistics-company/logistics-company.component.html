@@ -1,0 +1,67 @@
+<div pageTitle="Logistic Company">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Logistics Company
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshCompanyList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="logisticGridField"
+                  [height]="'250px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridLogistic($event)"
+                  (getParams)="getParamsLogistic()"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="logisticModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateLogistic()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedCompany" (click)="deleteLogistic()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Trucks
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshTruckList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="truckGridField"
+                  [height]="'300px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridTruck($event)"
+                  (getParams)="getParamsTruck()"
+                  overlayLoadingTemplate="Please choose a logistic to show truck"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addTruck()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateTruck()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedTruck" (click)="deleteTruck()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<truck-modal #truckModal (close)="refreshTruckList() "></truck-modal>
+<logistic-modal #logisticModal (close)="refreshCompanyList()"></logistic-modal>

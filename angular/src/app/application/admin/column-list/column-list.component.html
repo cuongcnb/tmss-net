@@ -1,0 +1,30 @@
+<div pageTitle="Danh sách cột số liệu">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Column list
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="gridField"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [showPagination]="false"
+                  [height]="'400px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="modifyColumnListModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue" (click)="updateData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<modify-column-list-modal #modifyColumnListModal (close)="refreshList()"></modify-column-list-modal>

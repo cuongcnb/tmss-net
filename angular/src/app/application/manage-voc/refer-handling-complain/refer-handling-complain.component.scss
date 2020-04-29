@@ -1,0 +1,20 @@
+.span-130{
+  .input-group-addon{
+    min-width: 130px;
+  }
+}
+.span-115{
+  .input-group-addon{
+    min-width: 115px;
+  }
+}
+fieldset {
+  border: 1px solid silver;
+  padding: 1rem;
+  legend {
+    width: auto;
+    margin-bottom: 5px;
+    font-size:
+      15px; border: none;
+  }
+}

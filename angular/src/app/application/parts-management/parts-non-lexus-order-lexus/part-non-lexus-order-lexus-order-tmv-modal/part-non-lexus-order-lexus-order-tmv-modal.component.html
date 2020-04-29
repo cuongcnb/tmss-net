@@ -1,0 +1,84 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"
+     [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Đặt hàng phụ tùng chuyên biệt Lexus cho đại lý Toyota</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Đơn hàng
+            </div>
+            <grid-table [fieldGrid]="fieldGridOrder" height="150px" [showPagination]="false"
+                        (callbackGrid)="callBackGridOrder($event)"
+            ></grid-table>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Chi tiết đơn hàng
+            </div>
+            <grid-table [fieldGrid]="fieldGridPart" height="200px" [showPagination]="false"
+                        (callbackGrid)="callBackGridPart($event)"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 text-center">
+            <button class="btn btn-blue" [disabled]="selectedOrder && selectedOrder.status != '1'" (click)="placeOrder()">
+              <i class="fa fa-save"></i> Đặt hàng
+            </button>
+            <button class="btn btn-light-grey" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Huỷ
+            </button>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

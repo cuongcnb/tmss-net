@@ -1,0 +1,75 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-sm-3 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Loại hình SC</span>
+          <select class="form-control" formControlName="roType">
+            <option value="">Tất cả</option>
+            <option value="BP">BP</option>
+            <option value="GJ">GJ</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Trạng thái</span>
+            <select class="form-control" formControlName="status">
+              <option value="">Tất cả</option>
+              <option *ngFor="let it of listStatus" [value]="it.key">{{it.value}}</option>
+            </select>
+          </div>
+        </div>
+      </div><div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">CVDV</span>
+            <select class="form-control" formControlName="empId">
+              <option value="">Tất cả</option>
+              <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 form-group pl-0">
+        <button class="btn btn-blue row-style d-small" type="submit" (click)="search()"><i class="fa fa-search"> </i>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default number">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Tổng số xe
+            </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-4 text">GJ: 1</div>
+        <div class="col-sm-4 text">BP: 1</div>
+        <div class="col-sm-4 text">Tổng: 1</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseVehicleHistory" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseVehicleHistory" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  [showPagination]="false"
+                  (cellDoubleClicked)="onCellDoubleClicked($event)"
+                  (getParams)="getParams()">
+      </grid-table>
+    </div>
+  </div>
+</div>
+<management-vehicle #managementVehicle></management-vehicle>
+<management-vehicle-unusual #managementVehicleUnusual></management-vehicle-unusual>

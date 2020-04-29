@@ -1,0 +1,28 @@
+<div class="modal fade" bsModal #removeSurvey="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="removeSurvey.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Remove Type</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+            <checkbox [text]="textArrays[0]" formControlName="removeReason"></checkbox>
+            <checkbox [text]="textArrays[1]" formControlName="removePhoneNumber"></checkbox>
+            <checkbox [text]="textArrays[2]" formControlName="removeCustomBlackList"></checkbox>
+            <checkbox [text]="textArrays[3]" formControlName="removeLexus"></checkbox>
+            <checkbox [text]="textArrays[4]" formControlName="removeSuggestionsList"></checkbox>
+            <checkbox [text]="textArrays[5]" formControlName="removePhoneNumberRepeat"></checkbox>
+          </form>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="saveHandle()"><i class="fa fa-check"></i> Lưu</button>
+        <button class="btn btn-light-grey" (click)="removeSurvey.hide()"><i class="fa fa-times"></i> Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

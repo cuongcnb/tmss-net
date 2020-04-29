@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Đơn vị
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseStaffCatalogUnit" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseStaffCatalogUnit" class="panel-collapse collapse in">
+
+        <perfect-scrollbar class="ps" [style.height.px]="'246'">
+          <div class="panel-body">
+            <h5 *ngIf="!unitsTreeData || unitsTreeData.length === 0">Chưa có dữ liệu</h5>
+            <tree-root *ngIf="unitsTreeData && unitsTreeData.length !== 0"
+                       #divisionTree
+                       [nodes]="unitsTreeData"
+                       [options]="unitsOptions"
+                       (activate)="active($event)"
+            ></tree-root>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" class="row">
+      <div class="form-group col-md-5 col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">Mã NV</span>
+          <input type="text" class="form-control" formControlName="empCode">
+        </div>
+      </div>
+      <div class="form-group col-md-5 col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">Tên NV</span>
+          <input type="text" class="form-control" formControlName="empName">
+        </div>
+      </div>
+      <div class="input-group col-md-2 col-sm-2">
+        <button class="btn btn-blue" type="submit" (click)="searchByEmp()">
+          <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </form>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh sách nhân viên của đơn vị
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseStaffCatalogList" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseStaffCatalogList" class="panel-collapse collapse in">
+
+        <grid-table [fieldGrid]="staffFieldGrid"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+                    [showPagination]="false"
+                    [height]="'210px'"
+        ></grid-table>
+<!--        <div class="panel-footer text-right">-->
+<!--          <button type="button" class="btn btn-blue mr-2" [disabled]="!staffSelected"-->
+<!--                  (click)="transferUnit.open(staffSelected)">-->
+<!--            Gán/ Chuyển đơn vị-->
+<!--          </button>-->
+<!--          <button class="btn btn-success " (click)="addStaff()" [disabled]="!staffSelected">-->
+<!--            <i class="fa fa-plus"></i> Thêm nhân viên-->
+<!--          </button>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<staff-detail *ngIf="selectedUnit || showDetail"
+              #staffDetail
+              [detailData]="staffSelected"
+              [selectedDivId]="selectedUnit?.id"
+              (close)="refresh()"
+              (addStaff)="addStaff()"
+></staff-detail>
+<transfer-unit #transferUnit (close)="refresh()"></transfer-unit>
+

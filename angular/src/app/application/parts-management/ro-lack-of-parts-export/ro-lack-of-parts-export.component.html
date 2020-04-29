@@ -1,0 +1,93 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số RO</span>
+              <input type="text" class="form-control" formControlName="ro">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                    title="Số đơn hàng BO">Số ĐH B/O</span>
+              <input type="text" class="form-control" formControlName="orderNo">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                    title="Mã phụ tùng">Mã PT</span>
+              <input type="text" class="form-control" formControlName="partsCode">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group search-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số</span>
+              <input type="text" class="form-control" formControlName="plate">
+              <button type="submit" class="btn btn-blue" (click)="searchRo()">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Xuất phụ tùng cho RO thiếu phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRoLack" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRoLack" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'400px'" [showPagination]="false"
+                [suppressRowClickSelection]="true"
+                [rowSelection]="'multiple'"
+                (callbackGrid)="callbackGrid($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+                (getParams)="getParams()"
+                [excelStyles]="excelStyles"
+                [frameworkComponents]="frameworkComponents"
+    ></grid-table>
+  </div>
+</div>
+
+
+
+<div class="text-right my-3">
+  <button class="btn btn-blue mr-3" (click)="dataExport()">
+    <i class="clip-download mr3"></i>
+    Xuất Excel
+  </button>
+  <button class="btn btn-blue" (click)="exportPrepick()">Xuất Prepick
+  </button>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin Prepick
+  </div>
+  <div class="panel-body prepick-container">
+    <p *ngFor="let text of prepickInfo"><strong>{{text}}</strong></p>
+  </div>
+</div>

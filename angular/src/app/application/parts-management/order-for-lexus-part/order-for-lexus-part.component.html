@@ -1,0 +1,152 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOrderForLexusPartInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseOrderForLexusPartInfo" class="panel-collapse collapse in">
+
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Số đơn hàng</span>
+                <input type="text" class="form-control" formControlName="orderNo">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Ngày giờ ĐH</span>
+                <input type="text" class="form-control" formControlName="orderDateDisplay">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Người đặt hàng</span>
+                <input type="text" class="form-control" formControlName="orderPerson">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Đặt lên đại lý</span>
+                <select class="form-control" formControlName="orderToDlr">
+                  <option *ngIf="dlrLexusOfCurrentDlr" [ngValue]="dlrLexusOfCurrentDlr.id">{{
+                    dlrLexusOfCurrentDlr.abbreviation }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Đại lý ghi chú</span>
+                <input type="text" class="form-control" formControlName="dlrRemark">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Loại đặt hàng</span>
+                <select class="form-control" formControlName="orderTypeId">
+                  <option [ngValue]="1">Phụ tùng chuyên biệt Lexus</option>
+                  <option [ngValue]="10">Dầu mỡ chuyên biệt Lexus</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseOrderForLexusPartList" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseOrderForLexusPartList" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [showPagination]="false" height="400px"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                (cellEditingStarted)="cellEditingStarted($event)"
+                (cellEditingStopped)="cellEditingStopped($event)"
+                (keyup)="agKeyUp($event)"
+    ></grid-table>
+    <div class="panel-footer">
+      <div class="row text-right">
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            + Thuế: <strong>{{taxOnly}}</strong>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <div class="form-group">
+            = Sau thuế: <strong> {{totalPriceIncludeTax}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-sm-6 text-left">
+    <p>
+      <small><i>* Click vào grid và nhấn mũi tên xuống để thêm dòng mới</i></small>
+    </p>
+    <p>
+      <small><i>* Nhập mã phụ tùng và ấn enter/tab để bắt đầu tìm kiếm</i></small>
+    </p>
+  </div>
+  <div class="col-md-8 col-sm-6">
+    <div class="text-right">
+      <button type="button" class="btn btn-blue mr-2" [disabled]="!dlrLexusOfCurrentDlr" (click)="onAddRow()">
+        <i class="fa fa-plus"></i> Thêm PT
+      </button>
+      <button type="button" class="btn btn-blue mr-2" [disabled]="!dlrLexusOfCurrentDlr"
+              (click)="removeSelectedRow()">
+        <i class="fa fa-times"></i> Xoá PT
+      </button>
+      <button type="submit" class="btn btn-blue mr-2" [disabled]="!dlrLexusOfCurrentDlr" (click)="placeOrder()">
+        <i class="fa fa-save"></i> Đặt hàng
+      </button>
+    </div>
+  </div>
+</div>
+<search-data-grid-modal #searchDataGridModal
+                        [headerText]="'Chọn phụ tùng'"
+                        [apiCall]="searchPartApiCall.bind(this)" [fieldGrid]="fieldGridSearchDataGrid"
+                        (close)="setDataToRow($event)" (cancel)="cancelSearchParts()"></search-data-grid-modal>

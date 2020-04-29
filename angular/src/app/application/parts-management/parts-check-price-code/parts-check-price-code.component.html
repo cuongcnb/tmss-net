@@ -1,0 +1,173 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapsePartCheckPriceCodeSearch"
+        aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartCheckPriceCodeSearch" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon" data-toggle="tooltip" data-placement="bottom"
+                  title="Mã phụ tùng">Mã PT</span>
+                <input class="form-control" formControlName="partCode">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon" data-toggle="tooltip" data-placement="bottom"
+                  title="Mã đại lý">Mã ĐL</span>
+                <select class="form-control" formControlName="dlrId">
+                  <ng-container *ngIf="!currentUser.isAdmin">
+                    <option [value]="currentUser.dealerId">{{currentUser.dealerCode}}</option>
+                  </ng-container>
+                  <ng-container *ngIf="currentUser.isAdmin">
+                    <option [ngValue]="null">Tất cả</option>
+                    <option *ngFor="let dealer of dealerList" [value]="dealer.id">{{dealer.code}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="fromDate" [addOnMinWidth]="'90px'" text="Từ ngày"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon" data-toggle="tooltip" data-placement="bottom"
+                  title="Tên phụ tùng">Tên PT</span>
+                <input class="form-control" formControlName="partName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon">Trạng thái 1</span>
+                <select class="form-control" formControlName="status">
+                  <option *ngIf="!currentUser.isAdmin" [ngValue]="0">Bản nháp</option>
+                  <option [selected]="currentUser.isAdmin" [ngValue]="1">Chưa xử lý</option>
+                  <option [ngValue]="2">Đã xử lý</option>
+                  <option [ngValue]="3">Từ chối</option>
+                  <option [ngValue]="5">Tất cả</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="toDate" [addOnMinWidth]="'90px'" text="Đến ngày"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon">Số phiếu hỏi</span>
+                <input class="form-control" formControlName="inquiryNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon">Trạng thái 2</span>
+                <select class="form-control" formControlName="statusDetail">
+                  <option *ngFor="let status of statusCodes2" [ngValue]="status.key">{{status.value}}</option>
+                  <option [ngValue]="5">Tất cả</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group search-group">
+              <div class="input-group">
+                <span class="input-group-addon same-width-addon">Mã/Giá</span>
+                <select class="form-control" formControlName="inquiryType">
+                  <option [ngValue]="1">Hỏi mã</option>
+                  <option [ngValue]="2">Hỏi giá</option>
+                  <option [ngValue]="0">Tất cả</option>
+                </select>
+                <button type="submit" class="btn btn-blue" (click)="resetPaginationParams(); search()">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách phản hồi
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+        data-target="#collapsePartCheckPriceCodeFeedback" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartCheckPriceCodeFeedback" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGridInquiry" [height]="'200px'" [frameworkComponents]="frameworkComponents"
+        (callbackGrid)="callbackInquiry($event)" (changePaginationParams)="changePaginationParams($event)"
+        [paginationTotalsData]="paginationTotalsData" (getParams)="getParamsInquiry()"
+        (cellValueChanged)="cellValueChanged($event)" [rowMultiSelectWithClick]="true"></grid-table>
+    </div>
+    <div class="panel-footer">
+      <div class="text-right mb-2">
+        <button type="button" class="btn btn-blue mr-2" (click)="newCheckPriceCodeModal.open()"
+          *ngIf="!currentUser.isAdmin">
+          <i class="fa fa-plus"></i> Hỏi mã/giá
+        </button>
+        <button type="button" class="btn btn-blue mr-2" (click)="modifyInquiry()"
+          [disabled]="selectedInquiries.length !== 1 && selectedInquiry && selectedInquiry.status !== '0'">
+          <i class="fa fa-edit"></i> {{!!currentUser.isAdmin ? 'Phản hồi hỏi mã/giá' : 'Sửa hỏi mã/giá'}}
+        </button>
+        <button type="button" class="btn btn-blue" (click)="exportExcel()">
+          <i class="fa fa-download"></i> Export
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Chi tiết phản hồi
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+        data-target="#collapsePartCheckPriceCodeDetailFeeback" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartCheckPriceCodeDetailFeeback" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="fieldGridPart" [height]="'300px'" [showPagination]="false"
+      (callbackGrid)="callbackPart($event)">
+    </grid-table>
+  </div>
+</div>
+<new-check-price-code-modal #newCheckPriceCodeModal [statusCodes1]="statusCodes1" [statusCodes2]="statusCodes2"
+  (close)="refreshAfterEdit($event)"></new-check-price-code-modal>

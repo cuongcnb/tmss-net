@@ -1,0 +1,37 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Thay đổi ngày quyết toán
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Chi tiết
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <tmss-datepicker text="Chọn ngày quyết toán" formControlName="dateTime"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue mr-2">
+            <i class="fa clip-history mr-2"></i>Quyết toán
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-power-off mr-2"></i>Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

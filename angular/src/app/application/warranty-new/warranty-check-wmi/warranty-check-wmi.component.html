@@ -1,0 +1,82 @@
+<ng-container>
+  <file-uploader acceptType=".xls"
+                 [apiCallUpload]="apiCallUpload.bind(this)"
+                 (responseUpload)="uploadSuccess($event)"
+                 (errorUpload)="uploadFail($event)"
+  ></file-uploader>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Tìm kiếm
+    </div>
+    <div class="panel-body">
+      <form  [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon same-addon-width">WMI</div>
+              <input class="form-control" formControlName="wmi"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width">VDS</div>
+                <input class="form-control" formControlName="vds"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width">Jobs Code</div>
+                <input class="form-control" formControlName="jobsCode"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-align-center"></i>
+      Kiểm tra công việc bảo hành
+    </div>
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [frameworkComponents]="frameworkComponents"
+                  [height]="'450px'"
+                  [sizeColumnToHeaderWidth] = "true"
+                  [paginationTotalsData]="paginationTotalsData"
+                  (changePaginationParams)="changePaginationParams($event)"
+      ></grid-table>
+    </div>
+  </div>
+
+  <div class="row mt-3 text-right">
+    <button class="btn btn-blue mr-2" (click)="updateModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" [disabled]="!this.selectedData" (click)="updateModal.open(selectedData)">
+      <i class="fa fa-plus"></i> Sửa
+    </button>
+  </div>
+
+</ng-container>
+<update-warranty-check-wmi #updateModal (close)="refreshData()"></update-warranty-check-wmi>
+<warranty-check-wmi-import-modal (close)="refreshData()" #importModal></warranty-check-wmi-import-modal>
+

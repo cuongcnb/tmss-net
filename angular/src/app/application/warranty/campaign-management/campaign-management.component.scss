@@ -1,0 +1,6 @@
+.row {
+  margin: 0 -5px;
+  [class*="col-xl-"], [class*="col-lg-"], [class*="col-md-"], [class*="col-sm-"] {
+    padding: 0 5px;
+  }
+}

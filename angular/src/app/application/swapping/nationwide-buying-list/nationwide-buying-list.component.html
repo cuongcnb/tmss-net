@@ -1,0 +1,81 @@
+<ng-container>
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <button class="btn btn-blue mr-2" (click)="openBuyingInformation()"><i class="fa fa-shopping-cart"></i> Buy
+      </button>
+      <button class="btn btn-blue mr-2" [attr.disabled]="disableDeleteBtn" (click)="deleteBuyingItem()"><i
+        class="fa fa-trash-o"></i> Delete
+      </button>
+      <button class="btn btn-blue mr-2" [attr.disabled]="disableAgreeBtn" (click)="agreeBuyingItem()"><i
+        class="fa fa-check"></i> Agree
+      </button>
+      <button class="btn btn-blue mr-2" [attr.disabled]="disableAgreeBtn" (click)="disagreeBuyingItem()"><i
+        class="fa fa-ban"></i> Disagree
+      </button>
+      <button class="btn btn-blue mr-2" (click)="export()"><i class="fa fa-download"></i> Export</button>
+    </div>
+  </div>
+  <div class="row header-form">
+    <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Region</span>
+          <select class="form-control" formControlName="region">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let region of regionArr" [ngValue]="region.id">{{region.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Grade</span>
+          <multi-column-select-control formControlName="gradeControl"
+                                       displayField="marketingCode"
+                                       [fieldGrid]="fieldGradeList"
+                                       [apiCall]="getGrade.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Color</span>
+          <multi-column-select-control formControlName="colorControl"
+                                       displayField="code"
+                                       [fieldGrid]="fieldColorList"
+                                       [apiCall]="getColor.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group search-group">
+          <div class="input-group">
+            <span class="input-group-addon">Quick Search</span>
+            <input placeholder="TMSS No, Frame No, VIN, Engine No, Key Code" type="text" class="form-control"
+                   formControlName="quickSearch">
+          </div>
+          <button type="button" class="btn btn-blue" (click)="search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Nationwide Buying List
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="search()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="nationwideBuyingFieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</ng-container>
+<addition-nationwide-buying-modal #buyingInformation *ngIf="gradeList && allColors"
+                                  [gradeList]="gradeList" [allColors]="allColors" [currentUser]="currentUser"
+                                  (close)="search()"></addition-nationwide-buying-modal>
+

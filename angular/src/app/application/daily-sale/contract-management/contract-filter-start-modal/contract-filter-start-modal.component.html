@@ -1,0 +1,93 @@
+<div class="modal fade" bsModal #defaultFilterModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Contract Filter</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Month'" formControlName="month" [showMonth]="true"></tmss-datepicker-sale>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group input-group" hasError="frameNo">
+                  <span [style.minWidth]="'120px'" class="input-group-addon">Frame No</span>
+                  <input type="text" class="form-control" formControlName="frameNo">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Deposit Date From'" formControlName="fromDepositDate"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Deposit Date To'" formControlName="toDepositDate"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectDepositDate"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Cancel Date From'" formControlName="fromCancelDate"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Cancel Date To'" formControlName="toCancelDate"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectCancelDate"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Sales Date From'" formControlName="fromSalesDate"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'120px'" [text]="'Sales Date To'" formControlName="toSalesDate"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectSalesDate"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <checkbox formControlName="remainContract" text="Include Remain Contract (24 Months)"></checkbox>
+              <checkbox formControlName="onlyWaiting" text="Only contract of waiting for confirmation"></checkbox>
+              <checkbox formControlName="endCustomer" text="Exclude End Customer"></checkbox>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="confirm()">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

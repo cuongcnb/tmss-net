@@ -1,0 +1,35 @@
+<div class="modal fade" bsModal #cbuDisplayChoosingModal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose Groups Of Column To Display</h5>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-10">
+              <checkbox *ngFor="let group of groups"
+                        textClassName="checkbox-text-lg"
+                        text="{{group.groupCode}}"
+                        formControlName="{{group.groupId}}">
+              </checkbox>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-blue" type="button" (click)="getCustomTableField()">
+          <i class="fa fa-save"></i> Save
+        </button>
+        <button class="btn btn-blue" type="button" (click)="unCheckAll()">
+          <i class="fa fa-refresh"></i> Uncheck All
+        </button>
+        <button class="btn btn-blue" type="button" (click)="cbuDisplayChoosingModal.hide()">
+          <i class="fa fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

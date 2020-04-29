@@ -1,0 +1,250 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="vinForm" *ngIf="vinForm">
+    <div class="modal-dialog lg-width">
+
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Chỉnh sửa thông tin xe bảo hành</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-info"></i>
+                    Thông tin xe
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="form-group" hasError="vin">
+                          <div class="input-group">
+                            <span class="input-group-addon">Số Vin</span>
+                            <input class="form-control" [ngClass]="!selectedVin ? 'required' : ''" formControlName="vin">
+                          </div>
+                          <div class="error-messages" errorMessage>
+                            <div *ifError="'required'">Bắt buộc nhập số Vin</div>
+                            <div *ifError="'maxLength'">Số Vin có chiều dài tối đa 17 ký tự</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Mã Dealer</span>
+                            <input class="form-control" formControlName="dealercode">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Màu</span>
+                            <input class="form-control" formControlName="color">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Engine No</span>
+                            <input class="form-control" formControlName="engine">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <tmss-datepicker addOnMinWidth="95px" formControlName="lineoffdate"
+                                           text="Line off Date"></tmss-datepicker>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="col-md-4">
+                        <div class="form-group" hasError="deliverdate">
+                          <tmss-datepicker addOnMinWidth="95px" formControlName="deliverdate"
+                                           text="Delivery Date"></tmss-datepicker>
+                          <div class="error-messages" errorMessage>
+                            <div *ifError="'notLessSalesdate'">Delivery Date không được nhỏ hơn Sale Date</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <tmss-datepicker addOnMinWidth="95px" formControlName="salesdate"
+                                           text="Sale Date"></tmss-datepicker>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <tmss-datepicker addOnMinWidth="95px" formControlName="pdsdate"
+                                           text="PDS Date"></tmss-datepicker>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="col-md-4">
+                        <div class="form-group" hasError="model">
+                          <div class="input-group">
+                            <span class="input-group-addon">Model</span>
+                            <input class="form-control" [ngClass]="!selectedVin ? 'required' : ''" formControlName="model">
+                          </div>
+                          <div class="error-messages" errorMessage>
+                            <div *ifError="'required'">Bắt buộc nhập Model</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">SFX</span>
+                            <input class="form-control" formControlName="sfx">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Name Code</span>
+                            <input class="form-control" formControlName="vhenamecode">
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="selectedVin">
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-info"></i>
+                    Thông tin khách hàng
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Chủ Xe</span>
+                        <input class="form-control" formControlName="carOwnerName">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Địa Chỉ</span>
+                        <input class="form-control" formControlName="carOwnerAdd">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số Điện thoại</span>
+                        <input class="form-control" formControlName="carOwnerTell">
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Tỉnh/Tp</span>
+                            <input class="form-control" formControlName="provinceName">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Huyện</span>
+                            <input class="form-control" formControlName="districtName">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-info"></i>
+                    Thông tin người thân
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Họ tên</span>
+                        <input class="form-control" formControlName="relativesName">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Địa chỉ</span>
+                        <input class="form-control" formControlName="relativesAddess">
+                      </div>
+                    </div>
+                    <div class="form-group" hasError="relativesPhone">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số Điện thoại</span>
+                        <input class="form-control" formControlName="relativesPhone">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Tỉnh/Tp</span>
+                            <select class="form-control" formControlName="relativeProvince">
+                              <option value=""></option>
+                              <option *ngFor="let provinces of provincesList" [ngValue]="provinces.id">
+                                {{provinces.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Quan Hệ</span>
+                            <select class="form-control" formControlName="relationship">
+                              <option [ngValue]="'Father'">Bố</option>
+                              <option [ngValue]="'Mother'">Mẹ</option>
+                              <option [ngValue]="'Wife'">Vợ</option>
+                              <option [ngValue]="'Husband'">Chồng</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="panel-footer text-right">
+          <button type="submit" class="btn btn-blue mr-2" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,372 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          {{isOldCarInfo ? "Khách hàng quan tâm xe cũ" : "Khách hàng quan tâm xe mới" }}
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin xe
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Model</span>
+                        <input type="text" class="form-control" formControlName="errorModel">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số vin</span>
+                        <input type="text" class="form-control" formControlName="errorVin">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">BKS</span>
+                        <input type="text" class="form-control" formControlName="licensePlates">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin khách hàng
+              </div>
+              <div class="panel-body">
+                <span class="ml-3">
+                  <b>Chủ sở hữu xe :</b>
+                </span>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="75px">Họ tên</span>
+                        <input type="text" class="form-control" formControlName="errorName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Địa chỉ</span>
+                        <input type="text" class="form-control" formControlName="errorAddress">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="85px">Tỉnh/TP</span>
+                        <input type="text" class="form-control" formControlName="errorCity">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorPhone">
+                      <div class="input-group">
+                        <span class="input-group-addon">Điện thoại</span>
+                        <input type="text" class="form-control" formControlName="errorPhone">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorEmail">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="59px">Email</span>
+                        <input type="text" class="form-control" formControlName="errorEmail">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+                        <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Quận/huyện</span>
+                        <input type="text" class="form-control" formControlName="errorDistrict">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="ml-3">
+                  <b>Công ty :</b>
+                </span>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="75px">Tên cty</span>
+                        <input type="text" class="form-control" formControlName="companyName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Địa chỉ</span>
+                        <input type="text" class="form-control" formControlName="errorAddress">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="85px">Tỉnh/TP</span>
+                        <input type="text" class="form-control" formControlName="errorCity">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorPhone">
+                      <div class="input-group">
+                        <span class="input-group-addon">Điện thoại</span>
+                        <input type="text" class="form-control" formControlName="errorPhone">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorEmail">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="59px">Email</span>
+                        <input type="text" class="form-control" formControlName="errorEmail">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+                        <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Quận/huyện</span>
+                        <input type="text" class="form-control" formControlName="errorDistrict">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <span class="ml-3"><b>Người mang xe :</b></span>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="75px">Họ tên</span>
+                        <input type="text" class="form-control" formControlName="errorName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Địa chỉ</span>
+                        <input type="text" class="form-control" formControlName="errorAddress">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="85px">Tỉnh/TP</span>
+                        <input type="text" class="form-control" formControlName="errorCity">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorPhone">
+                      <div class="input-group">
+                        <span class="input-group-addon">Điện thoại</span>
+                        <input type="text" class="form-control" formControlName="errorPhone">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="errorEmail">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="59px">Email</span>
+                        <input type="text" class="form-control" formControlName="errorEmail">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+                        <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Quận/huyện</span>
+                        <input type="text" class="form-control" formControlName="errorDistrict">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin xe quan tâm
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Loại xe</span>
+                        <select class="form-control" formControlName="carType">
+                          <option [ngValue]="1">{{isOldCarInfo ? "Xe cũ" : "Xe mới" }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Model</span>
+                        <input type="text" class="form-control" formControlName="errorModel">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Màu xe</span>
+                        <input type="text" class="form-control" formControlName="carColor">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Xuất xứ</span>
+                        <select class="form-control" formControlName="carOrigin">
+                          <option>Xe nhập khẩu</option>
+                          <option>Xe nội địa</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Mức giá</span>
+                        <input type="text" class="form-control" value="0" formControlName="carPrice">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Muốn mua/bán xe</span>
+                        <select class="form-control" formControlName="carPurchase">
+                          <option>Muốn mua xe</option>
+                          <option>Muốn bán xe</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Năm sx</span>
+                        <select class="form-control" formControlName="yearManufacture">
+                          <option>2010</option>
+                          <option>2011</option>
+                          <option>2012</option>
+                          <option>2013</option>
+                          <option>2014</option>
+                          <option>2015</option>
+                          <option>2016</option>
+                          <option>2017</option>
+                          <option>2018</option>
+                          <option>2019</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Đến</span>
+                        <input type="text" class="form-control" value="0" formControlName="carPriceto">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Thời điểm mua bán" formControlName="timePurchase"></tmss-datepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Yêu cầu</span>
+                    <input type="text" class="form-control" formControlName="errorRequest">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Ghi chú</span>
+                    <input type="text" class="form-control" formControlName="errorNote">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="btn btn-blue" (click)="save()">
+                <i class="clip-file-2 mr-2"></i>Ghi lại
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+                <i class="fa fa-power-off mr-2"></i>Quay ra
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

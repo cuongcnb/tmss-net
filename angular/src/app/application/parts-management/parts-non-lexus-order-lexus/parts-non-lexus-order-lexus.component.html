@@ -1,0 +1,170 @@
+<div class="mt-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartNonLexusOrderSearch" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartNonLexusOrderSearch" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã đơn hàng</span>
+                  <input type="text" class="form-control" formControlName="orderNo">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã phụ tùng</span>
+                  <input type="text" class="form-control" formControlName="partsCode">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <tmss-datepicker formControlName="fromDate" [addOnMinWidth]="'105px'" text="Từ ngày"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Số ĐH gửi TMV</span>
+                  <input type="text" class="form-control" formControlName="tmvOrderNo">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Trạng thái</span>
+                  <select class="form-control" formControlName="status">
+                    <option [ngValue]="5">Tất cả</option>
+                    <option *ngFor="let status of orderStatusArr" [ngValue]="status.key">{{status.value}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <tmss-datepicker formControlName="toDate" [addOnMinWidth]="'105px'" text="Đến ngày"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã đại lý</span>
+                  <select class="form-control" formControlName="dlrId">
+                    <ng-container *ngIf="!currentUser.isLexus">
+                      <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}</option>
+                    </ng-container>
+                    <ng-container *ngIf="currentUser.isLexus">
+                      <option *ngFor="let dealer of childDealerOfLexus" [ngValue]="dealer.id">{{dealer.dlrCode}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                <button type="submit" class="btn btn-blue mr-2" (click)="searchOrder()">
+                  <i class="fa fa-search"></i> Tìm kiếm
+                </button>
+                <button type="button" class="btn btn-blue mr-2" (click)="exportExcel()">
+                  <i class="fa fa-download"></i> Xuất dữ liệu
+                </button>
+                <button class="btn btn-blue" *ngIf="currentUser.isLexus" [disabled]="!selectedOrder"
+                        (click)="openPartSpecialOrder()">
+                  Đặt hàng đặc biệt
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartNonLexusOrderPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartNonLexusOrderPart" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridOrder" [height]="'200px'" [showPagination]="false"
+                (callbackGrid)="callBackGridOrder($event)"
+                (getParams)="getParamsOrder()"
+                (cellEditingStarted)="cellEditingStarted($event)"
+                (keyup)="agKeyUp($event)"
+                [frameworkComponents]="frameworkComponents"
+                (cellEditingStopped)="cellEditingStopped($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Chi tiết đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartNonLexusOrderDetail" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartNonLexusOrderDetail" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridPart" [height]="'200px'" [showPagination]="false"
+                (callbackGrid)="callBackGridPart($event)"
+    ></grid-table>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <div class="row text-right">
+            <div class="col-sm-4">
+              <div class="form-group">
+                Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                + Thuế: <strong>{{taxOnly}}</strong>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<tmss-export [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>
+<part-non-lexus-order-lexus-order-tmv-modal (close)="searchOrder()" #orderTmvModal
+                                            [childDealerOfLexus]="childDealerOfLexus"
+></part-non-lexus-order-lexus-order-tmv-modal>

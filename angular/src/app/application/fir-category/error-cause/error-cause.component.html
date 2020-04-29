@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách bộ phận gây lỗi
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseErrorCause" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseErrorCause" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  (cellDoubleClicked)="insertData($event)"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="panel-footer text-right">
+    <button type="button" class="btn btn-blue mr-2" (click)="search()">
+      <i class="fa fa-refresh mr-2"></i>Làm mới
+    </button>
+    <button type="button" class="btn btn-blue mr-2" (click)="errorCauseModal.open()">
+      <i class="fa fa-plus mr-2"></i>
+      Thêm mới
+    </button>
+    <button type="button" class="btn btn-blue mr-2" (click)="editRow()">
+      <i class="fa fa-pencil mr-2"></i>
+      Cập nhật
+    </button>
+    <button type="button" class="btn btn-blue mr-2" (click)="deleteRow()">
+      <i class="fa fa-trash-o mr-2"></i>
+      Xóa
+    </button>
+    <button type="button" class="btn btn-blue">
+      <i class="fa fa-cloud-download"></i>
+      Xuất excel
+    </button>
+  </div>
+</div>
+<error-cause-modal #errorCauseModal
+                   (close)="selectedRowGrid? update($event):addNew($event)"
+></error-cause-modal>
+

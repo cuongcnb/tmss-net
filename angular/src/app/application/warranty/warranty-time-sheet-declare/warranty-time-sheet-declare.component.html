@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Khai báo tham số giờ công bảo hành
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseWarrantyTimeSheet" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseWarrantyTimeSheet" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                [showPagination]="false"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2" (click)="updateWarrantyTimeSheetModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button type="button" class="btn btn-blue mr-2" [disabled]="!selectedData"
+              (click)="updateWarrantyTimeSheetModal.open(selectedData)">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+      <button type="button" [disabled]="!selectedData" class="btn btn-blue" (click)="deleteData()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>
+<modify-warranty-time-sheet #updateWarrantyTimeSheetModal (close)="refreshList()"></modify-warranty-time-sheet>

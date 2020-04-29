@@ -1,0 +1,201 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin KH
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartRetailDetailInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartRetailDetailInfo" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Số đơn hàng">Số ĐH</span>
+                <div class="double-input-7-3">
+                  <input type="text" class="form-control" formControlName="orderNo">
+                  <input class="form-control" formControlName="orderType">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                          title="Loại khách hàng">Loại KH</span>
+                    <input class="form-control" formControlName="customerType">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                          title="Di động">DĐ</span>
+                    <input type="text" class="form-control" formControlName="mobile">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker [text]="'Ngày bán'" formControlName="salesdate"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Mã khách hàng">Mã KH</span>
+                <input type="text" class="form-control" formControlName="customerCode">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                          title="Số điện thoại">SĐT</span>
+                    <input class="form-control" formControlName="phone">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">FAX</span>
+                    <input type="text" class="form-control" formControlName="fax">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Tài khoản</span>
+                <input type="text" class="form-control" formControlName="account">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group" hasError="customerName">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Tên khách hàng"
+                >Tên KH</span>
+                <input type="text" formControlName="customerName" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Tên công ty">Tên Cty</span>
+                <input type="text" class="form-control" formControlName="companyName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Tên ngân hàng">Tên NH</span>
+                <input class="form-control" formControlName="bankName">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Địa chỉ</span>
+                <input type="text" class="form-control" formControlName="address">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                      title="Mã số thuế"
+                >MST</span>
+                <input type="text" class="form-control" formControlName="taxNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Giảm giá</span>
+                  <input type="text" class="form-control" formControlName="discountPercent">
+                  <span class="input-group-addon percent-addon">%</span>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" formControlName="discountPrice">
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" #submitDetailForm class="d-none"></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartRetailDetailPartC" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartRetailDetailPartC" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridPartsOfOrder" [height]="'200px'" [showPagination]="false"
+                (callbackGrid)="callBackGridPartsOfOrder($event)"
+                (getParams)="getParamsPartsOfOrder()"></grid-table>
+    <div class="panel-footer">
+      <div class="row text-right">
+        <div class="col-sm-3 detail">
+          Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+        </div>
+        <div class="col-md-3 detail">
+          + Thuế: <strong>{{taxOnly}}</strong>
+        </div>
+        <div class="col-md-3 detail">
+          - Giảm giá: <strong>{{discount}}</strong>
+        </div>
+        <div class="col-md-3 detail">
+          = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

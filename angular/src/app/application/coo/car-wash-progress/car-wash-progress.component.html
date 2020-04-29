@@ -1,0 +1,177 @@
+<ng-container>
+  <label class="mouse-time" [style.top.px]="positionTop - 100" [style.left.px]="positionLeft">&nbsp;</label>
+  <label *ngIf="showMouseTime" class="mouse-time" [style.top.px]="positionTop - 72" [style.left.px]="positionLeft">{{timeMouseXDisplay | date:'HH:mm'}}</label>
+  <div class="row" *ngIf="form">
+    <form [formGroup]="form">
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Từ ngày" formControlName="fromDateTime" class="general-repair"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <tmss-datepicker text="Đến ngày" formControlName="toDateTime" class="general-repair"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-1 pl-0">
+        <button class="btn btn-blue pt-3 pb-2" (click)="refreshSearch()"><i class="fa fa-search mb-1"> </i></button>
+      </div>
+    </form>
+
+    <!-- <div class="col-md-2">
+      <div class="form-group general-repair">
+        <div class="input-group">
+          <span class="input-group-addon">Reload (min)</span>
+          <select [(ngModel)]="timeReload">
+            <option *ngFor="let time of listTimeReload" [ngValue]="time">{{time}}</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-3">
+      <div class="form-group general-repair">
+        <div class="input-group">
+          <span class="input-group-addon">Tìm kiếm</span>
+          <input-search [isKeepFocus]="true" (onSearch)="searchByRegisterNo($event)"
+                        placeholder="Nhập biển số xe"></input-search>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <div class="float-left mr-2 mt-2 planning-vehicle">Kế hoạch: {{getStateCount(RxStateCount.plan)}}</div>
+    <div class="float-left mr-2 mt-2 fixing-vehicle">Đang thực hiện: {{getStateCount(RxStateCount.performing)}}</div>
+    <div class="float-left mr-2 mt-2 delay-vehicle">Xe chờ trễ: {{getStateCount(RxStateCount.lateWaitingCar)}}</div>
+    <div class="float-left mr-2 mt-2 delay-vehicle">Thực hiện trễ: {{getStateCount(RxStateCount.lateCar)}}</div>
+    <div class="float-left mr-2 mt-2 delay-vehicle">Kế hoạch trễ: {{getStateCount(RxStateCount.latePlanCar)}}</div>
+    <div class="float-left mr-2 mt-2 delay-vehicle">Kết thúc muộn: {{getStateCount(RxStateCount.lateFinishCar)}}</div>
+    <div class="float-left mr-2 mt-2 complete-vehicle">Hoàn thành</div>
+    <div class="float-left mt-2 priority-vehicle">* : Xe ưu tiên</div>
+  </div>
+  <div class="col-sm-12 p-0">
+    <checkbox text="Hiển thị xe hoàn thành" textClassName="text-bold" [(ngModel)]="viewCompleteCar"
+      [labelWidth]="'155px'" (change)="showCompleteCar()"></checkbox>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Bảng tiến độ rửa xe
+
+      <div class="panel-tools">
+        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.hour"
+             (click)="changeViewType(ProgessViewType.minute)" placement="left" [tooltip]="'Hiển thị theo tiếng'">
+          <i class="fa fa-crosshairs"></i>
+        </div>
+
+        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.minute"
+             (click)="changeViewType(ProgessViewType.hour)" placement="left" [tooltip]="'Hiển thị theo phút'">
+          <i class="fa fa-bar-chart-o"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="progress-coo">
+        <div class="panel-additional-info waiting-vehicle rx-waiting-vehicle minWidth" style="width: 126px;">
+          <div class="header pt-4 wait-header" id="noWrap">Xe chờ</div>
+          <div class="body body-rx-waiting-vehicle" dragula="rx-waiting-vehicle-bag">
+            <div class="row list-car-wait background rx-waiting-vehicle" *ngFor="let vehicle of waitingVehicles" [id]="'' + vehicle.wpId"
+                 [ngClass]="[( arrayVehiclesSearch && arrayVehiclesSearch.includes(vehicle.registerno)) ? 'rx-focus-vehicle-wait' : '', vehicle.carDeliveryTime < now ? 'color-delay' : '']"
+                 (mouseenter)="displayTooltip(vehicle, 'waitingVehicleElem')"
+                 (mouseleave)="displayTooltip(null, 'waitingVehicleElem')"
+                 [contextMenuSubject]="vehicle"
+                 [contextMenu]="basicMenu">
+              <div class="col-sm-5 register-no" data-toggle="tooltip" data-placement="bottom"
+                   [title]="vehicle?.registerno" style="width: 70px;">{{vehicle?.registerno}}</div>
+              <!-- <div class="col-sm-1 size-img" *ngIf="vehicle.isCusWait === 'Y'"><img src="/assets/images/cup.svg"/></div>
+              <div class="col-sm-1 size-img" *ngIf="vehicle.appIdDone"><img src="/assets/images/h.svg"/></div>
+              <div class="col-sm-1 size-img" *ngIf="vehicle.isEm === 'Y'"><img src="/assets/images/em.svg"/></div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="main-table">
+          <div class="table-header">
+            <div class="shop shop-header"><span>Khoang</span></div>
+          </div>
+
+          <div class="table-body rx-tbody">
+            <div class="progress-area rx-left" [style.height.%]="100 * (shops.length + 1)">
+              <div [style.width.%]="100 * columns.length">
+                <div class="progress-overflow" id="style"
+                     [style.max-width.%]="100 / columns.length"
+                     [style.height.px]="progressOverflowHeight">
+
+                  <div class="progress-area-header">
+                    <ng-container *ngFor="let col of columns">
+                      <div class="d-inline-block">
+                        <div class="col-xs-12">{{col.day}}</div>
+                        <div class="col-xs-12">
+                          <span *ngFor="let data of col.workTimes"
+                                [style.width]="100 / col.workTimes.length+ '%'">
+                            {{data.minute === 0 ? data.hour : '|'}}
+                          </span>
+                        </div>
+                        <div class="seperate-line"
+                             [ngStyle]="{'height': 'calc(100% + ' + (33 * shops.length) + 'px)'}"></div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="tracking-line" [style.margin-left.%]="offsetLeft"
+                       [style.height.%]="100 * (shops.length + 1)" *ngIf="offsetLeft"></div>
+
+                  <div class="progress-area-body" [style.width.%]="100 * columns.length"
+                       (scroll)="onScroll($event, 'body-content')" (wheel)="currentScroll = 'progress-area-body'">
+                    <div class="rx-td" *ngFor="let shop of shops; let idx = index" dragula="pending-vehicle-bag"
+                         id="table"
+                         [attr.data-index]="idx" [attr.data-shopId]="shop.id">
+                      <div class="rx-progress-area" dragula="rx-waiting-vehicle-bag"
+                           [attr.data-index]="idx" [attr.data-shopId]="shop.id"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="body-content" (scroll)="onScroll($event, 'progress-area-body')"
+                 (wheel)="currentScroll = 'body-content'">
+              <div *ngFor="let shop of shops; let idx = index">
+                <div class="shop" data-toggle="tooltip" data-placement="bottom"
+                     [title]="shop.wsName">{{shop.wsName}}</div>
+                <div class="prg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-additional-info pending-vehicle col132 rx-right">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <repair-plan-modal
+    #repairPlanModal
+    (refreshList)="refreshSearch()"
+    (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></repair-plan-modal> -->
+
+  <complete-plan-rx-modal #completePlanModal (refreshList)="refreshSearch()"
+    (refreshRoNoPlanList)="refreshRoNoPlanList()"></complete-plan-rx-modal>
+</ng-container>
+
+<tmss-tooltip [contentElem]="waitingVehicleElem" *ngIf="waitingVehicleElem">
+  Tên chủ xe: {{vehicleChoosing?.carownername}} <br/>
+  Tên người mang xe đến: {{vehicleChoosing?.name || vehicleChoosing?.carownername}}
+</tmss-tooltip>
+<tmss-tooltip [contentElem]="pendingVehicleElem" *ngIf="pendingVehicleElem">
+  Tên chủ xe: {{vehicleChoosing?.carownername}} <br/>
+  Tên người mang xe đến: {{vehicleChoosing?.name || vehicleChoosing?.carownername}}
+</tmss-tooltip>
+<context-menu>
+  <ng-template contextMenuItem let-vehicle (execute)="cancelCarWash($event.item)">
+    <span style="font-size: 11px !important;">Không rửa</span>
+  </ng-template>
+</context-menu>

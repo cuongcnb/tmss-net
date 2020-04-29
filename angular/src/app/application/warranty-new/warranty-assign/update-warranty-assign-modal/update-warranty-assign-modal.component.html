@@ -1,0 +1,74 @@
+
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>Cập nhật</strong></h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group" hasError="modelId">
+              <label class="required">Model</label>
+              <select class="form-control col-md-6 col-sm-12" formControlName="modelId">
+                <option [ngValue]=""></option>
+                <option [ngValue]="mod.id" *ngFor="let mod of modelList">{{mod.cfCode}}</option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn Model</div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-12" hasError="modelPicId">
+              <label class="required">PIC</label>
+              <select class="form-control" formControlName="modelPicId">
+                <option [ngValue]=""></option>
+                <option [ngValue]="mod.id" *ngFor="let mod of modelPicList">{{mod.fullUserName}}</option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn PIC</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12" hasError="regionId">
+              <label class="required">Region</label>
+              <select class="form-control" formControlName="regionId">
+                <option [ngValue]=""></option>
+                <option [ngValue]="reg.id" *ngFor="let reg of regionList">{{reg.value}}</option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn vùng</div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label>Email</label>
+              <input type="text" formControlName="email" class="form-control">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label>Bcc</label>
+              <input type="text" formControlName="bcc" class="form-control">
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <label>Note</label>
+              <input type="text" formControlName="note" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-blue" (click)="save()">
+              <i class="fa fa-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

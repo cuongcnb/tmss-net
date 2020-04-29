@@ -1,0 +1,134 @@
+<ng-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseWarrantyFollowUpSearch" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseWarrantyFollowUpSearch"  class="panel-collapse collapse in">
+      <div class="panel-body">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">From</div>
+                  <tmss-datepicker formControlName="fromDate"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">To</div>
+                  <tmss-datepicker formControlName="toDate"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">Dealer</div>
+                  <select class="form-control" formControlName="dlrId">
+                    <option value=""></option>
+                    <option *ngFor="let dlr of dlrList" [ngValue]="dlr.id">{{dlr.abbreviation}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">CBO Req TSD Date</div>
+                  <select class="form-control" formControlName="cboReqTSD">
+                    <option value=""></option>
+                    <option [value]="0">ShowAll</option>
+                    <option [value]="1">Yes</option>
+                    <option [value]="2">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">By Status</div>
+                  <select class="form-control" formControlName="status">
+                    <option value=""></option>
+                    <option [value]="'all'">All</option>
+                    <option [value]="'closed'">Closed</option>
+                    <option [value]="'pending'">Pending</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">By LT</div>
+                  <select class="form-control" formControlName="byLT">
+                    <option value=""></option>
+                    <option [value]="'all'">All</option>
+                    <option [value]="'over_std'">Over STD</option>
+                    <option [value]="'within_std'">Within STD</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon same-addon-width">Model PIC</div>
+                  <select class="form-control" formControlName="modelPicId">
+                    <option value=""></option>
+                    <option [value]="modPic.id" *ngFor="let modPic of modelPicList">{{modPic.fullUserName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-1">
+              <button type="submit" class="btn btn-blue" (click)="search()">
+                <i class="fa fa-search"></i> Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Theo dõi bảo hành
+    </div>
+    <div id="collapseWarrantyFollowUp" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  [sizeColumnToHeaderWidth] = "true"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [paginationTotalsData]="paginationTotalsData"
+      ></grid-table>
+    </div>
+  </div>
+</ng-container>
+
+<div class="row mt-3 text-right">
+  <button class="btn btn-blue mr-2" [disabled]="!selectedData" (click)="updateModal.open(selectedData)">
+    <i class="fa fa-edit"></i> Sửa
+  </button>
+  <button class="btn btn-blue mr-2" [disabled]="!selectedData" (click)="delete()">
+    <i class="fa fa-edit"></i> Xóa
+  </button>
+</div>
+
+<update-warranty-follow-up #updateModal (close)="refreshData()"></update-warranty-follow-up>

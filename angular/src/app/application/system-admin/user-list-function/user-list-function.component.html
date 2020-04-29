@@ -1,0 +1,35 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}"
+>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Danh sách chức năng người dùng</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-5 col-sm-6">Chọn trạng thái người dùng: </div>
+              <div class="col-md-3 col-sm-6 form-group">
+                <select class="form-control" class="required" formControlName="typeUser">
+                  <option value="active">Còn hiệu lực</option>
+                  <option value="inActive">Hết hiệu lực</option>
+                  <option value="all">Tất cả</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="exportXls()">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

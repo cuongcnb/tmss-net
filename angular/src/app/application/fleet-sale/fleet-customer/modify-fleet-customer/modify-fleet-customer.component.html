@@ -1,0 +1,118 @@
+<div class="modal fade" bsModal #modifyFleetCustomer="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header" *ngIf="!selectedData">Add New Fleet Customer</h5>
+          <h5 class="title-header" *ngIf="selectedData">Update Fleet Customer</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4" hasError="code">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Code</label>
+                <input type="text" class="required form-control" formControlName="code" autoFocusField>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Code is required</div>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+            <div class="col-md-4" hasError="name">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Name</label>
+                <input type="text" class="form-control required" formControlName="name">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Name is required</div>
+                <div *ifError="'maxLength'">Max length is 100</div>
+              </div>
+            </div>
+            <div class="col-md-4" hasError="address">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Address</label>
+                <input type="text" class="form-control" formControlName="address">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 2000</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4" hasError="phone">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Phone</label>
+                <input type="text" class="form-control" formControlName="phone" maxlength="11">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+              </div>
+            </div>
+            <div class="col-sm-4" hasError="fax">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Fax</label>
+                <input type="text" class="form-control" formControlName="fax" maxlength="11">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+              </div>
+            </div>
+            <div class="col-sm-4" hasError="email">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Email</label>
+                <input type="text" class="form-control" formControlName="email">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'emailFormat'">Your input is not a valid email</div>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4" hasError="contactPerson">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Contact Person</label>
+                <input type="text" class="form-control" formControlName="contactPerson">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+            <div class="col-sm-4" hasError="contactPersonAddress">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Contact Address</label>
+                <input type="text" class="form-control" formControlName="contactPersonAddress">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 2000</div>
+              </div>
+            </div>
+            <div class="col-md-4" hasError="contactPersonPhone">
+              <div class="form-group input-group">
+                <label class="input-group-addon min-width">Contact Phone</label>
+                <input type="text" class="form-control" formControlName="contactPersonPhone" maxlength="11">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

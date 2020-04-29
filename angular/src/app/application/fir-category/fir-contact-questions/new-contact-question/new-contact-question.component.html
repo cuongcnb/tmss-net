@@ -1,0 +1,87 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"       [config]="{ignoreBackdropClick : 'Disable'}"
+>
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Câu hỏi liên hệ FIR
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Chi tiết câu hỏi
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group w-span">
+                      <div class="input-group">
+                        <span class="input-group-addon">Tên câu hỏi</span>
+                        <input type="text" class="form-control" formControlName="questionName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group w-span">
+                      <div class="input-group">
+                        <span class="input-group-addon">Đại lý</span>
+                        <select class="form-control" formControlName="sortAgency">
+                          <option>TGP-ND</option>
+                          <option>THTL</option>
+                          <option>TTG</option>
+                          <option>THHC</option>
+                          <option>THKC</option>
+                          <option>TGP</option>
+                          <option>TGP_PV</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group w-span">
+                      <div class="input-group">
+                        <span class="input-group-addon">Thứ tự</span>
+                        <input type="text" class="form-control" formControlName="isSerial">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group w-span">
+                      <div class="input-group">
+                        <span class="input-group-addon">Trạng thái</span>
+                        <select class="form-control" formControlName="isStatus">
+                          <option>Còn hiệu lực</option>
+                          <option>Hết hiệu lực</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon">Ghi chú</div>
+                    <textarea class="form-control" rows="4" formControlName="isNote"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue" (click)="save()">
+            <i class="clip-file-2 mr-2"></i>Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-power-off mr-2"></i>Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

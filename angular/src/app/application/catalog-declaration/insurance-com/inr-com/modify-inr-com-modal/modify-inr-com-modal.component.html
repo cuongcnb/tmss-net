@@ -1,0 +1,178 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật' : 'Thêm mới'}}</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body insurance-form">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="inrCCode">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Mã công ty</span>
+                    <input class="form-control required" formControlName="inrCCode" maxlength="255">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Yêu cầu phải nhập</div>
+                    <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="inrCName">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Tên công ty</span>
+                    <input class="form-control required" formControlName="inrCName" maxlength="255">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Yêu cầu phải nhập</div>
+                    <div *ifError="'maxLength'">Tối đa 255 kí tự</div>
+                    <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="smicAdd">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Địa chỉ</span>
+                    <input class="form-control" formControlName="smicAdd" maxlength="500">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="website">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Website</span>
+                    <input class="form-control" formControlName="website" maxlength="100">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="tel">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Điện thoại</span>
+                    <input class="form-control" formControlName="tel">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="fax">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Fax</span>
+                    <input class="form-control" formControlName="fax">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="accno">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Số tài khoản</span>
+                    <input class="form-control" formControlName="accno" maxlength="30">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Số tài khoản chỉ nhập giá trị là số</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="bankId">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Ngân hàng</span>
+                    <select class="form-control" formControlName="bankId">
+                      <option></option>
+                      <option *ngFor="let bank of banks" [ngValue]="bank.id">{{bank.bankName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="taxcode">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Mã số thuế</span>
+                    <input class="form-control" formControlName="taxcode">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'taxFormat'">Không đúng định dạng mã số thuế</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="email">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Email</span>
+                    <input class="form-control" formControlName="email" maxlength="100">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'emailFormat'">Sai định dạng email</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="pic">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">Người liên hệ</span>
+                    <input class="form-control" formControlName="pic" maxlength="100">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="picTel">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="95px">ĐT người LH</span>
+                    <input class="form-control" formControlName="picTel">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'">Sai định dạng số điện thoại</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" hasError="remark">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="95px">Ghi chú</span>
+                <input class="form-control" formControlName="remark" maxlength="240">
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

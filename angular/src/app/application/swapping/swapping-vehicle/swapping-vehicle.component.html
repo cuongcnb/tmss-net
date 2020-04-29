@@ -1,0 +1,85 @@
+<form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon" addonWidth="60px">Dealer</span>
+        <select class="form-control" formControlName="dealerId">
+          <ng-container *ngIf="currentUser.isAdmin">
+            <option value="">All</option>
+            <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+          </ng-container>
+          <ng-container *ngIf="!currentUser.isAdmin">
+            <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon" addonWidth="90px">Grade</span>
+        <multi-column-select-control formControlName="gradeControl"
+                                     displayField="marketingCode"
+                                     [fieldGrid]="fieldGradeList"
+                                     [list]="gradeList">
+        </multi-column-select-control>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon min-width">Color</span>
+        <multi-column-select-control formControlName="colorControl" displayField="code"
+                                     [fieldGrid]="fieldColorList"
+                                     [list]="allColors">
+        </multi-column-select-control>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon" addonWidth="60px">Status</span>
+        <select class="form-control" formControlName="status">
+          <option value="">All</option>
+          <option value="wait_approve">Wait Approve</option>
+          <option value="approve">Approve</option>
+          <option value="reject">Reject</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="input-group form-group search-group">
+        <span class="input-group-addon" addonWidth="90px">Quick Search</span>
+        <input type="text" placeholder="" data-toggle="tooltip" data-placement="top"
+               title="Quich search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address."
+               class="form-control"
+               formControlName="quickSearch">
+        <button type="submit" class="btn btn-blue" (click)="resetPaginationParams(); search()">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Swapping Vehicle
+  </div>
+  <grid-table [fieldGrid]="swappingVehicleGridField"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [paginationTotalsData]="paginationTotalsData"
+              (changePaginationParams)="changePaginationParams($event)"
+              [height]="'400px'"
+  ></grid-table>
+  <div class="panel-footer text-right">
+    <button type="button" class="btn btn-blue ml-2" (click)="export()"><i class="fa fa-download"></i> Export</button>
+    <button type="button" *ngIf="currentUser.isAdmin" class="btn btn-blue ml-2"
+            [attr.disabled]="disableApproveRejectBtn" (click)="approveReject(true)"><i class="fa fa-check"></i>
+      Approve
+    </button>
+    <button type="button" *ngIf="currentUser.isAdmin" class="btn btn-blue ml-2"
+            [attr.disabled]="disableApproveRejectBtn" (click)="approveReject()"><i class="fa fa-ban"></i> Reject
+    </button>
+  </div>
+</div>

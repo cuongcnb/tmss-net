@@ -1,0 +1,138 @@
+<div class="modal fade" bsModal #modal="bs-modal">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin khách hàng
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapseRegisDetailInfo" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapseRegisDetailInfo" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">Mã KH</span>
+                          <input type="text" class="form-control" formControlName="makh">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">Tên KH</span>
+                          <input type="text" class="form-control" formControlName="tenkh">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="77px">Ngày sinh</span>
+                          <input type="text" class="form-control" formControlName="birthday">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="75px">Giới tính</span>
+                          <input type="text" class="form-control" formControlName="sex">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">SĐT</span>
+                          <input type="text" class="form-control" formControlName="sdt">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">Email</span>
+                          <input type="text" class="form-control" formControlName="email">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <tmss-datepicker text="Đăng kí từ" formControlName="date"></tmss-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <tmss-datepicker text="Đến ngày" formControlName="date"></tmss-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thời gian đại lý xác nhận
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-link" data-toggle="collapse"
+                          data-target="#collapseRegisDetailConfirm" aria-expanded="true">
+                  </button>
+                </div>
+              </div>
+              <div id="collapseRegisDetailConfirm" class="panel-collapse collapse in">
+
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">Mã NV</span>
+                          <input type="text" class="form-control" formControlName="manv">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon" addonWidth="79px">Tên NV</span>
+                          <input type="text" class="form-control" formControlName="tennv">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <tmss-datepicker text="Xác nhận từ" formControlName="date"></tmss-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <tmss-datepicker text="Đến ngày" formControlName="date"></tmss-datepicker>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-blue mb-2 float-right" type="submit" (click)=" save()">
+              <i class="fa fa-save"></i> Lưu
+            </button>
+            <button class="btn btn-light-grey mr-2 mb-2 float-right" (click)="modal.hide()">
+              <i class="fa fa-times"></i> Hủy
+            </button>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </form>
+</div>
+

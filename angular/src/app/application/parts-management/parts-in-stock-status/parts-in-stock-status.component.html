@@ -1,0 +1,115 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm theo điều kiện
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Dự trữ</span>
+              <select class="form-control" formControlName="instocktype">
+                <option [ngValue]="null">Tất cả</option>
+                <option value="N">Không dự trữ</option>
+                <option value="Y">Dự trữ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Hàng Toyota</span>
+              <select class="form-control" formControlName="toyota">
+                <option [ngValue]="null">Tất cả</option>
+                <option value="N">Non-Toyota</option>
+                <option value="Y">Toyota</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã phụ tùng</span>
+              <input type="text" class="form-control" formControlName="partsCodes" (change)="deleteCharacterSpecial(0, $event.target.value)">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group search-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Tên phụ tùng</span>
+              <input type="text" class="form-control" formControlName="partsNameVn">
+              <button type="submit" class="btn btn-blue" (click)="checkEditingBeforeSearch()">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm mã phụ tùng
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="partsForm" *ngIf="partsForm" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group search-group">
+            <div class="input-group">
+              <span class="input-group-addon">Mã phụ tùng</span>
+              <input type="text" class="form-control" formControlName="partsCodes" (change)="deleteCharacterSpecial(1, $event.target.value)">
+              <button type="submit" class="btn btn-blue" (click)="checkEditingBeforeSearch(true)">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <small><i>Định dạng nhập: ABC12345,CDE23456,...</i></small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartInStock" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartInStock" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [frameworkComponents]="frameworkComponents"
+                (callbackGrid)="callBackGrid($event)"
+                (getParams)="getParams()"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 text-right">
+    <button type="submit" class="btn btn-blue mr-2" (click)="exportExcel()">
+      <i class="fa fa-download"></i> Xuất dữ liệu
+    </button>
+    <button type="button" class="btn btn-blue" [disabled]="!listOfModifiedParts.length" (click)="saveChanges()">
+      <i class="fa fa-save"></i> Lưu thay đổi
+    </button>
+  </div>
+</div>

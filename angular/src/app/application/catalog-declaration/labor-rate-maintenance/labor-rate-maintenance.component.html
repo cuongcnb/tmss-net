@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-sm-12">
+    <!-- <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off"> -->
+      <div class="input-group form-group">
+        <span class="input-group-addon">Dealer</span>
+        <select class="form-control required">
+          <option [ngValue]="'all'">Tất cả</option>
+          <ng-container>
+            <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">{{dealer.vnName}}</option>
+          </ng-container>
+        </select>
+      </div>
+    <!-- </form> -->
+  </div>
+  <div class="col-sm-12">
+    <div class="grid-table-area mt-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Labor rate maintenance
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseLaborRateMaintenance" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseLaborRateMaintenance" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="fieldGrid"
+                      (callbackGrid)="callbackGridBank($event)"
+                      (getParams)="getParamsBank()"></grid-table>
+        </div>
+      </div>
+      <div class="my-3 text-right grid-table-btn">
+        <button type="button" class="btn btn-blue mr-2" (click)="laborRateMaintenanceModal.open()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue mr-2" (click)="updateLaborRate()">
+          <i class="fa fa-pencil"></i> Sửa
+        </button>
+        <button type="button" [disabled]="btnDeleteState" class="btn btn-blue" (click)="deleteLaborRate()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-labor-rate-maintenance-modal #laborRateMaintenanceModal (close)="refreshList()"></app-labor-rate-maintenance-modal>

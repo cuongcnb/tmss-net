@@ -1,0 +1,48 @@
+<div pageTitle="Dealer Order Config">
+  <form class="row">
+    <div class="col-sm-3 mb-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Gói Import</span>
+        <month-picker  [model]="selectedDate" (modelChange)="generateDay($event)"></month-picker>
+      </div>
+    </div>
+
+
+    <div class="col-sm-3 mb-4">
+      <button class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"> Search</i></button>
+    </div>
+  </form>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Khai báo deadline đặt hàng
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  [enableFilter]="true"
+                  (getParams)="getParamsDealerOrderConfig()"
+                  (callbackGrid)="callbackGridDealerOrderConfigs($event)"
+                  [showPagination]="false"
+                  [height]="'450px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="dealerOrderConfigModal.open()">
+          <i class="fa fa-plus"> Add</i>
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateDealerOrderConfig()">
+          <i class="fa fa-pencil"> Edit</i>
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedDealerOrderConfig" (click)="deleteDealerOrderConfig()">
+          <i class="fa fa-trash-o"> Delete</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dealer-order-config-modal #dealerOrderConfigModal (close)="refreshList()"></dealer-order-config-modal>

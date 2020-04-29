@@ -1,0 +1,223 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <checkbox class="contact-day15-mt" text="Liên hệ thành công" formControlName="isContactSuccessful"></checkbox>
+    </div>
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-md-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <checkbox class="contact-day15-mt" text="Đã làm BD" formControlName="contactCheck"></checkbox>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <checkbox text="KH BD ở DL khác" formControlName="contactCheck"></checkbox>
+              </div>
+              <div class="form-group">
+                <checkbox text="KH có xưởng SC riêng" formControlName="contactCheck"></checkbox>
+              </div>
+              <div class="form-group">
+                <checkbox text="KH ở xưởng SC ngoài" formControlName="contactCheck"></checkbox>
+              </div>
+              <div class="form-group">
+                <checkbox text="KH ở xa" formControlName="contactCheck"></checkbox>
+              </div>
+              <div class="form-group">
+                <checkbox text="Xe tiện đâu làm đấy" formControlName="contactCheck"></checkbox>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Lý do khác" formControlName="contactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <textarea class="form-control textarea-fix" rows="2" formControlName="contactCheck"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Nhập thông tin cập nhật
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">KM cập nhật</span>
+                      <input type="text" class="form-control" formControlName="contactCheck">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Không nhớ km" formControlName="contactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon" addonWidth="87px">Mốc BD tiếp</span>
+                      <input type="text" class="form-control" formControlName="contactNextBD">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <tmss-datepicker text="Ngày BD tiếp" formControlName="contactDateTime"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group span-date-info">
+                    <tmss-datepicker text="Ngày hẹn" formControlName="contactAppointmentDate"></tmss-datepicker>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <tmss-datepicker formControlName="contactAppointmentDateTo"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon" addonWidth="87px">CVDV</span>
+                      <input type="text" class="form-control" formControlName="contactCheck">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Khách hàng phàn nàn" formControlName="contactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="87px">ND cuộc gọi</span>
+                  <input type="text" class="form-control" formControlName="contactCheck">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="87px">Ghi chú</span>
+                  <input type="text" class="form-control" formControlName="isNote">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Liên hệ không thành công
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Có nhấc máy
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Người khác nghe máy" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Yêu cầu gọi lại sau" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="SDT người khác" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Yêu cầu gửi tin nhắn" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Người khác nghe máy" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                  <div class="form-group">
+                    <checkbox text="Yêu cầu gọi lại sau" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <textarea class="form-control textarea-fix" rows="2" formControlName="failedContactCheck"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Không nhấc máy
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Tín hiệu máy bận" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Không trả lời" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Sai số" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Không liên lạc được" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <checkbox text="Lý do khác" formControlName="failedContactCheck"></checkbox>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <textarea class="form-control textarea-fix" rows="2" formControlName="failedContactCheck"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

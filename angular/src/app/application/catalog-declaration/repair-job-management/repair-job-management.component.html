@@ -1,0 +1,80 @@
+<form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate class="row" focusField>
+<!--  <div class="col-sm-2 form-group w-20">-->
+<!--    <div class="input-group">-->
+<!--      <span class="input-group-addon">Dòng xe</span>-->
+<!--      <select class="form-control" formControlName="cmName" (change)="changeCmName($event.target)">-->
+<!--        <option *ngFor="let it of listCmName" [ngValue]="it">{{it.dataNameVn}}</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="col-md-3 col-sm-6 form-group">
+    <div class="input-group" *ngIf="carFamListDefault">
+      <span class="input-group-addon">Kiểu xe</span>
+      <multi-column-select-control formControlName="carFamId"
+                                   displayField="cfCode"
+                                   dataField="id"
+                                   [fieldGrid]="carFamField"
+                                   [list]="carFamListDefault"
+                                   [enableFilter]="true"
+                                   [isClear]="false"
+      ></multi-column-select-control>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 form-group">
+    <div class="input-group" *ngIf="carModelList">
+      <span class="input-group-addon">Đời xe</span>
+      <multi-column-select-control formControlName="carModelId"
+                                   displayField="doixe"
+                                   dataField="id"
+                                   [fieldGrid]="carModelField"
+                                   [list]="carModelList"
+                                   [enableFilter]="true"
+                                   [isClear]="false"
+      ></multi-column-select-control>
+    </div>
+  </div>
+  <!--<div class="col-sm-2 form-group w-20">-->
+    <!--<div class="input-group">-->
+      <!--<span class="input-group-addon">Trạng thái</span>-->
+      <!--<select class="form-control" formControlName="deleteFlag" (change)="changeDeleteFlag()">-->
+        <!--<option *ngFor="let it of listState" [ngValue]="it.dataValue">{{it.dataNameVn}}</option>-->
+
+      <!--</select>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="col-md-1 col-sm-12">
+    <button type="button" class="btn btn-blue mr-2" (click)="jobGroupDeclaration.open()">Khai báo gói công việc</button>
+<!--    <div class="btn-group mr-2">-->
+<!--      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"-->
+<!--              aria-haspopup="true" aria-expanded="false">-->
+<!--        Áp công việc cho xe <span class="caret"></span>-->
+<!--      </button>-->
+<!--      <ul class="dropdown-menu">-->
+<!--        <li>-->
+<!--          <button type="button" class="btn btn-link" (click)="searchJob.open({searchKeyword:null})">-->
+<!--            <i class="fa fa-search"></i> Chọn công việc có sẵn-->
+<!--          </button>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <button type="button" class="btn btn-link" (click)="applyJobForCar.open()">-->
+<!--            <i class="fa fa-plus"></i> Tạo công việc mới-->
+<!--          </button>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+  </div>
+</form>
+
+<repair-job-detail #repairJobDetail *ngIf="form.value.carModelId || form.value.carModelId === 0 "
+                   [carModelId]="form.controls['carModelId'].value" [form]="form"
+></repair-job-detail>
+
+<job-group-declaration (closeModal)="changeDeleteFlag()" #jobGroupDeclaration></job-group-declaration>
+
+<search-data-grid-modal #searchJob
+                        [headerText]="'Chọn công việc'"
+                        [apiCall]="callSearchRepairJob.bind(this)"
+                        (close)="applyJobForCar.open($event)"
+                        [fieldGrid]="repairJobField"
+></search-data-grid-modal>
+<apply-job-for-car #applyJobForCar></apply-job-for-car>

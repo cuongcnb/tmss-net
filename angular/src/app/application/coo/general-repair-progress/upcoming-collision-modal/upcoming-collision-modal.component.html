@@ -1,0 +1,95 @@
+<div class="modal fade" bsModal #modal="bs-modal">
+	<div class="modal-dialog lg-width">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" (click)="close()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h2 class="modal-title text-danger-important">Cảnh báo: Xe thực tế sắp trùng với xe kế hoạch</h2>
+			</div>
+			<div class="modal-body">
+				<perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<i class="fa fa-external-link-square"></i>
+										Danh sách xe thực tế
+										<div class="panel-tools">
+											<button type="button" class="fa btn-collapse"
+												[ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+												(click)="isCollapsedWS = !isCollapsedWS"
+												[attr.aria-expanded]="!isCollapsedWS"
+												aria-controls="collapseEventOther">
+											</button>
+										</div>
+									</div>
+									<div id="isCollapsedWS" [collapse]="isCollapsedWS">
+										<div class="panel-body">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th>Khoang</th>
+														<th>Xe (thực tế)</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let v of collisionVehicles">
+														<td class="font-size-15">{{v.wsCode}}</td>
+														<td class="font-size-15">{{v.actualRegisterNo}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<i class="fa fa-external-link-square"></i>
+										Danh sách xe kế hoạch
+										<div class="panel-tools">
+											<button type="button" class="fa btn-collapse"
+												[ngClass]="isCollapsedWS ? 'fa-chevron-right' : 'fa-chevron-down'"
+												(click)="isCollapsedWS = !isCollapsedWS"
+												[attr.aria-expanded]="!isCollapsedWS"
+												aria-controls="collapseEventOther">
+											</button>
+										</div>
+									</div>
+									<div id="isCollapsedWS" [collapse]="isCollapsedWS">
+										<div class="panel-body">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th>Xe (kế hoạch)</th>
+														<th style="text-align: center;">Chỉnh sửa</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr *ngFor="let v of collisionVehicles">
+														<td  class="font-size-15">{{v.planRegisterNo}}</td>
+														<td class="pointer text-center" (click)="openRepairPlanModal(v)">
+															<i class="fa fa-edit font-size-15"></i>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12 mw-63 padding-div">
+							<button class="btn btn-blue mt-3 float-right ml-10"
+								(click)="close()">Đóng</button>
+						</div>
+					</div>
+				</perfect-scrollbar>
+			</div>
+		</div>
+	</div>
+</div>

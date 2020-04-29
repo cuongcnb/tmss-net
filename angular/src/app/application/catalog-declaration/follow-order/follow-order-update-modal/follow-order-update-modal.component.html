@@ -1,0 +1,51 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title"><strong>Cập nhật dữ liệu</strong></h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-addon">Lệnh sửa chữa</span>
+            <input type="text" class="form-control"/>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-tools">
+                <button class="btn btn-link" (click)="addRow()">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-link" (click)="delRow()"
+                        [attr.disabled]="this.selectedData ? null : true">
+                  <i class="fa fa-trash-o"></i>
+                </button>
+              </div>
+            </div>
+            <grid-table [fieldGrid]="gridField"
+                        (callbackGrid)="callbackGrid($event)"
+                        (getParams)="getParams()"
+                        [suppressRowClickSelection]="true"
+                        [rowSelection]="'multiple'"
+                        [height]="'250px'"
+                        [showPagination]="false"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" (click)="save()">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+        <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

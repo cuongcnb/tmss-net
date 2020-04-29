@@ -1,0 +1,70 @@
+<div class="modal fade" bsModal #districtListModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Update District' : 'Add new District'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-6" hasError="code">
+                <label class="required">Code</label>
+                <input type="text" formControlName="code" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Code is required</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="name">
+                <label class="required">Name</label>
+                <input type="text" formControlName="name" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Name is required</div>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4" hasError="ordering">
+                <label>Ordering</label>
+                <input type="text" formControlName="ordering" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Ordering must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="description">
+                <label>Description</label>
+                <input type="text" formControlName="description" class="form-control">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 2000</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label>Status</label>
+                <select formControlName="status" class="form-control">
+                  <option value=""></option>
+                  <option value="Y">Enabled</option>
+                  <option value="N">Disabled</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,140 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết đơn hàng</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin đơn hàng
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon equal-input-addon-label">Số đơn hàng</span>
+                        <input type="text" class="form-control" formControlName="orderNo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon equal-input-addon-label">Ngày giờ ĐH</span>
+                        <input type="text" class="form-control" formControlName="orderDateView">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon equal-input-addon-label">Người ĐH</span>
+                        <input type="text" class="form-control" formControlName="orderPersonId">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon equal-input-addon-label">PTVC</span>
+                        <select class="form-control" formControlName="transportTypeId">
+                          <option [ngValue]="null"></option>
+                          <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">
+                            {{transportType.transportName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 text-center text-right">
+                    <button type="button" class="btn btn-blue " (click)="placeOrder()">
+                      <i class="fa fa-save"></i> Đặt hàng
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon equal-input-addon-label">Loại ĐH</span>
+                        <select class="required form-control" formControlName="orderTypeId">
+                          <option *ngFor="let orderMethod of orderMethodArr" [ngValue]="orderMethod.id">
+                            {{orderMethod.orderMName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin đơn hàng
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                        (callbackGrid)="callBackGrid($event)"
+                        (getParams)="getParams()"></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 text-left">
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

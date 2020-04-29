@@ -1,0 +1,214 @@
+<div id="userManagement">
+  <div class="row">
+    <div class="grid-table col-4 col-md-4 ">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh Sách Thông Tin</div>
+          <grid-table [height]="'800px'" [showPagination]="false" [fieldGrid]="fieldGridListGroup" [autoGroupColumnDef]="autoGroupColumnDefListGroup"
+                      [groupDefaultExpanded]="-1"
+                      (getParams)="getParamsListGroup()"  (callbackGrid)="callbackGridListGroup($event)">
+          </grid-table>
+      </div>
+    </div>
+    <div *ngIf="view == 'User'" class="grid-table col-md-8 col-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Thông tin NSD</div>
+        <div class="panel-body pt-2">
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Tên người dùng</span>
+                <input disabled class="text-input form-control" [value]="userName">
+              </div>
+            </div>
+            <div class="form-group col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Họ tên</span>
+                <input disabled class="text-input form-control" [value]="fullName">
+              </div>
+            </div>
+            <div class="form-group col-md-2">
+              <div class="input-group">
+                <checkbox [isDisabled]="true" text="Is Locked" [selectedValue]="isLocked"></checkbox>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="button">
+          <div class="row px-3 py-3 justify-content-between">
+            <div class="float-right">
+              <button class="btn btn-blue mr-2" (click)="AddUpdateSetPassModal.open('add')" >
+                <i class="fa fa-plus"></i> Thêm Mới
+              </button>
+              <button class="btn btn-blue mr-2"  (click)="AddUpdateSetPassModal.open('update', DataUser)">
+                <i class="fa fa-edit"></i> Cập Nhật
+              </button>
+              <button class="btn btn-blue"  (click)="AddUpdateSetPassModal.open('setPass', DataUser)">
+                <i class="fa fa-edit"></i> Đặt Mật Khẩu
+              </button>
+            </div>
+            <div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Group of User</div>
+          <grid-table [showPagination]="false" [fieldGrid]="fieldGridUserInformation" [height]="'643px'"
+                      (getParams)="getParamsUser()" (callbackGrid)="callbackGridUserInformation($event)">
+          </grid-table>
+        <div class="button">
+          <div class="row px-3 pt-2 pb-2 justify-content-between">
+            <div class="float-right">
+              <button class="btn btn-blue mr-2" (click)="onBtSaveUser()">
+                <i class="fa fa-save"></i> Lưu
+              </button>
+              <button class="btn btn-light-grey" (click)="onBtCancelUserGroup()" >
+                <i class="clip-cancel-circle-2"></i> Hủy
+              </button>
+            </div>
+            <div class="mt-sm-2 mt-md-2 mt-lg-0">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="view == 'Function'" class="grid-table col-8 col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Function Information</div>
+          <grid-table [showPagination]="false" [height]="'800px'" [fieldGrid]="fieldGridFunction" [autoGroupColumnDef]="autoGroupColumnDefFunction"
+                      (getParams)="getParamsFunction()" (callbackGrid)="callbackGridFunction($event)">
+          </grid-table>
+      </div>
+    </div>
+    <div *ngIf="view == 'Group'" class="grid-table col-md-8 col-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Group Information</div>
+        <div class="panel-body">
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Tên người dùng</span>
+                <input disabled class="text-input form-control" [value]="selectedData.fullName">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <div class="row px-3 py-3 justify-content-between">
+          <div class="float-right">
+            <button class="btn btn-blue mr-2" (click)="AddUpdateGroupModal.open('add')" >
+              <i class="fa fa-plus"></i> Thêm
+            </button>
+            <button class="btn btn-blue mr-2" (click)="AddUpdateGroupModal.open('update', selectedData)" >
+              <i class="fa fa-edit"></i> Sửa
+            </button>
+            <button class="btn btn-blue" (click)="onShowModalDelete()" >
+              <i class="fa fa-trash-o"></i> Xóa
+            </button>
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="tabs">
+        <!--<button (click)="a()"> checkall</button>-->
+        <!--<hr/>-->
+        <tabset>
+          <tab heading="Functions of Group">
+              <grid-table [showPagination]="false" [fieldGrid]="fieldGridGroup" [autoGroupColumnDef]="autoGroupColumnDefGroup"
+                          [height]="'594px'" [groupSelectsChildren]="true"
+                          [groupSelectsFiltered]="true" [groupDefaultExpanded]="-1"
+                          (getParams)="getParamsGroup()" (callbackGrid)="callbackGridGroup($event)">
+              </grid-table>
+            <div class="button-user">
+              <div class="row px-3 pt-2 pb-3 justify-content-between">
+                <div class="float-right">
+                  <button class="btn btn-blue mr-2" (click)="onBtSaveGroup()" >
+                    <i class="fa fa-save"></i> Lưu
+                  </button>
+                  <button class="btn btn-light-grey" (click)="onBtCancelFunctionGroup()" >
+                    <i class="clip-cancel-circle-2"></i> Hủy
+                  </button>
+                </div>
+                <div class="mt-sm-2 mt-md-2 mt-lg-0">
+                </div>
+              </div>
+            </div>
+          </tab>
+          <tab heading="Menu of Group">
+            <div class="panel-body">
+              <grid-table [showPagination]="false" [fieldGrid]="fieldGridMenuGroup" [groupMultiAutoColumn] = "true" [groupSelectsChildren]="true"
+                          [groupSelectsFiltered]="true" [groupDefaultExpanded]="-1"
+                          [height]="'594px'" (getParams)="getParamsMenuGroup()" (callbackGrid)="callbackGridMenuGroup($event)">
+              </grid-table>
+            </div>
+            <div class="button-user">
+              <div class="row px-3 pt-2 pb-3 justify-content-between">
+                <div class="float-right">
+                  <button class="btn btn-blue mr-2" (click)="onBtSaveMenuGroup()" >
+                    <i class="fa fa-save"></i> Lưu
+                  </button>
+                  <button class="btn btn-light-grey" (click)="onBtCancelMenuGroup()" >
+                    <i class="clip-cancel-circle-2"></i> Hủy
+                  </button>
+                </div>
+                <div class="mt-sm-2 mt-md-2 mt-lg-0">
+                </div>
+              </div>
+            </div>
+          </tab>
+          <tab heading="Users in Group"  (select)="callServiceUserInGroup()">
+            <div class="panel-body">
+              <grid-table [showPagination]="false" [fieldGrid]="fieldGridUserInGroup" [height]="'636px'"
+                          (getParams)="getParamsUserInGroup()" (callbackGrid)="callbackGridUserInGroup($event)">
+              </grid-table>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<add-user-info-modal (close)="callbackGridListGroup(gridApiListInformation)"  #AddUpdateSetPassModal></add-user-info-modal>
+
+<add-group-info-modal (close)="callbackGridListGroup(gridApiListInformation)" #AddUpdateGroupModal></add-group-info-modal>
+
+<div bsModal #deleteGroupModal="bs-modal" class="modal fade" [config]="{ backdrop: 'static' }">
+  <div class="modal-dialog modal-delete modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa</h5>
+        <button type="button" class="close" (click)="deleteGroupModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <i class="fa fa-question-circle"></i> Bạn có muốn xóa nhóm và tất cả người dùng trong nhóm ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-blue" (click)="onSubmitModalDelete()"><i class="fa fa-check"></i>
+          Có
+        </button>
+        <button type="button" class="btn btn-default" (click)="deleteGroupModal.hide()">
+          <i class="clip-cancel-circle-2"></i> Không
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

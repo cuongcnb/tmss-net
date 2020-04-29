@@ -1,0 +1,45 @@
+<ul class="main-navigation-menu" (window:resize)="onResize($event)">
+  <ng-container *ngIf="menuList && menuList.length">
+    <li *ngFor="let menu of menuList; let i = index" (click)="changeSidebarMenu(menu)">
+      <a href="javascript:void(0)" [class.is-active]="currentSidebar === menu.code">
+        <!--<i class="fa fa-asterisk"></i>-->
+        <span class="title"> {{i+1}}. {{menu.code}}</span>
+      </a>
+      <ul class="sub-menu d-block" *ngIf="isAlwaysShowSubmenu || checkShowSubmenu(menu)" id="sidebar" >
+        <li *ngFor="let func of menu.list; let j = index" (click)="openComponent($event, func)">
+          <a href="javascript:void(0)">
+            <span class="title"> {{i+1}}.{{j+1}}. {{func.functionName}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ng-container>
+
+  <!--<ng-container *ngIf="menuList && menuList.length">-->
+    <!--<li class="dropdown" *ngFor="let menu of menuList" (click)="changeSidebarMenu(menu)">-->
+      <!--<a href="javascript:void(0)" [class.is-active]="currentSidebar === menu.code">-->
+        <!--<i class="fa fa-asterisk"></i>-->
+        <!--<span class="title"> {{menu.code}}</span>-->
+      <!--</a>-->
+      <!--<ul  (click)="$event.stopImmediatePropagation()" *ngIf="isAlwaysShowSubmenu || checkShowSubmenu(menu)" id="sidebar" >-->
+        <!--<li class="dropdown-submenu" *ngFor="let sub of menu.submenu" >-->
+          <!--<a href="javascript:void(0)" *ngIf="sub.code">-->
+            <!--<span class="title"> {{sub.code}}</span>-->
+          <!--</a>-->
+          <!--<a href="javascript:void(0)" *ngIf="!sub.code">-->
+            <!--<li *ngFor="let func of sub.list" (click)="openComponent($event, func)">-->
+                <!--<span class="title"> {{func.functionName}}</span>-->
+            <!--</li>-->
+          <!--</a>-->
+          <!--<ul class="sub-menu d-block" *ngIf="sub.code">-->
+            <!--<li *ngFor="let func of sub.list" (click)="openComponent($event, func)">-->
+              <!--<a href="javascript:void(0)">-->
+                <!--<span class="title"> {{func.functionName}}</span>-->
+              <!--</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</li>-->
+  <!--</ng-container>-->
+</ul>

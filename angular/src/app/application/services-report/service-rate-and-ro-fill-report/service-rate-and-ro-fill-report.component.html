@@ -1,0 +1,129 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">BC Service rate và RO Fill rate theo ngày/năm</h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="tabbable">
+            <ul class="nav nav-tabs tab-blue mb-3">
+              <li *ngFor="let item of tabs"
+                  [class.active]="item.tab === selectedTab" (click)="changeSelectedTab(item.tab)" class="pointer">
+                <a data-toggle="tab" class="tab-item text-capitalize">
+                  {{item.name}}
+                </a>
+              </li>
+            </ul>
+
+            <div *ngIf="selectedTab === 'year'" [tabDisplay]="selectedTab === 'year'">
+              <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+
+                <div class="form-group" hasError="dlrId">
+                  <div class="input-group">
+                    <span class="input-group-addon required" addonWidth="90px">Mã đại lý</span>
+                    <select class="form-control required" formControlName="dlrId">
+                      <ng-container *ngIf="!currentUser.isAdmin">
+                        <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}
+                          : {{currentUser.dealerVnName}}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="currentUser.isAdmin">
+                        <option *ngFor="let dealer of dealerList"
+                                [ngValue]="dealer.id">{{dealer.code}}: {{dealer.vnName}}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Mã đại lý</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <tmss-month-year text="Năm" formControlName="year" addOnMinWidth="90px"></tmss-month-year>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="90px">Loại báo cáo</span>
+                        <select class="form-control" formControlName="extension">
+                          <option value="xls">XLS</option>
+                          <option value="doc">DOC</option>
+                          <option value="pdf">PDF</option>
+                          <option value="rtf">RTF</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div *ngIf="selectedTab === 'month'" [tabDisplay]="selectedTab === 'month'">
+              <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                <div class="form-group" hasError="dlrId">
+                  <div class="input-group">
+                    <span class="input-group-addon required" addonWidth="90px">Mã đại lý</span>
+                    <select class="form-control required" formControlName="dlrId">
+                      <ng-container *ngIf="!currentUser.isAdmin">
+                        <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}
+                          : {{currentUser.dealerVnName}}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="currentUser.isAdmin">
+                        <option *ngFor="let dealer of dealerList"
+                                [ngValue]="dealer.id">{{dealer.code}}: {{dealer.vnName}}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Mã đại lý</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <tmss-month-year text="Tháng" formControlName="month" [isMonth]="true"
+                                       addOnMinWidth="90px"></tmss-month-year>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="90px">Loại báo cáo</span>
+                        <select class="form-control" formControlName="extension">
+                          <option value="xls">XLS</option>
+                          <option value="doc">DOC</option>
+                          <option value="pdf">PDF</option>
+                          <option value="rtf">RTF</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-blue" (click)="downloadFile()">
+          <i class="fa fa-download"></i> Xuất báo cáo
+        </button>
+        <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

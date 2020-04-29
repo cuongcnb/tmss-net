@@ -1,0 +1,28 @@
+<div>
+  <grid-table [fieldGrid]="fieldGrid"
+              [height]="height">
+  </grid-table>
+  <div class="tabbable mt-4">
+    <ul class="nav nav-tabs tab-blue">
+      <li *ngFor="let item of tabs"
+          [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+        <a data-toggle="tab" class="tab-item text-capitalize">
+          {{item}}
+        </a>
+      </li>
+    </ul>
+    <div class="my-3">
+      <grid-table [fieldGrid]="repairFieldGrid"
+                  [height]="height"
+                  *ngIf="selectedTab === tabs[0]"
+                  [tabDisplay]="selectedTab === tabs[0]">
+      </grid-table>
+      <grid-table [fieldGrid]="dongsonFieldGrid
+"
+                  [height]="height"
+                  *ngIf="selectedTab === tabs[1]"
+                  [tabDisplay]="selectedTab === tabs[1]">
+      </grid-table>
+    </div>
+  </div>
+</div>

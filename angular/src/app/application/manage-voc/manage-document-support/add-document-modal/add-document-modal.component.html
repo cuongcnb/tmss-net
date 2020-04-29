@@ -1,0 +1,63 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Tài liệu hướng dẫn {{editModal ? '[Cập nhật]' : '[Thêm mới]'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Thông tin tài liệu hướng dẫn
+              </div>
+              <div class="panel-body">
+                <div class="form-group span-80">
+                  <div class="input-group">
+                    <span class="input-group-addon">Tên tài liệu</span>
+                    <input class="form-control" formControlName="documentName">
+                  </div>
+                </div>
+                <div class="form-group span-80">
+                  <div class="input-group">
+                    <span class="input-group-addon">Dòng xe</span>
+                    <select class="form-control" formControlName="model"></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <checkbox text="Hoạt động" formControlName="status"></checkbox>
+                </div>
+                <div class="form-group span-80">
+                  <div class="input-group">
+                    <span class="input-group-addon">Số thứ tự</span>
+                    <input class="form-control" formControlName="stt">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue">
+            <i class="fa fa-save"></i>
+            Lưu
+          </button>
+          <button class="btn btn-blue" (click)="refresh()">
+            <i class="fa fa-refresh"></i>
+            Làm mới
+          </button>
+          <button class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i>
+            Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

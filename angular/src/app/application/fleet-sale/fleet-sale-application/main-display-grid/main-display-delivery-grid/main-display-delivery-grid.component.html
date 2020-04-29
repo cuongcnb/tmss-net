@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Delivery Plan
+    <div class="panel-tools">
+      <button role="button" class="btn btn-xs btn-link panel-refresh" [attr.disabled]="disableAddBtn" (click)="onAddRow()">
+        <i class="fa fa-plus"></i>
+      </button>
+      <button role="button" class="btn btn-xs btn-link panel-refresh" [attr.disabled]="disableRemoveBtn" (click)="removeSelectedRow()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <grid-table [fieldGrid]="fieldGridDelivery" [height]="'200px'"
+              (callbackGrid)="callbackGridDelivery($event)"
+              (getParams)="getParams()"
+              (cellDoubleClicked)="agCellDoubleClicked($event)"
+              [groupMultiAutoColumn]="true"
+  ></grid-table>
+</div>
+<fleet-edit-grid-dlr #fleetEditGridDlr (close)="setFleetModalData($event)"></fleet-edit-grid-dlr>
+<fleet-edit-grid-tmv #fleetEditGridTmv (close)="setFleetModalData($event)"></fleet-edit-grid-tmv>

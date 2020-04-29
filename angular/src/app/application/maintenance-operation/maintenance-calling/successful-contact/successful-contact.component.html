@@ -1,0 +1,179 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <checkbox class="successful-mta-5" text="Liên hệ thành công" formControlName="isContactSuccessful"></checkbox>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">KM cập nhật</span>
+                  <input type="text" class="form-control" value="0" formControlName="updateKm">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <checkbox text="Không nhớ km" formControlName="forgetKm"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="87px">BD tiếp</span>
+                  <input type="text" class="form-control" value="0" formControlName="nextBD">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <checkbox text="Bán xe" formControlName="carSale"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <tmss-datepicker text="Từ ngày" formControlName="dateTime"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <checkbox text="Chuyển công tác" formControlName="transferWork"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <tmss-datepicker text="Ngày hẹn" formControlName="dateTime"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="dateTime"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="75px">CVDV</span>
+              <input type="text" class="form-control" formControlName="errorCVDV">
+            </div>
+          </div>
+          <div class="form-group">
+            <checkbox text="Khách hàng phàn nàn" formControlName="customersComplained"></checkbox>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">ND Cuộc gọi</span>
+              <input type="text" class="form-control" formControlName="callContent">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="88px">Ghi chú</span>
+              <input type="text" class="form-control" formControlName="isNote">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Liên hệ không thành công
+        </div>
+        <div class="panel-body">
+          <span class="ml-3"><u>Có nhấc máy</u></span>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Người khác nghe máy" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Yêu cầu gọi lại" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="SDT người khác" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Yêu cầu gửi thư" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <checkbox text="Yêu cầu không gọi lại" formControlName="checkCall"></checkbox>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Lý do khác" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <textarea class="form-control textarea-fix" rows="2" formControlName="checkCall"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <span class="ml-3"><u>Không nhấc máy</u></span>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Tín hiệu máy bận" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Không trả lời" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Sai số" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Tắt máy" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <checkbox text="Lý do khác" formControlName="checkCall"></checkbox>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <textarea class="form-control textarea-fix" rows="2" formControlName="checkCall"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

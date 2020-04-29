@@ -1,0 +1,69 @@
+<ng-container>
+  <div class="row">
+    <div class="col-xs-12 mb-3">
+      <button class="btn btn-blue mr-2" (click)="export()"><i class="fa fa-download"></i> Export</button>
+      <button class="btn btn-blue" (click)="saleFilter.open(filterFormCode.nationwideSellingList)"><i
+        class="fa fa-filter"></i> Filter
+      </button>
+    </div>
+  </div>
+  <div class="row header-form">
+    <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Region</span>
+          <select class="form-control" formControlName="regionId">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let region of regionList" [ngValue]="region.id">{{region.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Grade</span>
+          <multi-column-select-control formControlName="gradeControl"
+                                       displayField="marketingCode"
+                                       [fieldGrid]="fieldGradeList"
+                                       [apiCall]="getGrade.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Color</span>
+          <multi-column-select-control formControlName="colorControl" displayField="code"
+                                       [fieldGrid]="fieldColorList"
+                                       [apiCall]="getColor.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group search-group">
+          <div class="input-group">
+            <span class="input-group-addon">Quick Search</span>
+            <input type="text" class="form-control" placeholder="TMSS No, Frame No, VIN, Engine No, Key Code"
+                   formControlName="quickSearch">
+          </div>
+          <button type="button" class="btn btn-blue" (click)="search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Nationwide Selling List
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="search()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="nationwideSellFieldGrid" [height]="'450px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</ng-container>
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>

@@ -1,0 +1,18 @@
+.input-dv {
+  width: calc(100% - 12px)
+}
+
+.search-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 26px;
+  width: 12px;
+  background: #8080C0;
+  cursor: pointer;
+}
+
+input[readonly] {
+  background: #fff !important;
+  cursor: default !important;
+}

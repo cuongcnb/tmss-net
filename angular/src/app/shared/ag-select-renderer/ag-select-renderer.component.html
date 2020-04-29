@@ -1,0 +1,9 @@
+<form [formGroup]="selectForm">
+    <select class="form-control py-0" formControlName="select">
+      <option [ngValue]="null" *ngIf="!params.colDef?.required"></option>
+      <option *ngFor="let select of selectList" [ngValue]="select['key']">
+        {{select['value']}}
+      </option>
+    </select>
+
+</form>

@@ -1,0 +1,67 @@
+=
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>{{ selectedData ? 'Cập nhật' : 'Thêm mới' }}</strong></h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12" hasError="model">
+              <label class="required">Dòng xe</label>
+              <select class="form-control" formControlName="model">
+                <option value=""></option>
+<!--                <option *ngFor="let val of currencyList" [ngValue]="val.id">{{val.currencyCode}}</option>-->
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn dòng xe</div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-12" hasError="color">
+              <label class="required">Màu</label>
+              <select class="form-control" formControlName="color">
+                <option value=""></option>
+                <!--                <option *ngFor="let val of currencyList" [ngValue]="val.id">{{val.currencyCode}}</option>-->
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn màu</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group"  hasError="lineOffDate">
+                <label class="required">Ngày hết hạn</label>
+                <tmss-datepicker formControlName="lineOffDate"></tmss-datepicker>
+<!--                <div class="error-messages" errorMessage>-->
+<!--                  <div *ifError="'required'">Bạn chưa chọn ngày bắt đầu</div>-->
+<!--                </div>-->
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group"  hasError="saleDate">
+                <label class="required">Ngày bán</label>
+                <tmss-datepicker formControlName="saleDate"></tmss-datepicker>
+                                <div class="error-messages" errorMessage>
+                                  <div *ifError="'required'">Bạn chưa chọn ngày bán</div>
+                                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

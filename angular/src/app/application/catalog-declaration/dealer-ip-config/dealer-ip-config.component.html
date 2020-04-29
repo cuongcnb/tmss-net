@@ -1,0 +1,44 @@
+<div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Dealer</span>
+        <select class="form-control" [(ngModel)]="selectedDealerId">
+          <option value="">Tất cả</option>
+          <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-sm-2 mb-3">
+      <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Quản lý Dealer IP
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGridDealerIpConfig($event)"
+                (getParams)="getParamsDealerIpConfig()">
+    </grid-table>
+  </div>
+  <div class="text-right mt-3">
+    <button class="btn btn-blue mr-2" (click)="dealerIpConfigModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-light-grey mr-2" (click)="updateDealerIpConfig()">
+      <i class="fa fa-edit"></i> Sửa
+    </button>
+    <button class="btn btn-blue">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+</div>
+<dealer-ip-config-modal #dealerIpConfigModal (close)="refreshAfterUpdate($event)"></dealer-ip-config-modal>

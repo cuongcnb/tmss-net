@@ -1,0 +1,173 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Phiếu xuất phụ tùng</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin khách hàng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapsePartExportViewCusInfo" aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapsePartExportViewCusInfo" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Kiểu</span>
+                          <select type="text" class="form-control" formControlName="reqtype">
+                            <option *ngFor="let type of exportTypeArr" [ngValue]="type.key">{{type.value}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Số RO</span>
+                          <input type="text" class="form-control" formControlName="ro">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Khách hàng</span>
+                          <input type="text" class="form-control" formControlName="customerName">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Biển số xe</span>
+                          <input type="text" class="form-control" formControlName="plate">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Mã số thuế</span>
+                          <input type="text" class="form-control" formControlName="taxNo">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Model</span>
+                          <input type="text" class="form-control" formControlName="model">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">Địa chỉ</span>
+                          <input type="text" class="form-control" formControlName="address">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-addon-width">CVDV</span>
+                          <input type="text" class="form-control" formControlName="advisor">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <button role="button" class="btn btn-blue mr-2" (click)="printSlip()">In phiếu xuất</button>
+                      <button role="button" class="btn btn-blue" (click)="viewExportTimes()">Xem lần xuất</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin phụ tùng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapsePartExportViewPart" aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapsePartExportViewPart" class="panel-collapse collapse in">
+
+              <grid-table [fieldGrid]="fieldGrid" [height]="'300px'"
+                          (callbackGrid)="callBackGrid($event)"
+              ></grid-table>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row text-right">
+          <div class="col-md-9">
+            <div class="form-group">
+              Tổng tiền trước thuế:
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              {{totalPriceBeforeTax}}
+            </div>
+          </div>
+
+          <div class="col-md-9">
+            <div class="form-group">
+              Tổng tiền thuế:
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              {{taxOnly}}
+            </div>
+          </div>
+
+          <div class="col-md-9">
+            <div class="form-group">
+              Tổng tiền sau thuế:
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              {{totalPriceIncludeTax}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<parts-export-single-slip-modal #partsExportSingleSlipModal></parts-export-single-slip-modal>
+<part-select-print-format-modal #partSelectPrintFormatModal></part-select-print-format-modal>

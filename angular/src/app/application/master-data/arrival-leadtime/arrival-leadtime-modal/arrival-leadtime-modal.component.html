@@ -1,0 +1,115 @@
+<div class="modal fade" bsModal #arrivalLeadtimeModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Arrival Lead Time</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Arrival Lead Time</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="dealerFrom">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Transport From</label>
+                  <select formControlName="dealerFrom" class="form-control required" autoFocusField>
+                    <option value=""></option>
+                    <option *ngFor="let transportForm of transportFormList" [ngValue]="transportForm.name"
+                            [hidden]="transportForm.id==86">{{transportForm.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Transport From is required</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="toDealerId">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="70px">To Dealer</label>
+                  <select formControlName="toDealerId" class="form-control required">
+                    <option value=""></option>
+                    <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">To Dealer is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-6" hasError="transportationTypesId">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Transport Type</label>
+                  <select formControlName="transportationTypesId" class="form-control required">
+                    <option value="0"></option>
+                    <option *ngFor="let transportType of transportTypeList" value="{{transportType.id}}">
+                      {{transportType.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Transport Type is required</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-6" hasError="dayAmount">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="70px">Day</label>
+                  <input type="text" formControlName="dayAmount" class="form-control required">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Day is required</div>
+                  <div *ifError="'numberFormatAcceptZero'">Must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="timeAmount">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Time</label>
+                  <input type="text" formControlName="timeAmount" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Must be positive float number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="fromExceptionAmount">
+                <div class="input-group">
+                  <label class="input-group-addon">Exception 1</label>
+                  <input type="text" formControlName="fromExceptionAmount" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Must be positive float number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="toExceptionAmount">
+                <div class="input-group">
+                  <label class="input-group-addon">Exception 2</label>
+                  <input type="text" formControlName="toExceptionAmount" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'floatNumberFormat'">Must be positive float number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

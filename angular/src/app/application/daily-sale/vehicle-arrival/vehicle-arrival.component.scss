@@ -1,0 +1,21 @@
+::ng-deep .is-edited {
+  background: #ffdde1 !important;
+}
+::ng-deep .component-service {
+  max-width: 100% !important;
+}
+.header-form {
+  .col-lg-3 {
+    padding-right: 0;
+
+    &:last-child {
+      padding-right: 15px;
+    }
+  }
+
+  @media only screen and (max-width: 1199px) {
+    .col-lg-3 {
+      padding-right: 15px;
+    }
+  }
+}

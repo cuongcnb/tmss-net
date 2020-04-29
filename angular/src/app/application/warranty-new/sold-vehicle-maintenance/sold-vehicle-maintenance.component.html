@@ -1,0 +1,38 @@
+
+<ng-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Tỷ Giá
+    </div>
+    <div class="panel panel-body">
+      <grid-table
+        [overlayLoadingTemplate]="'Không có dữ liệu để hiển thị'"
+        [height]="'450px'"
+        [fieldGrid]="gridField"
+        [sizeColumnToHeaderWidth] = "true"
+        (callbackGrid)="callbackGrid($event)"
+        (getParams)="getParams()"
+        [frameworkComponents]="frameworkComponents"
+        (changePaginationParams)="changePaginationParams($event)"
+        [paginationTotalsData]="paginationTotalsData"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="mb-1 mt-3 grid-table-btn text-right">
+      <button class="btn btn-blue mr-2" (click)="updateModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" (click)="update()" [disabled]="!this.selectedData">
+        <i class="fa fa-edit"></i> Sửa
+      </button>
+      <button class="btn btn-blue mr-2" (click)="delete()" [disabled]="!this.selectedData">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+
+<update-sold-vehicle-maintenance-modal #updateModal [currencyList]="currencyList" (close)="refreshData()"></update-sold-vehicle-maintenance-modal>

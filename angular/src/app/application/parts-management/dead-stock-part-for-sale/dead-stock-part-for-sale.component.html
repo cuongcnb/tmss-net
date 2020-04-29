@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-pencil"></i>
+    Rao bán hàng Dead Stock
+  </div>
+  <grid-table [fieldGrid]="gridField"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [height]="'250px'"
+              (changePaginationParams)="changePaginationParams($event)"
+              [paginationTotalsData]="paginationTotalsData"
+  ></grid-table>
+  <div class="panel-footer">
+    <div class="text-right">
+      <button type="button" class="btn btn-sm btn-blue mr-2" (click)="saveDeadStockPart()"
+              [disabled]="!deadStockParts || !deadStockParts.length">
+        <i class="fa fa-plus"></i> Lưu
+      </button>
+      <button type="button" class="btn btn-sm btn-blue mr-2" (click)="findParts.open()">
+        <i class="fa fa-plus"></i> Thêm PT rao bán
+      </button>
+      <button type="button" class="btn btn-sm btn-blue" [disabled]="!partSelected" (click)="removePartDeadStockRow()">
+        <i class="fa fa-trash-o"></i> Xóa PT
+      </button>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-upload"></i> Import
+  </div>
+  <div class="panel-body">
+    <file-uploader acceptType=".csv"
+                   [apiCallUpload]="apiCallUpload.bind(this)"
+                   (responseUpload)="uploadSuccess($event)"
+                   (errorUpload)="uploadFail($event)"
+    ></file-uploader>
+
+    <div class="form-group">
+      <textarea rows="3" class="form-control"></textarea>
+    </div>
+  </div>
+</div>
+
+<search-data-grid-modal #findParts
+                        [headerText]="'Danh sách phụ tùng'"
+                        [fieldGrid]="partSearchGridField"
+                        [apiCall]="apiPartsCall.bind(this)"
+                        (close)="setPartsDataToRow($event)"
+></search-data-grid-modal>

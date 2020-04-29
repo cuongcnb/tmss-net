@@ -1,0 +1,71 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="resetModal()">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="title-header">Filter</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6 mb-3">
+              <select class="form-control" (change)="onSelectFilter()" [(ngModel)]="selectedFilter">
+                <option value=""></option>
+                <option *ngFor="let filter of savedFilters" [ngValue]="filter.id">{{filter.name}}</option>
+              </select>
+            </div>
+            <div class="col-sm-4 text-left">
+              <button class="btn btn-blue mr-2" [attr.disabled]="!displayedData.length ? true : null"
+                      (click)="saveAs()">Save as
+              </button>
+              <button class="btn btn-blue" (click)="deleteSavedFilter()">Delete</button>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-external-link-square"></i>
+              Filter Condition
+            </div>
+            <grid-table [fieldGrid]="fieldGrid"
+                        (callbackGrid)="callbackGrid($event)"
+                        [showPagination]="false"
+                        (cellDoubleClicked)="editRow($event)"
+                        (getParams)="getParams()" [overlayLoadingTemplate]="'Add search condition'"></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <!-- <div class="col-sm-6 text-left">
+            <button role="button" class="btn btn-blue" (click)="this.editFilterRowModal.open(filterFieldArr)">
+              <i class="fa fa-plus"></i> Add
+            </button>
+            <button role="button" class="btn btn-blue"
+                    [attr.disabled]="!selectedData ? true : null" (click)="removeSelectedRow()">
+              <i class="fa fa-trash-o"></i> Delete
+            </button>
+          </div> -->
+          <div class="col-sm-12 text-right">
+              <button role="button" class="btn btn-blue" (click)="this.editFilterRowModal.open(filterFieldArr)">
+                  <i class="fa fa-plus"></i> Add
+                </button>
+                <button role="button" class="btn btn-blue"
+                        [attr.disabled]="!selectedData ? true : null" (click)="removeSelectedRow()">
+                  <i class="fa fa-trash-o"></i> Delete
+                </button>
+            <button type="submit" class="btn btn-blue" (click)="startFilter()">
+              <i class="fa fa-save"></i> OK
+            </button>
+            <button type="button" class="btn btn-blue" (click)="resetModal();modal.hide()">
+              <i class="fa fa-times"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<save-sale-filter #saveSaleFilterModal (close)="getFieldsAndSavedFilters(caller)"></save-sale-filter>
+<edit-filter-row-modal #editFilterRowModal (close)="setDataToRow($event)"></edit-filter-row-modal>

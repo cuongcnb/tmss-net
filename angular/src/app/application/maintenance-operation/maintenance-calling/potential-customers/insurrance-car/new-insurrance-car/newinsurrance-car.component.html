@@ -1,0 +1,150 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Bảo hiểm
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin xe
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Model</span>
+                        <input type="text" class="form-control" formControlName="errorModel">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số vin</span>
+                        <input type="text" class="form-control" formControlName="errorVin">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">BKS</span>
+                        <input type="text" class="form-control" formControlName="licensePlates">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <infomation-share></infomation-share>
+
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Thông tin bảo hiểm
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Ngày hỏi mua" formControlName="dateTimeHM"
+                                       addonWidth="94px"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Ngày mua BH" formControlName="dateTimeM"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <tmss-datepicker text="Ngày hết hạn BH" formControlName="dateTimeHH"></tmss-datepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="94px">Loại hình BH</span>
+                        <select class="form-control" formControlName="insurranceType">
+                          <option>Loại hình bắt buộc</option>
+                          <option>Loại hình không bắt buộc</option>
+                          <option>Loại hình 1</option>
+                          <option>Loại hình 2</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="errorDislable">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon" addonWidth="94px">Công ty BH</span>
+                        <select class="form-control" formControlName="errorCompany">
+                          <option>Công ty 1</option>
+                          <option>Công ty 2</option>
+                          <option>Công ty 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="errorDislable">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Chi nhánh BH</span>
+                    <input type="text" class="form-control" formControlName="insuranceBranch">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="94px">Ghi chú</span>
+                    <input type="text" class="form-control" formControlName="errorNote">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 text-left">
+              <button type="button" class="btn btn-blue" (click)="save()">
+                <i class="clip-file-2 mr-2"></i>
+                Ghi lại
+              </button>
+            </div>
+            <div class="col-md-6 text-right">
+              <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+                <i class="fa fa-power-off mr-2"></i>
+                Quay ra
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,65 @@
+<ng-container>
+  <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-sm-4" hasError="fromDate">
+        <div class="form-group">
+          <tmss-datepicker-sale [addOnMinWidth]="'80px'" formControlName="fromDate" text="From Date"></tmss-datepicker-sale>
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">From date is required</div>
+        </div>
+      </div>
+
+      <div class="col-sm-4" hasError="toDate">
+        <div class="form-group">
+          <tmss-datepicker-sale [addOnMinWidth]="'80px'" formControlName="toDate" text="To Date"></tmss-datepicker-sale>
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">To date is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="input-group form-group">
+          <span class="input-group-addon min-width">Grade</span>
+          <multi-column-select-control formControlName="gradeControl"
+                                       displayField="marketingCode"
+                                       [fieldGrid]="fieldGradeList"
+                                       [list]="gradeList">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group form-group">
+          <span class="input-group-addon min-width">Color</span>
+          <multi-column-select-control formControlName="colorControl" displayField="code"
+                                       [fieldGrid]="fieldColorList"
+                                       [list]="colorList">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group search-group">
+          <div class="input-group">
+            <span class="input-group-addon min-width">Search Key</span>
+            <select class="form-control" formControlName="searchKey">
+              <option value="Latest line off date">Latest line off date</option>
+              <option value="Dispatch plan date">Dispatch plan date</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Searching Vehicle
+    </div>
+    <grid-table [fieldGrid]="searchingVehicleGridField" [isResizeColumnToHeaderWidth]="true"
+                (callbackGrid)="callbackGrid($event)" [overlayLoadingTemplate]="' '"></grid-table>
+  </div>
+</ng-container>

@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Hoạt động CR
+  </div>
+  <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form">
+    <div>
+      <h4 class="mt-2">Nhắc bảo dưỡng</h4>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="row">
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="121px">Ngày b/dưỡng</span>
+                <input type="text" class="form-control" formControlName="maintainDate">
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <checkbox formControlName="isMaintain"></checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="121px">Ngày gọi điện</span>
+            <input type="text" class="form-control" formControlName="callingDate">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="121px">Ngày gửi thư</span>
+            <input type="text" class="form-control" formControlName="mailingDate1">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="121px">Nội dung nhắc BD</span>
+            <input type="text" class="form-control" formControlName="maintainContent">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4>Chiến dịch</h4>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="121px">Ngày gửi thư</span>
+            <input type="text" class="form-control" formControlName="mailingDate2">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="121px">Nội dung chiến dịch</span>
+            <input type="text" class="form-control" formControlName="campaignContent">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

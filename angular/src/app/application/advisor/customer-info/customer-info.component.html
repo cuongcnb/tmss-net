@@ -1,0 +1,101 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" class="customer-info"
+  (keydown.enter)="$event.preventDefault()" focusField>
+  <div class="row">
+    <!-- <div class="col-sm-2">
+      <button type="button" class="btn btn-blue mr-2 mb-1" (click)="customerWaiting.open()">Xe chờ tiếp nhận</button>
+    </div> -->
+    <div class="col-sm-3">
+      <div class="form-group" hasError="registerNo">
+        <div class="input-group">
+          <span class="input-group-addon">Biển số xe</span>
+          <input-search [maxLength]="13" formControlName="registerNo" [focus]="firstFocus" (onSearch)="search()"
+            [isRequired]="true" (change)="verifyRegisterNo(form)" (onFocus)="onFocus()" fieldAccessor="input"
+            (keyup.enter)="KeyUpEnter()"></input-search>
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Bắt buộc nhập</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 pl-0 mr-0">
+      <div class="form-group" hasError="vinno">
+        <div class="input-group">
+          <span class="input-group-addon">Vinno</span>
+          <input-search [maxLength]="17" formControlName="vinno" [isRequired]="true" (onSearch)="search()"
+            (keyup.enter)="KeyUpEnter()" fieldAccessor="input"></input-search>
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Bắt buộc nhập</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 pl-0 mr-0">
+      <button type="button" class="btn btn-blue mr-2 mb-1" (click)="search()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+      <button type="button" class="btn btn-blue" (click)="clear()">
+        <i class="fa fa-refresh"></i> Làm mới
+      </button>
+      <span class="not-exist-campaign"
+        [ngClass]="{'not-exist-campaign': !isExistCampaign , 'exist-campaign': isExistCampaign}">Xe
+        trong chiến dịch</span>
+    </div>
+  </div>
+
+  <perfect-scrollbar class="ps pr-3" [style.max-height.px]="screenHeight" (window:resize)="onResize()">
+    <div class="row">
+      <div class="col-md-7">
+        <customer [isSubmit]="isSubmit" [form]="form"
+          [isOrder]="form.getRawValue().cusvsStatus === 3 || form.getRawValue().appointmentId"
+          (onSearch)="search(true)">
+        </customer>
+      </div>
+
+      <div class="col-md-5">
+        <vehicle [isSubmit]="isSubmit" [form]="form"></vehicle>
+      </div>
+    </div>
+    <button class="ghost" #submitBtn></button>
+
+    <customer-refer #customerReferComponent [isSubmit]="isSubmitRef" [data]="customerD" [form]="customerRef"></customer-refer>
+    <div class="row">
+      <div class="col-md-12">
+        <history [isSubmit]="isSubmit" [form]="historyForm"></history>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <active-cr [form]="activeCrForm"></active-cr>
+      </div>
+    </div>
+  </perfect-scrollbar>
+</form>
+<div class="fixed-bottom" style="text-align: right">
+  <button class="btn btn-blue m-1" (click)="repairHistoryOpenModal()" [disabled]="!form.get('vehiclesId').value">
+    Lịch sử sửa chữa
+  </button>
+  <button class="btn btn-blue m-1" (click)="book()"
+    [disabled]="!form.get('vehiclesId').value || !form.get('customerId').value ">
+    Đặt hẹn
+  </button>
+  <button class="btn btn-blue m-1" (click)="proposalEdit()"
+    [disabled]="(!(form.get('cusvsId').value && form.get('meetcus').value)) || (customerD.cusVisit && customerD.cusVisit.cusstate === 1)">
+    Báo giá
+  </button>
+  <button class="btn btn-blue m-1" (click)="openCarQueuingTicket()">
+    Phiếu khám xe
+  </button>
+  <span>
+    <button type="submit" class="btn btn-blue m-1" (click)="save()">
+      <i class="fa fa-save"></i> Lưu thông tin
+    </button>
+  </span>
+</div>
+
+<campaign-dlr [formCustomer]="form" [dataRegisterNo]="this.form.value.registerNo" #campaignDlr (required)="form.get('campId').setValue($event ? $event : null)"></campaign-dlr>
+<customer-waiting #customerWaiting (choose)="setCustomerWaiting({registerno: $event})"></customer-waiting>
+<repair-history #repairHistory></repair-history>
+<car-queuing-ticket #carQueuingTicket
+  (close)="form.patchValue({cusvsId:$event ? $event.id : null , meetcus: $event ? $event.meetcus : null}); customerD.cusVisit = $event">
+</car-queuing-ticket>
+<vehicle-search #vehicleSearch (change)="onChange($event)"></vehicle-search>

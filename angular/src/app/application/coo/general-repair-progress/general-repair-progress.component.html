@@ -1,0 +1,272 @@
+<ng-container>
+  <label class="mouse-time" [style.top.px]="positionTop - 100" [style.left.px]="positionLeft">&nbsp;</label>
+  <label *ngIf="showMouseTime" class="mouse-time" [style.top.px]="positionTop - 72" [style.left.px]="positionLeft">{{timeMouseXDisplay | date:'HH:mm'}}</label>
+  <form [formGroup]="form" novalidate focusField *ngIf="form">
+    <div class="row">
+      <div hasError>
+        <div class="col-md-3">
+          <div class="form-group" hasError="fromDateTime">
+            <tmss-datepicker text="Từ ngày" formControlName="fromDateTime" class="general-repair"
+            [className]="'check-invalid'"></tmss-datepicker>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+              <div *ngIf="submitSearch && form.errors && form.errors.compareTime" style="color: #dc3545;">Ngày bắt đầu phải nhỏ hơn ngày kết thúc</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="toDateTime">
+            <tmss-datepicker text="Đến ngày" formControlName="toDateTime" class="general-repair"
+            [className]="'check-invalid'"></tmss-datepicker>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+              <div *ngIf="submitSearch && form.errors && form.errors.compareTime" style="color: #dc3545;">Ngày bắt đầu phải nhỏ hơn ngày kết thúc</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1 pl-0 text-center">
+          <button class="btn btn-blue pt-3 pb-2" (click)="refreshSearch()"><i class="fa fa-search mb-1"> </i></button>
+        </div>
+      </div>
+      <div class="col-md-3 col-md-offset-2 ml-8-percent">
+        <div class="form-group general-repair" (keydown.enter)="$event.preventDefault()">
+          <div class="input-group">
+            <span class="input-group-addon" [addonWidth]="'75px'">Biển Số Xe</span>
+            <input-search formControlName="keyword" (onSearch)="searchByRegisterNo(form.value.keyword)"
+                          [isKeepFocus]="true"
+                          [placeholder]="'Nhập biển số xe'" ></input-search>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-blue text-search w-100" (click)="searchByRegisterNo(form.value.keyword)">Go to</button>
+      </div>
+    </div>
+<!--    <div class="row">-->
+<!--      -->
+<!--    </div>-->
+  </form>
+
+  <div class="row">
+    <div class="col-sm-6" style="width: 52%;">
+      <div class="panel panel-default state">
+<!--        <div class="panel-heading">-->
+<!--          <i class="fa fa-info"></i>-->
+<!--          Trạng thái-->
+<!--        </div>-->
+        <div class="panel-body">
+          <div class="float-left mr-2   quotation">Kế hoạch</div>
+          <div class="float-left mr-2   planning-vehicle">Chờ thực hiện</div>
+          <div class="float-left mr-2   fixing-vehicle">Đang thực hiện</div>
+          <div class="float-left mr-2   stopping-vehicle">Đang dừng</div>
+          <div class="float-left mr-2   delay-vehicle">Xe trễ</div>
+          <div class="float-left mr-2   complete-vehicle">Hoàn thành</div>
+          <div class="float-left mr-2   performed-vehicle">Đã thực hiện</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-sm-5">
+      <div class="panel panel-default number">
+<!--        <div class="panel-heading">-->
+<!--          <i class="fa fa-info"></i>-->
+<!--          Số lượng-->
+<!--        </div>-->
+        <div class="panel-body">
+          <div class="float-left mr-2   ">Đang thực hiện: {{getTotalStateCar(StateCount.performing)}}</div>
+          <div class="float-left mr-2   ">Đang dừng: {{getTotalStateCar(StateCount.stopping)}}</div>
+          <div class="float-left mr-2   ">Xe trễ: {{getTotalStateCar(StateCount.lateCar)}}</div>
+          <div class="float-left mr-2   ">Xe hẹn: {{getTotalStateCar(StateCount.appointment)}}</div>
+          <div class="float-left mr-2  ">* : Xe ưu tiên</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-2">
+      <div class="form-group general-repair">
+        <div class="input-group">
+          <span class="input-group-addon w-100">Reload (min)</span>
+          <select class="height-reload" [(ngModel)]="timeReload">
+            <option *ngFor="let time of listTimeReload" [ngValue]="time">{{time}}</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-sm-4 ml-2px">
+      <checkbox text="Hiển thị xe hoàn thành" textClassName="text-bold" [(ngModel)]="viewCompleteCar"
+        [labelWidth]="'155px'" (change)="showCompleteCar()"></checkbox>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <!--    <div class="panel-heading">-->
+    <!--      <i class="fa fa-info"></i>-->
+    <!--      Bảng tiến độ SCC-->
+
+    <!--      <div class="panel-tools">-->
+    <!--        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.hour"-->
+    <!--             (click)="changeViewType(ProgessViewType.minute)" placement="left" [tooltip]="'Hiển thị theo tiếng'">-->
+    <!--          <i class="fa fa-crosshairs"></i>-->
+    <!--        </div>-->
+
+    <!--        <div class="p-2 pointer" *ngIf="viewType === ProgessViewType.minute"-->
+    <!--             (click)="changeViewType(ProgessViewType.hour)" placement="left" [tooltip]="'Hiển thị theo phút'">-->
+    <!--          <i class="fa fa-bar-chart-o"></i>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <div class="panel-body">
+      <div class="progress-coo">
+<!--        <div class="panel-additional-info not-working-emp">-->
+<!--          <div class="header pt-4" id="noWrap">Danh sách KTV</div>-->
+<!--          <span class="body body-general-repair-employee d-block" dragula="general-repair-employee">-->
+<!--            <span class=" pointer d-block" *ngFor="let emp of notWorkingEmps" [id]="'' + emp.id"-->
+<!--                  [attr.data-empId]="emp.employeeId">{{emp.empName}}</span>-->
+<!--          </span>-->
+<!--        </div>-->
+
+        <div class="panel-additional-info waiting-vehicle scc-waiting-vehicle minWidth panel-additional-info-scc">
+          <div class="header pt-4" id="no">Xe chờ</div>
+          <div class="body body-scc-waiting-vehicle" dragula="scc-waiting-vehicle-bag">
+            <div class="vehicle-waiting-scc background" *ngFor="let vehicle of waitingVehicles" [id]="'' + vehicle.wpId"
+                 [ngClass]="[( arrayVehiclesSearch && arrayVehiclesSearch.includes(vehicle.registerno)) ? 'scc-focus-vehicle-wait' : ''  , vehicle.state === ProgressState.manualSuggest ? 'quotation' : '', vehicle.state === ProgressState.manualAppointment ? 'appointment' : '']"
+                 (dblclick)="pendingPlanModal.open(vehicle, shops)"
+                 (mouseenter)="displayTooltip(vehicle, 'waitingVehicleElem')"
+                 (mouseleave)="displayTooltip(null, 'waitingVehicleElem')"
+                 [contextMenuSubject]="vehicle"
+                 [contextMenu]="basicMenu"
+                 data-toggle="tooltip" data-placement="bottom" [title]="vehicle?.registerno">
+              {{vehicle?.registerno}} <i *ngIf="vehicle.state === ProgressState.manualSuggest || vehicle.state === ProgressState.manualAppointment"><img class="size-img" src="/assets/images/h.svg"/>
+            </i>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-table">
+          <div class="table-header">
+            <div class="shop"><span>Khoang</span></div>
+            <div class="emp"><span>KTV</span></div>
+            <div class="car_actual" title="Xe đang thực hiện"><span>Xe ĐTH</span></div>
+          </div>
+
+          <div class="table-body scc-tbody">
+            <div class="progress-area scc-left" [style.height.%]="100 * (shops.length + 1)">
+              <div [style.width.%]="100 * columns.length">
+                <div class="progress-overflow" id="style"
+                     [style.max-width.%]="100 / columns.length"
+                     [style.height.px]="progressOverflowHeight">
+
+                  <div class="progress-area-header">
+                    <ng-container *ngFor="let col of columns">
+                      <div class="d-inline-block">
+                        <div class="col-xs-12">{{col.day}}</div>
+                        <div class="col-xs-12">
+                          <span *ngFor="let data of col.workTimes"
+                                [style.width]="100 / col.workTimes.length+ '%'">
+                            {{data.minute === 0 ? data.hour : '|'}}
+                          </span>
+                        </div>
+                        <div class="seperate-line"
+                             [ngStyle]="{'height': 'calc(100% + ' + (43 * shops.length) + 'px)'}"></div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="tracking-line" [style.margin-left.%]="offsetLeft"
+                       [style.height.%]="100 * (shops.length + 1)" *ngIf="offsetLeft"></div>
+
+                  <div class="progress-area-body" [style.width.%]="100 * columns.length"
+                       (scroll)="onScroll($event, 'body-content')" (wheel)="currentScroll = 'progress-area-body'">
+                    <div class="scc-td" *ngFor="let shop of shops; let idx = index" dragula="pending-vehicle-bag"
+                         id="table"
+                         [attr.data-index]="idx" [attr.data-shopId]="shop.id">
+                      <div class="scc-progress-area" dragula="scc-waiting-vehicle-bag"
+                           [attr.data-index]="idx" [attr.data-shopId]="shop.id"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="body-content" (scroll)="onScroll($event, 'progress-area-body')"
+                 (wheel)="currentScroll = 'body-content'">
+              <div *ngFor="let shop of shops; let idx = index">
+                <div class="shop" data-toggle="tooltip" data-placement="bottom"
+                     [title]="shop.wsName">{{shop.wsCode}}</div>
+                <div class="emp row" [id]="'' + idx">
+                  <div *ngFor="let emp of shop.emps" [id]="'' + emp.id"
+                       [attr.data-empId]="emp.empId"
+                       data-toggle="tooltip" data-placement="bottom" [title]="emp.empName">
+                    <!--                    {{emp.empName}} &nbsp;-->
+                    <img [src]="emp.url" *ngIf="emp.url" class="img-responsive" >
+                    <div *ngIf="!emp.url" >{{emp.empName}}</div>
+                  </div>
+                </div>
+                <div class="car_actual" [title]="getCarActual(shop.cars_in_wshop)">{{ getCarActual(shop.cars_in_wshop)}}</div>
+                <div class="prg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-additional-info pending-vehicle col132 scc-right">
+          <div class="header pt-4">Danh sách xe dừng SC</div>
+          <div class="body">
+            <div [ngClass]="(vehicle.lateCar === 1)?'delay-vehicle non-hover-delay':'vehicle-pending-scc non-hover'" class="" *ngFor="let vehicle of pendingVehicles" [id]="'' + vehicle.wpId"
+                 [attr.data-shopid]="abc"
+                 (dblclick)="stoppedPlanModal.open(vehicle.wshopsPlanId, ProgressState.stopOutside, true, null, vehicle.id, vehicle.id)"
+                 (mouseenter)="displayTooltip(vehicle, 'pendingVehicleElem')"
+                 (mouseleave)="displayTooltip(null, 'pendingVehicleElem')">
+              {{vehicle?.registerno}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <repair-plan-modal
+      #repairPlanModal
+      (refreshList)="refreshSearch()"
+      (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></repair-plan-modal>
+
+  <stopped-plan-modal
+      #stoppedPlanModal
+      (refreshList)="refreshSearch()"
+      (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></stopped-plan-modal>
+
+  <pending-plan-modal
+      #pendingPlanModal
+      (refreshList)="refreshSearch()"
+      (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></pending-plan-modal>
+
+  <upcoming-collision-modal
+    #upcomingCollisionModal
+    (refreshList)="refreshSearch()"
+    (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></upcoming-collision-modal>
+
+  <continue-plan-modal
+      #continuePlanModal
+      (refreshList)="refreshSearch()"
+      (refreshRoNoPlanList)="refreshRoNoPlanList()"
+  ></continue-plan-modal>
+
+</ng-container>
+
+<tmss-tooltip [contentElem]="waitingVehicleElem" *ngIf="waitingVehicleElem">
+  Thời gian GXDK: {{vehicleChoosing?.toTimePlan | date:"dd/MM/yyyy HH:mm"}} <br/>
+  Tên người mang xe đến: {{vehicleChoosing?.name || vehicleChoosing?.carownername}}
+</tmss-tooltip>
+<tmss-tooltip [contentElem]="pendingVehicleElem" *ngIf="pendingVehicleElem">
+  Thời gian GXDK: {{vehicleChoosing?.toTimePlan | date:"dd/MM/yyyy HH:mm"}} <br/>
+  Tên người mang xe đến: {{vehicleChoosing?.name || vehicleChoosing?.carownername}}
+</tmss-tooltip>
+<!-- <context-menu>
+  <ng-template contextMenuItem let-vehicle (execute)="cancelSuggest($event.item)">
+    <span style="font-size: 11px !important;">Hủy dfd</span>
+  </ng-template>
+</context-menu> -->
+

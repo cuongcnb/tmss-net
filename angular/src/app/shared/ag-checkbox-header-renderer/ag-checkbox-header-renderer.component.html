@@ -1,0 +1,10 @@
+<span class="ag-header-select-all">
+  <span class="ag-selection-checkbox">
+    <!--<span class="ag-icon ag-icon-checkbox-checked ag-hidden"></span>-->
+    <label class="ag-icon" [ngClass]="params.checked? 'ag-icon-checkbox-checked' : 'ag-icon-checkbox-unchecked'">
+      <input type="checkbox" class="ghost"
+             (change)="changeValue($event.currentTarget.checked)" [checked]="params.checked">
+    </label>
+  </span>
+  <span ref="eCellValue" class="ag-cell-value"></span>
+</span>

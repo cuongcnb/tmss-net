@@ -1,0 +1,42 @@
+.form-group {
+  margin-bottom: 0px;
+}
+.panel {
+  margin-bottom: 0px;
+}
+::ng-deep .component-service {
+  max-width: 100% !important;
+}
+
+::ng-deep .ag-cell.top-row-span {
+  border-bottom: 0px !important;
+}
+
+::ng-deep .ag-cell.bottom-row-span {
+  border-top: 0px !important;
+  text-align: left !important;
+  text-indent: -100em; // you can use this to hide the content of the bottom cell
+}
+
+::ng-deep .cell-border {
+  border-right: 1px solid #d9dcde !important;
+  border-top: 1px solid #d9dcde !important;
+  border-bottom: none !important;
+  border-left: none !important;
+}
+
+::ng-deep .ag-theme-balham .ag-row {
+  border: none !important;
+}
+
+::ng-deep .align-right {
+  text-align: right;
+}
+
+::ng-deep .text-red {
+  color: red;
+}
+
+::ng-deep .ag-theme-balham .ag-row.ag-row-last {
+  border-bottom: 1px solid #d9dcde !important;
+}

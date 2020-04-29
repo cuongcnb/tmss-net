@@ -1,0 +1,68 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Điều kiện tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Đại lý</span>
+              <select class="form-control" formControlName="sortAgency">
+                <option>TGP-ND</option>
+                <option>THTL</option>
+                <option>TTG</option>
+                <option>THHC</option>
+                <option>THKC</option>
+                <option>TGP</option>
+                <option>TGP_PV</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" text="Ngày gọi từ"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDateTo" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Loại hình liên lạc</span>
+              <input class="form-control" formControlName="contactType">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="dateAppointment" text="Ngày đặt hẹn từ"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="dateAppointmentTo" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        <i class="fa fa-refresh"></i> Làm mới
+      </button>
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</form>
+

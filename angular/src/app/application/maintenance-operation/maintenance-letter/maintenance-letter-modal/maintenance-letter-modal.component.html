@@ -1,0 +1,80 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Lịch sử sửa chữa</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">Thông tin tìm kiếm</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group" hasError="vin">
+                      <div class="input-group">
+                        <span class="input-group-addon">Vin</span>
+                        <input readonly class="form-control" formControlName="vin">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group" hasError="checkup">
+                      <div class="input-group">
+                        <span class="input-group-addon">Biển kiểm soát</span>
+                        <input readonly class="form-control" formControlName="checkup">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group" hasError="dateOutCar">
+                      <div class="input-group">
+                        <span class="input-group-addon">Ngày ra xe từ</span>
+                        <input readonly class="form-control" formControlName="dateOutCar">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group" hasError="toDate">
+                      <div class="input-group">
+                        <span class="input-group-addon">Đến ngày</span>
+                        <input readonly class="form-control" formControlName="toDate">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <button class="btn btn-blue">
+                      <i class="fa fa-search"></i>
+                      Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">Thông tin lịch sử sửa chữa</div>
+              <grid-table [fieldGrid]="fieldGrid"
+                          (callbackGrid)="callbackGrid($event)"
+              >
+              </grid-table>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-file"></i> Xuất Excel
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

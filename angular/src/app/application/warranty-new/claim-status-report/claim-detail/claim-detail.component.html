@@ -1,0 +1,837 @@
+<div id="claimDetail">
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static',keyboard:false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content" >
+      <form [formGroup]="claimForm" *ngIf="claimForm" focusField>
+        <div class="modal-header">
+          <button type="button" class="close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"> TOYOTA WARRANTY CLAIM</h5>
+        </div>
+        <perfect-scrollbar class="ps">
+          <div class="modal-body">
+            <table>
+              <tbody>
+              <tr>
+                <td colspan="1">A0</td>
+                <td colspan="9">
+                  <div class="inline-block">
+                    Dist.Code
+                    <p>{{claimForm.get('distCode').value}}</p>
+<!--                    <input class="form-control" formControlName="distCode" readonly>-->
+                  </div>
+                  <div class="inline-block">
+                    TWC No
+                    <input class="form-control" formControlName="no" readonly>
+                  </div>
+                  <div class="inline-block w-10">
+                    SFX
+                    <input class="form-control" formControlName="sfx" readonly>
+                  </div>
+                  <div class="inline-block">
+                    Claimantcode
+                    <input class="form-control" formControlName="claimantcode" readonly>
+                  </div>
+                  <div class="inline-block">
+                    Invoice No.
+                    <input class="form-control" formControlName="invoiceNo" readonly>
+                  </div>
+                  <div class="inline-block w-30">
+                    Warranty Application Code
+                    <div class="inline-block w-100 no-border-right">
+                      <input class="form-control inline w-20" placeholder="1" readonly>
+                      <input class="form-control inline w-20" placeholder="2" readonly>
+                      <input class="form-control inline w-20" placeholder="3" readonly>
+                      <input class="form-control inline w-20" placeholder="4" readonly>
+                      <input class="form-control inline w-20" placeholder="5" readonly>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">A1</td>
+                <td colspan="9">
+                  <div class="inline-block w-10" hasError="dealerCode">
+                    Dealer Code
+                    <input class="form-control" formControlName="dealerCode"
+                           [attr.readonly]="!isTMV? true : null">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block w-30">
+                    Dealer Name
+                    <input class="form-control" formControlName="dealerName"
+                           readonly>
+
+                  </div>
+                  <div class="inline-block" hasError="dealerClaimNo">
+                    Dealer Claim No
+                    <input class="form-control" formControlName="dealerClaimNo"
+                           [attr.readonly]="!isTMV? true : null">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+
+                  <div class="inline-block">
+                    Process Flag
+                    <input class="form-control" formControlName="processFlag" readonly>
+                  </div>
+                  <div class="inline-block">
+                    Currency
+                    <input class="form-control" readonly formControlName="currencyLabel">
+                  </div>
+                  <div class="inline-block">
+                    USEMonth
+                    <input class="form-control" formControlName="monthAge" readonly>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">A2</td>
+                <td colspan="9">
+                  <div class="inline-block w-30">
+                    <div class="inline w-30"> W/T</div>
+                    <select class="form-control inline w-70" formControlName="warrantyType">
+                      <option value="VE">VE</option>
+                    </select>
+                  </div>
+                  <div class="inline-block w-40" hasError="franchise">
+                    <div class="inline w-20"> Franchise</div>
+                    <div class="inline w-30">
+                      <div class="inline-radio">
+                        <input type="radio" value="1" formControlName="franchise">
+                      </div>
+                      <strong>TOYOTA</strong>
+                    </div>
+                    <div class="inline w-30">
+                      <div class="inline-radio">
+                        <input type="radio" value="4" formControlName="franchise">
+                      </div>
+                      <strong>LEXUS</strong>
+                    </div>
+                    <div class="error-messages w-100" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block w-30" *ngIf="isTMV">
+                    <div class="inline">Vender</div>
+                    <select type="text" class="form-control inline" formControlName="venderCode">
+                      <option *ngFor="let vender of venderList" value="vender.vendercode">{{vender.vendernameeng}}
+                      </option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">A3</td>
+                <td colspan="9">
+                  <div class="inline-block w-5">
+                    <checkbox styleClass="no-margin" text="NV" formControlName="nvFlag"></checkbox>
+                    <checkbox styleClass="no-margin" text="FV" formControlName="fvFlag"></checkbox>
+                  </div>
+                  <div class="inline-block w-10" hasError="wmi">
+                    WMI
+                    <input class="form-control" formControlName="wmi"
+                           [attr.readonly]="!isTMV? true : null" maxlength="3">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block w-10" hasError="vds">
+                    VDS
+                    <input class="form-control" formControlName="vds"
+                           maxlength="6">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block w-5" hasError="cd">
+                    CD
+                    <input class="form-control" formControlName="cd"
+                           maxlength="1">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block w-10" hasError="vis">
+                    VIS
+                    <input class="form-control" formControlName="vis"
+                           [attr.readonly]="!isTMV? true : null" maxlength="8">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+
+                  <div class="inline-block a3-date" hasError="lineoffdate">
+                    Line Off Date
+                    <tmss-datepicker-mini *ngIf="isTMV"
+                                          className="claim-detail"
+                                          formControlName="deliveryDate"></tmss-datepicker-mini>
+                    <input *ngIf="!isTMV" type="text" class="form-control" formControlName="lineoffdate"
+                           [value]="formatDate(claimForm.get('lineoffdate').value)" readonly>
+                  </div>
+
+                  <div class="inline-block a3-date">
+                    Delivery Date
+                    <tmss-datepicker-mini *ngIf="isTMV"
+                                          className="claim-detail"
+                                          formControlName="deliveryDate"></tmss-datepicker-mini>
+                    <input *ngIf="!isTMV" type="text" class="form-control"
+                           [value]="formatDate(claimForm.get('deliveryDate').value)"
+                           readonly>
+                  </div>
+                  <div class="inline-block a3-date" hasError="repairDate">
+                    Repair Date
+                    <tmss-datepicker-mini *ngIf="isTMV"
+                                          className="claim-detail"
+                                          formControlName="repairDate"></tmss-datepicker-mini>
+                    <input *ngIf="!isTMV" type="text" class="form-control"
+                           [value]="formatDate(claimForm.get('repairDate').value)"
+                           readonly>
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+
+                  <div class="inline-block" hasError="odometer">
+                    Odometer
+                    <input class="form-control" formControlName="odometer"
+                           [attr.readonly]="!isTMV? true : null" maxlength="6">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block">
+                    K/m Flag
+                    <select class="form-control" formControlName="kmFlag">
+                      <option value="1">Km</option>
+                      <option value="2">Mile</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">A4</td>
+                <td colspan="9">
+                  <div class="inline-block w-40 order-block" hasError="orderno">
+                    Current Order No
+                    <input class="form-control inline-block" formControlName="orderno"
+                           [attr.readonly]="!isTMV? true : null">
+                    <button type="button" class="btn btn-blue" (click)="openRepairJobHistory()">...</button>
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+                  <div class="inline-block" *ngIf="!isTMV">
+                    Autho.
+                    <input class="form-control" formControlName="authoType">
+                  </div>
+                  <div class="inline-block " *ngIf="!isTMV">
+                    Autho. No
+                    <input class="form-control" formControlName="authoNo">
+                  </div>
+                  <div class="inline-block">
+                    DATA-ID
+                    <select type="text" class="form-control" formControlName="dataId">
+                      <option *ngFor="let dataId of dataIdList" [ngValue]="dataId.key">{{dataId.value}}</option>
+                    </select>
+                  </div>
+                  <div class="inline-block">
+                    T/C
+                    <select class="form-control" formControlName="tc">
+                      <option [ngValue]="tc.key" *ngFor="let tc of tcList">{{tc.value}}</option>
+                    </select>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">B1</td>
+                <td colspan="9">
+                  <labor #labor *ngIf="claim" [form]="claimForm" [isSubmit]="isSubmit" [claim]="claim"
+                         [sourceTable]="sourceTable" [isTMV]="isTMV" [payCodeList]="payCodeList"></labor>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">B2</td>
+                <td colspan="9">
+                  <div class="inline-block w-30 no-border-right bl-inline">
+                    LaborRate
+                  </div>
+                  <div class="inline-block">
+                    <input class="form-control inline" formControlName="flatRateDlr" readonly>
+                  </div>
+                  <div class="inline-block no-border-right bl-inline">
+                    Labor total
+                  </div>
+                  <div class="inline-block no-border-right">
+                    <input class="form-control inline w-100" formControlName="laborTotalHour" readonly>
+                  </div>
+                  <div class="inline-block padding-top-2">
+                    <warranty-amount-input formControlName="sumLaborSubTotal"
+                                           [isReadOnly]="true"></warranty-amount-input>
+                    <!--<input class="form-control inline w-100" formControlName="sumLaborSubTotal" readonly>-->
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">C1</td>
+                <td colspan="9">
+                  <sublet #sublet
+                          *ngIf="claim && subletTypeList"
+                          [form]="claimForm"
+                          [isSubmit]="isSubmit"
+                          [claim]="claim"
+                          [isTMV]="isTMV"
+                          [sourceTable]="sourceTable"
+                          [payCodeList]="payCodeList"
+                          [subletTypeList]="subletTypeList"
+                  ></sublet>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">C2</td>
+                <td colspan="9">
+                  <div class="inline-block w-75 no-border-right bl-inline text-left">
+                    Sublet Total
+                  </div>
+                  <div class="inline-block border-left padding-top-2">
+                    <warranty-amount-input formControlName="sumSubletSubTotal"
+                                           [isReadOnly]="true" [hideDecimal]="true"></warranty-amount-input>
+                    <!--<input class="form-control inline w-100" formControlName="sumSubletSubTotal" readonly>-->
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="action ==='adjust' && isTMV ;else d1Add">
+                <td colspan="1">D1</td>
+                <td colspan="9">
+                  <div class="inline-block w-100 pt-2">
+                    <div class="row">
+                      <div class="col-sm-2 text-left">
+                        <strong> Sublet Des.(DLR)</strong>
+                      </div>
+                      <div class="col-sm-4">
+                        <input class="form-control w-100" [value]="claim?.subletDesc" readonly>
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-4">
+                        <input class="form-control w-100" formControlName="subletDesc" maxlength="50">
+                      </div>
+                      <div class="col-sm-1">
+                        <strong>(DIST)</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 text-left">
+                        <strong> Condition (VN)</strong>
+                      </div>
+                      <div class="col-sm-4">
+                        <input class="form-control w-100" [value]="claim?.condition" readonly>
+                      </div>
+                      <div class="col-sm-1 btn-transport">
+                        <button class="btn btn-blue" (click)="convert()"><i class="fa clip-arrow-right-3"></i></button>
+                      </div>
+                      <div class="col-sm-4" hasError="condition">
+                        <input class="form-control w-100" formControlName="condition" maxlength="50">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <strong>(ENG)</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 text-left">
+                        <strong> Cause (VN)</strong>
+                      </div>
+                      <div class="col-sm-4">
+                        <input class="form-control w-100" [value]="claim?.cause" readonly>
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-4" hasError="cause">
+                        <input class="form-control w-100" formControlName="cause" maxlength="50">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <strong>(ENG)</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 text-left">
+                        <strong> Remedy (VN)</strong>
+                      </div>
+                      <div class="col-sm-4">
+                        <input class="form-control w-100" [value]="claim?.remedy" readonly>
+                      </div>
+                      <div class="col-sm-1"></div>
+                      <div class="col-sm-4" hasError="remedy">
+                        <input class="form-control w-100" formControlName="remedy" maxlength="50">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <strong>(ENG)</strong>
+                      </div>
+                    </div>
+                    <div class="row" hasError="dlrComment">
+                      <div class="col-sm-2 text-left">
+                        Dealer Comment
+                      </div>
+                      <div class="col-sm-9">
+                        <input class="form-control" formControlName="dlrComment">
+                      </div>
+                      <div class="col-sm-1">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" hasError="distComment">
+                      <div class="col-sm-2 text-left">
+                        Dist's comment to Dealer
+                      </div>
+                      <div class="col-sm-9">
+                        <input class="form-control" formControlName="distComment">
+                      </div>
+                      <div class="col-sm-1">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-2 text-left">
+                        Dist's comment to Vendor
+                      </div>
+                      <div class="col-sm-9">
+                        <input class="form-control">
+                      </div>
+                      <div class="col sm-1">
+
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <ng-template #d1Add>
+                <tr>
+                  <td colspan="1">D1</td>
+                  <td colspan="9">
+                    <div hasError="subletDesc">
+                      <div class="inline-block no-border-right bl-inline text-left">
+                        Sublet Desc
+                      </div>
+                      <div class="inline-block w-75">
+                        <input class="form-control inline w-100" formControlName="subletDesc">
+                      </div>
+                      <div class="inline-block w-10">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div hasError="condition">
+                      <div class="inline-block no-border-right bl-inline text-left">
+                        Condition
+                      </div>
+                      <div class="inline-block w-75 ">
+                        <input class="form-control inline w-100" formControlName="condition">
+                      </div>
+                      <div class="inline-block w-10">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div hasError="cause">
+                      <div class="inline-block no-border-right bl-inline text-left">
+                        Cause
+                      </div>
+                      <div class="inline-block w-75">
+                        <input class="form-control inline w-100" formControlName="cause">
+                      </div>
+                      <div class="inline-block w-10">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div hasError="remedy">
+                      <div class="inline-block no-border-right bl-inline text-left">
+                        Remedy
+                      </div>
+                      <div class="inline-block w-75">
+                        <input class="form-control inline w-100" formControlName="remedy">
+                      </div>
+                      <div class="inline-block w-10">
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc</div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <tr>
+                <td colspan="1">E1</td>
+                <td colspan="9">
+                  <t-code #tCode
+                          *ngIf="claim && t1CodeList && t2CodeList && t3CodeList"
+                          [form]="claimForm"
+                          [isSubmit]="isSubmit"
+                          [claim]="claim"
+                          [t1Code]="t1CodeList"
+                          [t2Code]="t2CodeList"
+                          [t3Code]="t3CodeList"
+                  ></t-code>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">F1</td>
+                <td colspan="9">
+                  <parts *ngIf="claim" #parts [form]="claimForm" [isSubmit]="isSubmit" [claim]="claim"
+                         [isTMV]="isTMV"
+                         [sourceTable]="sourceTable" [payCodeList]="payCodeList"></parts>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">F2</td>
+                <td colspan="9">
+                  <div class="inline-block">
+                    Local
+                    <input class="form-control" formControlName="ofpLocalFlag" readonly>
+                  </div>
+
+                  <div class="inline-block w-40" hasError="ofpNo">
+                    O.F.P No
+                    <input class="form-control" formControlName="ofpNo" maxlength="15" (change)="onSearchChange()">
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Bắt buộc</div>
+                    </div>
+                  </div>
+
+                  <div class="inline-block">
+                    LOT Code
+                    <input class="form-control" formControlName="lotCode" [readOnly]="isTMV">
+                  </div>
+
+                  <div class="inline-block w-20">
+                    Parts Sub-total
+                    <warranty-amount-input formControlName="sumPartsSubTotal"
+                                           [hideDecimal]="true"
+                                           [showThousandOnly]="false"
+                                           [isReadOnly]="true"></warranty-amount-input>
+                    <!--<input class="form-control" formControlName="sumPartsSubTotal" readonly>-->
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!(isTMV && action === 'adjust')">
+                <td colspan="1">F3</td>
+                <td colspan="9">
+                  <div class="inline-block no-border-right text-right w-10 bl-inline">
+                    P.W.R
+                  </div>
+                  <div class="inline-block ">
+                    <input class="form-control inline w-100" formControlName="pwrDlr" readonly>
+                  </div>
+                  <div class="inline-block no-border-right w-10 bl-inline">
+                    <strong>Dealer</strong>
+                  </div>
+                  <div class="inline-block ">
+                    <input class="form-control inline w-100" formControlName="prrDlr" readonly>
+                  </div>
+                  <div class="inline-block w-10 bl-inline">
+                    <strong>DIST</strong>
+                  </div>
+                  <div class="inline-block no-border-right bl-inline">
+                    Parts Total
+                  </div>
+                  <div class="inline-block">
+                    <warranty-amount-input formControlName="partsTotal"
+                                           [showThousandOnly]="false"
+                                           [hideDecimal]="true"
+                                           [isReadOnly]="true"></warranty-amount-input>
+                    <!--<input class="form-control inline w-100" formControlName="partsTotal" readonly>-->
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="isTMV && action === 'adjust'">
+                <td colspan="1">F3</td>
+                <td colspan="9">
+                  <div class="inline-block text-right w-10 bl-inline">
+                    P.W.R/P.R.R
+                  </div>
+                  <div class="inline-block no-border-right w-10 bl-inline">
+                    P.W.R1
+                  </div>
+                  <div class="inline-block w-15">
+                    <input class="form-control inline w-100" formControlName="pwr1" readonly>
+                  </div>
+                  <div class="inline-block w-10 bl-inline">
+                    P.W.R2
+                  </div>
+                  <div class="inline-block w-15">
+                    <input class="form-control inline w-100" formControlName="pwr2" readonly>
+                  </div>
+                  <div class="inline-block no-border-right bl-inline">
+                    Parts Total
+                  </div>
+                  <div class="inline-block">
+                    <warranty-amount-input formControlName="partsTotal" [showThousandOnly]="false"
+                                           [isReadOnly]="true" [hideDecimal]="true"></warranty-amount-input>
+                    <!--<input class="form-control inline w-100" formControlName="partsTotal">-->
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1">G1</td>
+                <td colspan="9">
+                  <div class="inline-block w-75 no-border-right lb-inline vertical-middle">
+                    <strong>Total Claim Amount</strong>
+                  </div>
+                  <div class="inline-block no-border-right vertical-middle">
+                    <warranty-amount-input formControlName="total" [hideDecimal]="true"
+                                           [isReadOnly]="true" [showThousandOnly]="false"></warranty-amount-input>
+                    <!--<input class="form-control inline w-100 " formControlName="total" readonly>-->
+                  </div>
+                  <div class="inline-block w-10 border-left" *ngIf="isTMV && action!=='adjust'">
+                    SW104 Date
+                    <input class="form-control inline w-100" readonly>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!isTMV">
+                <td colspan="1">G2</td>
+                <td colspan="9">
+                  <div id="printFrontSizeDealer" class="inline-block  no-border-right bl-inline">
+                    Dealer's Comment
+                  </div>
+                  <div class="inline-block w-75">
+                    <input class="form-control inline w-100" formControlName="dlrComment">
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="isTMV && action!=='adjust'">
+                <td colspan="1">G2</td>
+                <td colspan="9">
+                  <div class="inline-block  no-border-right bl-inline w-20">
+                    Dist's comment to Vendor
+                  </div>
+                  <div class="inline-block w-70">
+                    <input class="form-control inline w-100" formControlName="distComment" maxlength="50">
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!isTMV">
+                <td colspan="1">H1</td>
+                <td colspan="9">
+                  <div class="inline-block w-30">
+                    <ng-container formGroupName="state">
+                      <div class="w-100">Dist's Claim Adjustment</div>
+                      <div class="inline w-25">
+
+                        <div class="inline-radio">
+                          <input type="radio" value="1" formControlName="stateValue">
+                        </div>
+                        <strong>AP</strong>
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="3" formControlName="stateValue">
+                        </div>
+                        <strong>DE</strong>
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="4" formControlName="stateValue">
+                        </div>
+                        <strong>RE</strong>
+
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="2" formControlName="stateValue">
+                        </div>
+                        <strong>AD</strong>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="inline-block">
+                    Labor(%)
+                    <input class="form-control" readonly formControlName="laborAdj">
+                  </div>
+                  <div class="inline-block">
+                    Sublet(%)
+                    <input class="form-control" readonly formControlName="subletAdj">
+                  </div>
+                  <div class="inline-block">
+                    Part(%)
+                    <input class="form-control" readonly formControlName="partsAdj">
+                  </div>
+                  <div class="inline-block w-25">
+                    Reason Code
+                    <!--<input class="form-control" formControlName="reasonCode" readonly>-->
+                    <input class="form-control" [value]="claimForm.get('reasonCode').value" readonly>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="isTMV ">
+                <td colspan="1">H1</td>
+                <td colspan="9">
+                  <div class="inline-block w-30" *ngIf="action!='adjust'">
+                    <ng-container formGroupName="tmvState">
+                      <div class="w-100">Vender's Claim Adjustment</div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="1" formControlName="stateValue">
+                        </div>
+                        <strong>AP</strong>
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="3" formControlName="stateValue">
+                        </div>
+                        <strong>DE</strong>
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="4" formControlName="stateValue">
+                        </div>
+                        <strong>RE</strong>
+                      </div>
+                      <div class="inline w-25">
+                        <div class="inline-radio">
+                          <input type="radio" value="2" formControlName="stateValue">
+                        </div>
+                        <strong>AD</strong>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="inline-block">
+                    Labor(%)
+                    <input class="form-control" formControlName="laborAdj">
+                    <div class="error-messages">
+                      <div *ngIf="isCheckAdj">Giá trị phải nhơ hơn 100</div>
+                      <div *ngIf="isCheckAccept">Giá trị phải bằng 100</div>
+                    </div>
+                  </div>
+                  <div class="inline-block">
+                    Sublet(%)
+                    <input class="form-control" formControlName="subletAdj">
+                    <div class="error-messages">
+                      <div *ngIf="isCheckAdj">Giá trị phải nhơ hơn 100</div>
+                      <div *ngIf="isCheckAccept">Giá trị phải bằng 100</div>
+                    </div>
+                  </div>
+                  <div class="inline-block">
+                    Part(%)
+                    <input class="form-control" formControlName="partsAdj">
+                    <div class="error-messages">
+                      <div *ngIf="isCheckAdj">Giá trị phải nhơ hơn 100</div>
+                      <div *ngIf="isCheckAccept">Giá trị phải bằng 100</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!isTMV">
+                <td colspan="1">J1</td>
+                <td colspan="9">
+                  <div id="printFrontSizeDist" class="inline-block no-border-right bl-inline">
+                    Dist's Comment
+                  </div>
+                  <div class="inline-block w-70">
+                    <input class="form-control inline w-100" formControlName="distComment" readonly>
+                  </div>
+                  <div class="inline-block">
+                    Dist. Signature
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="isTMV && action!=='adjust'">
+                <td colspan="1">J1</td>
+                <td colspan="9">
+                  <div class="inline-block no-border-right bl-inline w-20">
+                    Vender's comment to Dist
+                  </div>
+                  <div class="inline-block w-70">
+                    <input class="form-control inline w-100" maxlength="50" readonly>
+                  </div>
+                  <div class="inline-block w-10">
+                    Dist. Signature
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="row mt-3">
+            <div class="col-sm-12 text-left">
+
+            </div>
+          </div>
+          <div class="row" *ngIf="action==='adjust'">
+            <div class=" col-sm-offset-10 col-sm-2 text-left">
+              <checkbox text="Claim To Vender"
+                        formControlName="ckClaimToVenderCtl"></checkbox>
+            </div>
+          </div>
+          <div class="row text-right">
+            <!--<div class="col-sm-6 text-right" *ngIf="action==='adjust';else actionFooter;">-->
+            <!-- <div [className]="isTMV ? 'col-sm-6': ''"> -->
+            <div>
+              <ng-container *ngIf="action !== 'adjust'">
+                <button type="submit" class="btn btn-blue mr-2" (click)="refresh()">
+                  <i class="fa fa-refresh"></i> Kiểm tra lỗi
+                </button>
+                <button type="button" class="btn btn-blue mr-2" [disabled]="sourceTable==='STWC'" (click)="save()">
+                  <i class="fa fa-save"></i> Lưu
+                </button>
+                <button type="button" class="btn btn-blue mr-2" (click)="submit()">
+                  <i class="fa fa-share"></i> Submit
+                </button>
+                <button type="button" class="btn btn-blue mr-2" (click)="print()">
+                  <i class="fa fa-print"></i> Print
+                </button>
+              </ng-container>
+            </div>
+
+            <div class="col-sm-6" *ngIf="isTMV && action === 'adjust'">
+              <button class="btn btn-blue mr-2" (click)="accept()" [disabled]="action !== 'adjust'">
+                <i class="fa fa-check-square-o"></i> Chấp nhận
+              </button>
+              <button class="btn btn-blue mr-2" (click)="addReasonCode('return')" [disabled]="action !== 'adjust'">
+                <i class="fa fa-mail-reply"></i> Trả về
+              </button>
+              <button class="btn btn-blue mr-2" (click)="addReasonCode('deny')" [disabled]="action !== 'adjust'">
+                <i class="fa fa-minus-square-o"></i> Từ chối
+              </button>
+              <button class="btn btn-blue mr-2" (click)="adjust()" [disabled]="action !== 'adjust'">
+                <i class="fa fa-pencil-square-o"></i> Điều chỉnh
+              </button>
+              <button class="btn btn-blue mr-2" (click)="backClaim()">
+                <i class="fa fa-backward"></i> Back
+              </button>
+              <span *ngIf = "this.claim">{{this.claim.currentRecord}} / {{this.claim.totalRecord}}</span>
+              <button class="btn btn-blue mr-2" (click)="nextClaim()">
+                <i class="fa fa-forward"></i> Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<reason-code #reasonCode (close)="setErrorCodeDataToRow($event)"></reason-code>
+<repair-job-history #repairJobHistoryModal></repair-job-history>
+</div>

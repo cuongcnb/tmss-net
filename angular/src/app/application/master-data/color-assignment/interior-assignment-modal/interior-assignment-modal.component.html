@@ -1,0 +1,75 @@
+<div class="modal fade" bsModal #interiorAssignmentModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Color</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Color</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="colorId">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="80px">Color</label>
+                <select formControlName="colorId" class="required form-control" [compareWith]="compareFn"
+                        autoFocusField>
+                  <select value=""></select>
+                  <option *ngFor="let color of colors" [ngValue]="color.id">{{color.code}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Color is required</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="80px">VN Name</label>
+                <input formControlName="vnName" class="form-control">
+              </div>
+            </div>
+            <div class="form-group" hasError="ordering">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="80px">Ordering</label>
+                <input type="text" formControlName="ordering" class="form-control">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberFormat'">Ordering must be a number</div>
+                <div *ifError="'maxLength'">Max length is 4</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="80px">Status</label>
+                <select formControlName="status" class="form-control">
+                  <option value="Y">Enabled</option>
+                  <option value="N">Disabled</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" hasError="description">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="80px">Description</label>
+                <textarea rows="3" class="form-control resize-vertical" formControlName="description"></textarea>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Max length is 255</div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

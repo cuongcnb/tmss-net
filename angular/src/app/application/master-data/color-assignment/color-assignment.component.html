@@ -1,0 +1,88 @@
+<div pageTitle="Color Assignment Management">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Grade Production
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGradeProductionList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="gradeGridField"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridGradeProductions($event)"
+                  (getParams)="getParamsGradeProduction($event)"
+                  overlayLoadingTemplate="Please choose a grade to show color"
+      ></grid-table>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Color Assignment
+            <div class="panel-tools">
+              <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshColorAssignmentList()">
+                <i class="fa fa-refresh"></i>
+              </button>
+            </div>
+          </div>
+          <grid-table [enableFilter]="true" [fieldGrid]="colorAssignmentGridField"
+                      [showPagination]="false"
+                      (callbackGrid)="callbackGridColorAssignment($event)"
+                      (getParams)="getParamsColorAssignment($event)"
+                      overlayLoadingTemplate="Please choose a grade to show color">
+          </grid-table>
+          <div class="panel-footer text-right">
+            <button class="btn btn-blue mr-2" (click)="addColor('assignment')">
+              <i class="fa fa-plus"></i> Add
+            </button>
+            <button class="btn btn-blue mr-2" (click)="updateColorAssignment()">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button class="btn btn-blue" [disabled]="!selectedColorAssignment"
+                    (click)="deleteColorAssigment()">
+              <i class="fa fa-trash-o"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Interior Color Assignment
+            <div class="panel-tools">
+              <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshColorInteriorList()">
+                <i class="fa fa-refresh"></i>
+              </button>
+            </div>
+          </div>
+          <grid-table [enableFilter]="true" [fieldGrid]="interiorGridField"
+                      [showPagination]="false"
+                      (callbackGrid)="callbackGridInteriorColor($event)"
+                      (getParams)="getParamsInteriorColor($event)"
+                      overlayLoadingTemplate="Please choose a grade to show color">
+          </grid-table>
+          <div class="panel-footer text-right">
+            <button class="btn btn-blue mr-2" (click)="addColor('interior')">
+              <i class="fa fa-plus"></i> Add
+            </button>
+            <button class="btn btn-blue mr-2" (click)="updateColorInterior()">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button class="btn btn-blue" [disabled]="!selectedInterior"
+                    (click)="deleteColorInterior()">
+              <i class="fa fa-trash-o"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<color-assignment-modal #colorAssignmentModal (close)="refreshColorAssignmentList()"></color-assignment-modal>
+<interior-assignment-modal #colorInteriorModal (close)="refreshColorInteriorList()"></interior-assignment-modal>

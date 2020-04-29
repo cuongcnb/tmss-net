@@ -1,0 +1,221 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="refresh()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết ý kiến không hài lòng / Khiếu nại [Thêm mới]</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <!--<ul class="nav nav-tabs tab-space-3 tab-blue">-->
+          <!--<li *ngFor="let item of tabs"-->
+          <!--[class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">-->
+          <!--<a data-toggle="tab" class="tab-item text-capitalize">-->
+          <!--{{item}}-->
+          <!--</a>-->
+          <!--</li>-->
+          <!--</ul>-->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Thông tin về khiếu nại
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Ngày tạo</span>
+                      <select class="form-control" formControlName="dayCreate"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Đại lí giải quyết khiếu nại</span>
+                      <select class="form-control" formControlName="agency"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <checkbox text="Yêu cầu tham gia" formControlName="check"></checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Ngày tiếp nhận</span>
+                      <select class="form-control" formControlName="dayReceive"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Đại lí làm dịch vụ</span>
+                      <select class="form-control" formControlName="agency"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Ngày gửi => TMV</span>
+                      <select class="form-control" formControlName="daySend"></select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Nguồn tiếp nhận</span>
+                      <select class="form-control" formControlName="sourceReceipt"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Trạng thái</span>
+                      <select class="form-control" formControlName="status"></select>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <form class="row" *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Thông tin khách hàng
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Người liên hệ</span>
+                        <input type="text" class="form-control" formControlName="nameContact">
+                      </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Tên chủ xe</span>
+                        <input type="text" class="form-control" formControlName="carownerName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số điện thoại</span>
+                        <input type="text" class="form-control" formControlName="phoneNumber">
+                      </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <checkbox text="KH đặc biệt"></checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">Địa chỉ</span>
+                      <input type="text" class="form-control" formControlName="address">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Thông tin xe
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Loại xe</span>
+                        <input type="text" class="form-control" formControlName="typeCar">
+                      </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Số km</span>
+                        <input type="text" class="form-control" formControlName="sumKm">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">VIN</span>
+                        <input type="text" class="form-control" formControlName="vinNo">
+                      </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Biển số</span>
+                        <input type="text" class="form-control" formControlName="licensePlate">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">CVDV</span>
+                        <input type="text" class="form-control" formControlName="serviceAdvisor">
+                      </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">KTV</span>
+                        <input type="text" class="form-control" formControlName="techniciansName">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Khiếu nại - Yêu cầu
+            </div>
+            <grid-table [fieldGrid]="experience"
+                        [height]="'150px'"
+                        [showPagination]="false"
+            ></grid-table>
+            <div class="panel-footer">
+              <button class="btn btn-blue" (click)="addRequest.open()"><i class="fa fa-plus"> Thêm yêu cầu</i>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Các thông tin cần thiết
+            </div>
+            <grid-table [fieldGrid]="fieldGrid"
+                        [showPagination]="false"
+                        [height]="'150px'"
+            ></grid-table>
+            <div class="panel-footer">
+              <button class="btn btn-blue" (click)="addInfo.open()"><i class="fa fa-plus"> Thêm thông tin</i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue mr-4">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+        <button class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<add-request #addRequest (close)="save($event)"></add-request>
+<add-info #addInfo (close)="refresh()"></add-info>

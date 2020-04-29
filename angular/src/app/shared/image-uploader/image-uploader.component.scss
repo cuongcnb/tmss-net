@@ -1,0 +1,48 @@
+.btn-upload {
+  font: 400 15px 'Roboto', Arial, Helvetica, sans-serif !important;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-upload:after {
+  content: "\f093";
+  font-family: FontAwesome;
+  color: #fff;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -100%;
+  text-align: center;
+  line-height: 30px;
+  left: 0;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  transition: all 0.15s;
+}
+
+.btn-upload span {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 0.15s;
+  -webkit-backface-visibility: hidden;
+  -moz-transition: all 0.15s;
+  -moz-backface-visibility: hidden;
+  transition: all 0.15s;
+  backface-visibility: hidden;
+}
+
+.btn-upload:hover:after {
+  top: 0;
+}
+
+.btn-upload:hover span {
+  -webkit-transform: translateY(300%);
+  -moz-transform: translateY(300%);
+  -ms-transform: translateY(300%);
+  transform: translateY(300%);
+}

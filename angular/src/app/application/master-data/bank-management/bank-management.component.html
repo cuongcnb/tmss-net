@@ -1,0 +1,33 @@
+<div pageTitle="Bank Management List">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Bank Management List
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridBank($event)"
+                  (getParams)="getParamsBank()"
+                  [showPagination]="false"
+                  [height]="'450px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button type="button" class="btn btn-blue mr-2" (click)="bankManagementModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button type="button" class="btn btn-blue mr-2" (click)="updateBank()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button type="button" [disabled]="!selectedBank" class="btn btn-blue" (click)="deleteBank()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<bank-management-modal #bankManagementModal (close)="refreshList()"></bank-management-modal>

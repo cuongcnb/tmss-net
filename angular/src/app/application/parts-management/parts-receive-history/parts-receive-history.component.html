@@ -1,0 +1,107 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartReceiveHistorySearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartReceiveHistorySearch" class="panel-collapse collapse in">
+
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Số phiếu giao hàng</span>
+                    <input class="form-control" formControlName="voucherNo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <tmss-datepicker formControlName="fromDate" [text]="'Từ ngày'"></tmss-datepicker>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <tmss-datepicker formControlName="toDate" [text]="'Đến ngày'"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartReceiveHistoryOrder" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartReceiveHistoryOrder" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="fieldGridOrder" [height]="'200px'"
+                (callbackGrid)="callbackGridOrder($event)"
+                (getParams)="getParamsOrder()"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Chi tiết
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartReceiveHistoryDetail" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartReceiveHistoryDetail" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridParts" [height]="'300px'" [showPagination]="false"
+                (callbackGrid)="callbackGridParts($event)"></grid-table>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-4">
+          <div class="row text-right">
+            <div class="col-sm-4">
+              <div class="form-group">
+                Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                + Thuế: <strong>{{taxOnly}}</strong>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

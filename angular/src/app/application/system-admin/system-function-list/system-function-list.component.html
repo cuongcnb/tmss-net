@@ -1,0 +1,62 @@
+<div>
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh Sách Menu
+    </div>
+    <grid-table [fieldGrid]="menuGridField"
+                [enableFilter]="true"
+                (callbackGrid)="callbackGridMenu($event)"
+                (getParams)="getParamsMenu()"></grid-table>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-blue mr-2" (click)="modifyMenuModal.open([])">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" [disabled]="!selectedMenu || ([null, -1, -2].includes(this.selectedMenu.dealerId) && this.currentUser.dealerId > 0)" (click)="updateMenu()">
+      <i class="fa fa-edit"></i> Sửa
+    </button>
+  </div>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh Sách Chức Năng
+    </div>
+    <grid-table [fieldGrid]="fieldGridSystemFunction"
+                [enableFilter]="true"
+                (callbackGrid)="callbackGridSystemFunction($event)"
+                (getParams)="getParamsSystemFunction()"
+    ></grid-table>
+  </div>
+  <div class="my-3">
+    <span class="float-right">
+        <button type="submit" class="btn btn-blue mr-2" [disabled]="selectedMenu && currentUser.dealerId > 0 && selectedMenu.dealerId !== currentUser.dealerId"  (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+      <button type="button" class="btn btn-blue mr-2" [disabled]="selectedMenu && currentUser.dealerId > 0 && selectedMenu.dealerId !== currentUser.dealerId" (click)="addFunction()">
+        <i class="fa fa-plus"></i> Thêm Chức Năng
+      </button>
+      <button type="button" class="btn btn-blue" (click)="removeSelectedFunction()"
+              [disabled]="!selectedSystemFunction">
+        <i class="fa fa-trash-o"></i> Xóa Chức Năng
+      </button>
+    </span>
+  </div>
+
+</div>
+<add-system-fucntion-list-modal #addSystemFucntionListModal (close)="setFunctionToGrid($event)"></add-system-fucntion-list-modal>
+<modify-menu-modal #modifyMenuModal (close)="refreshList()"></modify-menu-modal>
+<swal #forceSelectData
+      title="Select a row!!!"
+      text="Bạn chưa chọn dòng."
+      type="warning"
+></swal>
+
+<swal #forceSelectMenu
+      title="Select a Menu to add Function"
+      text="Bạn chưa chọn menu để thêm chức năng"
+      type="warning"
+></swal>
+
+

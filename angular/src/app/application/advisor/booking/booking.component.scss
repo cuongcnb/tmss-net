@@ -1,0 +1,23 @@
+.booking {
+  ::ng-deep * {
+    font-size: 11px;
+  }
+  ::ng-deep .panel-tools {
+    top: 4px;
+  }
+  ::ng-deep input, select {
+    height: 30px;
+  }
+  ::ng-deep .form-group {
+    margin-bottom: 5px;
+  }
+  ::ng-deep .panel {
+    margin-bottom: 5px;
+  }
+}
+
+form {
+  ::ng-deep .form-control[disabled], ::ng-deep .form-control[readonly], ::ng-deep fieldset[disabled] .form-control {
+    cursor: default !important;
+  }
+}

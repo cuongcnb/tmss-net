@@ -1,0 +1,180 @@
+<div class="modal fade" bsModal #addMultiContractModal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Multiply Contract</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Contract No</span>
+                  <input type="text" class="form-control" formControlName="contractNo">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Total Vehicles</span>
+                  <input type="text" class="form-control" formControlName="total">
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Customer Name</span>
+                  <input type="text" class="form-control" formControlName="customerName">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4" hasError="gradeId">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Grade</span>
+                  <select class="form-control required" formControlName="gradeId">
+                    <option value=""></option>
+                    <option *ngFor="let grade of gradeList" [ngValue]="grade.id">{{grade.marketingCode}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                </div>
+              </div>
+              <div class="col-md-4" hasError="gradeProductionId">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Grade product</span>
+                  <select class="form-control required" formControlName="gradeProductionId">
+                    <option value=""></option>
+                    <option *ngFor="let prod of products" [ngValue]="prod.id">{{prod.productionCode}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                </div>
+              </div>
+              <div class="col-md-4" hasError="colorId">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Color</span>
+                  <select class="form-control required" formControlName="colorId">
+                    <option value=""></option>
+                    <option *ngFor="let val of colorAssignments" [ngValue]="val.colorId">{{val.code}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Interior color</span>
+                  <select class="form-control" formControlName="interiorColorId">
+                    <option value=""></option>
+                    <option *ngFor="let val of interiorColorAssignments" [ngValue]="val.colorId">{{val.code}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <tmss-datepicker-sale [addOnMinWidth]="'105px'" [text]="'Estimated Date'" formControlName="estimatedDate"></tmss-datepicker-sale>
+              </div>
+              <div class=" col-sm-4" hasError="addMore">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Add More</span>
+                  <input type="text" class="form-control required" formControlName="addMore">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                  <div *ifError="'min'">Must be greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="amount">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Deposit Amount</span>
+                  <input type="text" class="form-control" formControlName="amount">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'min'">Must be a positive value</div>
+                  <div *ifError="'numberFormat'">Deposit Amount must be a number and greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="orderPrice">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Order Price</span>
+                  <input type="text" class="form-control" formControlName="orderPrice">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'min'">Must be a positive value</div>
+                  <div *ifError="'numberFormat'">Order Price must be a number and greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="commissionPrice">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Commission</span>
+                  <input type="text" class="form-control" formControlName="commissionPrice">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'min'">Must be a positive value</div>
+                  <div *ifError="'numberFormat'">Commission must be a number and greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4" hasError="discountPrice">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Discount</span>
+                  <input type="text" class="form-control" formControlName="discountPrice">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'min'">Must be a positive value</div>
+                  <div *ifError="'numberFormat'">Discount must be a number and greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="otherPromotionValue">
+                <div class="form-group input-group">
+                  <span class="input-group-addon">Other Promotion Value</span>
+                  <input type="text" class="form-control" formControlName="otherPromotionValue">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'min'">Must be a positive value</div>
+                  <div *ifError="'numberFormat'">Other Promotion Value must be a number and greater than 0</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+              <div class="col-sm-4" hasError="paymentTypeId">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Payment Type</span>
+                  <select class="form-control required" formControlName="paymentTypeId">
+                    <option value=""></option>
+                    <option *ngFor="let type of paymentTypes" [ngValue]="type.id">{{type.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-check"></i> Order
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

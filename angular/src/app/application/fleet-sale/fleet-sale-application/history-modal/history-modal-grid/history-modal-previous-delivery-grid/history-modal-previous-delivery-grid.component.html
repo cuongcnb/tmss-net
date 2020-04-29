@@ -1,0 +1,9 @@
+<div class="panel panel-default mb-3">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Previous Purchasing Delivery
+  </div>
+  <grid-table [fieldGrid]="fieldGridPreviousDelivery" [height]="'300px'"
+              overlayLoadingTemplate="Please select History to show detail"
+              (callbackGrid)="callbackGridPreviousDelivery($event)"></grid-table>
+</div>

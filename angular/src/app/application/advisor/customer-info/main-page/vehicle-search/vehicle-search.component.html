@@ -1,0 +1,52 @@
+<div class="modal fade" bsModal #modal="bs-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Thông tin xe</h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" *ngIf="modal.isShown"
+                        (callbackGrid)="callbackGrid($event)"
+                        (getParams)="getParams()"
+                        [rowClassRules]="rowClassRules"
+                        (changePaginationParams)="changePaginationParams($event)"
+                        [paginationTotalsData]="paginationTotalsData"
+                        (cellDoubleClicked)="confirm()"
+                        (keyup)="agKeyUp($event)"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+
+      <div class="modal-footer">
+        <div class="float-left">
+          <div>
+            <span class="pl-3">Xe đang SC <span class="repairing"></span></span>
+            <span class="pl-3">Xe có báo giá <span class="quotes"></span></span>
+          </div>
+          <div>
+            <span class="pl-3">Xe hẹn <span class="order"></span></span>
+            <span class="pl-3">Xe chưa có yêu cầu <span></span></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-blue" (click)="confirm()">
+          <i class="fa fa-save"></i> Đồng ý
+        </button>
+
+        <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Hủy bỏ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+<form [formGroup]="form" *ngIf="form">
+  <div class="row">
+    <div class="col-sm-4">
+      <tmss-datepicker formControlName="date"></tmss-datepicker>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group input-group">
+        <span class="input-group-addon">CVDV</span>
+        <select class="form-control" formControlName="advisorId">
+          <option value=""></option>
+          <option *ngFor="let advisor of advisors" [value]="advisor.id">{{advisor.empName}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"> </i> Tìm kiếm</button>
+    </div>
+  </div>
+</form>
+<div>
+  <div class="tabbable">
+    <ul class="nav nav-tabs tab-space-3 tab-blue">
+      <li *ngFor="let item of tabs"
+          [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+        <a data-toggle="tab" class="tab-item text-capitalize">
+          {{item}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div [tabDisplay]="selectedTab === tabs[0]"
+       [style.display]="selectedTab === tabs[0]">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Thông tin
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseAppointmentInDayInfo" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseAppointmentInDayInfo" class="panel-collapse collapse in">
+        <grid-table *ngIf="partsAppointmentParams"
+                    [fieldGrid]="fieldAppointmentInDay"
+                    [height]="'200px'"
+                    (getParams)="getAppointmentInDayParams()"
+                    (callbackGrid)="callbackAppointmentInDay($event)"
+
+        ></grid-table>
+      </div>
+    </div>
+    <div class="my-2">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Yêu cầu khách hàng</span>
+        <textarea rows="2" cols="140" class="form-control" [value]="appointmentCusReq ||''" readonly></textarea>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Phụ tùng
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseAppointmentInDayPart" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseAppointmentInDayPart" class="panel-collapse collapse in">
+        <grid-table
+          [fieldGrid]="fieldParts"
+          [height]="'200px'"
+          (callbackGrid)="callbackPartAppointment($event)"
+          [isSuppressHorizontalScroll]="true"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+
+  <div [tabDisplay]="selectedTab === tabs[1]"
+       [style.display]="selectedTab === tabs[1]">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Công việc dang dở
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseUnfinishWork" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseUnfinishWork" class="panel-collapse collapse in">
+        <span style="display: flex; align-items: center; justify-content: flex-end; margin-right: 5px;">
+          <span class="mr-2">Hiển thị trạng thái báo giá</span>
+          <input type="checkbox" (change)="search()" [(ngModel)]="isShowQuotation">
+        </span>
+        <grid-table
+          [fieldGrid]="fieldUnfinishWork"
+          (callbackGrid)="callbackUnfinishWork($event)"
+          (getParams)="getUnfinishWorkParams()"
+          [isSuppressHorizontalScroll]="true"
+          [height]="'200px'"
+        ></grid-table>
+        <div class="panel-footer text-right">
+          <button class="btn btn-blue" (click)="openProposal()" [disabled]="!selectedUnfinishWork">
+            <i class="fa fa-folder-open"></i> Mở cửa sổ báo giá
+          </button>
+        </div>
+      </div>
+    </div>
+    <proposal-print #proposalPrintModal [isAdvisor]="true" (back)="proposalPrintModal.open()"></proposal-print>
+    <div class="my-2">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Yêu cầu khách hàng</span>
+        <textarea rows="2" cols="140" class="form-control" [value]="unfinishWorkCusReq ||''" readonly></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-info"></i>
+            Công việc
+            <div class="panel-tools">
+              <button type="button" class="btn btn-link" data-toggle="collapse"
+                      data-target="#collapseUnfinishWorkJob" aria-expanded="true">
+              </button>
+            </div>
+          </div>
+          <div id="collapseUnfinishWorkJob" class="panel-collapse collapse in">
+            <grid-table
+              [fieldGrid]="fieldJob"
+              [height]="'150px'"
+              (callbackGrid)="callbackJob($event)"
+              [isSuppressHorizontalScroll]="true"
+            ></grid-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-info"></i>
+            Phụ tùng
+            <div class="panel-tools">
+              <button type="button" class="btn btn-link" data-toggle="collapse"
+                      data-target="#collapseUnfinishWorkPart" aria-expanded="true">
+              </button>
+            </div>
+          </div>
+          <div id="collapseUnfinishWorkPart" class="panel-collapse collapse in">
+            <grid-table
+              [fieldGrid]="fieldParts"
+              [height]="'150px'"
+              (callbackGrid)="callbackPartUnfinishJob($event)"
+              [isSuppressHorizontalScroll]="true"
+            ></grid-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

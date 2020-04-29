@@ -1,0 +1,7 @@
+<input [(ngModel)]="displayValue" #input
+       type="text" class="form-control text-center"
+       [class.required]="isRequired"
+       [disabled]="isDisabled ? true : null"
+       [attr.readOnly]="isReadOnly ? true : null"
+       [attr.maxlength]="maxLength"
+>

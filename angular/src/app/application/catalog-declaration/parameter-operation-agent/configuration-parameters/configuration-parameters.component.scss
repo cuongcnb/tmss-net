@@ -1,0 +1,24 @@
+fieldset {
+  margin-bottom: 10px;
+  legend {
+    margin-bottom: 6px;
+  }
+}
+
+.hourly-coefficients {
+  .input-group-addon {
+    min-width: 80px;
+  }
+}
+.size{
+  max-height: 416px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .min-width-time-sm{
+    min-width: 105px !important;
+  }
+  .min-width-time-md{
+    min-width: 188px !important;
+  }
+}
+

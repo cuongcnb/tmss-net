@@ -1,0 +1,61 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Danh sách lệnh nợ phụ tùng [Danh sách]
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading"><i class="fa fa-info"></i>
+                Lựa chọn điều kiện tạo báo cáo
+              </div>
+              <div class="panel-body">
+                <div class="form-group w-span-modal">
+                  <div class="input-group">
+                    <span class="input-group-addon">Đại lý</span>
+                    <select class="form-control" formControlName="sortAgency">
+                      <option>Đại lý 1</option>
+                      <option>Đại lý 2</option>
+                      <option>Đại lý 3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <tmss-datepicker text="Mở lệnh từ ngày" formControlName="dateTime"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <tmss-datepicker text="Đến ngày" formControlName="dateTime"></tmss-datepicker>
+                    </div>
+                  </div>
+                </div>
+                <file-uploader *ngIf="modal.isShown" acceptType=".csv"
+                               [apiCallUpload]="apiCallUpload.bind(this)"
+                               (responseUpload)="uploadSuccess($event)"
+                               (errorUpload)="uploadFail($event)"
+                ></file-uploader>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue m-2">
+            <i class="clip-file-2 mr-2"></i>Tạo báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey m-2" (click)="modal.hide()">
+            <i class="fa fa-power-off mr-2"></i>Thoát
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

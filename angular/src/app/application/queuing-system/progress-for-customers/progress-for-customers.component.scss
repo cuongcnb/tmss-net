@@ -1,0 +1,749 @@
+// %font-family {
+//     font-family: 'Arial', sans-serif ;
+//     font-style: normal;
+// }
+
+.container {
+    // @extend %font-family;
+    padding: 0;
+}
+
+.header {
+    background-image: url('/assets/imgs/backgroundToyota.png');
+    background-size: cover;
+    background-repeat: round;
+    height: 7vw;
+    width: 100%;
+    padding: 20px;
+
+    .logo {
+        padding: 0;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+
+        img {
+            width: 75%;
+            height: 80px;
+            margin-left: 25px;
+        }
+    }
+
+    .text {
+        font-weight: bold;
+        font-size: 1.5vw;
+        line-height: 48px;
+        color: #ED1A3B;
+    }
+}
+
+.content {
+    padding: 20px;
+    margin-top: 32px;
+    overflow: auto;
+    margin-bottom: 130px;
+
+    .title {
+        margin-bottom: 23px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .column-registerNo {
+        min-width: 494px;
+        font-weight: bold;
+        font-size: 2vw;
+        line-height: 35px;
+        color: #636466;
+        margin-left: 31px;
+    }
+
+    .column-customer {
+        font-weight: bold;
+        font-size: 2vw;
+        line-height: 35px;
+        color: #636466;
+        min-width: 710px;
+
+    }
+
+    .column-advisor {
+        font-weight: bold;
+        font-size: 2vw;
+        line-height: 35px;
+        color: #636466;
+        margin-left: 56px;
+        min-width: 790px;
+    }
+
+    .column-status {
+        display: flex;
+        justify-content: flex-end;
+        font-weight: bold;
+        font-size: 2vw;
+        line-height: 35px;
+        color: #636466;
+        margin-right: 40px;
+    }
+
+    .list {
+        border-top: 1px solid #A2A4A7;
+        height: 120px;
+        padding: 10px 0;
+    }
+
+    .list:last-of-type {
+
+        border-bottom: 1px solid #A2A4A7;
+
+        .list:last-of-type {
+            border-bottom: 1px solid #A2A4A7;
+        }
+
+
+    }
+
+    .register-no {
+        h4 {
+            border: 1px solid #838383;
+            padding: 22px 0 0 0;
+            border-left: 3px solid #ED1A3B;
+            font-weight: bold;
+            text-align: center;
+            box-sizing: border-box;
+            border-radius: 3px;
+            min-width: 490px;
+            height: 84px;
+            font-weight: 600;
+            font-size: 4vw;
+            line-height: 40px;
+            text-align: center;
+            letter-spacing: 0.05em;
+            margin-left: 31px;
+        }
+    }
+
+    .customer-name {
+        margin-top: 10px;
+        min-width: 710px;
+
+        h4 {
+            font-weight: bold;
+            font-size: 33px;
+            line-height: 40px;
+            padding: 4px 20px 15px 0;
+        }
+    }
+
+    .advisor {
+        margin-top: 10px;
+
+        h4 {
+            font-weight: 600;
+            font-size: 2.7vw;
+            line-height: 40px;
+            padding: 4px 0 15px 0;
+            margin-right: 6px;
+            margin-left: 56px;
+            min-width: 700px;
+        }
+    }
+
+    .status {
+        min-width: 308px;
+        margin-right: 17px;
+
+        h4 {
+            display: flex;
+            justify-content: flex-end;
+            font-weight: 600;
+            font-size: 1.8vw;
+            line-height: 40px;
+            padding: 15px 0 15px 0;
+            ;
+
+        }
+
+        img {
+            padding: 0px 10px;
+            width: 87px;
+            height: 73px;
+        }
+    }
+}
+
+.footer {
+    height: 80px;
+    padding: 0;
+    bottom: 0;
+
+    .icon {
+        background-color: #D61A3B;
+        text-align: center;
+        height: 80px;
+
+        i {
+            font-size: 37px;
+            color: white;
+            margin-top: 22px;
+        }
+    }
+
+    .text {
+        background-color: #ED1A3B;
+        height: 80px;
+        padding: 0;
+
+        h4 {
+            color: white;
+            font-weight: 600;
+            font-size: 1.3vw;
+            line-height: 35px;
+            text-align: center;
+            margin-top: 26px;
+        }
+
+    }
+
+    .btn {
+        width: 84px;
+        height: 84px;
+        background: #64E029;
+        color: white;
+        font-weight: 600;
+        font-size: 1.7vw;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        position: absolute;
+        top: -13px;
+        right: 8%;
+        cursor: auto;
+        outline: none;
+
+    }
+
+    .service {
+        color: white;
+        font-weight: 600;
+        font-size: 28px;
+        line-height: 35px;
+        margin-top: 26px;
+        margin-right: -188px;
+    }
+}
+
+.toggle {
+    position: absolute;
+    bottom: 0;
+    display: none;
+}
+
+.carState7 {
+    height: 60px !important;
+    margin-top: 10px !important;
+}
+
+.carState5 {
+    width: 87px !important;
+    height: 69px !important;
+    margin-top: 10px !important;
+}
+
+.colorGreen {
+    color: #4EB81C !important;
+}
+
+.colorblue {
+    color: #1C48B8 !important;
+}
+
+@media (max-width: 1440px) {
+
+    .content {
+        .column-registerNo {
+            min-width: 200px;
+        }
+
+        .column-customer {
+            min-width: 448px;
+        }
+
+        .column-advisor {
+            min-width: 310px;
+        }
+
+
+
+
+        .status {
+            h4 {
+                padding: 15px 3px;
+            }
+
+            img {
+                width: 63px;
+                height: 45px;
+                margin-top: 13px;
+            }
+        }
+
+        .register-no {
+            h4 {
+                min-width: 200px;
+            }
+        }
+
+        .status {
+            h4 {
+                padding: 15px 3px;
+            }
+
+            img {
+                width: 57px;
+                height: 43px;
+                margin-top: 17px;
+            }
+        }
+
+        .advisor {
+            h4 {
+                min-width: 310px;
+            }
+        }
+
+        .customer-name {
+            min-width: 448px;
+        }
+    }
+
+    .carState7 {
+        width: 58px !important;
+        height: 34px !important;
+        margin-top: 25px !important;
+    }
+
+    .carState5 {
+        width: 61px !important;
+        height: 41px !important;
+        margin-top: 19px;
+    }
+
+    .footer {
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .icon {
+            i {
+                margin-top: 28px;
+            }
+        }
+
+        .btn {
+            width: 60px;
+            height: 60px;
+            top: -7px;
+            right: 1%;
+        }
+    }
+
+    .icon {
+        i {
+            margin-top: 28px;
+        }
+    }
+
+    .btn {
+        width: 60px;
+        height: 60px;
+        top: -7px;
+        right: 1%;
+    }
+
+}
+
+@media (max-width: 1366px) {
+
+    .content {
+        .column-registerNo {
+            min-width: 200px;
+        }
+
+        .column-customer {
+            min-width: 448px;
+        }
+
+        .column-advisor {
+            min-width: 310px;
+        }
+
+
+        .status {
+            h4 {
+                padding: 15px 3px;
+            }
+
+            img {
+                width: 63px;
+                height: 45px;
+                margin-top: 13px;
+            }
+        }
+
+        .register-no {
+            h4 {
+                min-width: 200px;
+            }
+        }
+
+        .status {
+            h4 {
+                padding: 15px 3px;
+            }
+
+            img {
+                width: 57px;
+                height: 43px;
+                margin-top: 17px;
+            }
+        }
+
+        .advisor {
+            h4 {
+                min-width: 310px;
+            }
+        }
+
+        .customer-name {
+            min-width: 448px;
+        }
+    }
+
+    .carState7 {
+        width: 58px !important;
+        height: 34px !important;
+        margin-top: 25px !important;
+    }
+
+    .carState5 {
+        width: 61px !important;
+        height: 41px !important;
+        margin-top: 19px;
+    }
+
+    .footer {
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .icon {
+            i {
+                margin-top: 28px;
+            }
+        }
+
+        .btn {
+            width: 60px;
+            height: 60px;
+            top: -7px;
+            right: 1%;
+        }
+    }
+
+    .icon {
+        i {
+            margin-top: 28px;
+        }
+    }
+
+    .btn {
+        width: 60px;
+        height: 60px;
+        top: -7px;
+        right: 1%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        height: 93px;
+
+        .logo {
+            img {
+                height: 62px;
+            }
+        }
+    }
+
+    .content {
+        .column-registerNo {
+            min-width: 165px;
+        }
+
+        .column-customer {
+            min-width: 250px;
+        }
+
+        .column-advisor {
+            min-width: 225px;
+        }
+
+        .column-status {
+            min-width: 22px;
+        }
+
+        .register-no {
+            h4 {
+                min-width: 150px;
+            }
+        }
+
+        .status {
+            min-width: 247px;
+            margin-top: 10px;
+
+            img {
+                width: 52px;
+                height: 31px;
+                margin-top: 25px;
+            }
+
+        }
+
+        .advisor {
+            margin-top: 20px;
+
+            h4 {
+                min-width: 225px;
+            }
+        }
+
+        .customer-name {
+            min-width: 250px;
+            margin-top: 24px;
+
+        }
+    }
+
+    .carState7 {
+        height: 24px !important;
+        margin-top: 29px !important;
+    }
+
+    .carState5 {
+        height: 36px !important;
+        margin-top: 24px !important;
+        width: 51px !important;
+    }
+
+    .footer {
+        .icon {
+            i {
+                margin-top: 32px;
+            }
+        }
+
+
+        .service {
+            padding-right: 55px;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            top: -0px;
+            right: 1%;
+        }
+    }
+
+
+}
+
+@media (max-width: 1080px) {
+    .header {
+        height: 93px;
+
+        .logo {
+            img {
+                height: 62px;
+            }
+        }
+    }
+
+    .content {
+        .column-registerNo {
+            min-width: 165px;
+        }
+
+        .column-customer {
+            min-width: 250px;
+        }
+
+        .column-advisor {
+            min-width: 225px;
+        }
+
+        .column-status {
+            min-width: 22px;
+
+        }
+
+        // .register-no {
+        //     h4 {
+        //         min-width: 150px;
+        //     }
+        // }
+
+        .status {
+            min-width: 247px;
+            margin-top: 10px;
+
+            img {
+                width: 52px;
+                height: 31px;
+                margin-top: 25px;
+            }
+
+        }
+
+        .advisor {
+            margin-top: 20px;
+
+            h4 {
+                min-width: 225px;
+            }
+        }
+
+        .customer-name {
+            min-width: 250px;
+            margin-top: 24px;
+        }
+    }
+
+    .carState7 {
+        height: 24px !important;
+        margin-top: 29px !important;
+    }
+
+    .carState5 {
+        height: 36px !important;
+        margin-top: 24px !important;
+        width: 51px !important;
+    }
+
+    .footer {
+        .icon {
+            i {
+                margin-top: 32px;
+            }
+        }
+
+        .service {
+            padding-right: 55px;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            top: -0px;
+            right: 1%;
+            font-size: 26px;
+        }
+    }
+
+
+}
+
+$colorBlack: black;
+$colorWhite: white;
+
+.text {
+  text-align: center;
+  font-size: 35px !important;
+  font-weight: 900;
+  background: #38a7e8 ;
+  color: $colorWhite;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+::ng-deep .main-container {
+  * {
+    font-size: 20px !important;
+  }
+}
+
+::ng-deep .ag-header-container {
+  background: $colorWhite !important;
+}
+::ng-deep .ag-header-cell-label .ag-header-cell-text {
+  justify-content: center;
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  color: $colorBlack !important;
+}
+
+::ng-deep .ag-row {
+ height: 70px !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+}
+
+::ng-deep .ag-header {
+  height: 50px !important;
+}
+::ng-deep .ag-theme-balham .ag-cell {
+  padding-top: 20px;
+  background: $colorWhite !important;
+}
+
+::ng-deep .cell-border {
+ //border: 1px solid black !important;
+}
+
+::ng-deep .ag-theme-balham .ag-header-row {
+  height: 46px !important;
+}
+
+::ng-deep .ag-theme-balham .ag-header-cell::after, .ag-theme-balham .ag-header-group-cell::after {
+  border-right: 1px solid $colorBlack !important;
+  content: " ";
+  height: 15px;
+  margin-top: 15px;
+  position: absolute;
+  text-indent: -2000px;
+  top: 0;
+}
+.back-group{
+  background: $colorWhite;
+}
+
+
+::ng-deep .btn-xs{
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: $colorBlack !important;
+  bottom: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+::ng-deep .ag-theme-balham {
+  .ag-icon{
+    color: $colorBlack !important;
+
+  }
+  .ag-paging-panel{
+    color: $colorBlack !important;
+  }
+  .ag-root{
+    border: 1px solid $colorBlack !important;
+  }
+  .ag-cell{
+    border: 1px solid $colorBlack !important;
+
+  }
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: $colorBlack !important;
+  opacity: 1 !important;
+  border: 1px solid $colorBlack !important;
+}

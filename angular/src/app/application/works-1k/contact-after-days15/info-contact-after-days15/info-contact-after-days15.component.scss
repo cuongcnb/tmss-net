@@ -1,0 +1,10 @@
+checkbox.contact-day15-mt {
+  margin-left: -32px;
+  margin-top: -5px !important;
+  display: block;
+}
+::ng-deep.span-date-info{
+  .input-group-addon:first-child{
+    min-width: 87px!important;
+  }
+}

@@ -1,0 +1,104 @@
+-
+<div class="modal fade" bsModal #provincesModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header" *ngIf="!selectedData">Add new provinces</h5>
+          <h5 class="title-header" *ngIf="selectedData">Update provinces</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6" hasError="code">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Code</span>
+                  <input type="text" class="form-control required" formControlName="code" autoFocusField>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Code is required</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class=" col-md-6" hasError="name">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Name</span>
+                  <input type="text" class="form-control required" formControlName="name">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Name is required</div>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" hasError="populationAmount">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Population</span>
+                  <input type="text" min="0" class="form-control" formControlName="populationAmount">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Population must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 12</div>
+                </div>
+              </div>
+              <div class=" col-md-6" hasError="squareAmount">
+                <div class="input-group form-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Square</span>
+                  <input type="text" min="0" class="form-control" formControlName="squareAmount">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'squareNumberValidate'">Not a valid number for Square (ex: 134.65)</div>
+                </div>
+              </div>
+              <div class="col-md-4" hasError="ordering">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'"  class="input-group-addon">Order</span>
+                  <input type="text" min="0" class="form-control" formControlName="ordering">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Order must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class=" col-md-4" hasError="status">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Status</span>
+                  <select class="form-control required" formControlName="status">
+                    <option value=""></option>
+                    <option value="Y">Enable</option>
+                    <option value="N">Disable</option>
+                  </select></div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Status is required</div>
+                </div>
+              </div>
+              <div class=" col-md-4" hasError="regionId">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Region</span>
+                  <select class="form-control required" formControlName="regionId" [compareWith]="compareFn">
+                    <option *ngFor="let val of regions" [ngValue]="val.id">{{val.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Region is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

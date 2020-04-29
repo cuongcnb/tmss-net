@@ -1,0 +1,59 @@
+<div class="modal fade" bsModal #employeeListModal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="employeeForm" *ngIf="employeeForm && finish_get_date" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Thêm kỹ thuật viên</h5>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="employee_time_form" [formGroup]="employee_time_form" novalidate autocomplete="off">
+            <div class="form-group col-sm-5">
+              <tmss-datepicker [disable]="false" [hasTimepicker]="true"
+                [text]="'Từ ngày'"
+                formControlName="fromDateTime"
+                [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+            </div>
+
+            <div class="form-group col-sm-5"> 
+              <tmss-datepicker [disable]="false" [hasTimepicker]="true"
+                [text]="'Đến ngày'"
+                formControlName="toDateTime"
+                [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+            </div>
+          </form>
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+          <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+            <div class="modal-body">
+              <div class="row" formArrayName="data">
+                <div *ngFor="let emp of employeeArray.controls; let idx = index" class="col-sm-3 border-emp"
+                  [ngClass]="emp.value.empStatus == 'BUSY' ? 'background_red' : ''">
+                  <ng-container formGroupName="{{idx}}">
+                    <checkbox [text]="emp.value.empName" formControlName="choosed"></checkbox>
+                  </ng-container>
+                  <span *ngIf="emp.value && emp.value.show_plan_time">
+                    {{ emp.planFromTime | date: 'DD/MM/YYYY HH:mm' }} - {{ emp.planToTime | date: 'DD/MM/YYYY HH:mm'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </perfect-scrollbar>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-blue" (click)="accept()">
+            <i class="fa fa-check"></i> Đồng ý
+          </button>
+          <button class="btn btn-light-grey" (click)="close()">
+            <i class="fa fa-times"></i> Hủy bỏ
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

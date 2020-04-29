@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+::ng-deep .bs-datepicker {
+  height: 350px;
+}
+
+::ng-deep {
+  .bs-datepicker {
+    height: 240px;
+  }
+  .bs-datepicker-container {
+    padding: 0 !important;
+  }
+  .bs-datepicker-head {
+    height: 30px;
+    padding: 2px 10px;
+  }
+  .bs-datepicker-body {
+    padding: 0;
+    min-height: auto;
+    min-width: auto;
+  }
+  .bs-datepicker-body table.days span {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+  }
+  .btn-dark-grey {
+    background: #32324b;
+  }
+  .btn-dark-grey:hover {
+    background: gray;
+    border-color: gray;
+  }
+}

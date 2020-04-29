@@ -1,0 +1,26 @@
+<div class="tmss-time-picker">
+  <div class="input-group">
+    <span class="input-group-addon" *ngIf="text">{{text}}</span>
+    <input type="text" class="form-control" [(ngModel)]="displayValue"
+           [class.required]="isRequired"
+           [disabled]="isDisabled ? true : null"
+           readonly>
+    <label class="input-group-addon btn btn-light-grey"
+           (click)="isDisabled ? $event.stopPropagation() : isShow = true">
+      <i class="fa fa-clock-o"></i>
+    </label>
+  </div>
+  <div class="dropdown-timepicker" *ngIf="isShow">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <timepicker [(ngModel)]="selectedValue"  [showMeridian]="false"></timepicker>
+      </div>
+      <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-sm btn-blue" (click)="onChoosenValue()">
+          <i class="fa fa-check"></i> Đồng ý
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,27 @@
+fieldset {
+  border: 1px solid silver;
+  padding: 1rem;
+
+  legend {
+    width: auto;
+    margin-bottom: 5px;
+    font-size: 15px;
+    border: none;
+  }
+}
+
+.modal-size {
+  width: 99%;
+}
+
+.select.form-control {
+  height: 17px;
+}
+.form-left{
+  padding-left: 0 !important;
+  padding-right: 5px!important;
+}
+.form-right{
+  padding-right: 0 !important;
+  padding-left: 5px!important;
+}

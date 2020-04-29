@@ -1,0 +1,90 @@
+<ng-container pageTitle="{{isTmv ? 'TMV Vehicle Information' : 'DLR Vehicle Information'}}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-blue mr-2" (click)="export()"><i class="fa fa-download"></i> Export
+        </button>
+        <button type="button" class="btn btn-blue"
+                (click)="saleFilter.open(isTmv ? filterFormCode.tmvVehicleInfo : filterFormCode.dlrVehicleInfo)"><i
+          class="fa fa-filter"></i> Filter
+        </button>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group input-group">
+          <span class="input-group-addon">Quick Search</span>
+          <input data-toggle="tooltip" data-placement="top"
+                 title="Quich search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address."
+                 placeholder="TMSS No, Frame No, VIN, Engine No, Key Code" type="text" class="form-control"
+                 formControlName="quickSearch">
+        </div>
+      </div>
+    </div>
+    <div class="row header-form">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Dealer</span>
+            <select class="form-control" formControlName="dealerId">
+              <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Grade</span>
+            <multi-column-select-control formControlName="gradeControl"
+                                         displayField="marketingCode"
+                                         [fieldGrid]="fieldGradeList"
+                                         [list]="gradeList">
+            </multi-column-select-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Color</span>
+            <multi-column-select-control formControlName="colorControl" displayField="code"
+                                         [fieldGrid]="fieldColorList"
+                                         [list]="allColors">
+            </multi-column-select-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group search-group">
+            <span class="input-group-addon">Type</span>
+            <select class="form-control" formControlName="type">
+              <option [ngValue]="null">All</option>
+              <option value="CKD">CKD</option>
+              <option value="CBU">CBU</option>
+            </select>
+            <button type="button" class="btn btn-blue" (click)="resetPaginationParams(); search()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      {{isTmv ? 'TMV Vehicle Information' : 'DLR Vehicle Information'}}
+    </div>
+    <grid-table [fieldGrid]="dlrVehicleInfoFieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+                (getParams)="getParams()"
+                (cellDoubleClicked)="cellDoubleClicked($event)">
+    </grid-table>
+  </div>
+</ng-container>
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>
+<dlr-advance-change-request-modal #dlrAdvanceChangeRequestModal [currentUser]="currentUser"
+                                  (close)="search()"></dlr-advance-change-request-modal>
+<tmss-export (getExportParams)="getExportParams($event)" [fieldGrid]="dlrVehicleInfoFieldGridExport"></tmss-export>

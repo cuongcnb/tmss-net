@@ -1,0 +1,91 @@
+<div class="modal fade" bsModal #provincesModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Sửa đổi' : 'Thêm mới'}} tỉnh thành</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-6" hasError="code">
+                <label class="required">Mã</label>
+                <input type="text" class="form-control" formControlName="code">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="name">
+                <label class="required">Tên</label>
+                <input type="text" class="form-control" formControlName="name">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 255 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6" hasError="populationAmount">
+                <label>Số dân</label>
+                <input type="text" min="0" class="form-control" formControlName="populationAmount">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Giá trị nhập vào phải là số</div>
+                  <div *ifError="'maxLength'">Tối đa 12 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="squareAmount">
+                <label>Diện tích</label>
+                <input type="text" min="0" class="form-control" formControlName="squareAmount">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'squareNumberValidate'">Giá trị nhập vào phải là số (vd: 134.65)</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4" hasError="ordering">
+                <label>Thứ tư</label>
+                <input type="text" min="0" class="form-control" formControlName="ordering">
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Giá trị nhập vào phải là số</div>
+                  <div *ifError="'maxLength'">Tối đa 4 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="status">
+                <label class=" required">Trạng thái</label>
+                <select class="form-control" formControlName="status">
+                  <option value=""></option>
+                  <option value="Y">Hết hiệu lực</option>
+                  <option value="N">Còn hiệu lực</option>
+                </select>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải chọn</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="regionId">
+                <label class="required">Khu vực</label>
+                <select class="form-control" formControlName="regionId">
+                  <option *ngFor="let val of regions" [ngValue]="val.id">{{val.name}}</option>
+                </select>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải chọn</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,58 @@
+<div pageTitle="Khai báo NSD và Phân Nhóm">
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh Sách Đại Lý
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshListDlr()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridIp"
+                  [enableFilter]="true"
+                  [height]="'350px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGridIp($event)"
+                  (getParams)="getParamsIp()"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="grid-table-area my-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh Sách IP
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshListDlrIp()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGridGroupIpDlr"
+                  [enableFilter]="true"
+                  [showPagination]="false"
+                  [height]="'250px'"
+                  (callbackGrid)="callbackGridIpDlr($event)"
+                  (getParams)="getParamsGridIpDlr()"
+      ></grid-table>
+    </div>
+    <div class="my-3 grid-table-btn">
+      <div class="float-right">
+        <button class="btn btn-blue mr-2" [disabled]="!selectedDLr"
+                (click)="declareIpDlr.open(selectedDLr, null, 'add')">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button class="btn btn-blue mr-2" [disabled]="!selectedDlrIp"
+                (click)="declareIpDlr.open(selectedDLr, selectedDlrIp, 'update')">
+          <i class="fa fa-plus"></i> Sửa
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedDlrIp" (click)="removeSelectedRow()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<declare-ip-dlr #declareIpDlr (close)="refreshListDlrIp()"></declare-ip-dlr>

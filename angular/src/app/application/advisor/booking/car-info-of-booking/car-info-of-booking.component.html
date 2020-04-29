@@ -1,0 +1,140 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin xe
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link collapse in" data-toggle="collapse"
+        data-target="#collapseCarInfoOfBooking" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseCarInfoOfBooking" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-sm-6 form-group" hasError="cfType">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="44px" style="max-width: 63px;">Dòng xe *</span>
+              <select class="form-control" formControlName="cfType" (change)="changeSelectCfType()">
+                <option [ngValue]=""></option>
+                <option *ngFor="let type of carFamilyTypes" [ngValue]="type.id">{{type.name}}</option>
+              </select>
+            </div>
+            <!-- <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc chọn</div>
+            </div> -->
+          </div>
+          <div class="col-sm-6" hasError="cfId">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="44px" style="max-width: 64px;">Kiểu xe *</span>
+              <select class="form-control" formControlName="cfId" (change)="selectCarModel()">
+                <option [ngValue]=""></option>
+                <option *ngFor="let val of cfList" [ngValue]="val.id">{{val.cfName}}</option>
+              </select>
+            </div>
+            <!-- <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc chọn</div>
+            </div> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">Mã k.xe</span>
+              <input class="form-control" formControlName="cmCode">
+            </div>
+          </div>
+          <!-- <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">K/xe</span>
+              <input class="form-control" formControlName="cmName" >
+            </div>
+          </div> -->
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px" style="max-width: 64px;">Số Vin *</span>
+              <input class="form-control" formControlName="vinno" maxlength="17">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">M/xe *</span>
+              <!-- <input class="form-control" formControlName="vccode" > -->
+              <input-search formControlName="vccode"
+                (onSearch)="vhColorModal.open({searchKeyword: form.get('vccode').value})" [isReadonly]="true"
+                [showBtn]="true" fieldAccessor="input">
+              </input-search>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px" style="max-width: 64px;">Số máy</span>
+              <input class="form-control" formControlName="engineno">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">Mã NT</span>
+              <input class="form-control" formControlName="ntCode">
+            </div>
+          </div>
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">Đời xe</span>
+              <input class="form-control" formControlName="doixe">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">L/máy</span>
+              <input-search formControlName="enginecode"
+                (onSearch)="vhEngineModal.open({searchKeyword:form.get('enginecode').value})" [isReadonly]="true"
+                [showBtn]="true">
+              </input-search>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <tmss-datepicker data-toggle="tooltip" data-placement="bottom" title="Ngày giao xe"
+                           text="Ng.GX" [addOnMinWidth]="'64px'" [ignoredCalender]='true' formControlName="deliveryDate" [disable]="true"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px">Km</span>
+              <input class="form-control" formControlName="lastKm">
+            </div>
+          </div>
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="64px" style="max-width: 64px;">Loại xe *</span>
+              <select class="form-control" formControlName="vhcType">
+                <option [value]="1">4 chỗ</option>
+                <option [value]="2">7 chỗ</option>
+                <option [value]="3">16 chỗ</option>
+                <option [value]="4">Bán tải</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button class="ghost" #submitBtn></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<search-data-grid-modal #cmInfoModal [list]="carModelList" [headerText]="'Danh sách đời xe'"
+  [isHideSearchField]="true" (cancel)="cancelSelectCmInfo()" (close)="patchCmValue($event)" [fieldGrid]="fieldGridCm"
+  [showPagination]="false"></search-data-grid-modal>
+<search-data-grid-modal #vhEngineModal [headerText]="'Danh sách loại máy'" [apiCall]="getEngineType.bind(this)"
+  (close)="patchEngineValue($event)" [fieldGrid]="fieldGridEngine"></search-data-grid-modal>
+<search-data-grid-modal #vhColorModal [headerText]="'Danh sách mã màu xe'" [apiCall]="getVehicleColor.bind(this)"
+  (close)="patchColorValue($event)" [fieldGrid]="fieldGridColor"></search-data-grid-modal>

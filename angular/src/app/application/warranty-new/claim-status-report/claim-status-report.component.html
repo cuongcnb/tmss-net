@@ -1,0 +1,244 @@
+<div id="claimPrintNone">
+<div class="row form-group">
+  <form [formGroup]="searchForm" *ngIf="searchForm" (submit)="searchClaim()" novalidate autocomplete="off">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="75px">
+                  Dealer
+                </span>
+                <select type="text" class="form-control" formControlName="dlrId">
+                  <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">
+                    {{dealer.code}}. {{dealer.vnName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="75px">
+                  State
+                </span>
+                <select class="form-control" formControlName="state">
+                  <option *ngFor="let state of stateList" [value]="state.stateValue">{{state.stateTitle}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="isTMV">
+              <div class="radio mb-0">
+                <label class="form-check-inline">
+                  <input type="radio" [value]="'TWC'" formControlName="sourceTable"> <strong>TMV-DLR</strong>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-2" *ngIf="isTMV">
+              <div class="radio mb-0">
+                <label class="form-check-inline">
+                  <input type="radio" [value]="'STWC'" formControlName="sourceTable">
+                  <strong>TMV-TMAP</strong>
+                </label>
+              </div>
+            </div>
+            <div [ngClass]="isTMV? 'col-md-2' : 'col-md-4'">
+              <div class="form-group">
+                <button class="btn btn-blue mr-2" type="submit"><i class="fa fa-search"></i> Tìm kiếm</button>
+                <button type="button" class="btn btn-blue" (click)="clear()"><i class="fa fa-refresh"></i>
+                  {{isTMV ? '' : 'Làm mới'}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group lb">
+                DLR Submit Date
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="dateFrom" text="From"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="dateTo" text="To"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="isTMV">
+            <div class="col-sm-2">
+              <div class="form-group lb">
+                TMV Submit Date
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="processDateFrom" text="From"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="processDateTo" text="To"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="form-group lb">
+                {{isTMV ? 'Vendor Settle Day' : 'TMV Process Day'}}
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="sTwcProcessDateFrom" text="From"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <tmss-datepicker formControlName="sTwcProcessDateTo" text="To"></tmss-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!--<div class="col-sm-3">-->
+            <!--<div class="input-group form-group">-->
+            <!--<span class="input-group-addon">-->
+            <!--W/T-->
+            <!--</span>-->
+            <!--<select class="form-control" formControlName="wt">-->
+            <!--<option value="VE">VE</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="76px">
+                 Brand
+                </span>
+                <select class="form-control" formControlName="brand">
+                  <option *ngFor="let brand of brands" [ngValue]="brand.key">{{brand.value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="76px">
+                 DATA-ID
+                </span>
+                <select class="form-control" formControlName="dataId">
+                  <option *ngFor="let dataId of dataIdList" [ngValue]="dataId.key">{{dataId.value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="76px">
+                 Ope.M
+                </span>
+                <input class="form-control" formControlName="opeM">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                  <span class="input-group-addon">
+                   Dealer Code
+                  </span>
+                <input class="form-control" formControlName="dealerCode">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                <span class="input-group-addon" addonWidth="76px">
+                 O.F.P. No
+                </span>
+                <input class="form-control" formControlName="ofpNo">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group form-group">
+                  <span class="input-group-addon" addonWidth="76px">
+                  Dealer Claim No
+                  </span>
+                <input class="form-control" formControlName="dealerClaimNo">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="grid-table-area mt-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseClaimStatusReport" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseClaimStatusReport" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldClaimStatusList"
+                  [height]="'300px'"
+                  (callbackGrid)="callbackClaimStatus($event)"
+                  (getParams)="getParamsClaimStatus()"
+                  [paginationTotalsData]="paginationTotalsData"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [ignoreFitColumn]="true"
+      ></grid-table>
+    </div>
+  </div>
+</div>
+<div class="form-group text-right">
+  <!--<button class="btn btn-blue mr-2"><i class="fa fa-share"></i> Send</button>-->
+  <button class="btn btn-blue mr-2" (click)="createClaim()"><i class="fa fa-plus"></i> Thêm</button>
+  <button class="btn btn-blue mr-2"
+          (click)="editClaim()"
+          [disabled]="sourceTable==='TWC' && currentUser.isAdmin ||(state==='P' || state==='1') ?true:null">
+    <i class="fa fa-edit"></i> Edit
+  </button>
+  <button class="btn btn-blue mr-2"
+          (click)="viewClaim()" [disabled]="(state!=='P' && state!='1')? true:null"><i class="fa fa-eye"></i> Xem
+  </button>
+
+  <button *ngIf="isTMV" class="btn btn-blue mr-2" (click)="adjustClaim()"
+          [disabled]="sourceTable==='STWC'||searchForm.value.dlrId===-1?true:null || state==='1'"><i
+    class="fa fa-check"></i> Adjustment
+  </button>
+  <button class="btn btn-blue mr-2"
+          (click)="download()"
+          [disabled]="claimStatusList.length==0 ?true:null"><i
+    class="fa fa-download"></i> Download
+  </button>
+</div>
+<div class="row p-3 text-right" *ngIf="totalClaimAmount && totalAdjustAmount">
+  <div class="col-sm-4" *ngIf="totalClaimAmount">
+    <span>Total Claim Amount:<strong class="ml-1">{{formatDisplay(totalClaimAmount)}}</strong></span>
+  </div>
+  <div class="col-sm-4" *ngIf="totalAdjustAmount">
+    <span>Total Adjusment amount:<strong class="ml-1">{{formatDisplay(totalAdjustAmount)}}</strong></span>
+  </div>
+  <div class="col-sm-4">
+    (Amount in VND 1,000)
+  </div>
+</div>
+</div>
+<search-ro-modal #searchRoModal (reload)="search()"></search-ro-modal>
+<claim-detail #claimDetailModal (close)="search()"></claim-detail>
+<claim-detail-view #claimDetailViewModal></claim-detail-view>
+
+

@@ -1,0 +1,32 @@
+<div pageTitle="Yard Management">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Yard management
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridYard($event)"
+                  (getParams)="getParamsYard()"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="yardModifyModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateYard()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedYard" (click)="deleteYard()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<yard-modify-modal (close)="refreshList()" #yardModifyModal></yard-modify-modal>

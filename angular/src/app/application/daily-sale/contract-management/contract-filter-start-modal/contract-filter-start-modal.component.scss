@@ -1,0 +1,15 @@
+.form-group {
+  tmss-datepicker .input-group {
+    float: left;
+    width: 90%;
+
+    &.filter-date {
+      width: 100%
+    }
+  }
+
+  checkbox {
+    float: right;
+    margin-top: -5px;
+  }
+}

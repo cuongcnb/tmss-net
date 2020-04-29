@@ -1,0 +1,55 @@
+<div pageTitle="Advance Report">
+  <div class="grid-table-area mt-3">
+    <form [formGroup]="form" *ngIf="form" class="mb-2" focusErrorField>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="input-group form-group">
+            <span class="input-group-addon">From Date</span>
+            <input type="text" class="form-control" formControlName="fromDate"
+                   #fromDate="bsDatepicker" bsDatepicker readonly>
+            <span class="input-group-addon btn btn-blue" (click)="fromDate.toggle()"
+                  [attr.aria-expanded]="fromDate.isOpen">
+          <i class="fa fa-calendar"></i>
+        </span>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="input-group form-group">
+            <span class="input-group-addon min-width">To Date</span>
+            <input type="text" class="form-control" formControlName="toDate"
+                   #toDate="bsDatepicker" bsDatepicker readonly>
+            <span class="input-group-addon btn btn-blue" (click)="toDate.toggle()"
+                  [attr.aria-expanded]="toDate.isOpen">
+          <i class="fa fa-calendar"></i>
+        </span>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="input-group form-group">
+            <span class="input-group-addon min-width">Dealer</span>
+            <multi-column-select-control formControlName="dealerControl"
+                                         displayField="abbreviation"
+                                         [fieldGrid]="dealerGridField"
+                                         [list]="dealers">
+            </multi-column-select-control>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-blue" (click)="runReport()"><i class="fa fa-download"></i> Run report
+          </button>
+          <button type="button" class="btn btn-blue ml-3" (click)="export()"><i class="fa fa-download"></i> Export
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Sell Report
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+      ></grid-table>
+    </div>
+  </div>
+</div>

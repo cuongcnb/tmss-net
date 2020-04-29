@@ -1,0 +1,15 @@
+.blk {
+  position: relative;
+  .form-control {
+    width: calc(100% - 105px);
+  }
+  .btn-blue {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.same-addon-width {
+  min-width: 75px;
+}

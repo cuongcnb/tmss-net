@@ -1,0 +1,188 @@
+<div class="panel panel-default">
+
+  <div class="panel-body">
+    <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" class="row mb-3">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-group input-group">
+            <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Số phiếu giao hàng">SPGH
+            </div>
+            <input type="text" class="form-control" formControlName="sVourcher">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group input-group">
+            <div class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Mã phụ tùng">Mã PT</div>
+            <input type="text" class="form-control" formControlName="partCode">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <tmss-datepicker text="Ngày GH từ" data-toggle="tooltip" data-placement="bottom" title="Ngày giao hàng từ"
+            formControlName="fromDate"></tmss-datepicker>
+        </div>
+        <div class="col-sm-3">
+          <tmss-datepicker text="Đến" formControlName="toDate"></tmss-datepicker>
+        </div>
+
+        <div class="col-sm-1 search-group">
+          <checkbox text="Lưu nháp?" formControlName="claimStatus"></checkbox>
+        </div>
+        <div class="col-sm-1 text-right">
+          <button class="btn btn-blue" (click)="search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+
+      </div>
+      <div class="row">
+
+      </div>
+    </form>
+  </div>
+</div>
+<div class="pt-2">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseSendClaimList"
+              aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseSendClaimList" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="fieldInvoice" (callbackGrid)="callbackInvoice($event)"
+            (getParams)="getParamsInvoice()" height="205px" [paginationTotalsData]="paginationTotalsInvoice"
+            (changePaginationParams)="changePaginationParamsInvoice($event)"></grid-table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Chi tiết
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseSendClaimDetail"
+              aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseSendClaimDetail" class="panel-collapse collapse in">
+
+          <div class="panel-body">
+            <form [formGroup]="invoiceForm" *ngIf="invoiceForm" novalidate autocomplete="off" class="row mb-3">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Số ĐH</span>
+                    <input type="text" class="form-control" formControlName="orderNo">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Số HĐ đỏ</span>
+                    <input type="text" class="form-control" formControlName="invoiceNo">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <tmss-datepicker text="Ngày nhận" formControlName="modifiedDate"></tmss-datepicker>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <tmss-datepicker text="Ngày lưu" formControlName="createdDate"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Ghi chú</span>
+                    <textarea class="form-control" rows="4" formControlName="dlrRemark"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Sai</span>
+                    <input type="text" class="form-control" formControlName="wrongQty">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Vỡ</span>
+                    <input type="text" class="form-control" formControlName="brokenQty">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Hỏng</span>
+                    <input type="text" class="form-control" formControlName="failQty">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group input-group">
+                    <span class="input-group-addon min-width">Thiếu</span>
+                    <input type="text" class="form-control" formControlName="lackQty">
+                  </div>
+                </div>
+              </div>
+              <div class="row text-right">
+                <div class="col-sm-12">
+                  <button type="button" class="btn btn-blue mr-2" [disabled]="disableSaveClaimBtn"
+                    (click)="saveClaim()">Lưu
+                  </button>
+                  <button type="button" class="btn btn-blue mr-2" [disabled]="!selectedInvoice?.claimId"
+                    (click)="openModal()">Gửi
+                  </button>
+                  <button type="button" class="btn btn-blue mr-2" [disabled]="!selectedInvoice || selectedInvoice?.claimStatus==null"
+                    (click)="attachedFileModal.open(selectedInvoice.claimId)">File đính kèm</button>
+                  <button type="button" class="btn btn-blue" (click)="showApprovalCaimModal()">Kết quả</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+      </div>
+      <grid-table [fieldGrid]="fieldParts" [height]="'300px'" [showPagination]="false"
+        (callbackGrid)="callBackParts($event)" (getParams)="getParamsParts()"
+        (cellEditingStarted)="cellEditingStarted($event)" (cellEditingStopped)="cellEditingStopped($event)"
+        (keyup)="agKeyUp($event)"></grid-table>
+
+    </div>
+  </div>
+  <send-claim-attached-file-modal #attachedFileModal 
+    (listFile)="listFile = $event"
+    (search)="search()"
+    (save)="saveClaim()"
+  ></send-claim-attached-file-modal>
+  <approval-claim-modal #approvalClaimModal></approval-claim-modal>
+  <send-claim-modal #sendClaimModal 
+    [partsRecvId]="selectedInvoice?.partsRecvId"
+    [orderNo]="selectedInvoice?.orderNo"
+    [invoiceNo]="selectedInvoice?.invoiceNo"
+    [listFile]="listFile"
+    (attachedFile)="attachedFileModal.open(selectedInvoice.claimId)"
+    (search)="search()"
+    (save)="saveClaim()"
+  ></send-claim-modal>

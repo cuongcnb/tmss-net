@@ -189,6 +189,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/flex-layout@~8.0.0-beta.26":
+  version "8.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-8.0.0-beta.27.tgz#a697d5a90e6d04c06b02ee872f88f384d1723f7c"
+  integrity sha512-qmpvQPesU4ZQ56IscwgmVRpK2UnyV+gwvXUql7TMv0QV215hLcHczjGsrKkLfW2By5E7XEyDat9br72uVXcPMw==
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/forms@^8.2.5":
   version "8.2.5"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-8.2.5.tgz#3d86574b344ffbe51403bf7237585cf42daaa8ab"
@@ -244,6 +251,13 @@
     eventsource "^1.0.7"
     request "^2.88.0"
     ws "^6.0.0"
+
+"@auth0/angular-jwt@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@auth0/angular-jwt/-/angular-jwt-3.0.0.tgz#c484af3d6faadfa1b3b4beb0646b60a562ceed8e"
+  integrity sha512-Ky8hghnEx+CtCd097YXji08/LvLTG98IAEX/j1UgnutRDhQ31eczOohDn98v3i3MHNfLjfI3HdyxPK1Qc0IkZw==
+  dependencies:
+    url "^0.11.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -914,6 +928,13 @@
     semver "6.3.0"
     semver-intersect "1.4.0"
 
+"@sweetalert2/ngx-sweetalert2@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/ngx-sweetalert2/-/ngx-sweetalert2-5.1.0.tgz#3e4b259064ca3dcc8cf54edc8cd8bcdf36fb72a4"
+  integrity sha512-2SYaYLkFocAnCpaDLd0b+BZeuFy1Nvkn4ctIVRy08neWiC01zSOoKbi+PT/VXplQEoPyb6EldcJmgaIUhTsCiQ==
+  dependencies:
+    tslib "^1.9.0"
+
 "@swimlane/ngx-charts@^12.0.1":
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/@swimlane/ngx-charts/-/ngx-charts-12.0.1.tgz#ad7200d2bd7255e9dc64d13bfca412e7d4569ad0"
@@ -931,6 +952,11 @@
     d3-selection "^1.1.0"
     d3-shape "^1.2.0"
     d3-time-format "^2.1.0"
+
+"@types/dragula@^2.1.34":
+  version "2.1.35"
+  resolved "https://registry.yarnpkg.com/@types/dragula/-/dragula-2.1.35.tgz#3214c575436fbe2f8ff8958acab3f062a320361c"
+  integrity sha512-kh0O22j8QVh7xU0P6Penwext6xVMNldVEzvtOAHU1/AzdluYstc9pe2nUL3fS6IZRyzSoSGvdR/u8zP2iIZmnA==
 
 "@types/events@*":
   version "3.0.0"
@@ -965,6 +991,13 @@
   integrity sha512-d9p31r7Nxk0ZH0U39PTH0hiDlJ+qNVGjlt1ucOoTUptxb2v+Y5VMnsxfwN+i3hK4yQnqBi3FMmoMFcd1JHDxdg==
   dependencies:
     "@types/jasmine" "*"
+
+"@types/jquery@3.3.29":
+  version "3.3.29"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.29.tgz#680a2219ce3c9250483722fccf5570d1e2d08abd"
+  integrity sha512-FhJvBninYD36v3k6c+bVk1DSZwh7B5Dpb/Pyk3HKVsiohn0nhbefZZ+3JXbWQhFyt0MxSl2jRDdGQPHeOHFXrQ==
+  dependencies:
+    "@types/sizzle" "*"
 
 "@types/lodash@^4.14.144":
   version "4.14.144"
@@ -1002,6 +1035,11 @@
   version "3.0.16"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-3.0.16.tgz#50a4755f8e33edacd9c406729e9b930d2451902a"
   integrity sha512-lMC2G0ItF2xv4UCiwbJGbnJlIuUixHrioOhNGHSCsYCJ8l4t9hMCUimCytvFv7qy6AfSzRxhRHoGa+UqaqwyeA==
+
+"@types/sizzle@*":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
+  integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -1248,6 +1286,21 @@ after@0.8.2:
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
   integrity sha1-/ts5T58OAqqXaOcCvaI7UF+ufh8=
 
+ag-grid-angular@21.1.0:
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-angular/-/ag-grid-angular-21.1.0.tgz#2a377958435ed865dd1ff2f6cf365d42ddd95dce"
+  integrity sha512-w5qdA2XHL/RfPDY8sAmuYAwpAnxBy2Oju36cjUe/EX+/dN3H/UUOrnMrQB24nLzj1ltzUTnl7v9qJ+kgUbNw5w==
+
+ag-grid-community@21.1.0:
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-21.1.0.tgz#d8dba9486c2ef1879f9d97496183711b406258c2"
+  integrity sha512-giWg653lxihzRulz4tiiSAewaZVeSvA3GN+uIY5LEHfJ8Eb2FWbI2IZ1n+KMhnuvMy7936dOflTYm8m0sxXplA==
+
+ag-grid-enterprise@21.1.0:
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-21.1.0.tgz#d89111b44e2f1adaf73ca6c0eda1fd055f88f9a5"
+  integrity sha512-D5CUrMGl5YclrQibEQl6mGwA/bgzkjpqzpT1HhQuRrPkaXT1496q1qb6NHE8hlazvur6c7iGKOQHajY20xZTnQ==
+
 agent-base@4, agent-base@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-4.3.0.tgz#8165f01c436009bccad0b1d122f05ed770efc6ee"
@@ -1327,6 +1380,22 @@ angular-oauth2-oidc@^8.0.4:
   dependencies:
     jsrsasign "^8.0.12"
     tslib "^1.9.0"
+
+angular-resizable-element@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/angular-resizable-element/-/angular-resizable-element-3.3.0.tgz#7927f72ed2b782961e1837b9a5a9566924ad2013"
+  integrity sha512-rnyeT2/kdJcDzkSAYCecjiBtP75WMI8TF2a63pRSIFWbE3x3kTZmnhIDxW+RFqIlg+MyHfRFXYiGBhjzgkvb+Q==
+  dependencies:
+    tslib "^1.9.0"
+
+angular-tree-component@8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/angular-tree-component/-/angular-tree-component-8.4.0.tgz#1e36118e4a5c0e573764a2a58efd66ec793fdc20"
+  integrity sha512-+3TKGI2Ta0DIfrt2urR6YKDPh7Xv/zuFG3YxWMNAVJY6SPlX9tFT8+pBxzXmcTgI2MDZT7M3Ft6eifQdt4krBw==
+  dependencies:
+    lodash "^4.17.11"
+    mobx "^3.6.2"
+    mobx-angular "2.1.1"
 
 angular2-counto@^1.2.5:
   version "1.2.5"
@@ -1703,6 +1772,11 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
+
+atoa@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/atoa/-/atoa-1.0.0.tgz#0cc0e91a480e738f923ebc103676471779b34a49"
+  integrity sha1-DMDpGkgOc4+SPrwQNnZHF3mzSkk=
 
 atob@^2.1.1:
   version "2.1.2"
@@ -2661,6 +2735,14 @@ content-type@~1.0.4:
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
+contra@1.9.4:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/contra/-/contra-1.9.4.tgz#f53bde42d7e5b5985cae4d99a8d610526de8f28d"
+  integrity sha1-9TveQtfltZhcrk2ZqNYQUm3o8o0=
+  dependencies:
+    atoa "1.0.0"
+    ticky "1.0.1"
+
 convert-source-map@^1.1.0, convert-source-map@^1.5.0, convert-source-map@^1.5.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
@@ -2800,6 +2882,11 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+cropperjs@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.3.2.tgz#b8fff7f3379370bef81491e233386e89a42c2904"
+  integrity sha512-r5SE9E+pz3JnTEApavBzLuH9ZOkL45YSCafgxeXztxq6hhUMupTz4Vr/d8YLL5HwTTjKlF/NdLDaFv5KIoriyA==
+
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -2810,6 +2897,13 @@ cross-spawn@^6.0.0:
     semver "^5.5.0"
     shebang-command "^1.2.0"
     which "^1.2.9"
+
+crossvent@1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/crossvent/-/crossvent-1.5.4.tgz#da2c4f8f40c94782517bf2beec1044148194ab92"
+  integrity sha1-2ixPj0DJR4JRe/K+7BBEFIGUq5I=
+  dependencies:
+    custom-event "1.0.0"
 
 crypto-browserify@^3.11.0:
   version "3.12.0"
@@ -2858,6 +2952,11 @@ cuint@latest:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cuint/-/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
   integrity sha1-QICG1AlVDCYxFVYZ6fp7ytw7mRs=
+
+custom-event@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/custom-event/-/custom-event-1.0.0.tgz#2e4628be19dc4b214b5c02630c5971e811618062"
+  integrity sha1-LkYovhncSyFLXAJjDFlx6BFhgGI=
 
 custom-event@~1.0.0:
   version "1.0.1"
@@ -3546,6 +3645,14 @@ domino@^2.1.2:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/domino/-/domino-2.1.3.tgz#0ca1ad02cbd316ebe2e99e0ac9fb0010407d4601"
   integrity sha512-EwjTbUv1Q/RLQOdn9k7ClHutrQcWGsfXaRQNOnM/KgK4xDBoLFEcIRFuBSxAx13Vfa63X029gXYrNFrSy+DOSg==
+
+dragula@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/dragula/-/dragula-3.7.2.tgz#4a35c9d3981ffac1a949c29ca7285058e87393ce"
+  integrity sha1-SjXJ05gf+sGpScKcpyhQWOhzk84=
+  dependencies:
+    contra "1.9.4"
+    crossvent "1.5.4"
 
 duplexify@^3.4.2, duplexify@^3.6.0:
   version "3.7.1"
@@ -5535,6 +5642,11 @@ jasminewd2@^2.1.0:
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
   integrity sha1-43zwsX8ZnM4jvqcbIDk5Uka07E4=
 
+jquery@~3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
+  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
+
 js-cookie@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
@@ -6312,6 +6424,16 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
+mobx-angular@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/mobx-angular/-/mobx-angular-2.1.1.tgz#d5e36539acb200186dd5a1170806b4776b9a8b88"
+  integrity sha1-1eNlOayyABht1aEXCAa0d2uai4g=
+
+mobx@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.6.2.tgz#fb9f5ff5090539a1ad54e75dc4c098b602693320"
+  integrity sha512-Dq3boJFLpZEvuh5a/MbHLUIyN9XobKWIb0dBfkNOJffNkE3vtuY0C9kSDVpfH8BB0BPkVw8g22qCv7d05LEhKg==
+
 moment-range@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/moment-range/-/moment-range-4.0.2.tgz#f7c3863df2a1ed7fd1822ba5a7bcf53a78701be9"
@@ -6426,6 +6548,11 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+net@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/net/-/net-1.0.2.tgz#d1757ec9a7fb2371d83cf4755ce3e27e10829388"
+  integrity sha1-0XV+yaf7I3HYPPR1XOPifhCCk4g=
+
 next-tick@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -6438,6 +6565,13 @@ ng-keyboard-shortcuts@8.2.5:
   dependencies:
     tslib "^1.9.0"
 
+ng-multiselect-dropdown@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/ng-multiselect-dropdown/-/ng-multiselect-dropdown-0.2.3.tgz#32f18b1f01fba7854524496c1639183adaeb6fa8"
+  integrity sha512-xY//BPXxiApzhGxVTDaSKiiW245GKBuZFCka7W9mG/2sWWIi3Geie7k0XtZv+1ItclFL+OxFZATHBYW5QULgvg==
+  dependencies:
+    tslib "^1.7.1"
+
 ng-recaptcha@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ng-recaptcha/-/ng-recaptcha-5.0.0.tgz#3aa3344b17e2954ba0eb0e27daf97e216c006b4f"
@@ -6446,6 +6580,14 @@ ng-recaptcha@^5.0.0:
     tslib "^1.9.0"
   optionalDependencies:
     "@types/grecaptcha" "^2.0.33"
+
+ng2-dragula@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ng2-dragula/-/ng2-dragula-2.1.1.tgz#350e78978b6f7e1ea0b16c61ba78161c84ec6386"
+  integrity sha512-PSo6N2Ja894KDogVLLBI0Hzpylikay7L1hWqp+qQmW+qsNsNT9J/6J2Qim9XwGzK4VQZjAwBJaJjgJ/TijRkLQ==
+  dependencies:
+    "@types/dragula" "^2.1.34"
+    dragula "^3.7.2"
 
 ng2-file-upload@^1.4.0:
   version "1.4.0"
@@ -6466,6 +6608,13 @@ ngx-contextmenu@5.2.0:
   dependencies:
     tslib "^1.9.0"
 
+ngx-editor@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-editor/-/ngx-editor-4.1.0.tgz#3ec5820627f25a2239094747cccf88a7ca02f79f"
+  integrity sha512-TdbFoHYJjWjyrYEw6fiYrP50s7mLcRErvSYfQ+Nz47Hse44klogi7FDl+hUjVZPBQVc5xXtTwcGSzId3ptxf8w==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-image-cropper@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ngx-image-cropper/-/ngx-image-cropper-1.5.1.tgz#1ec728beb7809349a30df5ef5fc76e3bc0966c6c"
@@ -6480,6 +6629,11 @@ ngx-perfect-scrollbar@^8.0.0:
   dependencies:
     perfect-scrollbar "^1.4.0"
     resize-observer-polyfill "^1.5.0"
+
+ngx-select-dropdown@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/ngx-select-dropdown/-/ngx-select-dropdown-1.3.1.tgz#97dfaf423d62b8c33d300530b44543a1108befa1"
+  integrity sha512-KnuLGe6ctzO+duA9dI3m/rU8PtqkJPC68ZJle2dv+2bX3U6GCv6gtaUAETxjsY6S9+9Ol7l+1aR7jPj8d6X6LA==
 
 ngx-spinner@^8.0.3:
   version "8.0.3"
@@ -8960,6 +9114,11 @@ thunky@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.0.3.tgz#f5df732453407b09191dae73e2a8cc73f381a826"
   integrity sha512-YwT8pjmNcAXBZqrubu22P4FYsh2D4dxRmnWBOL8Jk8bUcRUtc5326kx32tuTmFDAZtLOGEVNl8POAR8j896Iow==
+
+ticky@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ticky/-/ticky-1.0.1.tgz#b7cfa71e768f1c9000c497b9151b30947c50e46d"
+  integrity sha1-t8+nHnaPHJAAxJe5FRswlHxQ5G0=
 
 time-stamp@^1.0.0:
   version "1.1.0"

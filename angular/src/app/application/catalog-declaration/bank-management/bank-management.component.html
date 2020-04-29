@@ -1,0 +1,33 @@
+<div>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh mục ngân hàng
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseBankManagementList" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseBankManagementList" class="panel-collapse collapse in">
+        <grid-table [fieldGrid]="fieldGrid"
+                    (callbackGrid)="callbackGridBank($event)"
+                    (getParams)="getParamsBank()"></grid-table>
+      </div>
+    </div>
+    <div class="my-3 text-right grid-table-btn">
+      <button type="button" class="btn btn-blue mr-2" (click)="bankModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="updateBank()">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+      <button type="button" [disabled]="btnDeleteState" class="btn btn-blue" (click)="deleteBank()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>
+
+<bank-management-modal #bankModal (close)="refreshList()"></bank-management-modal>

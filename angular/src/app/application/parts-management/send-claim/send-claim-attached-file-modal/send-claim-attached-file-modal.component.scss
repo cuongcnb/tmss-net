@@ -1,0 +1,13 @@
+.search-group {
+  .input-group {
+    width: calc(100% - 85px);
+  }
+
+  .input-group-addon {
+    width: 75px !important;
+  }
+}
+
+#btn-choose-File {
+  height: 26px;
+}

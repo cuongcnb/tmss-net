@@ -1,0 +1,83 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <form [formGroup]="searchForm" *ngIf="searchForm">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Lexus trả hàng cho đại lý</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="90px"> Số phiếu giao hàng</span>
+                  <input type="text" class="form-control" formControlName="svourcher">
+                </div>
+                <!--Số phiếu giao hàng: <strong class="ml-2">{{invoice?.svourcher}}</strong>-->
+              </div>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <span class="input-group-addon" addonWidth="90px"> Số đơn hàng Lexus gửi</span>
+                  <input type="text" class="form-control" formControlName="orderNo">
+                </div>
+                <!--Số đơn hàng: <strong class="ml-2">{{invoice?.orderNo}}</strong>-->
+              </div>
+              <div class="col-sm-4">
+                <tmss-datepicker text="Ngày xuất Invoice" formControlName="shipdate"
+                                 addOnMinWidth="113px"></tmss-datepicker>
+                <!--Ngày xuất Invoice: <strong class="ml-2">{{convertDate(invoice?.createDate)}}</strong>-->
+              </div>
+            </div>
+
+            <div class="mt-2">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="input-group">
+                    <span class="input-group-addon"> Số hóa đơn</span>
+                    <input type="text" class="form-control" formControlName="invoiceNo">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="90px"> Số đơn hàng đại lý gửi</span>
+                    <input type="text" class="form-control" formControlName="orderNo">
+                  </div>
+                  <!--Số đơn hàng: <strong class="ml-2">{{invoice?.orderNo}}</strong>-->
+                </div>
+                <div class="col-sm-4">
+                  <tmss-datepicker text="Ngày nhận hàng" formControlName="modifydate"
+                                   addOnMinWidth="113px"></tmss-datepicker>
+                  <!--Ngày nhận hàng: <strong class="ml-2">{{convertDate(invoice?.shipdate)}}</strong>-->
+                </div>
+              </div>
+            </div>
+            <div class="grid-table-area mt-3">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i class="fa fa-info"></i>
+                </div>
+                <grid-table *ngIf="modal.isShown"
+                            [fieldGrid]="fieldPartsList"
+                            (callbackGrid)="callbackParts($event)"
+                            (cellDoubleClicked)="cellPartsDoubleClicked($event)"></grid-table>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="btns-group text-center">
+            <button class="btn btn-blue px-4 mr-2" (click)="returnParts()"><i class="fa fa-sign-in"></i> Trả hàng
+            </button>
+            <button class="btn btn-light-grey  px-4" (click)="modal.hide()"><i class="fa fa-times"></i> Quay về</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--<report-type-modal #reportTypeModal (close)="downloadReport($event)"></report-type-modal>-->

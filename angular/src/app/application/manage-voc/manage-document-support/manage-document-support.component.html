@@ -1,0 +1,95 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Tài liệu hỗ trợ
+  </div>
+  <div class="panel-body">
+    <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Model</span>
+              <select class="form-control" formControlName="model"></select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tiêu đề</span>
+              <input class="form-control" formControlName="title">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-blue mb-2" (click)="search()">
+            <i class="fa fa-search"></i>
+            Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <grid-table [fieldGrid]="fieldGird"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                [height]="'200px'"
+    ></grid-table>
+
+    <div>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onAdd()">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onEdit()">
+        <i class="fa fa-edit"></i>
+        Sửa
+      </button>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onDel()">
+        <i class="fa fa-trash-o"></i>
+        Xóa
+      </button>
+      <button class="btn btn-blue mr-2 mb-2">
+        <i class="clip-download"></i>
+        Xuất excel
+      </button>
+    </div>
+
+    <div class="panel panel-default mt-3">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Chi tiết tài liệu hỗ trợ
+      </div>
+      <grid-table [fieldGrid]="fieldGridDetail"
+                  (callbackGrid)="callbackGridDetail($event)"
+                  (getParams)="getParamsDetail()"
+                  [height]="'250px'"
+      ></grid-table>
+    </div>
+
+
+    <div>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onAddDetail()">
+        <i class="fa fa-plus"></i>
+        Thêm
+      </button>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onEditDetail()">
+        <i class="fa fa-edit"></i>
+        Sửa
+      </button>
+      <button class="btn btn-blue mr-2 mb-2" (click)="onDelDetail()">
+        <i class="fa fa-trash-o"></i>
+        Xóa
+      </button>
+      <button class="btn btn-blue mr-2 mb-2">
+        <i class="clip-download"></i>
+        Xuất excel
+      </button>
+    </div>
+  </div>
+</div>
+
+<add-document-modal #addDocumentModal></add-document-modal>
+<add-document-detail-modal #addDocumentDetailModal></add-document-detail-modal>
+

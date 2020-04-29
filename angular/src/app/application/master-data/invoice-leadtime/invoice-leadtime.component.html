@@ -1,0 +1,34 @@
+<div pageTitle="Invoice Lead-time">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Invoice Lead-time
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [showPagination]="false"
+                  [height]="'500px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="modifyInvoiceModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedInvoice" (click)="deleteInvoiceLeadTime()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modify-invoice-modal #modifyInvoiceModal (close)="refreshList()"></modify-invoice-modal>

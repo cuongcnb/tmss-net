@@ -1,0 +1,22 @@
+.bottom-detail {
+
+  .table-container {
+    height: 80px;
+    display: table;
+
+    .table-cell {
+      vertical-align: middle;
+      display: table-cell;
+    }
+  }
+}
+
+.input-group {
+  .input-group-addon.percent-addon {
+    min-width: 0 !important;
+  }
+}
+
+.same-addon-width {
+  min-width: 75px;
+}

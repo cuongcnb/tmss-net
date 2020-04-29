@@ -1,0 +1,50 @@
+<div class="modal fade" bsModal #dealerVersionTypeModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header" *ngIf="!selectedData">Add new dealer version type</h5>
+          <h5 class="title-header" *ngIf="selectedData">Update dealer version type</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6" hasError="dataType">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Data Type</span>
+                  <select class="form-control required" formControlName="dataType" [compareWith]="compareFn">
+                    <option *ngFor="let val of dataOrderConfigType" [ngValue]="val.key">{{val.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Data Type is required</div>
+                </div>
+              </div>
+              <div class=" col-md-6" hasError="versionType">
+                <div class="form-group input-group">
+                  <span [style.minWidth]="'80px'" class="input-group-addon">Version Type</span>
+                  <input type="text" class="form-control required" formControlName="versionType">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Version Type is required</div>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,300 @@
+::ng-deep * {
+  .fa-info{
+    height: 25px!important;
+  }
+  .planning-vehicle {
+    background: #B4C7E7;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .fixing-vehicle {
+    background: #4473C5;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 11;
+  }
+
+  .stopping-vehicle {
+    background: #7F807B;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 12;
+  }
+
+  .complete-vehicle {
+    background: #008000;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .performed-vehicle {
+    background: #304D65;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 13;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .priority-vehicle {
+    background: #ff9c00;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .delay-vehicle {
+    background: #EC1A22;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .delay-plan-vehicle {
+    background: #f76969e8;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .wshop-focus-vehicle {
+    background: #20b5ae !important;
+  }
+
+  .wshop-focus-vehicle-wait {
+    background: #20b5ae !important;
+  }
+}
+
+.panel-default {
+  height: calc(100% - 150px);
+
+  .panel-heading {
+    overflow: inherit;
+  }
+
+  .panel-body {
+    height: calc(100% - 25px);
+  }
+}
+
+.progress-status {
+  & > .float-left {
+    background: #327AB6;
+    padding: 5px;
+    white-space: nowrap;
+    color: #fff;
+  }
+}
+
+.main-table {
+  padding-right: 43px;
+
+  .table-header {
+    & > div {
+      height: 52px;
+    }
+
+    .shop {
+      padding-left: 180px;
+    }
+  }
+
+  .table-body {
+    .shop {
+      padding: 10px 0 10px 190px;
+      font-size: 15px !important;
+    }
+
+    .emp {
+      padding: 5px;
+
+      .ktv {
+        font-size: 15px !important;
+      }
+    }
+
+    .progress-area {
+      width: calc(60% - 61px);
+      left: calc(40% + -28px);
+    }
+
+    .wshop-progress-area {
+      height: 100%;
+    }
+
+    .wshop-td {
+      position: relative;
+      height: 33px;
+      top: 0;
+    }
+  }
+
+  .shop {
+    float: left;
+    width: 27%;
+    border-right: 1px solid #BDC3C7;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;  }
+
+  .emp {
+    float: left;
+    width: 13%;
+    border-right: 1px solid #BDC3C7;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;  }
+
+  .prg {
+    position: relative;
+    float: left;
+    width: 60%;
+  }
+}
+
+.float-left {
+  padding: 5px;
+  font-size: 11px !important;
+}
+
+::ng-deep.general-repair .input-group-addon {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair input:not([type='radio']) {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair select {
+  height: 30px !important;
+}
+
+.body-wshop-waiting-vehicle {
+  overflow-y: auto;
+}
+
+.body-general-repair-employee {
+  overflow-y: auto;
+}
+
+.waiting-vehicle {
+  left: 0 !important;
+}
+
+
+.main-table {
+  padding-right: 0;
+
+  .shop {
+    float: left;
+    width: 7.5%;
+    overflow-y: hidden;
+
+  }
+
+  .table-header {
+    .shop {
+      padding-left: 110px;
+    }
+  }
+
+  .table-body {
+    .shop {
+      padding: 30px 0 10px 120px;
+      font-size: 15px !important;
+    }
+
+    .progress-area {
+      width: calc(85.5% - 0px);
+      left: calc(7.5% + 0px);
+    }
+
+    .wshop-td {
+      height: 43px;
+    }
+  }
+}
+
+.progress-coo {
+  .panel-additional-info {
+    width: 110px;
+  }
+
+  .main-table {
+    .table-body {
+      .body-content {
+        & > div {
+          height: 43px;
+
+          & > div {
+            height: 43px;
+          }
+        }
+      }
+    }
+  }
+}
+.col132{
+  width: 0px !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ddd !important;
+}
+.title-wshop {
+  padding: 0 !important;
+  font-size: 11px !important;
+}
+
+.stop-width {
+  width: 7% !important;
+}
+
+.vehicle-pending-ds {
+  color: white;
+  background: #5e5e5e;
+}
+
+.non-hover:hover {  
+  background: #5E5E5E !important;
+}
+
+.border-around {
+  border: 1px solid #DDDDDD;
+}
+
+.header-wshop {
+  font-weight: bold;
+  color: #707070;
+  padding: 0px !important;
+}
+
+.h-36 {
+  height: 36px !important;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.float-left-button {
+  float: left;
+}
+
+.view-style {
+  padding-left: 20px;
+  padding-top: 5px;
+}

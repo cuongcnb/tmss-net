@@ -1,0 +1,9 @@
+<table>
+  <tr>
+    <td class="form-group">
+      <input class="form-control text-center" #inputHour maxlength="2" placeholder="HH" (input)="onChange($event.target.value, 'h')">
+      <input class="form-control text-center" #inputMinute maxlength="2" placeholder="MM" (input)="onChange($event.target.value, 'm')">
+      <!--      <button class="btn btn-blue float-right" (click)="onBtnAccept()">Đồng ý</button>-->
+    </td>
+  </tr>
+</table>

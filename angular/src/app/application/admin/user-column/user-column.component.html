@@ -1,0 +1,61 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-md-5 form-group" *ngIf="usersData && usersData.length>0">
+        <div class="input-group">
+          <label class="input-group-addon">User</label>
+          <multi-column-select-control formControlName="user"
+                                       displayField="userName"
+                                       [fieldGrid]="userGridField"
+                                       [list]="usersData">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <div class="input-group">
+          <label class="input-group-addon">Form</label>
+          <select class="form-control" formControlName="formId">
+            <option *ngFor="let form of formsData" [ngValue]="form.id">{{form.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4 form-group">
+        <div class="input-group">
+          <label class="input-group-addon">Group</label>
+          <select class="form-control" formControlName="groupId">
+            <option *ngFor="let group of groupsData" [ngValue]="group.id">
+              {{group.groupCode}} - {{group.groupName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Column List
+      <div class="panel-tools">
+        <div class="btn btn-xs btn-link mr-3">
+          <input type="checkbox" [(ngModel)]="isViewAll" (change)="isViewAllChange()" [disabled]="!columnsData">
+          <span> View All</span>
+        </div>
+        <div class="btn btn-xs btn-link mr-3">
+          <input type="checkbox" [(ngModel)]="isUpdateAll" (change)="isUpdateAllChange()" [disabled]="!columnsData">
+          <span> Update All</span>
+        </div>
+        <button class="btn btn-xs btn-link" (click)="refreshList()" [disabled]="!columnsData">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="gridField"
+                (callbackGrid)="callbackGrid($event)">
+    </grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue" (click)="save()" [disabled]="!columnsData || !isChanged">
+        <i class="fa fa-save"></i> Save Changes
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="search()">
+    <div class="row">
+      <div class="form-group col-md-4">
+        <div class="input-group w-span">
+          <span class="input-group-addon">Đại lý</span>
+          <select class="form-control" formControlName="dlrId">
+            <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon">Trạng thái</span>
+          <select class="form-control" formControlName="status">
+            <option value="IN">Xe vào</option>
+            <option value="OUT">Xe ra</option>
+            <option value="ALL">Xe vào & ra</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <div class="input-group w-span">
+          <span class="input-group-addon">Biển số</span>
+          <input formControlName="registerNo" class="form-control">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+      </div>
+      <div class="form-group col-md-4">
+        <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+      </div>
+      <div class="form-group col-md-4 pl-0">
+        <button class="btn btn-blue" type="submit" (click)="search();resetPaginationParams()">
+          <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Xe ra vào cổng Đại lý
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseGateInOut"
+                aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseGateInOut" class="panel-collapse collapse in">
+
+      <grid-table [fieldGrid]="fieldGrid"
+                  [excelStyles]="excelStyles"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [frameworkComponents]="frameworkComponents"
+                  (getParams)="getParams($event)"
+                  (callbackGrid)="callbackGrid($event)"
+                  [rowClassRules]="rowClassRules"
+                  [paginationTotalsData]="paginationTotalsData">
+      </grid-table>
+    </div>
+  </div>
+
+  <div class="my-3" style="text-align: right">
+    <button class="btn btn-blue mr-2" (click)="vehicleInOut.open()">
+      <i class="fa fa-plus"></i> Thêm mới
+    </button>
+    <button class="btn btn-blue mr-2" (click)="updateInfo()">
+      <i class="fa fa-edit"></i> Cập nhật
+    </button>
+    <button class="btn btn-blue mr-2" (click)="deleteData()">
+      <i class="fa fa-trash-o"></i> Xóa xe
+    </button>
+    <button class="btn btn-blue mr-2" (click)="removeVehicleOut()">
+      <i class="fa fa-times"></i> Hủy xe ra
+    </button>
+
+    <span>
+      <button class="btn btn-blue mr-2" (click)="reportTypeModal.open(1)">
+        <i class="fa fa-cloud-download"></i> In phiếu
+      </button>
+      <button class="btn btn-blue" (click)="exportExcel()">
+        <i class="fa fa-cloud-download"></i> Xuất Excel
+      </button>
+    </span>
+  </div>
+</div>
+<vehicle-in-out-modal #vehicleInOut (close)="refresh()" (shortcutsMoldal)="shortcutsMoldal = $event"></vehicle-in-out-modal>
+<tmss-export [fieldGrid]="fieldGrid" (getExportParams)="exportParams = $event"></tmss-export>
+<report-type-modal #reportTypeModal (close)="printGateInOut($event)"></report-type-modal>

@@ -1,0 +1,54 @@
+<div pageTitle="Yard Location">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Yard List
+        <div class="panel-tools">
+          <a role="button" class="btn btn-xs btn-link panel-refresh" href="#" (click)="refreshYardList()">
+            <i class="fa fa-refresh"></i>
+          </a>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridYard"
+                  (callbackGrid)="callbackGridYard($event)"
+                  (getParams)="getParamsYard()"
+                  [showPagination]="false"
+                  [height]="'200px'"
+      ></grid-table>
+    </div>
+  </div>
+
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Location of Yard
+        <div class="panel-tools">
+          <a role="button" class="btn btn-xs btn-link panel-refresh" href="#" (click)="refreshLocationList()">
+            <i class="fa fa-refresh"></i>
+          </a>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridLocation"
+                  (callbackGrid)="callbackGridLocation($event)"
+                  (getParams)="getParamsLocation()"
+                  [showPagination]="false"
+                  [height]="'300px'"
+                  overlayLoadingTemplate="Please choose a yard to show location">
+      </grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addLocation()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateLocationData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedLocation" (click)="deleteLocation()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<yard-location-modal #yardLocationModal (close)="refreshLocationList()"></yard-location-modal>

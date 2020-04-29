@@ -1,0 +1,73 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết đơn hàng BO </h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Số LSC</span>
+                    <input type="text" class="form-control" formControlName="soRo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Biển số xe</span>
+                    <input type="text" class="form-control" formControlName="bienSoXe">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Cố vấn dịch vụ</span>
+                    <input type="text" class="form-control" formControlName="tenCvdv">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Delay</span>
+                    <input type="text" class="form-control red">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              CVDV - Theo dõi đơn hàng BO
+            </div>
+            <grid-table [fieldGrid]="fieldGrid"
+                        (callbackGrid)="callbackGrid($event)"
+                        (cellValueChanged)="cellValueChanged($event)"
+                        [frameworkComponents]="frameworkComponents"
+                        (getParams)="getParams($event)"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue mr-2" (click)="save()">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+        <button class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

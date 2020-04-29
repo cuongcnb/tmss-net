@@ -1,0 +1,95 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}"
+>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Sửa thông tin' : 'Thêm mới'}}</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-12" hasError="dealercode">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Dealer</label>
+                  <select class="form-control required" formControlName="dealercode">
+                    <ng-container>
+                      <option *ngFor="let dealer of dealers" [ngValue]="dealer.code">{{dealer.vnName}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                </div>
+              </div>
+              <div class="form-group col-md-12" hasError="laborRate">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Labor Rate</label>
+                  <input type="text" formControlName="laborRate" class="form-control required">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'floatNumberFormat0'">Không đúng định dạng số (Mẫu: 2.54)</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6" hasError="descvn">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Description</label>
+                  <input type="text" formControlName="descvn" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="pwrdlr">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">PWRDLR</label>
+                  <input type="text" formControlName="pwrdlr" class="form-control required">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'floatNumberFormat0'">Không đúng định dạng số (Mẫu: 2.54)</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6" hasError="prr">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">PRRDLR</label>
+                  <input type="text" formControlName="prr" class="form-control required">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'floatNumberFormat0'">Không đúng định dạng số (Mẫu: 2.54)</div>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="freePm">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">FREEPM</label>
+                  <input type="text" formControlName="freePm" class="form-control required">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'floatNumberFormat0'">Không đúng định dạng số (Mẫu: 2.54)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,35 @@
+<div pageTitle="Insurance Company">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Insurance Company
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="insuranceCompanyGridField"
+                  (callbackGrid)="callbackInsuranceCompanies($event)"
+                  (getParams)="getParamsInsuranceCompany()"
+                  [height]="'500px'"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="insuranceCompanyModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateInsuranceCompany()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedCompany" (click)="deleteInsuranceCompany()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<insurance-company-modal #insuranceCompanyModal (close)="refreshList()"></insurance-company-modal>
+

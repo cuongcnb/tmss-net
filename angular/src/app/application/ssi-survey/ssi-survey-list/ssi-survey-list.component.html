@@ -1,0 +1,34 @@
+<div>
+  <div class="row">
+    <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <tmss-datepicker text="Ngày giao xe từ" formControlName="dayIn"></tmss-datepicker>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <tmss-datepicker text="Đến ngày" formControlName="dayOut"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-blue" type="button" (click)="search()"><i class="fa fa-search"></i> Tìm kiếm</button>
+        <button class="btn btn-blue ml-2" type="button"><i class="fa fa-refresh"></i> Làm mới</button>
+        <button class="btn btn-blue ml-2" type="button"><i class="clip-download"></i> Xuất Excel</button>
+      </div>
+    </form>
+  </div>
+  <div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{webList ? '[Web]-' : ''}} Xử lý khách hàng khảo sát SSI
+      </div>
+      <grid-table
+        [fieldGrid]="ssiSurveyList"
+        (callbackGrid)="callBackSsiSurveyList($event)"
+        (getParams)="getParamsSsiSurveyList()"
+      ></grid-table>
+    </div>
+  </div>
+</div>

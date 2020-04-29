@@ -1,0 +1,163 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin chi tiết của nhân viên
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseStaffDetail" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseStaffDetail" class="panel-collapse collapse in">
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="empCode">
+                <div class="input-group">
+                  <span class="input-group-addon">Mã nhân viên</span>
+                  <input type="text" class="form-control required" formControlName="empCode">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="empName">
+                <div class="input-group">
+                  <span class="input-group-addon">Tên nhân viên</span>
+                  <input type="text" class="form-control required" formControlName="empName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu phải nhập</div>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="sex">
+                <div class="input-group">
+                  <span class="input-group-addon">Giới tính</span>
+                  <select class="form-control" formControlName="sex">
+                    <option [ngValue]="1">Nam</option>
+                    <option [ngValue]="0">Nữ</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="tel">
+                <div class="input-group">
+                  <span class="input-group-addon">Số điện thoại</span>
+                  <input type="text" class="form-control" formControlName="tel">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="birthday">
+                <tmss-datepicker fieldAccessor="input" formControlName="birthday" text="Ngày sinh"></tmss-datepicker>
+              </div>
+              <div class="col-sm-6 form-group" hasError="typeId">
+                <div class="input-group">
+                  <span class="input-group-addon">Kiểu nhân viên</span>
+                  <select class="form-control" formControlName="typeId">
+                    <option></option>
+                    <option *ngFor="let type of empTypes" [ngValue]="type.id">{{type.empTypeName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="titleId">
+                <div class="input-group">
+                  <span class="input-group-addon">Chức danh</span>
+                  <select class="form-control" formControlName="titleId">
+                    <option></option>
+                    <option *ngFor="let title of titleEmps" [ngValue]="title.id">{{title.titleName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="empAddress">
+                <div class="input-group">
+                  <span class="input-group-addon">Địa chỉ</span>
+                  <input type="text" class="form-control" formControlName="empAddress">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="email">
+                <div class="input-group">
+                  <span class="input-group-addon">Email</span>
+                  <input type="text" class="form-control" formControlName="email">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'emailFormat'">Sai định dạng email</div>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="empColor">
+                <div class="input-group">
+                  <span class="input-group-addon">Màu đặc trưng</span>
+                  <input type="text" class="form-control" formControlName="empColor">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 30 kí tự</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-6 col-xs-12" hasError="startDate">
+              <tmss-datepicker fieldAccessor="input" formControlName="startDate" text="Ngày bắt đầu"></tmss-datepicker>
+            </div>
+            <div class="form-group col-md-6 col-sm-6 col-xs-12" hasError="divCode">
+              <div class="input-group">
+                <span class="input-group-addon">Đơn vị</span>
+                <select class="form-control" formControlName="divId">
+                  <option *ngFor="let unit of transferUnitList" [ngValue]="unit.id">
+                    {{unit.divCode}}-{{unit.divName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" hasError="typeJob">
+              <div class="input-group">
+                <span class="input-group-addon">Loại công việc</span>
+                <select class="form-control required" formControlName="typeJob">
+                  <option *ngFor="let type of jobTypes" [ngValue]="type.id">{{type.name}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Yêu cầu phải chọn</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <image-uploader [apiCallUpload]="apiCallUpload.bind(this)"
+                            [apiCallGetImg]="apiCallGetImg.bind(this)"
+                            [isCallGetImg]="isCallGetImg"
+                            (resUpload)="patchImgUrl($event)"
+                            [maxHeight]="178"
+            ></image-uploader>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue" (click)="this.addStaff.emit()">
+          <i class="fa fa-plus"></i> Thêm nhân viên
+        </button>
+        <button type="submit" class="btn btn-blue ml-2" (click)="save()">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+      </div>
+    </div>
+
+  </div>
+</form>

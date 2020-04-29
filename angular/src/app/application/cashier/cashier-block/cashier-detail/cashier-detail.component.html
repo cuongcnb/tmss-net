@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Thông tin hóa đơn
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseCashierDetailInfo" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseCashierDetailInfo" class="panel-collapse collapse in">
+        <grid-table [fieldGrid]="contractGridField"
+                    (callbackGrid)="callbackContract($event)"
+                    (getParams)="getParamsContract()"
+                    [height]="'200px'"
+                    [showPagination]="false"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Nội dung sửa chữa
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseCashierDetailRepair" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseCashierDetailRepair" class="panel-collapse collapse in">
+        <grid-table [fieldGrid]="contractDetailGridField"
+                    (callbackGrid)="callbackContractDetail($event)"
+                    [height]="'200px'"
+                    [showPagination]="false"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+</div>

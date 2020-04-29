@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="form-group col-md-4">
+    <div class="input-group">
+      <span class="input-group-addon">Total demand</span>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group col-md-4">
+    <div class="input-group">
+      <span class="input-group-addon">DAD</span>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group col-md-4">
+    <div class="input-group">
+      <button type="button" class="btn btn-blue">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      ForeCast Stock Order
+    </div>
+    <grid-table
+      [fieldGrid]="gridField"
+      (callbackGrid)="callbackForecast($event)"
+      (getParams)="getParamsForecast()"
+    ></grid-table>
+  </div>
+  <div class="text-right mt-3">
+    <button class="btn btn-blue mr-2 mb-3" (click)="bookStockOrder()">
+      <i class="fa fa-eye"></i> Xem Đơn Hàng
+    </button>
+    <button class="btn btn-blue mr-2 mb-3" (click)="forecastModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2 mb-3" (click)="updateForecast()">
+      <i class="fa fa-edit"></i> Sửa
+    </button>
+    <button class="btn btn-blue mb-3">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+</div>
+<forecast-stock-order-modal #forecastModal (close)="refreshForecast()"></forecast-stock-order-modal>
+<show-stock-order-modal #bookOrder (close)="refreshForecast()"></show-stock-order-modal>

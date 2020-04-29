@@ -1,0 +1,30 @@
+.span-custom{
+  .input-group-addon{
+    min-width: 110px;
+  }
+}
+::ng-deep.input-date-custom {
+  .input-group-addon:first-child {
+    min-width: 110px !important;
+  }
+}
+.span-custom-kh {
+  .input-group-addon{
+    min-width: 105px;
+  }
+}
+.span-80 {
+  .input-group-addon {
+    min-width: 80px;
+  }
+}
+.span-90 {
+  .input-group-addon {
+    min-width: 90px;
+  }
+}
+::ng-deep.date-span-80 {
+  .input-group-addon:first-child {
+    min-width: 80px !important;
+  }
+}

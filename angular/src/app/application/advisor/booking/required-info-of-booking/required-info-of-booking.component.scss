@@ -1,0 +1,29 @@
+.has-border {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+textarea {
+  height: 57px !important;
+}
+
+.panel-body {
+  max-height: unset !important;
+}
+
+.input-group-addon {
+  &.mw-78 {
+    min-width: 78px;
+  }
+  &.mw-63 {
+    min-width: 63px;
+  }
+  &.mw-103 {
+    min-width: 103px;
+  }
+}
+
+.app-changer-count {
+  position: relative;
+  top: -4px;
+}

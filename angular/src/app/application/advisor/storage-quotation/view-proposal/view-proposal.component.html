@@ -1,0 +1,161 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" #content
+      (keydown.enter)="$event.preventDefault()" focusField>
+  <div [style.max-height.px]="screenHeight" (window:resize)="onResize()" class="over-size">
+    <div class="header-form">
+      <div class="row">
+        <div class="col-sm-3  form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">DLRNO</span>
+            <input class="form-control" formControlName="dlrNo">
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">RO#</span>
+            <!--<input class="form-control" formControlName="roNo">-->
+            <select class="form-control" formControlName="roId" (change)="onSelectRo()">
+              <option value=""></option>
+              <option *ngFor="let it of listRoNo" [ngValue]="it.roId">{{it.roNo}} {{it.roNo? '-' : ''}} {{it.roName}}</option>
+            </select>
+
+          </div>
+        </div>
+        <div class="col-sm-3 form-group">
+          <tmss-datepicker formControlName="date" text="Ngày" addOnMinWidth="64px" [ignoredCalender]="true"
+                           [dateInputFormat]="'DD/MM/YYYY HH:mm'"></tmss-datepicker>
+        </div>
+        <div class="col-sm-1 form-group">
+          <div class="float-left">
+            <checkbox text="PDS" formControlName="pds"></checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">Loại hình SC</span>
+            <select class="form-control" formControlName="roType" (change)="changeType($event.target.value)">
+              <option [ngValue]="'2'">S/C chung</option>
+              <option [ngValue]="'1'">Đồng sơn</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">Hình thức thanh toán</span>
+            <select class="form-control" formControlName="rctypeId">
+              <option *ngFor="let type of rcTypes" [ngValue]="type.id"
+                      [ngClass]="(type.rctypename) === claimVehicleOld ? 'opacity' : ''">{{type.rctypename}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="64px">Biển số</span>
+            <input class="form-control required" formControlName="registerno">
+          </div>
+        </div>
+        <div class="col-sm-2 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="44px">VIN</span>
+            <input class="form-control" formControlName="vinno">
+          </div>
+        </div>
+        <div class="col-sm-1 form-group w-20">
+          <div class="input-group">
+            <span class="input-group-addon">Số lần in báo giá</span>
+            <input class="form-control" formControlName="quotationprint">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-7">
+        <cus-info-proposal #cusInfoOfProposal [form]="form" [isSubmit]="isSubmit"></cus-info-proposal>
+      </div>
+      <div class="col-sm-5">
+        <car-info-proposal [kmBefore]="kmBefore" [form]="form" [cmListByType]="cmListByType"></car-info-proposal>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="form-group" hasError="reqdesc">
+          <div class="input-group">
+            <span class="input-group-addon">Yêu cầu khách hàng</span>
+            <input class="form-control required" formControlName="reqdesc">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group" hasError="km" [ignoreCss]="['required']">
+          <tmss-money-input [kmBefore]="kmBefore" [maxLength]="7" text="Km vào" [isRequired]="true"
+                            [addOnMinWidth]="'80px'" formControlName="km"
+                            fieldAccessor="input"></tmss-money-input>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'maxLength'">Số có độ dài 6 ký tự</div>
+            <div *ifError="'numberFormat'">Sai định dạng</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" [addonWidth]="'80px'">Gói CV</span>
+            <select class="form-control" formControlName="packageJob" (change)="changeSelectJobGroup()">
+              <option *ngFor="let it of listJobGroupFilter"
+                      [ngValue]="it.id">{{it.gjName}}
+              </option>            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon" [addonWidth]="'80px'">Chiến dịch</span>
+            <select class="form-control" formControlName="campaign">
+              <option *ngFor="let it of listCampaign"
+                      [ngValue]="it">{{it.campaignName ? it.campaignName + ' - ' + it.dataNameVn : ''}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <repair-proposal
+      [dataGeneralRepair]="arrObjGeneralRepair"
+      [dataBpRepair]="arrObjBpRepair"
+      [cmId]="form ? form.value.cmId : ''"
+      [isRefresh]="isRefresh"
+      [state]="form.getRawValue().rostate"
+      [proposalForm]="form"
+      [roType]="form && form.getRawValue().roType ? form.getRawValue().roType : null"
+      (countMoney)="getRepairMoney($event)"
+      [dsCurredJob]="dsCurredJob"
+      [sccCurredJob]="sccCurredJob"
+      [roState]="roState"
+      (chosenJob)="findPart($event)"
+    ></repair-proposal>
+    <accessory-proposal *ngIf="form" [isRefresh]="isRefresh" [state]="form.getRawValue().rostate" [data]="arrObjPart"
+                           (countMoney)="getPartMoney($event)"
+                           [proposalForm]="form" [roId]="form.getRawValue().roId"
+    ></accessory-proposal>
+    <work-plan-proposal *ngIf="form"
+                           [timeStartComponent]="timeStartComponent"
+                           [form]="form" [isSubmit]="isSubmit"
+                           [campaignMoney]="campaignMoney"
+                           [customerInfo]="customerInfo"
+                           [repairMoney]="repairMoney ? repairMoney : {}"
+                           [partMoney]="partMoney"></work-plan-proposal>
+  </div>
+</form>

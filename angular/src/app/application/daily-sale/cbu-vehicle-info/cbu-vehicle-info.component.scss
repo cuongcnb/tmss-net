@@ -1,0 +1,26 @@
+::ng-deep .is-warning {
+  color: red !important;
+}
+
+.import-vehicle-menu {
+  margin-left: 23rem;
+}
+
+.download-template-menu {
+  margin-left: 31rem;
+}
+
+label {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  .dropdown-item {
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      background: #eee;
+    }
+  }
+}

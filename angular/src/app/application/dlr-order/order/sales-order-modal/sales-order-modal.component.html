@@ -1,0 +1,60 @@
+<div class="modal fade" bsModal #importModal="bs-modal" [config]="{ backdrop: 'static' }"
+     (onHidden)="resetImportFile()">
+  <div class="modal-dialog modal-lg modal-import" role="document">
+    <form name="form" novalidate autocomplete="off">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Import đặt hàng đại lý</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-4 form-group">
+              <month-picker [text]="'Gói import'" [model]="importDate" (modelChange)="generateDay($event)"></month-picker>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group input-group">
+                <label class="input-group-addon">File name</label>
+                <!-- <input class="form-control pt-1" type="file" accept=".xls, .xlsx" #fileUpLoad
+                       (change)="fileChangeEvent($event)"> -->
+                <input class="form-control pt-1" type="file" ng2FileSelect [uploader]="uploader" #fileUpLoad accept=".xls,.xlsx"
+                       (change)="fileChangeEvent($event)"/>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group input-group">
+                <button type="button" class="btn btn-blue mr-2"
+                        [disabled]="this.filesToUpload && this.filesToUpload.length < 1" (click)="uploadFile()">
+                  Load
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="grid-table">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Dữ liệu
+              </div>
+              <grid-table [showPagination]="false" [fieldGrid]="fieldGrid"
+                          (callbackGrid)="callbackGrid($event)">
+              </grid-table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer px-3 py-2">
+          <button type="button" class="btn btn-blue mr-2" (click)="saveFile()"
+                  [disabled]="disableSave">
+            <i class="fa fa-save"></i>
+            Save
+          </button>
+          <button class="btn btn-blue mr-2" (click)="resetImportFile()">
+            <i class="clip-cancel-circle-2"></i> Close
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

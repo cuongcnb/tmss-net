@@ -1,0 +1,79 @@
+<div class="modal fade" bsModal #historyModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">History</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="mb-3">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <i class="fa fa-external-link-square"></i>
+                  History
+                  <div class="panel-tools">
+                    <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refresh()">
+                      <i class="fa fa-refresh"></i>
+                    </button>
+                  </div>
+                </div>
+                <grid-table [fieldGrid]="fieldGridHistory" [height]="'200px'"
+                            (callbackGrid)="callbackGridHistory($event)"
+                            (getParams)="getParamsHistory()"></grid-table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <history-modal-active-intention-grid [historyOfSelectedFAH]="historyOfSelectedFAH"></history-modal-active-intention-grid>
+              </div>
+              <div class="col-md-6">
+                <history-modal-active-delivery-grid [historyOfSelectedFAH]="historyOfSelectedFAH"></history-modal-active-delivery-grid>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <history-modal-previous-intention-grid [historyOfSelectedFAH]="historyOfSelectedFAH"></history-modal-previous-intention-grid>
+              </div>
+              <div class="col-md-6">
+                <history-modal-previous-delivery-grid [historyOfSelectedFAH]="historyOfSelectedFAH"></history-modal-previous-delivery-grid>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 " hasError="noteDealer">
+                <div class="form-group input-group">
+                  <span class="input-group-addon">Note DLR</span>
+                  <input type="text" class="form-control" formControlName="noteDealer">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="noteTmv">
+                <div class="form-group input-group">
+                  <label class="input-group-addon">Note TMV</label>
+                  <input type="text" class="form-control" formControlName="noteTmv">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue" (click)="saveNote()"
+                  [attr.disabled]="!selectedFleetAppHistory ? true : null">
+            <i class="fa fa-times"></i> Save Note
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

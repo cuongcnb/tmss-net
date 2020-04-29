@@ -1,0 +1,110 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Thông tin tìm kiếm
+  </div>
+  <div class="panel-body">
+    <form class="search-form" *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Đại lý</span>
+              <select class="form-control" formControlName="dlrId"></select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Trạng thái</span>
+              <select class="form-control" formControlName="status"></select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã số</span>
+              <input type="text" class="form-control" formControlName="code">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Số lệnh SC</span>
+              <input type="text" class="form-control" formControlName="LSC">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" addOnMinWidth="110px" text="Khảo sát từ ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="toDate" addOnMinWidth="110px" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Biển số</span>
+              <input type="text" class="form-control" formControlName="licensePlate">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">VIN</span>
+              <input type="text" class="form-control" formControlName="vin">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group text-center">
+            <button class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách liên hệ
+  </div>
+
+  <grid-table [fieldGrid]="fieldGrid"
+              [sizeColumnToHeaderWidth]="true"
+              (callbackGrid)="callbackGrid($event)"
+              (cellDoubleClicked)="clickLSLH($event)"
+              (getParams)="getParams()"
+  ></grid-table>
+
+</div>
+
+<div class="row text-right mt-2">
+  <button class="btn btn-blue mr-2" (click)="update()">
+    <i class="fa fa-edit"></i>
+    Cập nhật
+  </button>
+  <button class="btn btn-blue mr-2 ">
+    <i class="clip-download"></i>
+    Xuất Excel
+  </button>
+</div>
+
+<update-modify-after-process-modal #updateMAPModal></update-modify-after-process-modal>
+<lslh-modal #lslhModal></lslh-modal>

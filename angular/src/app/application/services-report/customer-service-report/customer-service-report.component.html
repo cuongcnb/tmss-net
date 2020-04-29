@@ -1,0 +1,59 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Báo cáo xe lượt xe, khách hàng dịch vụ</h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="tabbable">
+            <ul class="nav nav-tabs tab-blue">
+              <li *ngFor="let item of tabs"
+                  [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+                <a data-toggle="tab" class="tab-item text-capitalize">
+                  {{item}}
+                </a>
+              </li>
+            </ul>
+            <div class="my-3">
+              <div [tabDisplay]="selectedTab === tabs[0]">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <div class="panel-tools">
+                      <button type="button" class="btn btn-link" (click)="addRow()">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                      <button type="button" class="btn btn-link" (click)="delRow()"
+                              [disabled]="!requiredSelectedData">
+                        <i class="fa fa-trash-o"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <grid-table [fieldGrid]="requiredGridField"
+                              (callbackGrid)="callbackRequiredGrid($event)"
+                              (getParams)="getRequiredParams()"></grid-table>
+                </div>
+              </div>
+              <div [tabDisplay]="selectedTab === tabs[1]">
+                <grid-table [fieldGrid]="diaryGridField"></grid-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" (click)="save()">
+          <i class="fa fa-download"></i> Lưu
+        </button>
+        <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

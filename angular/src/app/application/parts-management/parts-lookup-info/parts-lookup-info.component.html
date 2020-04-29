@@ -1,0 +1,142 @@
+<form [formGroup]="form" *ngIf="form">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Nguồn tìm kiếm
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapsePartLookupSearch" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapsePartLookupSearch" class="panel-collapse collapse in">
+
+          <div class="panel-body">
+            <div class="radio">
+              <label class="form-check-inline">
+                <input type="radio" formControlName="target" [value]="100"> Đại lý
+              </label>
+            </div>
+            <div class="radio">
+              <label class="form-check-inline">
+                <input type="radio" formControlName="target" [value]="101"> TMV
+              </label>
+            </div>
+            <div class="radio">
+              <label class="form-check-inline">
+                <input type="radio" formControlName="target" [value]="102"> Bình Dương
+              </label>
+            </div>
+            <div class="radio">
+              <label class="form-check-inline">
+                <input type="radio" formControlName="target" [value]="103"> Đại lý khác
+              </label>
+            </div>
+            <select class="form-control" formControlName="dlrId">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let dealer of otherDealer" [ngValue]="dealer.id">{{dealer.code}} {{ dealer.vnName }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+          <div class="panel-tools">
+<!--            <button class="btn btn-link" (click)="onAddRow()">-->
+<!--              <i class="fa fa-plus"></i>-->
+
+<!--            </button>-->
+<!--            <button class="btn btn-link"-->
+<!--                    [disabled]="!selectedPartSearch" (click)="removeSelectedRow()">-->
+<!--              <i class="fa fa-times"></i>-->
+<!--            </button>-->
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapsePartLookupList" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapsePartLookupList" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="fieldGridSearch"
+                      height="151px" [showPagination]="false"
+                      (callbackGrid)="callbackSearch($event)"
+                      (getParams)="getParamsSearch()"
+                      (cellEditingStopped)="cellEditingStopped($event)"
+                      [navigateToNextCell]="navigateToNextCell"
+                      (keyup)="agKeyUp($event)"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 text-right mb-2">
+      <button class="btn btn-blue m-1" (click)="search()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+      <button class="btn btn-blue m-1" (click)="clearSearchList()">
+        <i class="fa fa-trash-o"></i> Xoá danh sách
+      </button>
+      <button class="btn btn-blue m-1" (click)="openCheckPriceCodeFunction()">
+        <i class="fa fa-question"></i> Hỏi mã/giá
+      </button>
+      <button class="btn btn-blue m-1" (click)="clearSearchResult()"
+              [disabled]="!searchResultList">
+        <i class="fa fa-refresh"></i> Clear màn hình
+      </button>
+      <button class="btn btn-blue m-1" (click)="exportSearchResult()"
+              [disabled]="!partListForExport.length">
+        <i class="fa fa-download"></i> Xuất dữ liệu
+      </button>
+
+    </div>
+  </div>
+</form>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Kết quả tra cứu
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartLookupResult" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartLookupResult" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridResult"
+                [showPagination]="false"
+                [height]="'200px'"
+                [frameworkComponents]="frameworkComponents"
+                (callbackGrid)="callbackResult($event)"
+                (getParams)="getParams()"
+                [rowSelection]="'multiple'"
+                [rowMultiSelectWithClick]="true"
+    ></grid-table>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Lịch sử tra cứu
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartLookupHistory" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartLookupHistory" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="fieldGridResult"
+                [height]="'250px'"
+                [frameworkComponents]="frameworkComponents"
+                [showPagination]="false"
+                (callbackGrid)="callbackHistory($event)"
+                (getParams)="getParamsHistory()"
+    ></grid-table>
+  </div>
+</div>
+<tmss-export [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>

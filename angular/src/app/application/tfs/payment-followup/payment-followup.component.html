@@ -1,0 +1,94 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="row">
+    <div class="col-sm-6 mb-2 pr-0">
+      <button type="button" class="btn btn-blue mr-1" (click)="export()"><i class="fa fa-download"></i> Export</button>
+      <button type="button" class="btn btn-blue mr-1" [disabled]="!selectedPaymentFollowup"
+              (click)="paymentFollowupApproveModal.open(dealerList, paymentFollowupData, selectedPaymentFollowup)">
+        <i class="fa fa-check"></i> Approve
+      </button>
+      <button type="button" class="btn btn-blue mr-1" (click)="undo()"><i class="fa fa-undo"></i> Undo</button>
+      <button type="button" class="btn btn-blue mr-1" (click)="saleFilter.open(filterFormCode.paymentFollowUp)"><i
+        class="fa fa-filter"></i> Filter
+      </button>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group search-group">
+        <div class="input-group">
+          <span class="input-group-addon">Quick Search</span>
+          <input type="text" class="form-control" formControlName="quickSearch">
+        </div>
+        <button type="submit" class="btn btn-blue" (click)="search()">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-2">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Status</span>
+          <select class="form-control" formControlName="status">
+            <option [ngValue]="null">All</option>
+            <option value="N">None</option>
+            <option value="Y">Approved</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Dealer</span>
+          <select class="form-control" formControlName="dealerId">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Grade</span>
+          <multi-column-select-control formControlName="gradeControl"
+                                       displayField="marketingCode"
+                                       [fieldGrid]="fieldGradeList"
+                                       [list]="gradeList">
+          </multi-column-select-control>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Color</span>
+          <multi-column-select-control formControlName="colorControl" displayField="code"
+                                       [fieldGrid]="fieldColorList"
+                                       [list]="colorList">
+          </multi-column-select-control>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Payment Followup
+  </div>
+  <grid-table [fieldGrid]="paymentDetailFieldGrid"
+              [height]="'450px'"
+              [paginationTotalsData]="paginationTotalsData"
+              (changePaginationParams)="changePaginationParams($event)"
+              (callbackGrid)="callbackGridPayment($event)"
+              (getParams)="getParamsPayment()">
+  </grid-table>
+</div>
+
+<p>Tổng: {{tfsTotal}}</p>
+
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>
+<payment-followup-approve-modal #paymentFollowupApproveModal (close)="search()"></payment-followup-approve-modal>
+

@@ -1,0 +1,19 @@
+<div class="search-group">
+  <div class="input-group">
+    <span class="input-group-addon">File</span>
+    <input type="text" class="form-control" [(ngModel)]="fileUrl" readonly [placeholder]="placeholder">
+    <span class="input-group-btn">
+      <button class="btn btn-light-grey" type="button" (click)="importExcel()">
+        <i class=" fa fa-file"></i> Chọn file
+      </button>
+    </span>
+  </div>
+  <button class="btn btn-blue" (click)="importApi()"
+          [disabled]="uploader.queue.length === 0 ? true : null">
+    <i class="fa fa-upload"></i> Tải lên
+  </button>
+  <input type="file" [accept]="acceptType" class="ghost"
+         ng2FileSelect [uploader]="uploader"
+         [attr.multiple]="multiple"
+         #fileInput (change)="checkFile()"/>
+</div>

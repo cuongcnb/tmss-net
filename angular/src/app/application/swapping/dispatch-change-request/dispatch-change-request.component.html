@@ -1,0 +1,92 @@
+<ng-container>
+  <form [formGroup]="searchForm" *ngIf="searchForm">
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <button type="button" class="btn btn-blue mr-2" (click)="export()"><i class="fa fa-download"></i> Export
+        </button>
+        <button type="button" class="btn btn-blue" (click)="saleFilter.open(filterFormCode.dispatchChangeRequest)">
+          <i class="fa fa-filter"></i> Filter
+        </button>
+      </div>
+      <div class="col-md-9">
+        <div class="form-group search-group">
+          <div class="input-group">
+            <span class="input-group-addon">Quick Search</span>
+            <input type="text" class="form-control" data-toggle="tooltip" data-placement="top"
+                   title="Quich search :Frame No., Contract No, Customer Name, CustomerAddress, Contact Name, Contact Address."
+                   formControlName="quickSearch">
+          </div>
+          <button role="button" class="btn btn-blue" (click)="resetPaginationParams(); search()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row header-form">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon min-width">Dealer</span>
+            <select class="form-control" formControlName="dealerId">
+              <option [ngValue]="null">All</option>
+              <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon min-width">Type</span>
+            <select class="form-control" formControlName="type">
+              <option [ngValue]="null">All</option>
+              <option value="CKD">CKD</option>
+              <option value="CBU">CBU</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon min-width">Grade</span>
+            <multi-column-select-control formControlName="gradeControl"
+                                         displayField="marketingCode"
+                                         [fieldGrid]="fieldGradeList"
+                                         [list]="gradeList">
+            </multi-column-select-control>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon min-width">Color</span>
+            <multi-column-select-control formControlName="colorControl" displayField="code"
+                                         [fieldGrid]="fieldColorList"
+                                         [list]="allColors">
+            </multi-column-select-control>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Dispatch Change Request
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+                (getParams)="getParams()" (cellDoubleClicked)="cellDoubleClicked($event)"></grid-table>
+  </div>
+</ng-container>
+<sale-filter #saleFilter (close)="searchWithSaleFilter($event)"></sale-filter>
+<dispatch-change-approve-modal #dispatchChangeApproveModal (close)="refresh()"></dispatch-change-approve-modal>

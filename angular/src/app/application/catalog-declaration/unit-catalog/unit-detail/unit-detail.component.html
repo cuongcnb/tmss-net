@@ -1,0 +1,66 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div hasError="divCode">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Mã đơn vị</span>
+        <input type="text" class="form-control required" formControlName="divCode">
+      </div>
+      <div class="error-messages" errorMessage>
+        <div *ifError="'required'">Yêu cầu phải nhập</div>
+        <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+        <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+      </div>
+    </div>
+    <div hasError="divName">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Tên đơn vị</span>
+        <input type="text" class="form-control required" formControlName="divName">
+      </div>
+      <div class="error-messages" errorMessage>
+        <div *ifError="'required'">Yêu cầu phải nhập</div>
+        <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+        <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+      </div>
+    </div>
+    <div hasError="des">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Mô tả</span>
+        <textarea rows="2" class="form-control" formControlName="des"></textarea>
+      </div>
+      <div class="error-messages" errorMessage>
+        <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+      </div>
+    </div>
+    <div class="input-group form-group ghost">
+      <span class="input-group-addon">Người quản lý</span>
+      <input-search formControlName="managerName" [isReadonly]="true"
+                    (onSearch)="callSearchManager()"
+                    [showBtn]="true" [ignoreEnterEvent]="true"
+      ></input-search>
+    </div>
+    <div class="input-group form-group">
+      <span class="input-group-addon">Đơn vị con của</span>
+      <input-search formControlName="parentDivName" [isReadonly]="true"
+                    (onSearch)="callSearchDivision()"
+                    [showBtn]="true" [ignoreEnterEvent]="true"
+      ></input-search>
+    </div>
+    <button #btnSubmit type="submit" class="hide" (click)="save()"></button>
+  </form>
+</div>
+
+<search-data-grid-modal #searchManager
+                        [headerText]="'Chọn người quản lý'"
+                        (close)="patchManager($event)"
+                        [fieldGrid]="managerGridField"
+                        [isHideSearchField]="true"
+                        [showPagination]="false"
+></search-data-grid-modal>
+
+<search-data-grid-modal #searchDivision
+                        [headerText]="'Danh sách đơn vị'"
+                        [fieldGrid]="childOfGridField"
+                        (close)="patchDivision($event)"
+                        [isHideSearchField]="true"
+                        [showPagination]="false"
+></search-data-grid-modal>

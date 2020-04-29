@@ -1,0 +1,73 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Điều kiện tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseFirContactQuestions" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseFirContactQuestions" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên câu hỏi</span>
+                <input class="form-control" formControlName="questionName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <select class="form-control" formControlName="sortAgency">
+                  <option>TGP-ND</option>
+                  <option>THTL</option>
+                  <option>TTG</option>
+                  <option>THHC</option>
+                  <option>THKC</option>
+                  <option>TGP</option>
+                  <option>TGP_PV</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"></grid-table>
+    </div>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2" (click)="newContactQuestion.open()">
+        <i class="fa fa-plus mr-2"></i>
+        Thêm mới
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="editRow()">
+        <i class="fa fa-pencil mr-2"></i>
+        Cập nhật
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="deleteRow()">
+        <i class="fa fa-trash-o mr-2"></i>
+        Xóa
+      </button>
+      <button type="button" class="btn btn-blue">
+        <i class="fa fa-cloud-download"></i>
+        Xuất excel
+      </button>
+    </div>
+  </div>
+</form>
+<new-contact-question #newContactQuestion
+                      (close)="selectedRowGrid? update($event):addNew($event)"
+></new-contact-question>

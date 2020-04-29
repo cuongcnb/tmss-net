@@ -1,0 +1,34 @@
+<div pageTitle="Money Define List">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Money Define List
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [height]="'450px'"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button type="button" class="btn btn-blue mr-2" (click)="moneyModifyModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button type="button" class="btn btn-blue mr-2" (click)="updateData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button type="button" [disabled]="!selectedData" class="btn btn-blue" (click)="deleteMoney()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<money-modify-modal #moneyModifyModal (close)="refreshList()"></money-modify-modal>

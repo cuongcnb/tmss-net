@@ -1,0 +1,17 @@
+table {
+  width: 96%;
+  position: absolute;
+  bottom: 5px;
+  .form-group {
+    input {
+      width: 45px;
+      height: 25px;
+      float: left;
+      margin-right: 10px;
+    }
+  }
+  .btn{
+    font-size: 11px !important;
+    padding: 5px;
+  }
+}

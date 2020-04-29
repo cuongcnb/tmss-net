@@ -1,0 +1,166 @@
+<div class="mt-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartSpecialOrderSearch" aria-expanded="true" >
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartSpecialOrderSearch" class="panel-collapse collapse in">
+
+      <div class="panel-body">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã đơn hàng</span>
+                  <input type="text" class="form-control" formControlName="orderNo">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã phụ tùng</span>
+                  <input type="text" class="form-control" formControlName="partsCode" (change)="deleteCharacterSpecial($event.target.value)">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Mã đại lý</span>
+                  <select class="form-control" formControlName="dlrId">
+                    <ng-container *ngIf="![-2, -1].includes(currentUser.dealerId)">
+                      <option [ngValue]="currentUser.dealerId">{{currentUser.dealerCode}}</option>
+                    </ng-container>
+                    <ng-container *ngIf="[-2, -1].includes(currentUser.dealerId)">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.code}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <tmss-datepicker formControlName="fromDate" [addOnMinWidth]="'95px'" text="Từ ngày"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <tmss-datepicker formControlName="toDate" [addOnMinWidth]="'95px'" text="Đến ngày"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group search-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Trạng thái</span>
+                  <select class="form-control" formControlName="status">
+                    <option [ngValue]="1">Đại lý mới gửi</option>
+                    <option [ngValue]="2">Từ chối</option>
+                    <option [ngValue]="3">Hoàn thành</option>
+                    <option [ngValue]="4">Tất cả</option>
+                  </select>
+                  <button type="submit" class="btn btn-blue" (click)="searchOrder()">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Đơn hàng đặc biệt
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartSpecialOrderOrder" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartSpecialOrderOrder" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGridSpecialOrder" [height]="'200px'" [showPagination]="false"
+                  (callbackGrid)="callBackGridSpecialOrder($event)"
+                  (getParams)="getParamsSpecialOrder()"
+                  (cellDoubleClicked)="cellDoubleClicked($event)"
+                  (cellEditingStarted)="cellEditingStarted($event)"
+                  (cellValueChanged)="cellValueChanged($event)"
+                  (keyup)="agKeyUp($event)"
+                  (cellClicked)="onCellClicked($event)"
+                  [suppressRowClickSelection]="true"
+                  [rowSelection]="'multiple'"
+                  [frameworkComponents]="frameworkComponents"></grid-table>
+
+      <div class="text-right my-2">
+      <span *ngIf="![-2, -1].includes(this.currentUser.dealerId)">
+        <button type="button" class="btn btn-blue mr-2" (click)="createSpecialOrderModal.open()">
+          <i class="fa fa-plus"></i> Tạo đơn hàng
+        </button>
+        <button type="button" class="btn btn-blue" [disabled]="disableUpdateBtn" (click)="updateOrder()">
+          <i class="fa fa-edit"></i> Sửa đơn hàng
+        </button>
+      </span>
+        <button type="button" class="btn btn-blue ml-2" (click)="exportExcel()">
+          <i class="fa fa-download"></i> Export
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Phụ tùng
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartSpecialOrderPart" aria-expanded="true" >
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartSpecialOrderPart" class="panel-collapse collapse in">
+
+      <grid-table [fieldGrid]="fieldGridPartsOfOrder" [height]="'300px'" [showPagination]="false"
+                  (callbackGrid)="callBackGridPartsOfOrder($event)"
+                  (getParams)="getParamsPartsOfOrder()"></grid-table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-4">
+      <div class="row text-right">
+        <div class="col-md-4">
+          <div class="form-group">
+            Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            + Thuế: <strong>{{taxOnly}}</strong>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<create-special-order-modal #createSpecialOrderModal [dealerList]="dealerList"
+                            (close)="refreshAfterEdit($event)"></create-special-order-modal>
+<tmss-export [excelStyles]="excelStyles" [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>
+<cell-table-edit-modal #cellTableEditModal></cell-table-edit-modal>

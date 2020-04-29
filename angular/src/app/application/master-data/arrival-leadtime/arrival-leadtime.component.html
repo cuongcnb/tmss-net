@@ -1,0 +1,60 @@
+<div pageTitle="Arrival Leadtime">
+  <form [formGroup]="form" *ngIf="form" class="row" focusErrorField>
+    <div class="col-md-3 col-lg-2">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Transport From</span>
+        <select formControlName="fromDealer" class="form-control">
+          <option value="">All</option>
+          <option *ngFor="let transportForm of transportFormList" [ngValue]="transportForm.name"
+                  [hidden]="transportForm.id==86">
+            {{transportForm.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-2">
+      <div class="input-group form-group">
+        <span class="input-group-addon">To Dealer</span>
+        <select formControlName="toDealerId" class="form-control">
+          <option value="">All</option>
+          <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-2 search-btn">
+      <button type="button" class="btn btn-blue" (click)="search()">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Arrival Plan Lead Time
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                [height]="'450px'"
+                [showPagination]="false"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="arrivalLeadtimeModal.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button class="btn btn-blue mr-2" (click)="updateLeadtime()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedData" (click)="deleteLeadTime()">
+        <i class="fa fa-trash-o "></i> Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<arrival-leadtime-modal #arrivalLeadtimeModal (close)="refreshList()"></arrival-leadtime-modal>

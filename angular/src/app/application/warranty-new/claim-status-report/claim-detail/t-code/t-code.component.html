@@ -1,0 +1,41 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="inline-block w-10" hasError="t1Code">
+    T1Code
+    <input class="form-control" formControlName="t1Code" (dblclick)="searchTCode('T1',$event)"
+           maxlength="2">
+    <div class="error-messages" errorMessage>
+      <div *ifError="'tCode'">Code sai</div>
+      <div *ifError="'required'">Bắt buộc</div>
+    </div>
+  </div>
+  <div class="inline-block w-10" hasError="t2Code">
+    T2Code
+    <input class="form-control" formControlName="t2Code" (dblclick)="searchTCode('T2',$event)"
+           maxlength="5">
+    <div class="error-messages" errorMessage>
+      <div *ifError="'tCode'">Code sai</div>
+      <div *ifError="'required'">Bắt buộc</div>
+    </div>
+  </div>
+  <ng-container formArrayName="t3Codes">
+    <ng-container
+      *ngFor="let val of t3CodeArray.controls; let i = index">
+      <ng-container formGroupName="{{i}}">
+        <div class="inline-block w-10 no-border-right" hasError="tcode">
+          <span [ngClass]="{'fade':i!=0}">T3Code</span>
+          <input class="form-control" formControlName="tcode" (dblclick)="searchTCode('T3',$event,i)"
+                 maxlength="5">
+          <div class="error-messages" errorMessage>
+            <div *ifError="'tCode'">Code sai</div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <button class="ghost" #submitBtn></button>
+</form>
+<search-data-grid-modal #findTCodeModal
+                        [headerText]="tcodeType +'Code'"
+                        [apiCall]="apiTCodeCall.bind(this)"
+                        (close)="setTCodeDataToRow($event)"
+                        [fieldGrid]="fieldTCode"></search-data-grid-modal>

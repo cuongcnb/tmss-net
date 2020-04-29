@@ -1,0 +1,69 @@
+<div pageTitle="Means of transportation">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Mean of Transportation
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshTrans()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridTrans"
+                  (callbackGrid)="callbackGridTrans($event)"
+                  (getParams)="getParamsTrans()"
+                  [height]="'200px'"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="transportationListModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateTransportationData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedMeans" (click)="deleteTransportation()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Transport Type
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshTransType()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridTransType"
+                  (callbackGrid)="callbackGridTransType($event)"
+                  (getParams)="getParamsTransType()"
+                  overlayLoadingTemplate="Please choose a vehicle to show type"
+                  [height]="'250px'"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addTransportationTypeData()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateTransportationTypeData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedTransType"
+                (click)="deleteTransportationType()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modify-transportation-modal #transportationListModal (close)="refreshTrans()"></modify-transportation-modal>
+<modify-transportation-type-modal #transportationTypeListModal
+                                  (close)="refreshTransType()"></modify-transportation-type-modal>

@@ -1,0 +1,69 @@
+<div class="modal fade" bsModal #changePurchasingDelivery="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Change Request</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body" *ngIf="gradeList && colorList && selectedFleetApp">
+          <div class="row">
+            <div class="col-md-6">
+              <change-purchasing-active-intention-grid [isDlrFleetSaleApplication]="isDlrFleetSaleApplication"
+                                                       [selectedFleetApp]="selectedFleetApp"
+                                                       [gradeList]="gradeList"
+                                                       [colorList]="colorList"
+                                                       [fleetIntentions]="fleetIntentions"></change-purchasing-active-intention-grid>
+            </div>
+            <div class="col-md-6">
+              <change-purchasing-active-delivery-grid [isDlrFleetSaleApplication]="isDlrFleetSaleApplication"
+                                                      [selectedFleetApp]="selectedFleetApp"
+                                                      [gradeList]="gradeList"
+                                                      [fleetDeliveries]="fleetDeliveries"></change-purchasing-active-delivery-grid>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <change-purchasing-request-intention-grid [isDlrFleetSaleApplication]="isDlrFleetSaleApplication"
+                                                        [selectedFleetApp]="selectedFleetApp"
+                                                        [gradeList]="gradeList"
+                                                        [colorList]="colorList"
+                                                        [fleetIntentions]="fleetIntentions"
+                                                        (displayedDataToSend)="getDisplayedIntention($event)"></change-purchasing-request-intention-grid>
+            </div>
+            <div class="col-md-6">
+              <change-purchasing-request-delivery-grid [isDlrFleetSaleApplication]="isDlrFleetSaleApplication"
+                                                       [selectedFleetApp]="selectedFleetApp"
+                                                       [gradeList]="gradeList"
+                                                       [fleetDeliveries]="fleetDeliveries"
+                                                       (displayedDataToSend)="getDisplayedDelivery($event)"></change-purchasing-request-delivery-grid>
+            </div>
+          </div>
+          <form [formGroup]="form" *ngIf="form">
+            <div class="row">
+              <div class="col-sm-12" hasError="sendToTmv">
+                <div class="form-group input-group">
+                  <label class="input-group-addon">Send To TMV</label>
+                  <textarea class="form-control resize-vertical" formControlName="sendToTmv" rows="3"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Ref No's maximum length is 2000 characters</div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" (click)="sendToTmv()">
+          <i class="fa fa-save"></i> Send to TMV
+        </button>
+        <button type="button" class="btn btn-blue" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

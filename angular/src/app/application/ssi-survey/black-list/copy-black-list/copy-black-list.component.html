@@ -1,0 +1,56 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-title">
+          <h5>Copy</h5>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+            <div class="row">
+              <div class="col-sm-4 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Loại khách hàng</span>
+                  <input class="form-control" formControlName="customerType">
+                </div>
+              </div>
+              <div class="col-sm-8 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Tên khách hàng</span>
+                  <input class="form-control" formControlName="customerName">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Số điện thoại</span>
+                  <input class="form-control" formControlName="phoneNumber">
+                </div>
+              </div>
+              <div class="col-sm-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Chứng minh thư</span>
+                  <input class="form-control" formControlName="idNumber">
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">Ghi chú</span>
+              <textarea class="form-control" formControlName="node"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="saveCopy()"><i class="fa fa-check"></i> Lưu</button>
+        <button class="btn btn-light-grey" (click)="modal.hide()"><i class="fa fa-times" ></i> Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>

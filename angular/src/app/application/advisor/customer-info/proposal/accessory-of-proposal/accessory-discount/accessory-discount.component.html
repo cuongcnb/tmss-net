@@ -1,0 +1,43 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}" (keyup.enter)="save()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Giám giá (%)</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="discountPercent">
+              <div class="input-group">
+                <span class="input-group-addon">Giảm (%)</span>
+                <input class="form-control" formControlName="discountPercent">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'numberPercent'">Hãy nhập số trong khoảng từ 0 đến 100</div>
+                <div *ifError="'floatNumberFormat0'">Không đúng định dạng số (Mẫu: 2.54)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <!-- <checkbox text="Áp dụng cho tất cả" formControlName="forAll"></checkbox> -->
+              <checkbox text="Áp dụng cho CV" formControlName="forJob"></checkbox>
+              <checkbox text="Áp dụng cho PT" formControlName="forAccessary"></checkbox>
+              <checkbox text="Không sửa bản ghi đã giảm giá" formControlName="forDiscounted"></checkbox>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="btn btn-blue" type="submit" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+

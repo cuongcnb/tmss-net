@@ -1,0 +1,13 @@
+<div class="position-relative">
+  <div [class.input-dv]="showBtn">
+    <input type="text" [ngClass]="isRequired ? 'required form-control': 'form-control'" #input
+           (keyup)="search($event)"
+           [readonly]="isReadonly"
+           [value]="value" (input)="changeValue($event)"
+           [attr.maxlength]="maxLength ? maxLength : 999"
+           [disabled]="isDisabled ? true: null"
+           [attr.placeholder]="placeholder">
+  </div>
+
+  <span class="search-btn" *ngIf="showBtn" (click)="blurInput()"></span>
+</div>

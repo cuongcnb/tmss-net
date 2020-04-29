@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Purchasing Intention
+    <div class="panel-tools" *ngIf="isDlrFleetSaleApplication">
+      <button role="button" class="btn btn-xs btn-link panel-refresh" [attr.disabled]="disableAddBtn" (click)="onAddRow()">
+        <i class="fa fa-plus"></i>
+      </button>
+      <button role="button" class="btn btn-xs btn-link panel-refresh" [attr.disabled]="disableRemoveBtn" (click)="removeSelectedRow()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <grid-table [fieldGrid]="fieldGridIntention" [height]="'200px'"
+              (callbackGrid)="callbackGridIntention($event)"
+              (cellDoubleClicked)="agCellDoubleClicked($event)"
+              (getParams)="getParams()"
+  ></grid-table>
+</div>
+<fleet-edit-grid-dlr #fleetEditGridDlr (close)="setFleetModalData($event)"></fleet-edit-grid-dlr>
+<fleet-edit-grid-tmv #fleetEditGridTmv (close)="setFleetModalData($event)"></fleet-edit-grid-tmv>

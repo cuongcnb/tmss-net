@@ -1,0 +1,43 @@
+<div pageTitle="Dealer Ip Config">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Dealer</span>
+        <select class="form-control" [(ngModel)]="selectedDealerId">
+          <option value="">All</option>
+          <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-sm-2 mb-3">
+      <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Dealer Ip Config Management
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGridDealerIpConfig($event)"
+                (getParams)="getParamsDealerIpConfig()"
+                [height]="'500px'"
+                [showPagination]="false"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="dealerIpConfigModal.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button class="btn btn-blue" (click)="updateDealerIpConfig()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+    </div>
+  </div>
+</div>
+<dealer-ip-config-modal #dealerIpConfigModal (close)="refreshAfterUpdate($event)"></dealer-ip-config-modal>

@@ -1,0 +1,33 @@
+<div class="modal fade" bsModal #importModal="bs-modal" [config]="{ backdrop: 'static' }"
+     (onHidden)="resetImportFile()">
+  (onHidden)="resetImportFile()">
+  <div class="modal-dialog modal-lg modal-import" role="document">
+    <form name="form" novalidate autocomplete="off">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="grid-table">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Dữ liệu
+              </div>
+              <grid-table [showPagination]="false" [fieldGrid]="fieldGrid" (getParams)="getParams($event)"
+                          (callbackGrid)="callbackGrid($event)">
+              </grid-table>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer px-3 py-2">
+          <button type="button" class="btn btn-blue mr-2" (click)="saveFile()"
+                  [disabled]="disableSave">
+            <i class="fa fa-save"></i>
+            Lưu
+          </button>
+          <button class="btn btn-blue mr-2" (click)="importModal.hide()">
+            <i class="clip-cancel-circle-2"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

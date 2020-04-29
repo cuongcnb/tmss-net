@@ -1,0 +1,48 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Change Delivery</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <month-picker [addOnMinWidth]="'100px'" [text]="'Month'" [model]="selectedDate"
+                            (modelChange)="fillDatePicker($event)"></month-picker>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group input-group">
+                <span  [style.minWidth]="'100px'" class="input-group-addon ">Frame No</span>
+                <input type="text" class="form-control" formControlName="frameNo">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group input-group ">
+                <tmss-datepicker-sale [text]="'Sale Date From'" [addOnMinWidth]="'100px'"
+                                 formControlName="saleDateFrom"></tmss-datepicker-sale>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group input-group">
+                <tmss-datepicker-sale [text]="'Sale Date To'" [addOnMinWidth]="'100px'"
+                                 formControlName="saleDateTo"></tmss-datepicker-sale>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue" (click)="confirm()">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

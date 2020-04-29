@@ -1,0 +1,22 @@
+<div class="multi-column-select">
+  <div class="input-group">
+    <div class="trigger-field form-control"
+         [class.required]="isRequired"
+         [class.disabled]="isDisabled"
+         (click)="isDisabled ? $event.stopPropagation() : isShowList = true"
+         [innerHtml]="selectedValue? selectedValue[displayField] : ''">
+    </div>
+    <span class="caret"></span>
+    <span class="input-group-addon btn btn-light-grey"
+          *ngIf="isClear" (click)="clearValue()">x</span>
+  </div>
+
+  <div class="dropdown-list" *ngIf="isShowList">
+    <grid-table
+      [height]="height" [fieldGrid]="fieldGrid"
+      [enableFilter]="enableFilter"
+      (getParams)="getParams($event)" [showPagination]="false"
+      (callbackGrid)="callbackGrid($event)">
+    </grid-table>
+  </div>
+</div>

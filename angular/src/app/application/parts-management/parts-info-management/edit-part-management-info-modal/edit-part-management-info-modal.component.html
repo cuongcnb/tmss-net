@@ -1,0 +1,361 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">{{selectedPart ? 'Sửa thông tin phụ tùng' : 'Tạo phụ tùng'}}</h5>
+      </div>
+      <form [formGroup]="form" autocomplete="off" novalidate *ngIf="form" focusField>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="partsType">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Loại PT</span>
+                    <select class="required form-control" formControlName="partsType" autofocus>
+                      <option *ngFor="let partType of partTypes" [ngValue]="partType.id">{{partType.gTypeName}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Loại PT</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="localFlag">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Nguồn nhập</span>
+                    <select class="required form-control" formControlName="localFlag">
+                      <option value="L">Nội địa (LSP)</option>
+                      <option value="J">Nhật bản (JSP)</option>
+                      <option value="S">Khác (MSP)</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Nguồn nhập</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="partsCode">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Mã PT</span>
+                    <input type="text" class="required form-control" formControlName="partsCode">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Mã PT</div>
+                    <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="pnc">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">PNC</span>
+                    <input type="text" class="form-control" formControlName="pnc">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 6 ký tự</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" hasError="partsName">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Tên PT</span>
+                <input type="text" class="required form-control" formControlName="partsName">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập Tên PT</div>
+                <div *ifError="'maxLength'">Tối đa 255 ký tự</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="partsNameVn">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Tên TV</span>
+                <input type="text" class="form-control" formControlName="partsNameVn">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 255 ký tự</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group" hasError="price">
+                      <tmss-money-input text="Giá nhập" [isRequired]="true" formControlName="price"
+                                        [addOnMinWidth]="'100px'"></tmss-money-input>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập Giá nhập</div>
+                        <div *ifError="'numberFormat'">Chỉ được nhập số nguyên</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group" hasError="unitId">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">ĐVT</span>
+                        <select class="required form-control" formControlName="unitId">
+                          <option *ngFor="let unit of unitArr" [ngValue]="unit.id">{{unit.unitName}}</option>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập ĐVT</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group" hasError="sellPrice">
+                      <tmss-money-input text="Giá bán" [isRequired]="true" formControlName="sellPrice"
+                                        [addOnMinWidth]="'100px'"></tmss-money-input>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập Giá bán</div>
+                        <div *ifError="'numberFormat'">Chỉ được nhập số nguyên</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group" hasError="sellUnitId">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">ĐVT</span>
+                        <select class="form-control required" formControlName="sellUnitId">
+                          <option *ngFor="let sellUnit of sellUnits" [ngValue]="sellUnit.id">{{sellUnit.name}}</option>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập ĐVT</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Thuế</span>
+                    <select class="form-control required" formControlName="rate">
+                      <option [ngValue]="0">0</option>
+                      <option [ngValue]="5">5</option>
+                      <option [ngValue]="10">10</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="currentUser.isAdmin">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group" hasError="fobPrice">
+                      <tmss-money-input text="Giá FOB" [isRequired]="true" formControlName="fobPrice"
+                                        [addOnMinWidth]="'100px'"></tmss-money-input>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập Giá FOB</div>
+                        <div *ifError="'floatNumberFormat'">Chỉ được nhập giá trị là số</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group" hasError="fobcurrencycode">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">ĐVT</span>
+                        <select class="form-control required" formControlName="fobcurrencycode">
+                          <option *ngFor="let currency of currencyArr"
+                                  [value]="currency.currencyName">{{currency.currencyName}}</option>
+                        </select>
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Bắt buộc nhập ĐVT</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="supplierId">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Nhà CC</span>
+                    <select class="required form-control" formControlName="supplierId">
+                      <option value=""></option>
+                      <option *ngFor="let supplier of supplierList" [ngValue]="supplier.id">{{supplier.supplierCode}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Nhà CC</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group" hasError="leadTime">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Lead Time</span>
+                        <input type="text" class="form-control" formControlName="leadTime">
+                      </div>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'floatNumberFormat'">Chỉ được nhập giá trị là số</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-addon">KPI Part Types</div>
+                        <select class="form-control" formControlName="kpiPartType">
+                          <option [ngValue]="null"></option>
+                          <option *ngFor="let partType of kpiPartTypes" [value]="partType">{{partType}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="newPart">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Mã TT mới</span>
+                    <input type="text" class="form-control" formControlName="newPart">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 20 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="oldPart">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Mã TT cũ</span>
+                    <input type="text" class="form-control" formControlName="oldPart">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 20 ký tự</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="handlemodel">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Model</span>
+                    <input type="text" class="form-control" formControlName="handlemodel">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 200 ký tự</div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="frCd">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">FRC</span>
+                    <input type="text" class="required form-control" formControlName="frCd">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập FRC</div>
+                    <div *ifError="'maxLength'">Tối đa 1 ký tự</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="partSize">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Kích thước</span>
+                    <input type="text" class="form-control" formControlName="partSize">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="expressShipping">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Chuyển nhanh</span>
+                    <input type="text" class="form-control" formControlName="expressShipping">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'floatNumberFormat'">Chỉ được nhập giá trị là số</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="coo">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Xuất xứ</span>
+                    <input type="text" class="form-control" formControlName="coo">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 200 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="status">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Trạng thái</span>
+                    <select class="required form-control" formControlName="status">
+                      <option value="Y">Hoạt động</option>
+                      <option value="N">Không hoạt động</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Trạng thái</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" hasError="remark">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Ghi chú</span>
+                <input type="text" class="form-control" formControlName="remark">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 200 ký tự</div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer text-center">
+          <button type="submit" class="btn btn-blue" (click)="confirm()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

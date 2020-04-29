@@ -1,0 +1,48 @@
+.row {
+  ::ng-deep ag-grid-angular {
+    min-width: inherit !important;
+  }
+}
+
+.fleet-sale-header {
+  .col-md-2 {
+    padding-right: 0;
+
+    &:last-child {
+      padding-right: 15px;
+    }
+  }
+
+  .form-control {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
+::ng-deep .ag-row {
+  .ag-cell {
+    &:last-child {
+      border: none !important;
+    }
+  }
+}
+
+.search-group .form-control {
+  width: calc(100% - 50px);
+}
+
+@media (min-width: 1200px) {
+  .col-lg-3 {
+    width: 23.5%;
+  }
+  .search-group {
+    width: 19.5%;
+  }
+}
+
+.min-width-header{
+  min-width: 80px;
+}
+.min-width-customer{
+  min-width: 107px;
+}

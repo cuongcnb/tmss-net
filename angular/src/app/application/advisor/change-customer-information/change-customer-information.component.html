@@ -1,0 +1,238 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Biển số xe</span>
+          <input-search formControlName="registerno" (onSearch)="search()"></input-search>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <button type="button" class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"> </i></button>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin KH
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carownername">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Tên khách hàng">Tên KH</span>
+              <input type="text" class="form-control required" formControlName="carownername">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập tên khách hàng</div>
+              <div *ifError="'maxLength'">Tối đa 180 ký tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Mã khách hàng">Mã KH</span>
+              <input type="text" class="form-control" formControlName="cusno">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Loại khách hàng">Loại KH</span>
+              <select class="form-control" formControlName="cusTypeId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let type of customerTypes" [ngValue]="type.id">{{type.cusTypeName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carowneridnum">
+            <div class="input-group">
+              <span class="input-group-addon">CMTND</span>
+              <input type="text" class="form-control" formControlName="carowneridnum">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 30 ký tự</div>
+              <div *ifError="'peopleIdFormat'">Giá trị bạn nhập không phải số CMT</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carownertel">
+            <div class="input-group">
+              <span class="input-group-addon">Điện thoại</span>
+              <input type="text" class="form-control" formControlName="carownertel">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carownermobil">
+            <div class="input-group">
+              <span class="input-group-addon">Di động</span>
+              <input type="text" class="form-control required" formControlName="carownermobil">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập số điện thoại</div>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carowneradd">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <input type="text" class="form-control required" formControlName="carowneradd">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải nhập địa chỉ</div>
+              <div *ifError="'maxLength'">Tối đa 180 ký tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" hasError="provinceId">
+            <div class="input-group">
+              <span class="input-group-addon">Tỉnh thành</span>
+              <select class="form-control required" formControlName="provinceId">
+                <option value=""></option>
+                <option *ngFor="let province of provinces" [ngValue]="province.id">
+                  {{province.name}}
+                </option>
+              </select>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải chọn tỉnh thành</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" hasError="districtId">
+            <div class="input-group">
+              <span class="input-group-addon">Quận huyện</span>
+              <select class="form-control required" formControlName="districtId">
+                <option value=""></option>
+                <option *ngFor="let district of districts" [ngValue]="district.id">
+                  {{district.name}}
+                </option>
+              </select>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bạn phải chọn quận/huyện</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carownerfax">
+            <div class="input-group">
+              <span class="input-group-addon">Fax</span>
+              <input type="text" class="form-control" formControlName="carownerfax">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group" hasError="carowneremail">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <input type="email" class="form-control" formControlName="carowneremail">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+              <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group" hasError="taxcode">
+            <div class="input-group">
+              <span class="input-group-addon">Mã số thuế</span>
+              <input type="text" class="form-control" formControlName="taxcode">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'taxFormat'">Giá trị bạn nhập không phải là mã số thuế</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group" hasError="orgname">
+            <div class="input-group">
+              <span class="input-group-addon">Tên công ty</span>
+              <input type="text" class="form-control" formControlName="orgname">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 2000 ký tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Số tài khoản</span>
+              <input type="text" class="form-control" formControlName="accno">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Tên ngân hàng</span>
+              <select class="form-control" formControlName="bankId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let bank of banks" [ngValue]="bank.id">{{bank.bankName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<grid-table [fieldGrid]="fieldGrid"-->
+              <!--[showPagination]="false"-->
+              <!--[frameworkComponents]="frameworkComponents"-->
+              <!--suppressRowClickSelection="true"-->
+              <!--(callbackGrid)="callbackGrid($event)"-->
+              <!--[height]="'250px'"-->
+  <!--&gt;</grid-table>-->
+
+  <div class="my-2">
+    <div class="float-right">
+      <button type="submit" class="btn btn-blue m-1" (click)="update()" [disabled]="!disableBtn">
+        <i class="fa fa-upload"></i> Cập nhật thông tin
+      </button>
+    </div>
+  </div>
+</form>
+<search-data-grid-modal
+  #searchDataGridModal
+  [modalClass]="'modal-lg'"
+  [headerText]="'Thông tin khách hàng'"
+  [apiCall]="getCustomers.bind(this)"
+  (close)="chooseCustomer($event)"
+  [fieldGrid]="fieldGridSearchDataGrid"
+  [showPagination]="false"
+></search-data-grid-modal>

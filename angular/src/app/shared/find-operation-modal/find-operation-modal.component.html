@@ -1,0 +1,91 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog" [ngClass]="modalClass ? modalClass : ''">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="onCancelBtn()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Find Operation</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading pl-5">
+              Loại hình công việc
+            </div>
+            <div class="panel-body py-2">
+
+              <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label class="radio-inline">
+                      <input type="radio" [value]="1" formControlName="type">Sửa chữa chung
+                    </label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="radio-inline" disabled>
+                      <input type="radio" [value]="2" formControlName="type"> Đồng
+                    </label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="radio-inline">
+                      <input type="radio" [value]="3" formControlName="type">Sơn
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div [ngClass]="{'ghost':option!=1}">
+            <form *ngIf="searchForm" [formGroup]="searchForm" class="input-group form-group w-50">
+              <span class="input-group-addon">Find</span>
+              <input-search formControlName="keyword" (onSearch)="searchGeneralRepair(true)"></input-search>
+              <span class="input-group-btn">
+              <button type="button" class="btn btn-blue" (click)="searchGeneralRepair(true)">
+                <i class="fa fa-search"></i></button>
+            </span>
+            </form>
+            <grid-table [fieldGrid]="fieldGeneralRepair" *ngIf="modal.isShown"
+                        (changePaginationParams)="changePaginationParamsGeneralRepair($event)"
+                        [paginationTotalsData]="paginationTotalsData"
+                        (callbackGrid)="callbackGeneralRepair($event)"
+                        (cellDoubleClicked)="save()"
+                        [height]="'300px'"
+                        (getParams)="getParamsGeneralRepair()"
+            ></grid-table>
+          </div>
+          <div [ngClass]="{'ghost':option!=2}" *ngIf="currentUser.isAdmin">
+            <form *ngIf="selectForm" [formGroup]="selectForm" class="input-group form-group  w-50">
+              <span class="input-group-addon">Nhóm xe</span>
+              <select class="form-control" formControlName="option">
+                <option *ngFor="let carFamily of carFamilyList" [value]="carFamily.id">{{carFamily.cfName}}</option>
+              </select>
+            </form>
+            <grid-table [fieldGrid]="fieldBodyRepair" *ngIf="modal.isShown"
+                        (callbackGrid)="callbackBody($event)"
+                        (cellDoubleClicked)="save()"
+                        (getParams)="getParamsBody()"
+            ></grid-table>
+          </div>
+          <div [ngClass]="{'ghost':option!=3}" *ngIf="currentUser.isAdmin">
+            <grid-table [fieldGrid]="fieldPaint" *ngIf="modal.isShown"
+                        (callbackGrid)="callbackPaint($event)"
+                        (cellDoubleClicked)="save()"
+                        (getParams)="getParamsPaint()"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" [disabled]="!selected" (click)="save()">
+          <i class="fa fa-check"></i> Đồng ý
+        </button>
+        <button type="button" class="btn btn-light-grey" (click)="onCancelBtn()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,108 @@
+<div class="modal fade" bsModal #defaultFilterModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Vehicle Arrival Filter</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+<!--              <div class="col-sm-6">-->
+<!--                <month-picker [addOnMinWidth]="'150px'" [text]="'Month'" [model]="selectedDate"-->
+<!--                              (modelChange)="fillDatePicker($event)"></month-picker>-->
+<!--              </div>-->
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <tmss-datepicker-sale [dateInputFormat]="'MMM-YYYY'" [showMonth]="true" [addOnMinWidth]="'150px'" [text]="'Month'"
+                                   formControlName="month"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group input-group" hasError="frameNo">
+                  <span [style.minWidth]="'150px'" class="input-group-addon">Frame No</span>
+                  <input type="text" class="form-control" formControlName="frameNo">
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Frame No must be a number and greater than 0</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'Allocation Month From'"
+                                   formControlName="allocationMonthFrom"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'Allocation Month To'"
+                                       formControlName="allocationMonthTo"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectAllocationMonth"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'DLR Arrival Date From'"
+                                   formControlName="dlrArrivalDateFrom"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'DLR Arrival Date To'"
+                                       formControlName="dlrArrivalDateTo"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectDlrArrivalDate"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'Actual Invoice Date From'"
+                                   formControlName="actualInvoiceDateFrom"></tmss-datepicker-sale>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group ">
+                  <div class="row position-relative">
+                    <div class="col-xs-11">
+                      <tmss-datepicker-sale [addOnMinWidth]="'150px'" [text]="'Actual Invoice Date To'"
+                                       formControlName="actualInvoiceDateTo"></tmss-datepicker-sale>
+                    </div>
+                    <div class="checkbox-filter-start-modal">
+                      <checkbox formControlName="selectActualInvoiceDate"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <checkbox formControlName="includeStockVehicle" text="Include Stock Vehicle"></checkbox>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue" (click)="confirm()">
+            <i class="fa fa-check"></i> OK
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

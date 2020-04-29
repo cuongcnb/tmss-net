@@ -1,0 +1,90 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin công việc
+    <div class="panel-tools">
+      <button type="button" class="fa btn-collapse" [ngClass] ="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEvent">
+      </button>
+    </div>
+  </div>
+  <div id="collapseEvent" [collapse]="isCollapsed">
+    <div class="panel-body">
+<!--      <form class="row" [formGroup]="proposalForm" *ngIf="proposalForm" novalidate autocomplete="off">-->
+<!--        <div class="col-sm-4">-->
+<!--          <div class="row">-->
+<!--            <div class="col-sm-6">-->
+<!--              <checkbox text="Sửa lại" formControlName="isFix"></checkbox>-->
+<!--            </div>-->
+<!--            <div class="col-sm-6">-->
+<!--              <checkbox text="Bảo hiểm" formControlName="isInr"></checkbox>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-sm-4 form-group">-->
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-addon">Đơn vị bảo hiểm</span>-->
+<!--            <select class="form-control" formControlName="inrComId">-->
+<!--              <option [ngValue]="null"></option>-->
+<!--              <option *ngFor="let item of insurances" [ngValue]="item.id">{{item.inrCName}}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-sm-4">-->
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-addon">Nhân viên BH</span>-->
+<!--            <select class="form-control" formControlName="inrEmpId">-->
+<!--              <option [ngValue]="null"></option>-->
+<!--              <option *ngFor="let item of empOfInsurance" [ngValue]="item.id">{{item.name}}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </form>-->
+      <div class="tabbable">
+        <ul class="nav nav-tabs tab-blue">
+          <li *ngFor="let item of tabs"
+              [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer">
+            <a data-toggle="tab" class="tab-item text-capitalize">
+              {{item.name}}
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <general-repair-of-proposal
+            [data]="dataGeneralRepair"
+            [isRepair]="isRepair"
+            [cmId]="cmId"
+            [state]="state"
+            (partByJob)="partByJob.emit($event)"
+            [proposalForm]="proposalForm"
+            [tabDisplay]="selectedTab === 'repair'"
+            (countMoney)="countMoney.emit($event)"
+            [isRefresh]="isRefresh"
+            [curredJob]="sccCurredJob"
+            [roState]="roState"
+            (chosenJob)="chosenJob.emit($event)"
+          ></general-repair-of-proposal>
+          <dong-son-of-proposal
+            [data]="dataBpRepair"
+            [cmId]="cmId"
+            [isRepair]="isRepair"
+            (partByJob)="partByJob.emit($event)"
+            [proposalForm]="proposalForm"
+            [tabDisplay]="selectedTab === 'dongson'"
+            (countMoney)="countMoney.emit($event)"
+            [isRefresh]="isRefresh"
+            [curredJob]="dsCurredJob"
+            [state]="state"
+            [roState]="roState"
+            (chosenJob)="chosenJob.emit($event)"
+          ></dong-son-of-proposal>
+          <fix-of-proposal [tabDisplay]="selectedTab === 'isFix'" [proposalForm]="proposalForm"></fix-of-proposal>
+          <insurance-of-proposal [insurances]="insurances"
+                                 [proposalForm]="proposalForm"
+                                 [tabDisplay]="selectedTab === 'isInr'"
+          ></insurance-of-proposal>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

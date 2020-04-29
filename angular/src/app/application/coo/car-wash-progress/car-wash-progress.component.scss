@@ -1,0 +1,301 @@
+::ng-deep * {
+  .planning-vehicle {
+    background: #B4C7E7;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 10;
+  }
+
+  .fixing-vehicle {
+    background: #4473C5;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 11;
+  }
+
+  .delay-plan-vehicle {
+    background: #f76969e8;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .stopping-vehicle {
+    background: #7F807B;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 12;
+  }
+
+  .complete-vehicle {
+    background: #008000;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .performed-vehicle {
+    background: #304D65 ;
+    padding: 5px 1px;
+    white-space: nowrap;
+    z-index: 13;
+    color: white;
+    border: 0.5px solid #DDDDDD;
+  }
+
+  .priority-vehicle {
+    background: #ff9c00;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .delay-vehicle {
+    background: #EC1A22;
+    padding: 5px 1px;
+    white-space: nowrap;
+    color: #fff;
+    z-index: 13;
+  }
+
+  .color-delay {
+    background: #ff1a23;
+    color: #000000 !important;
+  }
+
+  .rx-focus-vehicle {
+    background: #20b5ae;
+  }
+
+  .rx-focus-vehicle-wait {
+    background: #20b5ae;
+  }
+
+  .background {
+    background: bisque !important;
+    color: black !important;
+  }
+
+  .mouse-time{
+    position: relative;
+    z-index: 1000000;
+  }
+
+}
+
+.panel-default {
+  height: calc(100% - 150px);
+
+  .panel-heading {
+    overflow: inherit;
+  }
+
+  .panel-body {
+    height: calc(100% - 25px);
+  }
+}
+
+.main-table {
+  padding-right: 70px;
+
+  .table-header {
+    & > div {
+      height: 52px;
+    }
+
+    .shop {
+      padding-left: 180px;
+    }
+  }
+
+  .table-body {
+    .shop {
+      padding: 10px 0 10px 190px;
+      font-size: 15px !important;
+    }
+
+    .emp {
+      padding: 5px;
+
+      .ktv {
+        font-size: 15px !important;
+      }
+    }
+
+    .progress-area {
+      width: calc(60% - 61px);
+      left: calc(40% + -28px);
+    }
+
+    .rx-progress-area {
+      height: 100%;
+    }
+
+    .rx-td {
+      position: relative;
+      height: 33px;
+      top: 0;
+    }
+  }
+
+  .shop {
+    float: left;
+    width: 27%;
+    border-right: 1px solid #BDC3C7;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .emp {
+    float: left;
+    width: 13%;
+    border-right: 1px solid #BDC3C7;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .prg {
+    position: relative;
+    float: left;
+    width: 60%;
+  }
+}
+
+.float-left {
+  padding: 5px;
+  font-size: 11px !important;
+}
+
+::ng-deep.general-repair .input-group-addon {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair input:not([type='radio']) {
+  height: 30px !important;
+}
+
+::ng-deep.general-repair select {
+  height: 30px !important;
+}
+
+.body-rx-waiting-vehicle {
+  overflow-y: auto;
+}
+
+.body-general-repair-employee {
+  overflow-y: auto;
+}
+
+.waiting-vehicle {
+  left: 0 !important;
+}
+
+
+.main-table {
+  padding-right: 0;
+
+  .shop {
+    float: left;
+    width: 226px;
+    overflow-y: hidden;
+
+  }
+
+  .table-header {
+    .shop {
+      padding-left: 90px;
+    }
+  }
+
+  .table-body {
+    .shop {
+      padding: 30px 0 10px 126px;
+      font-size: 15px !important;
+    }
+
+    .progress-area {
+      width: calc(100% - 226px);
+      left: 226px
+    }
+
+    .rx-td {
+      height: 70px;
+    }
+  }
+}
+
+.progress-coo {
+  .panel-additional-info {
+    width: 90px;
+  }
+
+  .main-table {
+    .table-body {
+      .body-content {
+        & > div {
+          height: 70px;
+
+          & > div {
+            height: 70px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.col132 {
+  width: 0px !important;
+}
+
+.size-img {
+  min-width: 25px;
+  margin-top: 3px;
+}
+
+.list-car-wait {
+  margin: 2px !important;
+}
+
+.register-no {
+  font-size: 14px !important;
+}
+
+.wait-header {
+  padding-left: 24px;
+  padding-top: 16px !important;
+}
+
+.shop-header {
+  padding-top: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}

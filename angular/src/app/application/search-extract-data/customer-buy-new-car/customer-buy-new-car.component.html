@@ -1,0 +1,24 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <input type="radio" formControlName="criteria" [value]="true">
+        Tiêu chí 1: Tìm kiếm khách hàng giao xe từ ngày
+        ...đến ngày ...Quay lại/Chưa quay lại làm 1K trong vòng ...ngày
+      </div>
+      <div class="form-group">
+        <input type="radio" formControlName="criteria" [value]="false">
+        Tiêu chí 2: Tìm kiếm khách hàng giao xe từ ngày ...đến ngày ...Quay lại làm 1K từ ngày ...đến ngày ..."
+      </div>
+      <criteria-one *ngIf="form.value.criteria"></criteria-one>
+      <criteria-two *ngIf="!form.value.criteria"></criteria-two>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</form>

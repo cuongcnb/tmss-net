@@ -1,0 +1,50 @@
+<div class="modal fade" bsModal #dispatchChangeApproveModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="save()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Approve Detail</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" hasError="action">
+            <label class="required">Action</label>
+            <select type="text" formControlName="action" class="form-control" autoFocusField>
+              <option value=""></option>
+              <option value="approve">Approve</option>
+              <option value="reject">Reject</option>
+              <option value="newPlan">New Plan</option>
+            </select>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Action is required</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="changeDate">
+            <label class="required">Change Date</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="changeDate"
+                     #changeDate="bsDatepicker" bsDatepicker readonly>
+              <span class="input-group-addon btn btn-blue" (click)="changeDate.toggle()"
+                    [attr.aria-expanded]="changeDate.isOpen">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Change Date is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

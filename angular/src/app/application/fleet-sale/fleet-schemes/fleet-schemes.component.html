@@ -1,0 +1,80 @@
+<div pageTitle="Fleet Schemes">
+  <h4>Fleet Schemes</h4>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Name</span>
+        <select type="text" class="form-control">
+          <option value=""></option>
+          <option value="">Ghep Api</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Effective Day</span>
+        <input type="text"
+               class="form-control"
+               #effectiveDay="bsDatepicker" bsDatepicker readonly>
+        <span class="input-group-addon btn btn-blue" (click)="effectiveDay.toggle()"
+              [attr.aria-expanded]="effectiveDay.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Expired Day</span>
+        <input type="text"
+               class="form-control"
+               #expiredDay="bsDatepicker" bsDatepicker readonly>
+        <span class="input-group-addon btn btn-blue" (click)="expiredDay.toggle()"
+              [attr.aria-expanded]="expiredDay.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group input-group">
+        <span class="input-group-addon">Description</span>
+        <input type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="input-group form-group">
+        <span class="input-group-addon">Grade</span>
+        <select type="text" class="form-control">
+          <option value=""></option>
+          <option *ngFor="let grade of grades" [value]="grade.id">{{grade.marketingCode}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Fleet Schemes Detail
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridFleetSchemes($event)"
+                  (getParams)="getParamsFleetSchemes()"></grid-table>
+    </div>
+    <div class="my-3 text-right grid-table-btn">
+      <button type="button" class="btn btn-blue mr-2" (click)="modifyFleetSchemes.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button type="button" class="btn btn-blue" (click)="updateFleetSchemes()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+    </div>
+  </div>
+</div>
+<modify-fleet-schemes #modifyFleetSchemes (close)="refreshList()"></modify-fleet-schemes>

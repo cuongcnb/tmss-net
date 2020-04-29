@@ -1,0 +1,46 @@
+$repairingColor: #C0C0E0;
+$quotesColor: #C0E0FF;
+$orderColor: #E0FFC0;
+
+.modal-footer {
+  .float-left > div {
+    & > span {
+      font-size: 11px;
+
+      & > span {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        background: #fff;
+
+        &.repairing {
+          background: $repairingColor;
+        }
+
+        &.quotes {
+          background: $quotesColor;
+        }
+
+        &.order {
+          background: $orderColor;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .is-repairing {
+  background: $repairingColor !important; ;
+}
+
+::ng-deep .is-quotes {
+  background: $quotesColor !important;
+}
+
+::ng-deep .is-order {
+  background: $orderColor !important;
+}
+
+::ng-deep .ag-theme-balham .ag-row-selected {
+  background-color: #b7e4ff !important;
+}

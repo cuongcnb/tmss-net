@@ -1,0 +1,165 @@
+<layout-header></layout-header>
+<div id="main-container" class="main-container">
+  <layout-sidebar></layout-sidebar>
+
+  <div class="main-content">
+    <div [hidden]="!hide" class="container" *ngIf="data">
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="font-weight-bold">HỆ THỐNG QUẢN LÝ CÔNG VIỆC</h4>
+        </div>
+        <div class="col-md-4 mt-2">
+          <button type="button" class="close-menu float-right" (click)="onBtnCloseMenu()">
+            <span aria-hidden="true" class="x">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-sm-3 col-xs-6">
+          <div class="panel panel-primary panel-status">
+            <div class="panel-body">
+              <div class="car-status car-working">
+                <div class="info text-center"><span>{{data.carWorking}}</span></div>
+                <div class="text-center">Xe đang sửa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3 col-xs-6">
+          <div class="panel panel-warning panel-status">
+            <div class="panel-body">
+              <div class="car-status car-resource">
+                <div class="info text-center"><span>{{data.resource}}</span></div>
+                <div class="text-center">% Nguồn lực</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <div class="panel panel-success panel-status">
+            <div class="panel-body">
+              <div class="car-status car-done">
+                <div class="info text-center"><span>{{data.carDone}}</span></div>
+                <div class="text-center">Xe đã giao trong ngày</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <div class="panel panel-danger panel-status">
+            <div class="panel-body">
+              <div class="car-status car-waiting">
+                <div class="info text-center"><span>{{data.carWait}}</span></div>
+                <div class="text-center">Xe còn phải giao trong ngày</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row pt-3">
+
+
+        <div class="col-md-6 col-sm-6">
+          <div class=" panel panel-warning">
+            <div class="panel-body panel-orange color-text">Tiếp nhận khách hàng hôm nay</div>
+            <div class="panel-footer">
+              <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-4 text-center big-text">Đặt hẹn<br>{{data.appointment}}</div>
+                <div class="col-md-4 col-sm-4 col-xs-4 text-center big-text">Tiếp nhận<br>{{data.receive}}</div>
+                <div class="col-md-4 col-sm-4 col-xs-4 text-center big-text">Đang chờ<br>{{data.wait}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6">
+          <div class="panel panel-success">
+            <div class="panel-body panel-green color-text">Dịch vụ tiếp nhận hôm nay</div>
+            <div class="panel-footer">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3 text-center big-text">BP<br>{{data.bp}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3 text-center big-text">GJ<br>{{data.gj}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3 text-center big-text">PM<br>{{data.pm}}</div>
+                <div class="col-md-3 col-sm-3 col-xs-3 text-center big-text">Kết hợp<br>{{data.mix}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row pt-3">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-body panel-white">
+              Danh sách khách chờ: {{data.wait}}
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'600px'" (callbackGrid)="callbackGrid($event)"
+                        (getParams)="getParams()" (changePaginationParams)="changePaginationParams($event)"
+                        [paginationTotalsData]="paginationTotalsData"></grid-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="hide" class="container" id="breadcrumb-container">
+      <div class="tabbable mt-4" *ngIf="activeTabs.length">
+        <ul id="myTab" class="nav nav-tabs tab-bricky">
+          <li (mouseup)="triggerMouseEvent($event, activeTab.tab)"
+              *ngFor="let activeTab of activeTabs"
+              [class.active]="activeTab.tab === selectedTab" (click)="selectTab(activeTab.tab, $event)"
+              data-toggle="tooltip"
+              data-placement="bottom" title="{{activeTab.name}}" class="pointer">
+            <a data-toggle="tab" class="tab-item text-capitalize">
+              <button type="button" class="close" (click)="removeTab(activeTab.tab)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              {{activeTab.name}}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!--tiến độ-->
+      <!-- <general-repair-progress *ngIf="isLoadComponent(tMSSTabs.generalRepairProgress)"
+                               #generalRepairProgress [dataProgress]="dataProgress"
+                               [tabDisplay]="selectedTab === tMSSTabs.generalRepairProgress"></general-repair-progress>
+      <info-general-repair-progress *ngIf="isLoadComponent(tMSSTabs.infoGeneralRepairProgress)"
+                                    [tabDisplay]="selectedTab === tMSSTabs.infoGeneralRepairProgress"></info-general-repair-progress>
+      <dong-son-progress *ngIf="isLoadComponent(tMSSTabs.dongsonProgress)"
+                         #dongSonProgress [tabDisplay]="selectedTab === tMSSTabs.dongsonProgress"></dong-son-progress>
+      <dong-son-progress-by-car *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByCar)"
+                                #dongSonProgressByCar
+                                [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByCar"></dong-son-progress-by-car>
+      <dong-son-progress-by-wshop *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByWshop)"
+                                  #dongSonProgressByWshop
+                                  [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByWshop"></dong-son-progress-by-wshop>
+      <car-wash-progress *ngIf="isLoadComponent(tMSSTabs.carWash)"
+                         #carWashProgress [tabDisplay]="selectedTab === tMSSTabs.carWash"></car-wash-progress> -->
+
+      <!-- Lễ tân -->
+      <receptionist *ngIf="isLoadComponent(tMSSTabs.receptionist)"
+                    #receptionist [tabDisplay]="selectedTab === tMSSTabs.receptionist"></receptionist>
+
+      <div class="component-service">
+        <gate-in-out #gateInOut *ngIf="isLoadComponent(tMSSTabs.gateInOut)"
+                     [tabDisplay]="selectedTab === tMSSTabs.gateInOut" (shortcuts)="setShortcuts($event)">
+        </gate-in-out>
+        <customer-service-reception *ngIf="isLoadComponent(tMSSTabs.collocationCustomer)"
+                                    [tabDisplay]="selectedTab === tMSSTabs.collocationCustomer"></customer-service-reception>
+        <receiving-vehicle *ngIf="isLoadComponent(tMSSTabs.receivingVehicle)" #receivingVehicle
+                           [tabDisplay]="selectedTab === tMSSTabs.receivingVehicle"></receiving-vehicle>
+        <dynamic-tab *ngFor="let tab of isService(canLazyLoad(activeTabs))"
+                     [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
+                     [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
+      </div>
+      <dynamic-tab *ngFor="let tab of nonService(canLazyLoad(activeTabs))"
+                   [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
+                   [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
+    </div>
+  </div>
+</div>
+<confirmation></confirmation>
+
+<ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>
+<ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="'Bảng phím tắt'"></ng-keyboard-shortcuts-help>

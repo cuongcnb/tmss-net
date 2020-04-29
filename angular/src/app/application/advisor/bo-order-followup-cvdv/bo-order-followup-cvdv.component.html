@@ -1,0 +1,106 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseBoOrderFollowupCVDVSearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseBoOrderFollowupCVDVSearch" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Đại lý</span>
+                <select class="form-control" formControlName="dlrId">
+                  <option [value]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Lệnh sửa chữa">LSC</span>
+                <input class="form-control" formControlName="orderNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Biển số</span>
+                <input class="form-control" formControlName="plateNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Thời gian hẹn">CVDV</span>
+                <input class="form-control" formControlName="advisor">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Hôm nay</span>
+                <input class="form-control" formControlName="today">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    CVDV - Theo dõi đơn hàng BO
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseBoOrderFollowupCVDV" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseBoOrderFollowupCVDV" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'400px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams($event)"
+                [sizeColumnToHeaderWidth] = "true"
+                [frameworkComponents]="frameworkComponents"
+                (cellDoubleClicked)="detailModal.open($event.data)"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="mt-3 text-right">
+  <button class="btn btn-blue mr-2" [disabled]="!selectedBo" (click)="editBo()">
+    <i class="fa fa-edit"></i> Cập nhật
+  </button>
+  <button class="btn btn-blue mr-2" (click)="exportExcel()">
+    <i class="fa fa-download"></i> Xuất dữ liệu
+  </button>
+  <button class="btn btn-blue" [disabled]="!selectedBo" (click)="deleteBo()">
+    <i class="fa fa-times"></i> Xóa
+  </button>
+  <input *ngIf="selectedBo" [value]="selectedBo.soRo" disabled>
+</div>
+<bo-followup-cvdv-detail-modal #detailModal (close)="search()"></bo-followup-cvdv-detail-modal>
+<bo-followup-cvdv-edit-modal #editModal (close)="search()"></bo-followup-cvdv-edit-modal>

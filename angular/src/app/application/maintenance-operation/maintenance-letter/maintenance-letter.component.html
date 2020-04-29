@@ -1,0 +1,72 @@
+<div>
+  <form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Đại lý</span>
+          <select class="form-control" formControlName="supplier">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">BKS</span>
+          <input class="form-control" formControlName="BKS">
+        </div>
+      </div>
+      <div class="col-md-4 form-group">
+        <div class="input-group">
+          <span class="input-group-addon">VIN</span>
+          <input class="form-control" formControlName="VIN">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <tmss-datepicker text="Ngày nhắc từ ngày" formControlName="remindDate"></tmss-datepicker>
+      </div>
+      <div class="col-md-4 form-group">
+        <tmss-datepicker text="Đến ngày" formControlName="toDate"></tmss-datepicker>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-blue mr-2" (click)="search()">
+          <i class="fa fa-search"></i>
+          Tìm kiếm
+        </button>
+        <button class="btn btn-blue">
+          <i class="fa fa-refresh"></i>
+          Làm mới
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-4">
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+      >
+      </grid-table>
+    </div>
+
+    <div class="col-md-8">
+      <maintenance-letter-content
+        [dataSearch]='selectedData'
+      ></maintenance-letter-content>
+    </div>
+  </div>
+
+  <div class="row text-right mt-2">
+    <button class="btn btn-blue mr-2 " (click)="clickLSSC()">
+      <i class="fa fa-clock-o"></i>
+      Lịch sử sửa chữa
+    </button>
+    <button class="btn btn-blue mr-2 ">
+      <i class="clip-download"></i>
+      Xuất Excel
+    </button>
+  </div>
+</div>
+
+<maintenance-letter-modal #maintenanceLetterModal></maintenance-letter-modal>

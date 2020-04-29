@@ -1,0 +1,51 @@
+<form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Từ khóa</span>
+          <input class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Model</span>
+          <select class="form-control"></select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-blue mb-2">
+        <i class="fa fa-search"></i>
+        Tìm kiếm
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Đầu mục
+        </div>
+        <grid-table [fieldGrid]="fieldGrid"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-default mt-3">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Chi tiết
+        </div>
+        <div class="panel-body">
+          Chi tiết ...
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

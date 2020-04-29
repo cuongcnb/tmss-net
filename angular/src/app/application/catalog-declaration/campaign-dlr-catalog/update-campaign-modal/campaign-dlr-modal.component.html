@@ -1,0 +1,168 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>{{!campaignSelected ? "Tạo mới chiến dịch" : "Cập nhật" }}</strong></h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6" hasError="campaignName">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Tên chiến dịch</span>
+                  <input type="text" class="form-control required" formControlName="campaignName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu nhập tên chiến dịch</div>
+                  <div *ifError="'maxLength'">Tối đa 250 kí tự</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="sortName">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Tên viết tắt</span>
+                  <input type="text" class="form-control" formControlName="sortName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 250 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6" hasError="campaignType">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Loại chiến dịch</span>
+                  <select class="form-control required" formControlName="campaignType">
+                    <option>Recall/SSC</option>
+                    <option>CSC</option>
+                    <option>SPA</option>
+                    <option>FIP</option>
+                    <option>ICSC</option>
+                    <option>PDC</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Yêu cầu chọn loại chiến dịch</div>
+                  <div *ifError="'maxLength'">Tối đa 200 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="reqNo">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Số thư/Ref. No</span>
+                  <input type="text" class="form-control" formControlName="reqNo">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 form-group" hasError="effectFrom">
+                <tmss-datepicker [minDate]="minDate" [addOnMinWidth]="'120px'"
+                                 formControlName="effectFrom" text="Áp dụng từ" [isRequired]="true"></tmss-datepicker>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Chọn ngày áp dụng</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group" hasError="effectTo">
+                <tmss-datepicker [minDate]="minDate" [addOnMinWidth]="'120px'"
+                                 formControlName="effectTo" text="Đến ngày" [isRequired]="true"></tmss-datepicker>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Chọn ngày kết thúc</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6" hasError="description">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Mô tả</span>
+                  <input type="text" class="form-control" formControlName="description">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Tối đa 250 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Trạng thái</span>
+                  <select class="form-control required" formControlName="status">
+                    <option value="Y">Còn hiệu lực</option>
+                    <option value="N">Hết hiệu lực</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Hình thức giảm giá</span>
+                  <select class="form-control" formControlName="discountType">
+                    <option *ngFor="let it of listDiscountType" [ngValue]="it.dataValue">{{it.dataNameVn}}</option>
+                  </select></div>
+              </div>
+              <div class="col-sm-6" *ngIf="form.value.discountType === '0'">
+                <div class="input-group form-group">
+                  <span class="input-group-addon min-width">Giảm giá</span>
+                  <input type="text" class="form-control" formControlName="percentDiscount" [maxLength]="10">
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="priceDiscount" *ngIf="form.value.discountType === '1'">
+                <tmss-money-input [addOnMinWidth]="'120px'" [text]="'Giảm giá tiền'" formControlName="priceDiscount"
+                                  fieldAccessor="input"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Sai định dạng</div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Danh sách dòng xe, đời xe
+              </div>
+              <grid-table [fieldGrid]="workGridField"
+                          (callbackGrid)="callbackWorkGrid($event)"
+                          (getParams)="getWorkParams()"
+                          [height]="'200px'"
+                          [showPagination]="false"
+              ></grid-table>
+              <div class="panel-footer text-right">
+                <button type="button" class="btn btn-blue mr-2" (click)="showCarModel(null)">
+                  <i class="fa fa-plus"></i> Thêm
+                </button>
+                <button type="button" class="btn btn-blue btn-danger" (click)="delWork()">
+                  <i class="fa fa-trash-o"></i> Xóa
+                </button>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" *ngIf="!campaignSelected" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="submit" class="btn btn-blue" *ngIf="campaignSelected" (click)="save()">
+            <i class="fa fa-save"></i> Cập nhật
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal #newWork [headerText]="'Thêm dòng xe, đời xe'"
+                        [apiCall]="getWorkCodeList.bind(this)"
+                        (close)="addWork($event)"
+                        [fieldGrid]="newWorkGridField"
+></search-data-grid-modal>

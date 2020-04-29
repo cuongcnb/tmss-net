@@ -1,0 +1,45 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Import thông tin phụ tùng</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <file-uploader *ngIf="modal.isShown" acceptType=".csv"
+                         [apiCallUpload]="apiCallUpload.bind(this)"
+                         (responseUpload)="uploadSuccess($event)"
+                         (errorUpload)="uploadFail($event)"
+          ></file-uploader>
+          <div class="panel panel-default mt-2" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách cập nhật
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'300px'"
+                        (callbackGrid)="callBackGrid($event)"
+            ></grid-table>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin xử lý
+            </div>
+            <div class="panel-body processing-info" *ngIf="processingInfo.length > 0">
+              <p *ngFor="let info of processingInfo">{{info}}</p>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-light-grey" (click)="closeModal()">
+          <i class="fa fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

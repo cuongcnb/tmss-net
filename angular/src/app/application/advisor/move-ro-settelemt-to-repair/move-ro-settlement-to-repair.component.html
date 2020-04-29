@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartShippingHistorySearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartShippingHistorySearch" class="panel-collapse collapse in">
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group input-group span-115">
+            <span class="input-group-addon">Số RO hoặc BSX</span>
+            <input class="form-control" formControlName="filter">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-blue" (click)="search()">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách RO đã quyết toán
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartShippingHistoryPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartShippingHistoryPart" class="panel-collapse collapse in">
+
+  <grid-table [showPagination]="false" [fieldGrid]="fieldGrid" [height]="'450px'"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [suppressRowClickSelection]="true"
+              [rowSelection]="'multiple'"
+  ></grid-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <button class="float-right btn btn-blue mr-2" [disabled]="!listData" (click)="onBtnButtonMove()">
+      <i class="fa fa-pencil"></i> Chuyển về LSC
+    </button>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="rows">
+    <div class="inline-block no-border-right">
+      Pay Code
+    </div>
+    <div class="inline-block w-5 no-border-right">
+      Ope.M
+    </div>
+    <div class="inline-block w-40 no-border-right">
+      Operation No.
+    </div>
+    <div class="inline-block no-border-right">
+      Hour
+    </div>
+    <div class="inline-block no-border-right">
+      Amount
+    </div>
+    <div class="inline-block w-10 no-border-right">
+      <button class="btn btn-link p-0" type="button" (click)="addLabor()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="rows" *ngIf="!laborArray.controls.length">
+    <div class="inline-block no-border-right">
+      <select *ngIf="isTMV" class="form-control"
+              disabled></select>
+    </div>
+    <div class="inline-block w-5 pt-1 no-border-right">
+      <div class="inline-checkbox">
+        <checkbox ngClass="checkbox-claim" [isDisabled]="true"></checkbox>
+      </div>
+    </div>
+    <div class="inline-block w-40 no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block w-10 no-border-right">
+    </div>
+  </div>
+  <ng-container *ngIf="laborArray.controls.length" formArrayName="warrantyClaimLaborDTOs">
+    <ng-container
+      *ngFor="let val of laborArray.controls; let i = index">
+      <div class="rows" formGroupName="{{i}}">
+        <div class="ng-container">
+          <div class="inline-block no-border-right">
+            <select *ngIf="isTMV" class="form-control" formControlName="payCode">
+              <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">{{payCode.paycode}}</option>
+            </select>
+          </div>
+          <div class="inline-block checkboxs w-5 pt-1 no-border-right">
+            <div class="inline-checkbox">
+              <checkbox ngClass="checkbox-claim" formControlName="opeMFlagCtl"></checkbox>
+            </div>
+          </div>
+          <div class="no-border-right inline-block w-40" hasError="srvCode">
+            <input class="form-control" formControlName="srvCode" maxlength="7"
+                   (dblclick)="openFindLabor(i,claim.roType, claim.cmId)">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc</div>
+              <div *ifError="'srvCode'">Sai mã</div>
+            </div>
+          </div>
+          <div class="inline-block no-border-right" hasError="hours">
+            <input class="form-control" formControlName="hours" maxlength="6">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'floatNumberFormatHourl'">Sai định đạng</div>
+              <div *ifError="'required'">Bắt buộc</div>
+            </div>
+          </div>
+          <div class="inline-block no-border-right">
+            <warranty-amount-input formControlName="amount" [isReadOnly]="true"></warranty-amount-input>
+            <!--<input class="form-control" formControlName="amount" readonly>-->
+          </div>
+          <div class="inline-block w-10 no-border-right">
+            <button type="button" class="btn btn-link p-0">
+              <i class="fa fa-trash-o" (click)="deleteLabor(i)"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <button class="ghost" #submitBtn></button>
+</form>
+<find-operation-modal #findOperationModal
+                      (close)="setLaborDataToRow($event)"></find-operation-modal>

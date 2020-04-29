@@ -1,0 +1,104 @@
+input.ghost {
+  visibility: hidden;
+  position: fixed;
+  opacity: 0;
+}
+
+.modal-body-nopadding {
+  padding: 0;
+  text-align: center;
+  margin: auto;
+  background-color: #222;
+}
+
+.image-cropper {
+  display: none;
+  overflow: hidden;
+  position: relative;
+  &.round {
+    border-radius: 100%;
+    .overlay {
+      .btn-group {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        right: auto;
+      }
+    }
+  }
+  .preview {
+    width: 100%;
+    max-height: inherit;
+  }
+  .modal-body {
+    min-height: 400px;
+  }
+  label {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    cursor: pointer;
+    display: block;
+    &:hover {
+      .icon {
+        color: #fff;
+      }
+    }
+    .icon {
+      font-size: 4em;
+      color: rgba(255, 255, 255, 0.7);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: ease-in-out 300ms;
+    z-index: 99;
+  }
+  &:hover {
+    .overlay {
+      opacity: 1;
+    }
+  }
+  .btn-group {
+    position: absolute;
+    right: .5em;
+    top: 1em;
+    z-index: 10;
+    .btn-remove {
+      position: relative;
+      line-height: 1;
+      padding: .5em;
+      border-radius: 50%;
+      background-color: hsla(0, 100%, 100%, .7);
+      color: #555;
+      cursor: pointer;
+      display: inline-block;
+      width: 2em;
+      text-align: center;
+      &+.btn-remove {
+        margin-left: .5em;
+      }
+      &:hover {
+        background-color: hsla(0, 100%, 100%, .9);
+      }
+    }
+  }
+}

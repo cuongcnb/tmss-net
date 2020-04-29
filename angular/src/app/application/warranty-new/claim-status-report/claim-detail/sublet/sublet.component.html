@@ -1,0 +1,87 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="rows">
+    <div class="inline-block no-border-right">
+      Pay Code
+    </div>
+    <div class="inline-block w-40 no-border-right">
+      Sublet Type
+    </div>
+    <div class="inline-block w-20 no-border-right">
+      Sublet Invoice No
+    </div>
+    <div class="inline-block no-border-right">
+      Amount
+    </div>
+    <div class="inline-block w-10 no-border-right">
+      <button type="button" class="btn btn-link p-0" (click)="addSublet()">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
+  <div class="rows" *ngIf="!subletArray.controls.length">
+    <div class="inline-block no-border-right">
+      <select *ngIf="isTMV" class="form-control" disabled>
+      </select>
+    </div>
+    <div class="inline-block w-40 no-border-right">
+      <select class="form-control" disabled>
+      </select>
+    </div>
+    <div class="inline-block w-20 no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block no-border-right">
+      <input class="form-control" disabled>
+    </div>
+    <div class="inline-block w-10">
+    </div>
+  </div>
+  <ng-container *ngIf="subletArray.controls.length" formArrayName="warrantyClaimSubletDTOs">
+    <ng-container
+      *ngFor="let val of subletArray.controls; let i = index">
+      <div formGroupName="{{i}}" class="rows">
+          <div class="inline-block no-border-right">
+            <select *ngIf="isTMV" class="form-control" formControlName="payCode">\
+
+              <option *ngFor="let payCode of payCodeList" [ngValue]="payCode.paycode">{{payCode.paycode}}</option>
+            </select>
+          </div>
+          <div class="inline-block w-40 no-border-right">
+            <select class="form-control" formControlName="subletType">
+              <ng-container *ngFor="let sublet of subletTypeList">
+                <!--<option [ngValue]="sublet.sublettype" *ngIf="i!==0 || sublet.id!==62">-->
+                <option [ngValue]="sublet.sublettype">
+                  {{sublet.desceng}}
+                </option>
+
+<!--                <option [ngValue]="sublet.sublettype" *ngIf="i > 0 && sublet.id !== 62">-->
+<!--                  {{sublet.desceng}} {{i}} {{sublet.id}}-->
+<!--                </option>-->
+              </ng-container>
+            </select>
+          </div>
+          <div class="inline-block w-20 no-border-right" hasError="subletInvoiceNo">
+            <input class="form-control" formControlName="subletInvoiceNo" maxlength="7">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Bắt buộc</div>
+            </div>
+          </div>
+          <div class="inline-block no-border-right" hasError="cost">
+<!--            <warranty-amount-input formControlName="cost" [hideDecimal]="false"-->
+<!--                                   [isReadOnly]="false" [maxlength]="11"></warranty-amount-input>-->
+            <input type="number" class="form-control" formControlName="cost" maxlength="11">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'floatNumberFormat'">Sai định dạng</div>
+              <div *ifError="'required'">Bắt buộc</div>
+            </div>
+          </div>
+          <div class="inline-block w-10 no-border-right">
+            <button type="button" class="btn btn-link p-0">
+              <i class="fa fa-trash-o" (click)="deleteSublet(i)"></i>
+            </button>
+          </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <button class="ghost" #submitBtn></button>
+</form>

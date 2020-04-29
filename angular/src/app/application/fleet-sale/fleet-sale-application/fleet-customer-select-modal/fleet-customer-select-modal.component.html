@@ -1,0 +1,37 @@
+<div class="modal fade" bsModal #fleetCustomerSelectModal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Fleet Customer Select</h5>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Fleet Customer
+            <div class="panel-tools">
+              <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshFleetCustomer()">
+                <i class="fa fa-refresh"></i>
+              </button>
+            </div>
+          </div>
+          <grid-table [fieldGrid]="fieldGridFleetCustomer"
+                      (callbackGrid)="callbackGridFleetCustomer($event)"
+                      (cellDoubleClicked)="confirm()"
+                      (getParams)="getParamsFleetCustomer()"></grid-table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue" [attr.disabled]="!selectedFleetCustomer ? true : null" (click)="confirm()">
+          <i class="fa fa-save"></i> OK
+        </button>
+        <button type="button" class="btn btn-blue" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

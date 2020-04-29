@@ -1,0 +1,124 @@
+<div class="modal fade" bsModal #gradeListModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Grade</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Grade</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-4" hasError="marketingCode">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Marketing Code</label>
+                  <input type="text" formControlName="marketingCode" class="form-control required" autoFocusField>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Marketing Code is required</div>
+                  <div *ifError="'maxLength'">Max length is 25</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="enName">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">En Name</label>
+                  <input type="text" formControlName="enName" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="vnName">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Vn Name</label>
+                  <input type="text" formControlName="vnName" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4" hasError="ordering">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Order</label>
+                  <input type="text" formControlName="ordering" class="form-control">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Order must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 4</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">CBU/CKD/Lexus</label>
+                  <select formControlName="cbuCkd" class="form-control">
+                    <option value="Y">CBU</option>
+                    <option value="N">CKD</option>
+                    <option value="L">Lexus</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Request Color In Firm Order</label>
+                  <select formControlName="isFirmColor" class="form-control">
+                    <option value=""></option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Audio</label>
+                  <select formControlName="isHasAudio" class="form-control">
+                    <option value=""></option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4" hasError="gasolineTypeId">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Fuel</label>
+                  <select formControlName="gasolineTypeId" class="form-control required" [compareWith]="compareFn">
+                    <option value=""></option>
+                    <option *ngFor="let type of gasolines" [ngValue]="type.id">{{type.name}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Fuel is required</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Status</label>
+                  <select type="text" formControlName="status" class="form-control">
+                    <option value="Y">Enabled</option>
+                    <option value="N">Disabled</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,198 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin xe
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseVhc" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapseVhc" class="panel-collapse collapse in">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form" focusField>
+      <div class="row">
+        <div class="col-sm-6 form-group" hasError="cfType">
+          <div class="input-group">
+            <span class="input-group-addon">Dòng xe</span>
+            <select class="form-control required" formControlName="cfType" (change)="changeSelectCfType()">
+              <option [ngValue]="null"></option>
+              <option *ngFor="let type of carFamilyTypes" [ngValue]="type.id">{{type.name}}</option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc chọn</div>
+          </div>
+        </div>
+        <div class="col-sm-3" *ngIf="form.value.cfType !== 3">
+          <checkbox formControlName="ckd" text="CKD"></checkbox>
+        </div>
+        <div class="col-sm-3" *ngIf="form.value.cfType !== 3">
+          <checkbox formControlName="pds" text="PDS"></checkbox>
+        </div>
+        <div class="col-sm-3 form-group" *ngIf="form.value.cfType === 3">
+          <div class="input-group">
+            <select class="form-control" formControlName="pi">
+              <option *ngFor="let it of pi" [ngValue]="it.id">{{it.name}}</option>
+              <option [ngValue]="null"></option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc chọn</div>
+          </div>
+        </div>
+        <div class="col-sm-3" *ngIf="form.value.cfType === 3">
+          <checkbox formControlName="hybrid" text="Hybrid"></checkbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <div class="row">
+            <div class="col-sm-6" hasError="cfId">
+              <div class="input-group">
+                <span class="input-group-addon">Kiểu xe</span>
+                <select class="form-control required" formControlName="cfId" (change)="selectCarModel()">
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let val of cfList" [ngValue]="val.id">{{val.cfName}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc chọn</div>
+              </div>
+            </div>
+<!--            <div class="col-sm-6">-->
+<!--              <input type="text" disabled class="form-control" formControlName="doixe">-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 form-group" hasError="cmCode">
+          <div class="input-group">
+            <span class="input-group-addon">Mã kiểu xe</span>
+            <input class="form-control required" formControlName="cmCode">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc chọn</div>
+          </div>
+        </div>
+        <div class="col-sm-6 form-group" hasError="fullmodel">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="60px" data-toggle="tooltip" data-placement="bottom" title="Full Model">FM</span>
+            <input type="text" disabled class="form-control" formControlName="fullmodel" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Số khung</span>
+            <input type="text" class="form-control" formControlName="frameno" maxlength="20">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="input-group">
+                <span class="input-group-addon">Loại máy</span>
+                <input-search formControlName="enginecode"
+                              (onSearch)="vhEngineModal.open({searchKeyword:form.get('enginecode').value})"
+                              [isReadonly]="true"
+                              [showBtn]="true"></input-search>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="60px">Số máy</span>
+                <input type="text" class="form-control" formControlName="engineno" maxlength="20">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 form-group" hasError="vccode">
+          <div class="input-group">
+            <span class="input-group-addon">Màu xe</span>
+            <input-search formControlName="vccode"
+                          (onSearch)="vhColorModal.open({searchKeyword: form.get('vccode').value})"
+                          [isReadonly]="true"
+                          [showBtn]="true" [isRequired]="true" fieldAccessor="input"></input-search>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc chọn</div>
+          </div>
+        </div>
+        <div class="col-sm-6 form-group">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="60px">Mã NT</span>
+            <input type="text" class="form-control" formControlName="ntCode" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <tmss-datepicker data-toggle="tooltip" data-placement="bottom" title="Ngày giao xe mới"
+                           text="Ngày GX mới" [addOnMinWidth]="'72px'" formControlName="deliveryDate"></tmss-datepicker>
+        </div>
+        <div class="col-sm-6 form-group" hasError="vhcType">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="60px">Loại xe</span>
+            <select class="form-control required" formControlName="vhcType">
+              <option [value]="1">4 chỗ</option>
+              <option [value]="2">7 chỗ</option>
+              <option [value]="3">16 chỗ</option>
+              <option [value]="4">Bán tải</option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc chọn</div>
+          </div>
+        </div>
+      </div>
+<!--      <div class="row">-->
+<!--        <div class="col-sm-6 form-group">-->
+<!--          <div class="input-group">-->
+<!--            <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"-->
+<!--                  title="Bảo hành xe cũ">BH xe cũ</span>-->
+<!--            <input class="form-control" maxlength="20" formControlName="effectToDate" maxlength="20">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-sm-6 form-group" hasError="engineno">-->
+<!--          <tmss-money-input text="KM" [addOnMinWidth]="'60px'" formControlName="km" maxlength="20"></tmss-money-input>-->
+<!--        </div>-->
+<!--      </div>-->
+      <button class="ghost" #submitBtn></button>
+    </form>
+  </div>
+</div>
+
+<search-data-grid-modal
+  #cmInfoModal
+  [list]="carModelList"
+  [headerText]="'Danh sách đời xe'"
+  [isHideSearchField]="true"
+  (cancel)="cancelSelectCmInfo()"
+  (close)="patchCmValue($event)"
+  [fieldGrid]="fieldGridCm"
+  [showPagination]="false"
+></search-data-grid-modal>
+<search-data-grid-modal
+  #vhEngineModal
+  [headerText]="'Danh sách loại máy'"
+  [apiCall]="getEngineType.bind(this)"
+  (close)="patchEngineValue($event)"
+  [fieldGrid]="fieldGridEngine"
+></search-data-grid-modal>
+<search-data-grid-modal
+  #vhColorModal
+  [headerText]="'Danh sách mã màu xe'"
+  [apiCall]="getVehicleColor.bind(this)"
+  (close)="patchColorValue($event)"
+  [fieldGrid]="fieldGridColor"
+></search-data-grid-modal>
+

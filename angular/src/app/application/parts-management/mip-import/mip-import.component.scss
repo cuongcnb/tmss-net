@@ -1,0 +1,11 @@
+.upload {
+  position: relative;
+  ::ng-deep .search-group {
+    width: calc(100% - 70px);
+  }
+  .btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}

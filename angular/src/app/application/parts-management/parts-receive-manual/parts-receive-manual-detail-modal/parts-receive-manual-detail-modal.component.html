@@ -1,0 +1,106 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static',keyboard:false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <form [formGroup]="manualPartsForm" *ngIf="manualPartsForm" novalidate autocomplete="off">
+        <div class="modal-header">
+          <button type="button" class="close" [disabled]="startEditing?true:null"
+                  (click)="!startEditing? modal.hide():null">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Nhận hàng thủ công</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4 form-group " hasError="svourcher">
+                <div class="input-group ">
+                  <div class="input-group-addon min-width" addonWidth="78px">
+                    Số PGH
+                  </div>
+                  <input type="text" class="form-control required" formControlName="svourcher">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn chưa nhập Số phiếu giao hàng</div>
+                  <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+                  <div *ifError="'validateInputText'">Không được phép chứa kí tự có dấu</div>
+                </div>
+              </div>
+              <div class="col-sm-4 form-group ">
+                <div class="input-group mb-2">
+                  <div class="input-group-addon min-width" addonWidth="78px">
+                    Số H.đơn
+                  </div>
+                  <input type="text" class="form-control" formControlName="invoiceNo">
+                </div>
+                <div class="input-group ">
+                  <div class="input-group-addon min-width" addonWidth="78px">Số ĐH</div>
+                  <input type="text" class="form-control" formControlName="orderNo">
+                </div>
+              </div>
+              <div class="col-sm-4 form-group ">
+                <div class="mb-2">
+                  <tmss-datepicker formControlName="shipdate" text="Ngày giao" addOnMinWidth="78px"></tmss-datepicker>
+                </div>
+                <tmss-datepicker formControlName="modifyDate" text="Ngày nhận" addOnMinWidth="78px"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="grid-table-area mt-2">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-external-link-square"></i>
+                    Danh sách phụ tùng
+                    <div class="panel-tools">
+                      <button type="button" class="btn btn-link" data-toggle="collapse"
+                              data-target="#collapsePartReceiveManualPart" aria-expanded="true">
+                      </button>
+                    </div>
+                  </div>
+                  <div id="collapsePartReceiveManualPart" class="panel-collapse collapse in">
+                    <grid-table *ngIf="modal.isShown" [fieldGrid]="fieldPartsList" #gridTable
+                                (callbackGrid)="callbackParts($event)"
+                                [height]="'300px'"
+                                suppressRowClickSelection="true"
+                                (cellValueChanged)="cellPartsValueChange($event)"
+                                (cellEditingStopped)="cellEditingStopped()"
+                                (cellEditingStarted)="cellEditingStarted()"
+                                rowSelection="multiple"
+                                (getParams)="getParamsParts()"
+                    ></grid-table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-offset-4 col-sm-8">
+                <div class="row text-right">
+                  <div class="col-xs-4 detail">
+                    Trước thuế: <strong>{{formatMoney(totalPartsBeforeTax)}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    + Thuế: <strong>{{formatMoney(totalTax)}}</strong>
+                  </div>
+                  <div class="col-xs-4 detail">
+                    = Sau thuế: <strong>{{formatMoney(totalPartsAfterTax)}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <div class="btns-group">
+            <button class="btn btn-blue btn-primary px-4" (click)="receiveOrder()" [disabled]="startEditing?true:null">
+              <i class="fa fa-sign-in"></i> Nhận hàng
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--<report-type-modal #reportTypeModal (close)="downloadReport($event)"></report-type-modal>-->
+
+<!--<warranty-new-claim #claimDetailModal></warranty-new-claim>-->
+

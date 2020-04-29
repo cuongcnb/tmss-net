@@ -1,0 +1,51 @@
+<div class="modal fade" bsModal #petrolModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedPetrol">Add new Petrol</h5>
+          <h5 class="modal-title" *ngIf="selectedPetrol">Update Petrol</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="gradeProducesId">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="110px">Grade Production</label>
+                <select class="required form-control" formControlName="gradeProducesId" autoFocusField>
+                  <option value=""></option>
+                  <option *ngFor="let gradeProduction of gradeProductions" [value]="gradeProduction.id">
+                    {{gradeProduction.productionCode}}
+                  </option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Grade Production is required</div>
+              </div>
+            </div>
+            <div class="form-group" hasError="quantityAmount">
+              <div class="input-group">
+                <label class="input-group-addon" addonWidth="110px">Quantity</label>
+                <input type="text" class="required form-control" formControlName="quantityAmount">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Quantity is required</div>
+                <div *ifError="'petrolQuantityAmount'">Not a valid quantity (ex: 38.45)</div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

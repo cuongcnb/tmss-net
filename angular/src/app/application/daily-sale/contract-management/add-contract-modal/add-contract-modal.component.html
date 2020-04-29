@@ -1,0 +1,693 @@
+<div class="modal fade" bsModal #addContractModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusErrorField>
+    <div class="modal-dialog xl-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="cancel()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedFollowUp">Add Contract</h5>
+          <h5 class="modal-title" *ngIf="selectedFollowUp">Modify Contract</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="750" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="contract-info-area">
+              <h5><strong>Contract Information</strong></h5>
+              <div class="row">
+                <div class="col-sm-3 form-group" hasError="contractNo">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Contract No.</label>
+                    <input type="text" class="form-control required" formControlName="contractNo" autoFocusField>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Contract No is required</div>
+                    <div *ifError="'maxLength'">Max length is 50</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="contractType">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Contract Type</label>
+                    <select class="form-control required" formControlName="contractType">
+                      <option value="R">R</option>
+<!--                      <option value="TMV_B"-->
+<!--                              *ngIf="(!currentUser.isAdmin && !selectedFollowUp) || selectedFollowUp?.contractType === 'F'">-->
+<!--                        TMV_B-->
+<!--                      </option>-->
+                      <option value="TMV_B">TMV_B</option>
+                      <option value="DLR_B">DLR_B</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Contract type is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="amount">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Deposit Amount</label>
+                    <input type="text" class="form-control text-right" formControlName="amount"
+                           (input)="dataFormatService.formatMoneyForm(form,'amount')">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Deposit Amount must be a number and greater than 0</div>
+                    <div *ifError="'maxLength'">Max length is 18</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Total</label>
+                    <input type="text" class="form-control" formControlName="total">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-group" hasError="wodDate">
+                  <tmss-datepicker-sale addOnMinWidth="105px" text="Wod Date" [isRequired]="true"
+                                   formControlName="wodDate"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Wod Date is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="depositDate">
+                  <tmss-datepicker-sale addOnMinWidth="105px" text="Deposit Date" [isRequired]="true"
+                                   formControlName="depositDate"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Deposit Date is required</div>
+                    <!-- <div *ifError="'depositDate'">Deposit date must be today</div> -->
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="discountPrice">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Discount</label>
+                    <input type="text" class="form-control text-right" formControlName="discountPrice"
+                           (input)="dataFormatService.formatMoneyForm(form,'discountPrice')">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Discount must be a number and greater than 0</div>
+                    <div *ifError="'maxLength'">Max length is 18</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="refNoControl">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Ref No.</label>
+                    <multi-column-select-control
+                      formControlName="refNoControl"
+                      displayField="refNo"
+                      [fieldGrid]="gridField"
+                      [apiCall]="getFleets.bind(this)">
+                    </multi-column-select-control>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">You must input fleet applicant</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-group" hasError="commissionPrice">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Commission</label>
+                    <input type="text" class="form-control text-right" formControlName="commissionPrice"
+                           (input)="dataFormatService.formatMoneyForm(form,'commissionPrice')">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Commission must be a number and greater than 0</div>
+                    <div *ifError="'maxLength'">Max length is 18</div>
+                  </div>
+                </div>
+
+                <div class="col-sm-3 form-group" hasError="otherPromotionValue">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Promotion Value</label>
+                    <input type="text" class="form-control text-right" formControlName="otherPromotionValue"
+                           (input)="dataFormatService.formatMoneyForm(form,'otherPromotionValue')">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">Promotion Value must be a number</div>
+                    <div *ifError="'maxLength'">Max length is 18</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="paymentTypeId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px" required>Payment Type</label>
+                    <select class="form-control required" formControlName="paymentTypeId">
+                      <option value=""></option>
+                      <option *ngFor="let type of paymentTypes" [ngValue]="type.id">{{type.name}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Payment type is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Sales Person</label>
+                    <multi-column-select-control
+                      formControlName="salesStaffControl"
+                      displayField="fullName"
+                      [enableFilter]="true"
+                      [fieldGrid]="salesStaffGridField"
+                      [list]="salePersons">
+                    </multi-column-select-control>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-group" hasError="estimatedDate">
+                  <tmss-datepicker-sale [isRequired]="true" addOnMinWidth="105px" text="Original Est Date"
+                                   formControlName="estimatedDate"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Estimate date is required</div>
+                    <div *ifError="'estimatedDate'">Estimate date must greater than today</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group">
+                  <tmss-datepicker-sale addOnMinWidth="105px" text="New Est Date" [isRequired]="false"
+                                   formControlName="newEstimatedDate"></tmss-datepicker-sale>
+                </div>
+                <div class="col-sm-3 form-group" hasError="orderPrice">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px" required>Order Price</label>
+                    <input type="text" class="form-control text-right required" formControlName="orderPrice"
+                           (input)="dataFormatService.formatMoneyForm(form,'orderPrice')">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Order price is required</div>
+                    <div *ifError="'numberFormat'">Order Price must be a number and greater than 0</div>
+                    <div *ifError="'maxLength'">Max length is 18</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="estimatedReasonId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Reason Type</label>
+                    <select class="form-control required" formControlName="estimatedReasonId">
+                      <option value=""></option>
+                      <option *ngFor="let reason of reasons" [ngValue]="reason.id">{{reason.name}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Reason type is required</div>
+                  </div>
+                </div>
+<!--                <div class="col-sm-4 form-group" *ngIf="newEstimatedDate" hasError="estimatedReasonId">-->
+<!--                  <div class="input-group">-->
+<!--                    <label class="input-group-addon" addonWidth="105px">Reason Type</label>-->
+<!--                    <select class="form-control required" formControlName="estimatedReasonId">-->
+<!--                      <option value=""></option>-->
+<!--                      <option *ngFor="let reason of reasons" [ngValue]="reason.id">{{reason.name}}</option>-->
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                  <div class="error-messages" errorMessage>-->
+<!--                    <div *ifError="'required'">Reason type is required</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+              </div>
+              <div class="row">
+                <div class="col-sm-3 form-group checkbox-right">
+                  <span style="padding-right: 4%">Sale For Dealer</span>
+                  <checkbox formControlName="saleForDealer" style="float: right;clear: right"></checkbox>
+                </div>
+                <div class="col-sm-3 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Dealer</label>
+                    <select class="form-control" formControlName="endDealerSalesId">
+                      <option value=""></option>
+                      <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group"></div>
+                <div class="col-sm-3 form-group" hasError="dlrOutletId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="105px">Sales Dealer</label>
+                    <select class="form-control required" formControlName="dlrOutletId">
+                      <option value=""></option>
+                      <option *ngFor="let dlr of saleDealers" [ngValue]="dlr.id">{{dlr.name}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Sales dealer is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="!newEstimatedDate" hasError="estimatedReasonText">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Detail Reason</label>
+                  <textarea class="form-control resize-vertical required"
+                            formControlName="estimatedReasonText"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 500</div>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="newEstimatedDate" hasError="estimatedReasonText">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="105px">Detail Reason</label>
+                  <textarea class="form-control resize-vertical required"
+                            formControlName="estimatedReasonText"></textarea>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Reason detail is required</div>
+                  <div *ifError="'maxLength'">Max length is 500</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="customer-info-area">
+              <h5><strong>Customer Information</strong></h5>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="customerName">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="120px">Customer Name</label>
+                    <input type="text" class="form-control required" formControlName="customerName">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Customer name is required</div>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 form-group" hasError="email">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Email</label>
+                    <input type="email" class="form-control" formControlName="email">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'emailFormat'">Your input is not a valid email</div>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-2 form-group" hasError="legalId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Legal Status</label>
+                    <select class="form-control required" formControlName="legalId">
+                      <option value=""></option>
+                      <option *ngFor="let legalStatus of legalStatusList" [ngValue]="legalStatus.id">
+                        {{legalStatus.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Legal status is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-2 form-group" hasError="taxCode">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">ID No/Tax Code</label>
+                    <input type="text" class="form-control" formControlName="taxCode">
+                  </div>
+                  <!-- <div class="error-messages" errorMessage>
+                    <div *ifError="'numberFormat'">ID No/Tax Code must be a number and greater than 0</div>
+                    <div *ifError="'maxLength'">ID No/Tax Code must not have more than 13 digits</div>
+                    <div *ifError="'minLength'">ID No/Tax Code must not have less than 9 digits</div>
+                  </div> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="contractRepresentative">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="120px">Contract Represent</label>
+                    <input type="text" class="form-control required" formControlName="contractRepresentative">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Contract represent is required</div>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="fax">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Customer Fax</label>
+                    <input type="text" class="form-control" formControlName="fax">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 50</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="tel">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Customer Tel</label>
+                    <input type="text" class="form-control required" formControlName="tel" maxlength="15">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Customer tel is required</div>
+                    <div *ifError="'telFormat'">Your input is not a valid phone number</div>
+                    <div *ifError="'maxLength'">Max length is 50</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="customerAddress">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="120px">Customer Address</label>
+                    <input type="text" class="form-control required" formControlName="customerAddress">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Customer address is required</div>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="provinceId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Province</label>
+                    <select class="form-control required" formControlName="provinceId">
+                      <option value=""></option>
+                      <option *ngFor="let province of provinceList" [ngValue]="province.id">{{province.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Province is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">District</label>
+                    <select class="form-control" formControlName="districtId">
+                      <option value=""></option>
+                      <option *ngFor="let district of districtsOfProvince" [ngValue]="district.id">{{district.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-person-area">
+              <h5><strong>Contact Person</strong></h5>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="contactName">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Contact Name</label>
+                    <input type="text" class="form-control" formControlName="contactName">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="form-group col-sm-4" hasError="contactAddress">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Contact Address</label>
+                    <input type="text" class="form-control" formControlName="contactAddress">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="contactTel">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Contact Tel</label>
+                    <input type="text" class="form-control" formControlName="contactTel" maxlength="15">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'telFormat'">Your input is not a valid phone number</div>
+                    <div *ifError="'maxLength'">Max length is 50</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="invoice-person-area">
+              <h5><strong>Invoice Person</strong></h5>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="invoiceName">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Invoice Name</label>
+                    <input type="text" class="form-control" formControlName="invoiceName">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <!--                    <div *ifError="'required'">Invoice Name is required</div>-->
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="form-group col-sm-4" hasError="invoiceAddress">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Invoice Address</label>
+                    <input type="text" class="form-control" formControlName="invoiceAddress">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <!--                    <div *ifError="'required'">Invoice Address is required</div>-->
+                    <div *ifError="'maxLength'">Max length is 255</div>
+                  </div>
+                </div>
+                <div class="col-sm-2 form-group" hasError="ageLeadTimeId">
+                  <div class="input-group">
+                    <label class="input-group-addon">Age</label>
+                    <select class="form-control required" formControlName="ageLeadTimeId">
+                      <option value=""></option>
+                      <option *ngFor="let ageGroup of ageGroups" [ngValue]="ageGroup.id">{{ageGroup.name}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Age is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-2 form-group" hasError="genderId">
+                  <div class="input-group">
+                    <label class="input-group-addon">Gender</label>
+                    <select class="form-control required" formControlName="genderId">
+                      <option value=""></option>
+                      <option *ngFor="let gender of genders" [ngValue]="gender.id">{{gender.name}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Gender is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="customer-relationship-area">
+              <h5><strong>Customer Relationship Info</strong></h5>
+              <div class="row">
+                <div class="form-group col-sm-6" hasError="relativesName">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Relatives Name</label>
+                    <input type="text" class="form-control" formControlName="relativesName">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 500</div>
+                  </div>
+                </div>
+                <div class="form-group col-sm-6" hasError="relativesAddress">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Address</label>
+                    <input type="text" class="form-control" formControlName="relativesAddress">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Max length is 1000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="relativesPhone">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Phone Number</label>
+                    <input type="text" class="form-control" formControlName="relativesPhone" maxlength="11">
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                    <div *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                    <div *ifError="'maxLength'">Max length is 50</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Province/City</label>
+                    <select class="form-control" formControlName="relativesProvinceId">
+                      <option value=""></option>
+                      <option *ngFor="let province of provinceList" [ngValue]="province.id">{{province.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Relationship</label>
+                    <select class="form-control" formControlName="relationship">
+                      <option value=""></option>
+                      <option *ngFor="let val of relationships" [ngValue]="val">{{val}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="survey-info-area">
+              <h5><strong>Survey Information</strong></h5>
+              <div class="row">
+                <div class="col-sm-4 form-group" hasError="purchasingTypeId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="125px">Purchasing Type</label>
+                    <select class="form-control required" formControlName="purchasingTypeId">
+                      <option value=""></option>
+                      <option *ngFor="let purchasingType of purchasingTypes" [ngValue]="purchasingType.id">
+                        {{purchasingType.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Purchasing type is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="purchasingPurposeId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="125px">Purchasing Purpose</label>
+                    <select class="form-control required" formControlName="purchasingPurposeId">
+                      <option value=""></option>
+                      <option *ngFor="let purchasingPurpose of purchasingPurposes" [ngValue]="purchasingPurpose.id">
+                        {{purchasingPurpose.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Purchasing Purpose required</div>
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group" hasError="driverSeftdriverId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="125px">Driver/Self-Driving</label>
+                    <select class="form-control required" formControlName="driverSeftdriverId">
+                      <option value=""></option>
+                      <option *ngFor="let drivingType of drivingTypes" [ngValue]="drivingType.id">
+                        {{drivingType.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Driving type is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vehicle-info-area">
+              <h5><strong>Vehicle Information</strong></h5>
+              <div class="row">
+                <ng-container *ngIf="!selectedFollowUp">
+                  <div class="col-sm-2 form-group" hasError="gradeId">
+                    <div class="input-group">
+                      <label class="input-group-addon" addonWidth="100px">Grade</label>
+                      <select class="form-control required" formControlName="gradeId">
+                        <option value=""></option>
+                        <option *ngFor="let grade of gradeList" [ngValue]="grade.id">{{grade.marketingCode}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="error-messages" errorMessage>
+                      <div *ifError="'required'">Grade is required</div>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="selectedFollowUp">
+                  <div class="col-sm-2 form-group">
+                    <div class="input-group">
+                      <label class="input-group-addon" addonWidth="100px">Grade</label>
+                      <input class="form-control required" formControlName="grade" readonly>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="col-sm-3 form-group" hasError="cbuCkd">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Vehicle Type</label>
+                    <select class="form-control required" formControlName="cbuCkd">
+                      <option value=""></option>
+                      <option *ngFor="let vehicleType of vehicleTypeList"
+                              [ngValue]="vehicleType.key">{{vehicleType.value}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Vehicle Type is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-3 form-group" hasError="gradeProductionId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Grade product</label>
+                    <select class="form-control required" formControlName="gradeProductionId">
+                      <option value=""></option>
+                      <option *ngFor="let prod of products" [ngValue]="prod.id">{{prod.productionCode}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Product is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-2 form-group" hasError="colorId">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Color</label>
+                    <select class="form-control required" formControlName="colorId">
+                      <option value=""></option>
+                      <option *ngFor="let val of colorAssignments" [ngValue]="val.colorId">{{val.code}}</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Color is required</div>
+                  </div>
+                </div>
+                <div class="col-sm-2 form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon" addonWidth="100px">Interior color</label>
+                    <select class="form-control" formControlName="interiorColorId">
+                      <option value=""></option>
+                      <option *ngFor="let val of interiorColorAssignments" [ngValue]="val.colorId">{{val.code}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!--                <ng-container *ngIf="selectedFollowUp">-->
+                <!--                  <div class="col-sm-2 form-group">-->
+                <!--                    <div class="input-group">-->
+                <!--                      <label class="input-group-addon" addonWidth="100px">Grade</label>-->
+                <!--                      <input class="form-control required" formControlName="grade" readonly>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                  <div class="col-sm-3 form-group">-->
+                <!--                    <div class="input-group">-->
+                <!--                      <label class="input-group-addon" addonWidth="100px">Vehicle Type</label>-->
+                <!--                      <input class="form-control required" formControlName="cbuCkd" readonly>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                  <div class="col-sm-3 form-group">-->
+                <!--                    <div class="input-group">-->
+                <!--                      <label class="input-group-addon" addonWidth="100px">Grade product</label>-->
+                <!--                      <input class="form-control required" formControlName="gradeProduction" readonly>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                  <div class="col-sm-2 form-group">-->
+                <!--                    <div class="input-group">-->
+                <!--                      <label class="input-group-addon" addonWidth="100px">Color</label>-->
+                <!--                      <input class="form-control required" formControlName="color" readonly>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                  <div class="col-sm-2 form-group">-->
+                <!--                    <div class="input-group">-->
+                <!--                      <label class="input-group-addon" addonWidth="100px">Interior color</label>-->
+                <!--                      <input class="form-control" formControlName="interiorColor" readonly>-->
+                <!--                    </div>-->
+                <!--                  </div>-->
+                <!--                </ng-container>-->
+              </div>
+              <div class="form-group" hasError="remark">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="100px">Remark</label>
+                  <input type="text" class="form-control" formControlName="remark">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 500</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-check"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="cancel()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

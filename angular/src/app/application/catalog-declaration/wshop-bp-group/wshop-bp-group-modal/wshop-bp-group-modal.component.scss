@@ -1,0 +1,16 @@
+.input-group-addon:first-child{
+  min-width: 110px;
+}
+::ng-deep.span-110{
+  .input-group-addon{
+    min-width: 110px!important;
+  }
+}
+.span-110{
+  input-group-addon{
+    min-width: 110px;
+  }
+}
+.text-center {
+  text-align: center;
+}

@@ -1,0 +1,33 @@
+<form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate class="row" focusField>
+  <div class="col-md-4 col-sm-6 form-group">
+    <div class="input-group" *ngIf="carFamList">
+      <span class="input-group-addon">Dòng xe</span>
+      <multi-column-select-control formControlName="carFamId"
+                                   displayField="cfCode"
+                                   dataField="id"
+                                   [fieldGrid]="carFamField"
+                                   [list]="carFamList"
+                                   [isClear]="false"
+      ></multi-column-select-control>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 form-group">
+    <div class="input-group" *ngIf="carModelList">
+      <span class="input-group-addon">Đời xe</span>
+      <multi-column-select-control formControlName="carModelId"
+                                   displayField="doixe"
+                                   dataField="id"
+                                   [fieldGrid]="carModelField"
+                                   [list]="carModelList"
+                                   [isClear]="false"
+      ></multi-column-select-control>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <button class="btn btn-blue mr-2" ><i class="fa fa-search"></i></button>
+
+  </div>
+</form>
+<detail-job-package #repairJobDetail *ngIf="form.get('carModelId').value || form.get('carModelId').value === 0 "
+                   [carModelId]="form.get('carModelId').value"
+></detail-job-package>

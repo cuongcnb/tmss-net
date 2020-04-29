@@ -1,0 +1,140 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static',keyboard:false }">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">CẢNH BÁO CHIẾN DỊCH / FIELD ACTION WARNING POP-UP</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField class="campaign-dlr">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Thông tin xe
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Số VIN</span>
+                      <input class="form-control" formControlName="vinno">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Số máy</span>
+                      <input class="form-control" formControlName="engineNo">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Số KM</span>
+                      <input class="form-control" formControlName="lastKm">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Model Code</span>
+                      <input class="form-control" formControlName="cmCode">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Biển số</span>
+                      <input class="form-control" formControlName="registerno">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Offical</span>
+                      <input class="form-control" formControlName="offical">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Thông tin chủ sở hữu
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Tên chủ xe</span>
+                      <input class="form-control" formControlName="carownername">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">Địa chỉ</span>
+                      <input class="form-control" formControlName="carowneradd">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">Số điện thoại</span>
+                      <input class="form-control" formControlName="carownermobil">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Người m/xe</span>
+                      <input class="form-control" formControlName="name">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group form-group">
+                      <span class="input-group-addon">Điện thoại</span>
+                      <input class="form-control" formControlName="tel">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <span class="text-notify">CHÚ Ý: Xe của quý khách có thể bị ảnh hưởng bởi chiến dịch sau</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                <grid-table [fieldGrid]="fieldGridCampaign"
+                            (callbackGrid)="callbackGridCampaign($event)"
+                            (getParams)="getParamsCampaign()"
+                            [rowSelection]="'multiple'"
+                            [showPagination]="false"
+                            [height]="'150px'"
+                ></grid-table>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-blue btn-block" [disabled]="!(selectedCampaigns && selectedCampaigns.length)" (click)="requireCamp()">
+                  YC thực hiện chiến dịch
+                </button>
+                <button class="btn btn-blue btn-block" (click)="noticeToCus()">Thông báo tới KH</button>
+                <button class="btn btn-blue btn-block" [disabled]="!isNoticeToCus" (click)="cancel()">Cancel</button>
+              </div>
+            </div>
+            <div class="panel panel-default mt-2">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Thống kê các chiến dịch / chương trình đã thực hiện
+              </div>
+              <grid-table [fieldGrid]="fieldGridCampaignUsed"
+                          (callbackGrid)="callbackGridCampaignUsed($event)"
+                          [showPagination]="false"
+                          [height]="'150px'"
+              ></grid-table>
+            </div>
+          </div>
+        </form>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+<input *ngIf="params.value !== undefined" type="checkbox" [(ngModel)]="params.value"
+       (change)="this.refresh(this.params)">

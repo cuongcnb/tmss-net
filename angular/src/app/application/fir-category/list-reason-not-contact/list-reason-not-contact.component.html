@@ -1,0 +1,58 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseListReasonNotContact" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseListReasonNotContact" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Lý do không liên hệ được</span>
+                <input class="form-control" formControlName="isNotContact">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-blue mb-2 mr-2" (click)="search()">
+              <i class="fa fa-search mr-2"></i>Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                (cellDoubleClicked)="insertData($event)"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2" (click)="notContactModal.open()">
+        <i class="fa fa-plus mr-2"></i>
+        Thêm mới
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="editRow()">
+        <i class="fa fa-pencil mr-2"></i>
+        Cập nhật
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="deleteRow()">
+        <i class="fa fa-trash-o mr-2"></i>
+        Xóa
+      </button>
+      <button type="button" class="btn btn-blue">
+        <i class="fa fa-cloud-download"></i>
+        Xuất excel
+      </button>
+    </div>
+  </div>
+</form>
+<not-contact-modal #notContactModal
+                   (close)="selectedRowGrid? update($event):addNew($event)"
+></not-contact-modal>

@@ -1,0 +1,64 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="refresh()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Thêm yêu cầu</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Nội dung không hài lòng/khiếu nại</span>
+                  <input type="text" class="form-control" formControlName="requestContent">
+                </div>
+              </div>
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Yêu cầu của khách hàng</span>
+                  <input type="text" class="form-control" formControlName="requestCustomer">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Lĩnh vực không hài lòng</span>
+                  <input type="text" class="form-control" formControlName="requestField">
+                </div>
+              </div>
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Vấn đề không hài lòng/khiếu nại</span>
+                  <input type="text" class="form-control" formControlName="requestProblem">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Bộ phận hư hỏng</span>
+                  <input type="text" class="form-control" formControlName="partDamaged">
+                </div>
+              </div>
+              <div class="col-xs-6 form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Hiện tượng hư hỏng/quy trình phụ</span>
+                  <input type="text" class="form-control" formControlName="phenomenaDamaged">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="save()"><i class="fa fa-plus"> Thêm yêu cầu</i></button>
+        <button class="btn btn2 btn-red" (click)="modal.hide()"><i class="fa fa-"> Hủy</i></button>
+      </div>
+    </div>
+  </div>
+</div>
+

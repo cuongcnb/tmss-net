@@ -1,0 +1,26 @@
+form {
+  max-height: 170px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.last-km {
+  width: 100%;
+  & > div:nth-child(1) {
+    width: 52%;
+    float: left;
+    display: table;
+  }
+  & > div:nth-child(2) {
+    width: 48%;
+    float: left;
+    display: table;
+  }
+  & > div:not(:first-child) .input-group-addon {
+    border-radius: 0;
+    min-width: 0;
+    padding: 6px 6px;
+  }
+}

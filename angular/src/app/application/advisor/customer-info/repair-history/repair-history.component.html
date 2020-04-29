@@ -1,0 +1,274 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog modal-size">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Lịch sử sửa chữa</h5>
+      </div>
+
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin xe
+              <div class="panel-tools">
+                <button type="button" class="fa btn-collapse" [ngClass]="isCollapsedCar ? 'fa-chevron-right' : 'fa-chevron-down'"
+                        (click)="isCollapsedCar = !isCollapsedCar" [attr.aria-expanded]="!isCollapsedCar" aria-controls="collapseEventCus">
+                </button>
+              </div>
+            </div>
+            <div  id="collapseEventCus" [collapse]="isCollapsedCar">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Số Vin: </b>
+                    <span>{{customerD?.vehicle?.vinno ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info"><u>Biển số</u>: </b>
+                    <span><strong>{{customerD?.vehicle?.registerno ||''}}</strong></span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Mã kiểu xe: </b>
+                    <span>{{customerD?.carModel?.cmCode ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Kiểu xe: </b>
+                    <span>{{customerD?.carModel?.cmName ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Loại xe: </b>
+                    <span>{{getCarType(customerD?.carModel?.cmType)}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Số khung: </b>
+                    <span>{{customerD?.vehicle?.frameno ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Số máy: </b>
+                    <span>{{customerD?.vehicle?.engineno ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Loại máy: </b>
+                    <span>{{customerD?.vehicle?.enginecode ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Màu: </b>
+                    <span>{{customerD?.vehicleColor?.vcCode ||''}}</span>
+                  </div>
+                  <div class="col-sm-2 mb-2">
+                    <b class="text-info">Đời xe: </b>
+                    <span>{{customerD?.carModel?.doixe ||''}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin KH
+              <div class="panel-tools">
+                <button type="button" class="fa btn-collapse" [ngClass]="isCollapsedCus ? 'fa-chevron-right' : 'fa-chevron-down'"
+                        (click)="isCollapsedCus = !isCollapsedCus" [attr.aria-expanded]="!isCollapsedCus" aria-controls="collapseEventCus">
+                </button>
+              </div>
+            </div>
+            <div id="collapseCusInfoHis" [collapse]="isCollapsedCus">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Chủ xe: </b>
+                    <span>{{customerD?.customer?.carownername||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Mã KH: </b>
+                    <span>{{customerD?.customer?.cusno||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Di động: </b>
+                    <span>{{customerD?.customer?.carownermobil||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2 hidden">
+                    <b class="text-info">Giờ gọi: </b>
+                    <span>{{customerD?.customer?.calltime === 'H' ? 'Hành chính' : customerD?.customer?.calltime === 'N' ? 'Ngoài HC' : null||''}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Tên c/ty: </b>
+                    <span>{{customerD?.customer?.orgname||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Loại hình: </b>
+                    <span>{{customerD?.custypeId||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Email: </b>
+                    <span>{{customerD?.customer?.carowneremail||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">M/số thuế: </b>
+                    <span>{{customerD?.customer?.taxcode||''}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-9 mb-2">
+                    <b class="text-info">Địa chỉ: </b>
+                    <span>{{customerD?.customer?.carowneradd||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Ghi chú: </b>
+                    <span>{{customerD?.cusVisit?.notes||''}}</span>
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Người m/xe: </b>
+                    <span>{{customerVisitInfo ? customerVisitInfo.name :customerD?.customer?.carownername || ''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Điện thoại: </b>
+                    <span>{{customerVisitInfo ? customerVisitInfo.tel :customerD?.customer?.carownermobil ||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2">
+                    <b class="text-info">Email: </b>
+                    <span>{{customerVisitInfo ? customerVisitInfo.email :customerD?.customer?.carowneremail ||''}}</span>
+                  </div>
+                  <div class="col-sm-3 mb-2 hidden">
+                    <b class="text-info">Giờ gọi: </b>
+                    <span>{{customerVisitInfo ? customerVisitInfo.callTime :''}}</span>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 mb-2">
+                    <b class="text-info">Địa chỉ: </b>
+                    <span>{{customerVisitInfo ? customerVisitInfo.address :customerD?.customer?.carowneradd || ''}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4">
+              <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+                <div class="form-group ">
+                  <div class="input-group">
+                    <span class="input-group-addon">Loại hình sửa chữa</span>
+                    <select class="form-control" formControlName="roType"
+                      (change)="dropdownChange($event.target.value)">
+                      <option [value]="0">Tất cả</option>
+                      <option [value]="2">Sửa chữa chung</option>
+                      <option [value]="1">Đồng sơn</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- <div class="col-sm-4">
+              <button type="button" class="btn btn-blue" (click)="search()">
+                <i class="fa fa-search"></i> Tìm kiếm
+              </button>
+            </div> -->
+            <span style="display: flex; align-items: center; justify-content: flex-end; margin-right: 5px;">
+              <span class="mr-2">Hiển thị tất cả lịch sử sửa chữa</span>
+              <input type="checkbox" (change)="search()" [(ngModel)]="isGetAll">
+            </span>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Lịch sửa sửa chữa
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseROHistory"
+                  aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseROHistory" class="panel-collapse collapse in">
+              <grid-table 
+                *ngIf="modal.isShown && repairParams && partsParams "
+                [fieldGrid]="fieldHistory"      
+                [frameworkComponents]="frameworkComponents"
+                [isSuppressHorizontalScroll]="true" height="180px"
+                (callbackGrid)="callbackHistory($event)"
+                (getParams)="getParamsHistory()" 
+              >
+              </grid-table>
+            </div>
+          </div>
+          <div class="col-sm-5 form-left">
+          <div class="panel panel-default ">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Công việc sửa chữa
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseROHistoryDetail"
+                  aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseROHistoryDetail" class="panel-collapse collapse in">
+              <grid-table [fieldGrid]="fieldRepair" [showPagination]="false" *ngIf="modal.isShown"
+                (callbackGrid)="callbackRepair($event)" [frameworkComponents]="frameworkComponents" height="200px">
+              </grid-table>
+            </div>
+          </div>
+          </div>
+          <div class="col-sm-7 form-right">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Phụ tùng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseROPartHis"
+                  aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseROPartHis" class="panel-collapse collapse in">
+              <grid-table [fieldGrid]="fieldParts" [showPagination]="false" *ngIf="modal.isShown"
+                (callbackGrid)="callbackParts($event)" [frameworkComponents]="frameworkComponents" [height]="'200px'">
+              </grid-table>
+            </div>
+          </div>
+        </div>
+        </div>
+      </perfect-scrollbar>
+
+      <div class="modal-footer">
+        <div class="row">
+          <form [formGroup]="form" class="col-md-offset-4 col-md-4">
+            <div class="row">
+              <div class="col-md-5">
+                <tmss-datepicker formControlName="startDate" text="Từ ngày"></tmss-datepicker>
+              </div>
+              <div class="col-md-5">
+                <tmss-datepicker formControlName="endDate" text="Đến ngày"></tmss-datepicker>
+              </div>
+              <div class="col-md-2 text-center">
+                <button type="button" class="btn btn-blue" (click)="checkDate()">
+                  <i class="fa fa-print"></i> In lịch sử sửa chữa
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<report-type-modal #reportTypeModal (close)="print($event)"></report-type-modal>

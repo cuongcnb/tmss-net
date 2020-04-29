@@ -1,0 +1,7 @@
+.input-group-addon:first-child {
+  min-width: 75px;
+}
+
+::ng-deep .is-cancel-booking {
+  background: rgba(230, 88, 63, 0.8) !important;
+}

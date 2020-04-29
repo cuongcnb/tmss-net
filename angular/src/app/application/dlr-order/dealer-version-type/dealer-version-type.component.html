@@ -1,0 +1,35 @@
+<div pageTitle="Dealer Order Config">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Dealer Order Config Management
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  [enableFilter]="true"
+                  (getParams)="getParamsDealerVersionType()"
+                  (callbackGrid)="callbackGridDealerVersionTypes($event)"
+                  [showPagination]="false"
+                  [height]="'450px'"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="dealerVersionTypeModal.open()">
+          <i class="fa fa-plus"> Add</i>
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateDealerVersionType()">
+          <i class="fa fa-pencil"> Edit</i>
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedDealerVersionType" (click)="deleteDealerVersionType()">
+          <i class="fa fa-trash-o"> Delete</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dealer-version-type-modal #dealerVersionTypeModal (close)="refreshList()"></dealer-version-type-modal>

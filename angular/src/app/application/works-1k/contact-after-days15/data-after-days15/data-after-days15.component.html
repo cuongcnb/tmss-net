@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Lịch sử liên hệ
+  </div>
+  <div class="panel-body">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'150px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+    ></grid-table>
+  </div>
+  <div class="panel-footer">
+    <div class="btn-group dropup m-2">
+      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="clip-user-2"></i>
+        KH tiềm năng
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <button type="button" class="btn btn-link" (click)="newCar.open()">Khách hàng mua xe mới</button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-link" (click)="oldCar.open()">Khách hàng mua xe cũ</button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-link" (click)="insurance.open()">Khách hàng mua bảo hiểm</button>
+        </li>
+        <li>
+          <button type="button" class="btn btn-link" (click)="accessaryCar.open()">Khách hàng mua phụ tùng
+          </button>
+        </li>
+      </ul>
+    </div>
+    <button type="button" class="btn btn-blue m-2">
+      <i class="clip-file-excel mr-2"></i> In phiếu
+    </button>
+    <button type="button" class="btn btn-blue m-2">
+      <i class="clip-file-excel mr-2"></i> Xuất Excel
+    </button>
+    <button type="button" class="btn btn-blue m-2">
+      <i class="clip-pencil-2 mr-2"></i> Ghi lại
+    </button>
+  </div>
+</div>
+<new-car #newCar></new-car>
+<new-car #oldCar></new-car>
+<insurrance-car #insurance></insurrance-car>
+<accessary-car #accessaryCar></accessary-car>

@@ -1,0 +1,56 @@
+//@media (min-width: 576px) {
+//  .modal-dialog.modal-lg {
+//    max-width: 900px;
+//  }
+//}
+//
+//.user-name {
+//  margin-top: 21px;
+//}
+//
+//.user-input {
+//  display: inline;
+//}
+//
+//.input-label-left {
+//  min-width: 100px;
+//}
+//
+//.label-left {
+//  min-width: 80px;
+//  text-align: right;
+//}
+//
+//.label-right {
+//  min-width: 310px;
+//  text-align: right;
+//}
+//
+//.error-messages-right {
+//  text-align: right;
+//}
+//
+//.invalid-control .error-messages-right > div {
+//  max-width: 440px;
+//  color: #dc3545;
+//  position: inherit;
+//  /* bottom: -10px; */
+//  font-size: 0.8125rem;
+//  ///* padding: 0; */
+//}
+//
+//.error-messages-left {
+//  text-align: right;
+//}
+//
+//.invalid-control .error-messages-left > div {
+//  color: #dc3545;
+//  position: inherit;
+//  /* bottom: -10px; */
+//  font-size: 0.8125rem;
+//  ///* padding: 0; */
+//}
+
+.input-group-addon:first-child {
+  min-width: 100px;
+}

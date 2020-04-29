@@ -1,0 +1,45 @@
+<div class="container" [pageTitle]="pageTitle">
+  <div class="month-picker-area my-2">
+    <month-picker [model]="selectedDate"
+                  (modelChange)="generateDayRange($event)"></month-picker>
+  </div>
+
+  <form [formGroup]="form" novalidate autocomplete="off" *ngIf="form && isResetForm" (submit)="submit()">
+    <div class="calendar mb-3">
+      <div class="calendar-header row">
+        <div *ngFor="let day of weekDays; let index = index" class="col text-center"
+             [class.text-danger]="index % 7 === 0"
+             [class.text-primary]="index % 7 === 6">
+          {{day}}
+        </div>
+      </div>
+      <div class="calendar-body row">
+        <div *ngFor="let column of columns; let columnIndex = index" class="calendar-column">
+          <div *ngFor="let row of rows; let rowIndex = index"
+               [style.min-height]="rowIndex === 0 ? '41px' : '0px'">
+            <ng-container *ngIf="getDateOfPoint(columnIndex, rowIndex); let date">
+              <div class="calendar-cell" [formGroupName]="date - 1"
+                   *ngIf="(rowIndex > 0 && date <= daysOfMonth) || (rowIndex === 0 && columnIndex >= firstWeekDay)"
+                   [style.min-height]="rowIndex === 0 ? '41px' : '0px'"
+                   [class.text-primary]="(date - 1) % 7 === (7 - firstWeekDay - 1)"
+                   [class.text-danger]="(date - 1) % 7 === (firstWeekDay === 0 ? 0 : (7 - firstWeekDay))">
+                <checkbox formControlName="isDayoff" [text]="date"></checkbox>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="calendar-footer my-3 text-right">
+      <button type="submit" class="btn btn-blue mr-3">
+        <i class="fa fa-save"></i> Save
+      </button>
+      <button type="button" class="btn btn-blue mr-3" (click)="checkAllSun()">
+        <i class="fa fa-calendar"></i> Check All Sunday
+      </button>
+      <button type="button" class="btn btn-blue" (click)="checkAllSat()">
+        <i class="fa fa-calendar-o"></i> Check All Saturday
+      </button>
+    </div>
+  </form>
+</div>

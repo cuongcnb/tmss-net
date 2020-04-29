@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Danh mục Nhà Cung Cấp
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseSupplierCatalog" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseSupplierCatalog" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackSupplier($event)"
+                (getParams)="getParamsSupplier()"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="text-right">
+  <button class="btn btn-blue mr-2" (click)="updateSupplierCatalog.open()">
+    <i class="fa fa-plus"></i> Thêm
+  </button>
+  <button class="btn btn-blue mr-2" (click)="updateSupplier()">
+    <i class="fa fa-pencil"></i> Sửa
+  </button>
+  <button class="btn btn-blue" (click)="deleteSupplier()">
+    <i class="fa fa-trash-o"></i> Xóa
+  </button>
+</div>
+<update-supplier-catalog-modal #updateSupplierCatalog (close)="refreshSupplier()"></update-supplier-catalog-modal>

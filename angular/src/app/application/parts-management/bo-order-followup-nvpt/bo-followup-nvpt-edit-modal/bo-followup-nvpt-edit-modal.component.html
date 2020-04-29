@@ -1,0 +1,78 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết tình trạng BO </h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Số đơn hàng</span>
+                    <input type="text" class="form-control" formControlName="custOrderNo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Mã phụ tùng</span>
+                    <input type="text" class="form-control" formControlName="custOrdPartNo">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <checkbox formControlName="isNotFollow" text="Không theo dõi"></checkbox>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Biển số</span>
+                <input type="text" class="form-control" formControlName="bienso">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">CVDV</span>
+                <input type="text" class="form-control" formControlName="cvdv">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">LSC</span>
+                <input type="text" class="form-control" formControlName="lenhsuachua">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Vị trí giá hàng SOP</span>
+                <input type="text" class="form-control" formControlName="vitrigiahangsop">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width">Ghi chú</span>
+                <input type="text" class="form-control" formControlName="ghichu">
+              </div>
+            </div>
+          </form>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue mr-2" (click)="save()">
+          <i class="fa fa-save"></i> Lưu
+        </button>
+        <button class="btn btn-light-grey" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

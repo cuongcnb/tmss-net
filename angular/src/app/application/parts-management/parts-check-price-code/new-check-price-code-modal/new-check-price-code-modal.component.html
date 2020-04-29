@@ -1,0 +1,188 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog lg-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">{{!!currentUser.isAdmin ? 'Phiếu phản hồi hỏi mã/giá' : 'Phiếu hỏi mã/giá PT'}}</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Thông tin
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseNewCheckPriceCodeInfo" aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseNewCheckPriceCodeInfo" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group" hasError="fullmodelcode">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Full Model Code</span>
+                          <input class="required form-control" formControlName="fullmodelcode">
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc điền Full Model Code</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Số phiếu hỏi</span>
+                          <input class="form-control" formControlName="inquiryno">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group" hasError="vinnoFrameno">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">VinNo/FrameNo</span>
+                          <input class="required form-control" formControlName="vinnoFrameno">
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc điền VinNo/FrameNo</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <checkbox text="Hỏi mã" formControlName="queryCode"></checkbox>
+                        </div>
+                        <div class="col-md-6">
+                          <checkbox text="Hỏi giá" formControlName="queryPrice"></checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Người hỏi</span>
+                          <input class="form-control" formControlName="personQuery">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Ghi chú (DLR)</span>
+                          <input class="form-control" formControlName="remark">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group" hasError="telPersonQuery">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Số ĐT</span>
+                          <input class="form-control" formControlName="telPersonQuery">
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Ghi chú (TMV)</span>
+                          <input class="form-control" formControlName="remarkTmv">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <tmss-datepicker formControlName="createDate" [addOnMinWidth]="'110px'" text="Ngày hỏi">
+                        </tmss-datepicker>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group" hasError="status">
+                        <div class="input-group">
+                          <span class="input-group-addon same-width-addon">Trạng thái</span>
+                          <select class="form-control" formControlName="status"
+>
+                            <option *ngIf="!currentUser.isAdmin" value="0">Bản nháp</option>
+                            <option value="1" *ngIf="hiddenStatus">Chưa xử lý</option>
+                            <option value="2">Đã xử lý</option>
+                            <option value="3">Từ chối</option>
+                          </select>
+                        </div>
+                        <div class="error-messages" errorMessage>
+                          <div *ifError="'required'">Bắt buộc chọn trạng thái</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" #submitFormBtn class="d-none"></button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-external-link-square"></i>
+              Danh sách phụ tùng
+              <div class="panel-tools">
+                <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseNewCheckPriceCodePart" aria-expanded="true">
+                </button>
+              </div>
+            </div>
+            <div id="collapseNewCheckPriceCodePart" class="panel-collapse collapse in">
+
+              <grid-table *ngIf="!!renderTable" [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                (callbackGrid)="callbackGrid($event)" (getParams)="getParams()"
+                (cellValueChanged)="cellValueChanged($event)" [frameworkComponents]="frameworkComponents"
+                (keyup)="agKeyUp($event)">
+
+              </grid-table>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <ng-container *ngIf="!currentUser.isAdmin">
+          <button type="button" class="btn btn-blue mr-2" (click)="saveDraft()">
+            <i class="fa fa-paperclip"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-blue mr-2" (click)="send()">
+            <i class="fa fa-save"></i> Gửi TMV
+          </button>
+          <button type="button" class="btn btn-blue mr-2" (click)="onAddRow()">
+            <i class="fa fa-plus"></i> Thêm PT
+          </button>
+          <button type="button" class="btn btn-blue" (click)="removeSelectedRow()">
+            <i class="fa fa-times"></i> Xóa PT
+          </button>
+        </ng-container>
+        <ng-container *ngIf="currentUser.isAdmin">
+          <button type="button" class="btn btn-blue mr-2" (click)="saveDraft()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

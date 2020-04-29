@@ -1,0 +1,427 @@
+<div class="panel panel-default">
+  <form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+    <perfect-scrollbar class="ps" [style.max-height.px]="530" (window:resize)="onResize()">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Thông tin xe
+        </div>
+        <div class="panel-body row">
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Biển số</span>
+              <input class="form-control" formControlName="licensePlate">
+            </div>
+          </div>
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Model</span>
+              <input class="form-control" formControlName="model">
+            </div>
+          </div>
+          <div class="col-md-4 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Vinno</span>
+              <input class="form-control" formControlName="vin">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Thông tin khách hàng
+        </div>
+        <div class="panel-body">
+          <div class="row info-customer">
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên chủ xe</span>
+                <input class="form-control" formControlName="driversName">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Địa chỉ</span>
+                <input class="form-control" formControlName="driversAddress">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Điện thoại</span>
+                <input class="form-control" formControlName="driversPhone">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Email</span>
+                <input class="form-control" formControlName="driversEmail">
+              </div>
+            </div>
+          </div>
+          <div class="row info-customer">
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên công ty</span>
+                <input class="form-control" formControlName="companyName">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Địa chỉ</span>
+                <input class="form-control" formControlName="companyAddress">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Điện thoại</span>
+                <input class="form-control" formControlName="conpanyPhone">
+              </div>
+            </div>
+          </div>
+          <div class="row info-customer">
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Người mang xe</span>
+                <input class="form-control" formControlName="carrierName">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Địa chỉ</span>
+                <input class="form-control" formControlName="carrierAddress">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Điện thoại</span>
+                <input class="form-control" formControlName="carrierPhone">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Email</span>
+                <input class="form-control" formControlName="carrierEmail">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Cập nhật thông tin
+        </div>
+        <div class="panel-body">
+          <div class="row info-update">
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Người liên hệ</span>
+                <input class="form-control" formControlName="contacterName">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Địa chỉ</span>
+                <input class="form-control" formControlName="contacterAddress">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Số điện thoại</span>
+                <input class="form-control" formControlName="contacterPhone">
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Email</span>
+                <input class="form-control" formControlName="contacterEmail">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Nội dung lần dịch vụ gần nhất
+        </div>
+        <div class="panel-body row">
+          <div class="col-md-6 form-group datepicker-custom">
+            <tmss-datepicker text="Ngày vào" formControlName="dateIn"></tmss-datepicker>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="120px">CVDV</span>
+              <input class="form-control" formControlName="cvdv">
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group info-customer">
+              <span class="input-group-addon">Km</span>
+              <input class="form-control" formControlName="km">
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Nội dung sửa chữa</span>
+              <textarea class="form-control textarea-fix textarea-custom" formControlName="contentSC"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Nội dung lần dịch vụ gần nhất tại đại lý khác
+        </div>
+        <div class="panel-body row">
+          <div class="col-md-6 form-group datepicker-custom">
+            <tmss-datepicker text="Ngày vào" formControlName="dateInK"></tmss-datepicker>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="120px">CVDV</span>
+              <input class="form-control" formControlName="cvdvK">
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group info-customer">
+              <span class="input-group-addon">Đại lý</span>
+              <input class="form-control" formControlName="supplier">
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Nội dung sửa chữa</span>
+              <textarea class="form-control textarea-fix textarea-custom" formControlName="contentSCK"></textarea>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="input-group info-customer">
+              <span class="input-group-addon">Km</span>
+              <input class="form-control" formControlName="kmK">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <checkbox class="check-custom" text="Liên hệ thành công" formControlName="checkboxContactTrue"></checkbox>
+        </div>
+        <div class="panel-body row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Thông tin phân loại (lý do)
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <checkbox text="Bán xe" formControlName="sellCar"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Không tiện" formControlName="inconvenient"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Chuyển công tác/Đổi tài" formControlName="transferWork"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Không có thời gian" formControlName="notHaveTime"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Tự làm/Có xưởng riêng" formControlName="doYourself"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Phàn nàn giá cả" formControlName="complainPrice"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Làm DV tại xưởng ngoài" formControlName="serviceOutWorkshop"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Phàn nàn chất lượng" formControlName="complainQuality"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Làm DV tại ĐL khác" formControlName="serviceOutSupplier"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Hậu mãi chưa hấp dẫn" formControlName="afterMarketNotGood"></checkbox>
+                  </div>
+                </div>
+                <checkbox text="Đi ít" formControlName="goLess"></checkbox>
+                <div class="row">
+                  <div class="col-md-3">
+                    <checkbox text="Lý do khác" formControlName="reasonTTPL"></checkbox>
+                  </div>
+                  <div class="col-md-9">
+                    <input class="form-control" formControlName="reasonTTPLContent">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Thông tin liên hệ
+              </div>
+              <div class="panel-body">
+                <div class="row form-group">
+                  <div class="col-md-6 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon" addonWidth="105px">Số Km cập nhật</span>
+                      <input class="form-control" formControlName="kmUpdate">
+                    </div>
+                  </div>
+                  <div class="col-md-6 row">
+                    <div class="col-md-8">
+                      <checkbox text="Không nhớ Km" formControlName="missKm"></checkbox>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <button type="reset" class="btn btn-blue">Note</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="105px">Cấp BD kế tiếp</span>
+                    <select class="form-control" formControlName="nextLevelBD"></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <tmss-datepicker text="Ngày BD kế tiếp" formControlName="nextDateBD"></tmss-datepicker>
+                </div>
+                <div class="row ">
+                  <div class="col-md-9 form-group span-105">
+                    <tmss-datepicker text="Ngày hẹn" formControlName="dateAppointment"></tmss-datepicker>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <select class="form-control" formControlName="timeAppointment"></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="105px">CVDV</span>
+                    <select class="form-control" formControlName="cvdvTTLH"></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <checkbox text="Khách hàng phàn nàn" formControlName="customerComplain"></checkbox>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon" addonWidth="105px">Nội dung</span>
+                    <textarea class="form-control textarea-fix textarea-custom" formControlName="customerComplainContent"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <checkbox class="check-custom" text="Liên hệ không thành công" formControlName="checkboxContactFalse"></checkbox>
+        </div>
+        <div class="panel-body row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Có nhấc máy
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <checkbox text="Người khác nghe máy" formControlName="anotherPickUp"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Yêu cầu gọi lại sau" formControlName="callLater"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="SĐT người khác" formControlName="anotherPhoneNumber"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Yêu cầu gửi thư/nhắn tin" formControlName="messageLater"></checkbox>
+                  </div>
+                </div>
+                <checkbox text="Yêu cầu không gọi lại" formControlName="notCallAgain"></checkbox>
+                <div class="row">
+                  <div class="col-md-3">
+                    <checkbox text="Lý do khác" formControlName="reasonCNM"></checkbox>
+                  </div>
+                  <div class="col-md-9">
+                    <input class="form-control" formControlName="reasonCNMContent">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Không nhấc máy
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <checkbox text="Tín hiệu máy bận" formControlName="busy"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Không trả lời/Nhấc máy" formControlName="notPickUp"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Sai số/SĐT không tồn tại" formControlName="wrongNumberPhone"></checkbox>
+                  </div>
+                  <div class="col-md-6">
+                    <checkbox text="Không liên lạc được" formControlName="cantContact"></checkbox>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <checkbox text="Lý do khác" formControlName="reasonKNM"></checkbox>
+                  </div>
+                  <div class="col-md-9">
+                    <input class="form-control" formControlName="reasonKNMContent">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row ">
+        <div class="col-md-6 form-group">
+          <tmss-datepicker text="Ngày hẹn gọi lại cho KH" formControlName="dateAppointmentToCall"></tmss-datepicker>
+        </div>
+        <div class="col-md-2 form-group">
+          <select class="form-control" formControlName="timeAppointmentToCall"></select>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Lịch sử liên hệ mốc hiện tại
+        </div>
+        <div class="panel-body">
+          <grid-table [fieldGrid]="fieldGrid"
+                      (callbackGrid)="callbackGrid($event)"
+                      height="250px"
+          ></grid-table>
+        </div>
+      </div>
+
+    </perfect-scrollbar>
+  </form>
+</div>

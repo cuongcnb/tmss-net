@@ -1,0 +1,397 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField class="size">
+  <fieldset>
+    <legend>Thời gian áp dụng</legend>
+    <div class="row">
+      <div class="form-group col-sm-6" hasError="effDateFrom">
+        <tmss-datepicker fieldAccessor="input" [isRequired]="true" formControlName="effDateFrom" text="Từ ngày">
+        </tmss-datepicker>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Yêu cầu phải nhập</div>
+        </div>
+      </div>
+      <div class="form-group col-sm-6" hasError="effDateTo">
+        <tmss-datepicker fieldAccessor="input" [isRequired]="true" formControlName="effDateTo" text="Đến ngày">
+        </tmss-datepicker>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Yêu cầu phải nhập</div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Giờ làm việc</legend>
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Sáng</label>
+        <div class="row">
+          <div class="col-sm-6 form-group" hasError="wkAmFrom">
+            <div class="input-group">
+              <label class="input-group-addon">Từ</label>
+              <input type="time" class="form-control required" formControlName="wkAmFrom">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group" hasError="wkAmTo">
+            <div class="input-group">
+              <label class="input-group-addon">Đến</label>
+              <input type="time" class="form-control required" formControlName="wkAmTo">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label>Chiều</label>
+        <div class="row">
+          <div class="col-sm-6 form-group" hasError="wkPmFrom">
+            <div class="input-group">
+              <label class="input-group-addon">Từ</label>
+              <input type="time" class="form-control required" formControlName="wkPmFrom">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group" hasError="wkPmTo">
+            <div class="input-group">
+              <label class="input-group-addon">Đến</label>
+              <input type="time" class="form-control required" formControlName="wkPmTo">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <checkbox fieldAccessor="input" text="Nghỉ giữa ca?" formControlName="breakBetween"></checkbox>
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label>Sáng</label>
+        <div class="row" [ngClass]="errorRangeBreakAMTime ? 'invalid-control' : ''">
+          <div class="col-sm-6 form-group" hasError="restAmFrom">
+            <div class="input-group">
+              <label class="input-group-addon">Từ</label>
+              <input type="time" class="form-control required check-invalid" formControlName="restAmFrom">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group" hasError="restAmTo">
+            <div class="input-group">
+              <label class="input-group-addon">Đến</label>
+              <input type="time" class="form-control required check-invalid" formControlName="restAmTo">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label>Chiều</label>
+        <div class="row" [ngClass]="errorRangeBreakPMTime ? 'invalid-control' : ''">
+          <div class="col-sm-6 form-group" hasError="restPmFrom">
+            <div class="input-group">
+              <label class="input-group-addon">Từ</label>
+              <input type="time" class="form-control required check-invalid" formControlName="restPmFrom">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group" hasError="restPmTo">
+            <div class="input-group">
+              <label class="input-group-addon">Đến</label>
+              <input type="time" class="form-control required check-invalid" formControlName="restPmTo">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Yêu cầu phải nhập</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <checkbox fieldAccessor="input" text="Có ngày nghỉ không?" formControlName="haveDayOff"></checkbox>
+  <div class="row">
+    <div class="form-group col-md-5" hasError="holidayDate">
+      <tmss-datepicker addOnMinWidth="90px" fieldAccessor="input" [isRequired]="form.value.haveDayOff"
+                       formControlName="holidayDate" text=" Ngày nghỉ" data-toggle="tooltip"
+                       title="Ngày nghỉ"></tmss-datepicker>
+      <div class="error-messages" errorMessage>
+        <div *ifError="'required'">Yêu cầu phải nhập</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9">
+      <fieldset class="hourly-coefficients">
+        <legend>Hệ số giờ công</legend>
+        <div class="row">
+          <div class="form-group col-sm-4" hasError="cost">
+            <div class="input-group">
+              <label class="input-group-addon">Định mức</label>
+              <input type="text" class="form-control" formControlName="cost">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'floatNumberFormat'">Giá trị nhập phải là số</div>
+              <div *ifError="'max'">Không được lớn hơn 9999999999.99</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-4" hasError="taxJobs">
+            <div class="input-group">
+              <label class="input-group-addon">Thuế</label>
+              <input type="text" class="form-control" formControlName="taxJobs">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Giá trị nhập phải là số</div>
+              <div *ifError="'max'">Không được lớn hơn 101</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-4" hasError="coefficientB">
+            <div class="input-group">
+              <label class="input-group-addon">Đồng</label>
+              <input type="text" class="form-control" formControlName="coefficientB">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Giá trị nhập phải là số có giá trị lớn hơn 0</div>
+              <div *ifError="'max'">Không được lớn hơn 100</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-4" hasError="coefficientJg">
+            <div class="input-group">
+              <label class="input-group-addon">SCC</label>
+              <input type="text" class="form-control" formControlName="coefficientJg">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Giá trị nhập phải là số có giá trị lớn hơn 0</div>
+              <div *ifError="'max'">Không được lớn hơn 100</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-4" hasError="coefficientP">
+            <div class="input-group">
+              <label class="input-group-addon">Sơn</label>
+              <input type="text" class="form-control" formControlName="coefficientP">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'numberFormat'">Giá trị nhập phải là số có giá trị lớn hơn 0</div>
+              <div *ifError="'max'">Không được lớn hơn 100</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-4">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <checkbox text="Sử dụng tiến độ sửa chữa chung?" formControlName="useprogress"></checkbox>
+          </div>
+          <div class="col-sm-4">
+            <checkbox text="Sử dụng tiến độ đồng sơn?" formControlName="useprogressDs"></checkbox>
+          </div>
+          <div class="form-group col-sm-4">
+            <checkbox text="Tiếp khách theo thứ tự?" formControlName="guessReceptionOrder"></checkbox>
+          </div>
+          <div class="col-sm-4"></div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-12" hasError="footerDoc">
+            <div class="input-group">
+              <label class="input-group-addon">Footer Doc</label>
+              <textarea rows="5" formControlName="footerDoc" class="form-control textarea-fix"></textarea>
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Tối đa 2000 kí tự</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="col-sm-2">
+      <image-uploader [apiCallUpload]="apiCallUpload.bind(this)" [apiCallGetImg]="apiCallGetImg.bind(this)"
+                      [isCallGetImg]="isCallGetImg" (resUpload)="patchImgUrl($event)"></image-uploader>
+    </div>
+  </div>
+
+  <div class="row">
+    <fieldset class="hourly-coefficients">
+      <div class="col-sm-6">
+        <legend>Thông số thời gian (phút)</legend>
+        <div class="form-group col-sm-12" hasError="washTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Rửa xe</label>
+            <input type="text" class="required form-control" formControlName="washTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'floatNumberFormat'">Giá trị nhập phải là số thập phân định dạng 0.01</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <legend>Thời gian tiếp khách</legend>
+        <div class="form-group col-sm-12" hasError="receptionTimeBp">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Thời gian tiếp đồng sơn</label>
+            <input type="text" class="required form-control" formControlName="receptionTimeBp">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="waitTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Chờ sau khi rửa xe đến lúc nhận</label>
+            <input type="text" class="form-control required" formControlName="waitTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'floatNumberFormat'">Giá trị nhập phải là số thập phân định dạng 0.01</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="receptionTimeScc">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Thời gian tiếp sửa chữa chung</label>
+            <input type="text" class="form-control required" formControlName="receptionTimeScc">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'floatNumberFormat'">Giá trị nhập phải là số thập phân định dạng 0.01</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="wshopGjChangeTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Chuyển khoang sửa chữa chung</label>
+            <input type="text" class="form-control required" formControlName="wshopGjChangeTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="warningTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Cảnh báo xe chờ tiếp nhận</label>
+            <input type="text" class="form-control required" formControlName="warningTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'floatNumberFormat'">Giá trị nhập phải là số thập phân định dạng 0.01</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="wshopBpChangeTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Chuyển khoang đồng sơn</label>
+            <input type="text" class="form-control required" formControlName="wshopBpChangeTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="lateAppointmentTime">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Khách trễ hẹn</label>
+            <input type="text" class="form-control required" formControlName="lateAppointmentTime">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <legend>Độ chia thời gian nhỏ nhất:</legend>
+        <div class="form-group col-sm-12" hasError="splitTimeScc">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Sửa chữa chung</label>
+            <input type="text" class="form-control required" formControlName="splitTimeScc">
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <legend>Thông số liên quan tới phụ tùng</legend>
+        <div class="form-group col-sm-12" hasError="reservePartsPct">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Đặt cọc phụ tùng(%)</label>
+            <input type="text" class="form-control required" formControlName="reservePartsPct">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="splitTimeDs">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Đồng Sơn</label>
+            <input type="text" class="form-control required" formControlName="splitTimeDs">
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="reception">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Xe chờ tiếp nhận</label>
+            <input type="text" class="form-control required" formControlName="reception">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" hasError="splitTimeRx">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Rửa xe</label>
+            <input type="text" class="form-control required" formControlName="splitTimeRx">
+          </div>
+          
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6">
+        <div class="form-group col-sm-12" style="margin-top: 22px;" hasError="lateSuggested">
+          <div class="input-group">
+            <label class="input-group-addon min-width-time-md">Cảnh báo trễ gợi ý</label>
+            <input type="text" class="form-control required" formControlName="lateSuggested">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+            <div *ifError="'maxLength'">Giá trị nhập có độ dài tối đa 7 ký tự</div>
+          </div>
+        </div>
+      </div>
+      
+    </fieldset>
+  </div>
+  <button #btnSubmit type="submit" class="hide" (click)="save()"></button>
+</form>

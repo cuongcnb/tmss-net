@@ -1,0 +1,63 @@
+<form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" (submit)="search()">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Ngày</span>
+          <select class="form-control" formControlName="dateType">
+            <option [ngValue]="1">Line Off Date</option>
+            <option [ngValue]="2">Delivery Date</option>
+            <option [ngValue]="3">Sale Date</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <tmss-datepicker formControlName="dateFrom" [text]="'Từ ngày'"></tmss-datepicker>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <tmss-datepicker formControlName="dateTo" [text]="'Đến ngày'"></tmss-datepicker>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group search-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="input-group-text ">Số Vin</span>
+          </div>
+          <input formControlName="vinNo" class="form-control">
+          <button class="btn btn-blue"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="grid-table-area mt-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+    </div>
+    <grid-table [fieldGrid]="fieldVinInfo" [showPagination]="false"
+                [height]="'300px'"
+                (callbackGrid)="callbackVinInfo($event)"
+                (getParams)="getParamsVinInfo()"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+    ></grid-table>
+  </div>
+</div>
+<div class="mt-2 text-right">
+  <button class="btn btn-blue mr-2" (click)="vinDetailModal.open()" *ngIf="isTMV">
+    <i class="fa fa-plus"></i> Thêm mới
+  </button>
+  <button class="btn btn-blue mr-2" (click)="openVinDetailModal()">
+    <i class="fa fa-edit"></i> Sửa
+  </button>
+  <!--<button type="button" class="btn btn-danger" (click)="deleteVin()">-->
+  <!--<i class="fa fa-trash-o"></i> Delete-->
+  <!--</button>-->
+</div>
+<vin-detail-modal #vinDetailModal (close)="updateVin($event)"></vin-detail-modal>

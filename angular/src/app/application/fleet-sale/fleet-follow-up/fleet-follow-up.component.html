@@ -1,0 +1,58 @@
+<div pageTitle="Fleet Follow Up">
+  <div class="page-header">
+    <h3>Fleet Follow Up</h3>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 mb-3">
+      <button type="button" class="btn btn-blue" (click)="followDetailModal.open()">New Follow Up</button>
+      <button type="button" class="btn btn-blue ml-2" (click)="exportExcel()">Export</button>
+      <button type="button" class="btn btn-blue ml-2" (click)="followAlertModal.open()">Alert</button>
+      <button type="button" class="btn btn-blue ml-2" (click)="saleFilter.open()">Filter</button>
+    </div>
+    <form [formGroup]="form" *ngIf="form" class="col-lg-6">
+      <div class="row search-area">
+        <div class="col-sm-4 mb-3">
+          <div class="input-group">
+            <span class="input-group-addon">Dealer</span>
+            <select class="form-control" formControlName="dealer">
+              <option value=""></option>
+              <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <div class="input-group">
+            <span class="input-group-addon">Quick Search</span>
+            <input type="text" class="form-control" formControlName="quickSearch">
+          </div>
+        </div>
+        <div class="col-sm-2 mb-3">
+          <button type="button" class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="grid-table-area mt-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Fleet Sale Follow Ups
+            <div class="panel-tools">
+              <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refresh()">
+                <i class="fa fa-refresh"></i>
+              </button>
+            </div>
+          </div>
+          <grid-table [fieldGrid]="fieldGridFleetFollow"
+                      (callbackGrid)="callbackGridFleetFollow($event)"
+                      (getParams)="getParamsFleetFollow()"></grid-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<sale-filter #saleFilter></sale-filter>
+<follow-alert-modal #followAlertModal></follow-alert-modal>
+<follow-detail #followDetailModal></follow-detail>

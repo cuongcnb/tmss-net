@@ -1,0 +1,31 @@
+.panel.search {
+  .input-group-addon {
+    min-width: 62px;
+  }
+}
+
+.panel.params {
+  .input-group-addon {
+    min-width: 45px;
+  }
+}
+
+.form-control[readonly] {
+  cursor: default;
+  background-color: white;
+}
+
+.cell-white {
+  background-color: white;
+}
+
+.panel-heading .panel-tools {
+  top: 1px;
+}
+
+.panel {
+  ::ng-deep .ag-theme-balham .ag-row-selected {
+    border-bottom-color: white;
+  }
+}
+

@@ -1,0 +1,47 @@
+<div *ngIf="finishLoadData">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Khai báo tổ/nhóm đồng sơn 
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseRepairBpGroup" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div>
+        <grid-table [fieldGrid]="gridField"
+                    (callbackGrid)="callbackBpGroup($event)"
+                    (getParams)="getParamsBpGroup()"
+                    [height]="'300px'"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 text-right">
+    <button class="btn btn-blue mr-2"
+            (click)="wshopBpGroupModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" (click)="updateBpGroup()">
+      <i class="fa fa-pencil"></i> Sửa
+    </button>
+    <button class="btn btn-blue" (click)="deleteBpGroup()">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+
+  <div class="mt-3 col-sm-12">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh Sách nhân Viên
+    </div>
+    <grid-table [fieldGrid]="fieldGridEmployees"
+                (callbackGrid)="callbackGridEmployees($event)"
+                (getParams)="getParamsEmployees()"
+                [height]="'300px'"></grid-table>
+  </div>
+
+  <wshop-bp-group-modal #wshopBpGroupModal (close)="refreshBpGroup()"></wshop-bp-group-modal>
+</div>

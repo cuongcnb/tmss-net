@@ -1,0 +1,20 @@
+<div class="pt-3 back-group">
+  <div class="text p-5">
+    CHÀO MỪNG QUÝ KHÁCH ĐẾN VÀ SỬ DỤNG DỊCH VỤ CỦA TOYOTA
+  </div>
+  <div class="pt-1 panel panel-default">
+    <grid-table [fieldGrid]="fieldGrid"
+                [frameworkComponents]="frameworkComponents"
+                (getParams)="getParams($event)"
+                (callbackGrid)="callbackGrid($event)"
+                [rowClassRules]="rowClassRules"
+                [height]="height"
+                [getRowHeight]="70"
+                [disablePagination]="true"
+                [tenTotal]="10">
+    </grid-table>
+  </div>
+</div>
+<audio autoplay hidden [src]="audioData" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>

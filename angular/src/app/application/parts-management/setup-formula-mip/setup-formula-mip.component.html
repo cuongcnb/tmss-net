@@ -1,0 +1,210 @@
+<div class="row">
+  <div class="col-sm-3 panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Danh sách công thức
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartExportOrderPart" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartExportOrderPart" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGridRo"
+                  (callbackGrid)="callbackRoInfo($event)"
+                  (getParams)="getParamsRoInfo()"
+                  [showPagination]="false"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="col-sm-9 tabbable">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group p-1">
+            <span class="input-group-addon same-addon-width-search">Mã</span>
+            <input type="text" class="form-control" formControlName="code" (click)="$event.stopPropagation()">
+          </div>
+          <div class="input-group p-1">
+            <span class="input-group-addon same-addon-width-search">MAD</span>
+            <input type="text" class="form-control" formControlName="mad" (click)="$event.stopPropagation()">
+          </div>
+          <div class="input-group p-1">
+            <span class="input-group-addon same-addon-width-search">SS</span>
+            <input type="text" class="form-control" formControlName="ss" (click)="$event.stopPropagation()">
+          </div>
+          <div class="input-group p-1">
+            <span class="input-group-addon same-addon-width-search">MIP</span>
+            <input type="text" class="form-control" formControlName="mip" (click)="$event.stopPropagation()">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="row p-1">
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('1', $event)">1</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('2')">2</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('3')">3</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('+')">+</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('4')">4</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('5')">5</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('6')">6</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('-')">-</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('7')">7</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('8')">8</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('9')">9</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('*')">*</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('0')">0</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('(')">(</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD(')')">)</button>
+                </div>
+                <div class="col-sm-3">
+                  <button class="btn btn-blue w-100" (click)="changeValueMAD('/')">/</button>
+                </div>
+              </div>
+
+
+              <!--              <div class="row p-1">-->
+              <!--                <div class="col-sm-12">-->
+              <!--                  <button class="btn btn-blue w-100" (click)="changeValueMAD($event.target.value)">Del</button>-->
+              <!--                </div>-->
+              <!--              </div>-->
+
+
+            </div>
+            <div class="col-sm-3">
+              <div class="row p-1">
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T1')">T1</button>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T2')">T2</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T3')">T3</button>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T4')">T4</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T5')">T5</button>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('T6')">T6</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('MAX')">MAX</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueSS('MIN')">MIN</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="row p-1">
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('a')">a</button>
+                </div>
+                <div class="col-sm-6">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('n')">n</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('LT')">LT</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('OC')">OC</button>
+                </div>
+              </div>
+
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('MAD')">MAD</button>
+                </div>
+              </div>
+              <div class="row p-1">
+                <div class="col-sm-12">
+                  <button class="btn btn-blue w-100" (click)="changeValueMIP('SS')">SS</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <ul class="nav nav-tabs tab-blue">
+      <li *ngFor="let item of tabs"
+          [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer">
+        <a data-toggle="tab" class="tab-item text-capitalize">
+          {{item.name}}
+        </a>
+      </li>
+    </ul>
+    <setup-icc [partShippingHistory]="partShippingHistory"
+               [tabDisplay]="selectedTab === tabs[1].tab"
+    ></setup-icc>
+    <apply-parameters [prepickListOfRo]="prepickListOfRo"
+                      [selectedRo]="selectedRo"
+                      [tabDisplay]="selectedTab === tabs[0].tab"
+                      (prePickActionSuccess)="getRoDetail()"
+    ></apply-parameters>
+  </div>
+</div>

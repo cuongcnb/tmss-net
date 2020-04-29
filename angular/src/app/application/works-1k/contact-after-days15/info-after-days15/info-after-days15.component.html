@@ -1,0 +1,224 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading"><i class="fa fa-info"></i>
+      Thông tin xe
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">Biển số</span>
+          <input type="text" class="form-control" formControlName="licensePlates">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="62px">Model</span>
+              <input type="text" class="form-control" formControlName="errorModel">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="90px">Vinno</span>
+              <input type="text" class="form-control" formControlName="errorVin">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="62px">TVBH</span>
+              <input type="text" class="form-control" formControlName="errorTVBH">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <tmss-datepicker text="Ngày giao xe" formControlName="dateTime"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading"><i class="fa fa-info"></i>
+      Thông tin khách hàng
+      <div class="panel-tools" *ngIf="isContactAfterDays15">
+        <div class="btn btn-link mr-3 info-customer-box">
+          <input type="checkbox" class="" formControlName="errorStop">
+          <span class="pt-3 pl-1">Dừng theo dõi</span>
+        </div>
+        <div class="btn btn-link mr-3 info-customer-box">
+          <input type="checkbox" class="" formControlName="errorTaxi">
+          <span class="pt-3 pl-1">Taxi</span>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="85px">Chủ xe</span>
+              <input type="text" class="form-control" formControlName="ownerName">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <input type="text" class="form-control" formControlName="errorAddress">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorPhone">
+            <div class="input-group">
+              <span class="input-group-addon">Điện thoại</span>
+              <input type="text" class="form-control" formControlName="errorPhone">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorEmail">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <input type="text" class="form-control" formControlName="errorEmail">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+              <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="85px">Công ty</span>
+              <input type="text" class="form-control" formControlName="companyName">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <input type="text" class="form-control" formControlName="errorAddressCompany">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorPhoneCompany">
+            <div class="input-group">
+              <span class="input-group-addon">Điện thoại</span>
+              <input type="text" class="form-control" formControlName="errorPhoneCompany">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Ng.mang xe</span>
+              <input type="text" class="form-control" formControlName="carCarrier">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <input type="text" class="form-control" formControlName="errorAddressChil">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorPhoneChil">
+            <div class="input-group">
+              <span class="input-group-addon">Điện thoại</span>
+              <input type="text" class="form-control" formControlName="errorPhoneChil">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorEmailChil">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <input type="text" class="form-control" formControlName="errorEmailChil">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+              <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading"><i class="fa fa-info"></i>
+      Cập nhật thông tin
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Ng.liên hệ</span>
+              <input type="text" class="form-control" formControlName="errorContact">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Địa chỉ</span>
+              <input type="text" class="form-control" formControlName="errorAddress">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorPhone">
+            <div class="input-group">
+              <span class="input-group-addon">Điện thoại</span>
+              <input type="text" class="form-control" formControlName="errorPhone">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group" hasError="errorEmail">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <input type="text" class="form-control" formControlName="errorEmail">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+              <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

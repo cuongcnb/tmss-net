@@ -1,0 +1,76 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin người thân
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRelativeInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRelativeInfo" class="panel-collapse collapse in">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form" focusField>
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-12" hasError="relativeName">
+          <div class="input-group">
+            <span class="input-group-addon">Tên người thân</span>
+            <input type="text" class="form-control required" formControlName="relativeName">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12 col-sm-12" hasError="address">
+          <div class="input-group">
+            <span class="input-group-addon">Địa chỉ</span>
+            <input type="text" class="form-control required" formControlName="address">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4 col-sm-4" hasError="phone">
+          <div class="input-group">
+            <span class="input-group-addon">Số điện thoại</span>
+            <input type="text" class="form-control required" formControlName="phone">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="province">
+          <div class="input-group">
+            <span class="input-group-addon">Tỉnh/TP</span>
+            <select formControlName="province" class="form-control required">
+              <option>1</option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4 col-sm-4" hasError="relationship">
+          <div class="input-group">
+            <span class="input-group-addon">Quan hệ với chủ xe</span>
+            <select formControlName="relationship" class="form-control required">
+              <option>1</option>
+            </select>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="text-left pt-1 pb-1 ml-4">
+  <button class="btn btn-blue text-left">Cập nhật người thân</button>
+</div>
+
+

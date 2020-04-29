@@ -1,0 +1,40 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <div class="input-group">
+          <label class="input-group-addon">Đại lý</label>
+          <select class="form-control" formControlName="dlrId">
+            <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">
+              {{dealer.abbreviation}}-{{dealer.vnName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <div class="input-group">
+          <label class="input-group-addon">Mã PT</label>
+          <input class="form-control" formControlName="partCode">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-blue mr-2" (click)="searchDeadStockPart()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+      <button type="button" class="btn btn-blue" [disabled]="!partSelected" (click)="exportSelected()">
+        <i class="fa fa-download"></i> Export
+      </button>
+    </div>
+  </form>
+  <grid-table [fieldGrid]="gridField"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [suppressRowClickSelection]="true"
+              rowSelection="multiple"
+              (changePaginationParams)="changePaginationParams($event)"
+              [paginationTotalsData]="paginationTotalsData"
+  ></grid-table>
+</div>

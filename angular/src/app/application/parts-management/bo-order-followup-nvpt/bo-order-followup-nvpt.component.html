@@ -1,0 +1,124 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseBoOrderFollowupNVPTSearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseBoOrderFollowupNVPTSearch" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width">ATA</div>
+                <select class="form-control" formControlName="ata">
+                  <option [ngValue]="0">Tất cả</option>
+                  <option [ngValue]="1">Có</option>
+                  <option [ngValue]="2">Không</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Số đơn hàng">Số ĐH</div>
+                <input type="text" class="form-control" formControlName="orderNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Mã phụ tùng">Mã PT</div>
+                <input type="text" class="form-control" formControlName="partsCode">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Lệnh sửa chữa">LSC</div>
+                <input type="text" class="form-control" formControlName="ro">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Cố vấn dịch vụ">CVDV</div>
+                <input type="text" class="form-control" formControlName="advisor">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon same-addon-width">Biển số</div>
+                <input type="text" class="form-control" formControlName="plateNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Delay</span>
+                  <input class="form-control delay" disabled>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input class="form-control" formControlName="today">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    NVPT - Theo dõi đơn hàng BO
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseBoOrderFollowupNVPTOrder" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseBoOrderFollowupNVPTOrder" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid"
+                [sizeColumnToHeaderWidth] = "true"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                (changePaginationParams)="changePaginationParams($event)"
+                [paginationTotalsData]="paginationTotalsData"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="row mt-3 text-right">
+  <button class="btn btn-blue mr-2" [disabled]="!selectedPart" (click)="editPart()">
+    <i class="fa fa-edit"></i> Cập nhật
+  </button>
+  <button class="btn btn-blue mr-2" (click)="exportExcel()">
+    <i class="fa fa-download"></i> Xuất dữ liệu
+  </button>
+  <input *ngIf="selectedPart" [value]="selectedPart.custOrdPartNo" disabled>
+</div>
+<bo-followup-nvpt-edit-modal #editModal (close)="search()"></bo-followup-nvpt-edit-modal>

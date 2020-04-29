@@ -1,0 +1,32 @@
+<ng-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Sublet Type Maintenance
+    </div>
+    <div class="panel panel-body">
+      <grid-table [fieldGrid]="gridField"
+                  [sizeColumnToHeaderWidth]="true"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [showPagination]=true
+      ></grid-table>
+    </div>
+  </div>
+  <div class="panel panel-footer">
+    <div class="row mt-3 text-right grid-table-btn">
+      <button class="btn btn-blue mr-2" (click)="updateModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" (click)="updateModal.open(selectedData)" [disabled]="!this.selectedData">
+        <i class="fa fa-save"></i> Sửa
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!this.selectedData" (click)="delete()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<update-sublet-type-maintenance-modal #updateModal (close)="refreshData()"></update-sublet-type-maintenance-modal>
+

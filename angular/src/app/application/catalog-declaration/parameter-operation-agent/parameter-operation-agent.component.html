@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default mb-3">
+      <div class="panel-heading text-truncate">
+        <i class="fa fa-external-link-square"></i>
+        Cấu hình tham số hoạt động đại lý
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseParameterAgent" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseParameterAgent" class="panel-collapse collapse in">
+        <grid-table [fieldGrid]="gridField"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+                    [height]="'463px'"
+                    [showPagination]="false">
+        </grid-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Chi tiết
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseParameterAgentDetail" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseParameterAgentDetail" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <configuration-parameters #configurationParameters [detailData]="selectedData"
+                                    (close)="refresh($event)"
+          ></configuration-parameters>
+        </div>
+        <div class="panel-footer">
+          <div class="text-right">
+            <button type="button" class="btn btn-blue mr-2"
+                    (click)="configurationParameters.submit()">
+              <i class="fa fa-save"></i> Lưu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Hệ số giờ công bảo hành
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseParameterAgentClaim" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseParameterAgentClaim" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridHourLabor"
+                (callbackGrid)="callbackGridLabor($event)"
+                (getParams)="getParamsLabor()"
+                height="300px"
+                [showPagination]="false">
+    </grid-table>
+  </div>
+</div>

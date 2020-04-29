@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-2">
+    <div class="input-group form-group">
+      <span class="input-group-addon">Đại lý</span>
+      <select class="form-control">
+        <option value=""></option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="input-group form-group">
+      <span class="input-group-addon">Lệnh sửa chữa</span>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="input-group form-group">
+      <span class="input-group-addon">Biển số</span>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="input-group form-group">
+      <span class="input-group-addon">CVDV</span>
+      <input type="text" class="form-control">
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="input-group form-group">
+      <span class="input-group-addon">Hôm nay</span>
+      <tmss-datepicker></tmss-datepicker>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-blue mb-3 ml-4">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Follow Order
+      </div>
+      <grid-table [fieldGrid]="gridField"
+                  (callbackGrid)="callbackFollow($event)"
+                  (getParams)="getParamsFollow()"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <p>
+      <b>Tổng số: </b>
+      <i>1200000</i>
+    </p>
+  </div>
+  <div class="col-sm-8 text-right">
+    <button class="btn btn-blue mr-2 mb-3" (click)="updateFollow()">
+      <i class="fa"></i> Cập nhật
+    </button>
+    <button class="btn btn-blue mr-2 mb-3" (click)="export()">
+      <i class="fa"></i> Xuất Excel
+    </button>
+  </div>
+</div>
+
+<follow-order-update-modal #updateFollowOrder (close)="refreshFollow()"></follow-order-update-modal>

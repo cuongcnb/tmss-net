@@ -1,0 +1,55 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="input-group form-group">
+    <span class="input-group-addon">Dealer</span>
+    <select class="form-control required" formControlName="dlrId">
+      <option *ngIf="!currentUser.isAdmin" [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+      <ng-container *ngIf="currentUser.isAdmin">
+        <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách báo cáo
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseDealerFooter" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseDealerFooter" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="gridField"
+                  (callbackGrid)="callbackDlrFooter($event)"
+                  (getParams)="getParamsDlrFooter()"
+                  [showPagination]="false"
+                  [height]="'200px'"
+      ></grid-table>
+    </div>
+  </div>
+  <div class="form-group" hasError="footerTmv">
+    <div class="input-group">
+      <span class="input-group-addon span-155">TMV Footer Information</span>
+      <textarea class="form-control" formControlName="footerTmv" rows="3"></textarea>
+    </div>
+    <div class="error-messages" errorMessage>
+      <div *ifError="'maxLength'">Tối đa 2000 kí tự</div>
+    </div>
+  </div>
+  <div class="form-group" hasError="footer">
+    <div class="input-group">
+      <span class="input-group-addon span-155">Dealer Footer Information</span>
+      <textarea class="form-control" formControlName="footer" rows="4"></textarea>
+    </div>
+    <div class="error-messages" errorMessage>
+      <div *ifError="'maxLength'">Tối đa 2000 kí tự</div>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-blue" (click)="save()" [disabled]="!selectedType">
+      <i class="fa fa-save"></i> Lưu
+    </button>
+  </div>
+</form>
+

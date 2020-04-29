@@ -1,0 +1,170 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseInfo" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Số đơn hàng</span>
+                <input type="text" class="form-control" formControlName="orderNo">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Người ĐH</span>
+                <input type="text" class="form-control" formControlName="orderPersonId">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Ngày giờ ĐH</span>
+                <input type="text" class="form-control" formControlName="orderDateView">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">PTVC</span>
+                <select class="form-control" formControlName="transportTypeId">
+                  <option [ngValue]="null"></option>
+                  <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">
+                    {{transportType.transportName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" hasError="orderTypeId">
+              <div class="input-group">
+                <span class="input-group-addon equal-input-addon-label">Loại ĐH</span>
+                <select class="required form-control" formControlName="orderTypeId">
+                  <option *ngFor="let orderMethod of orderMethodArr" [ngValue]="orderMethod.id">
+                    {{orderMethod.orderMName}}
+                  </option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc điền Loại ĐH</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-blue mr-2" (click)="onAddRow()">
+              <i class="fa fa-plus"></i> Thêm PT
+            </button>
+            <button type="button" class="btn btn-blue mr-2" (click)="removeSelectedRow()">
+              <i class="fa fa-times"></i> Xoá PT
+            </button>
+            <button type="submit" class="btn btn-blue mr-2" (click)="resetForm()">
+              <i class="fa fa-plus-circle"></i> Tạo mới ĐH
+            </button>
+            <button type="button" class="btn btn-blue" (click)="viewOrder()">
+              <i class="fa fa-eye"></i> Xem ĐH
+            </button>
+          </div>
+        </div>
+
+        <button #submitFormBtn class="d-none"></button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePart" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                (callbackGrid)="callBackGrid($event)"
+                (cellEditingStopped)="cellEditingStopped($event)"
+                (cellEditingStarted)="cellEditingStarted($event)"
+                (getParams)="getParams()" (keyup)="agKeyUp($event)"></grid-table>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="row">
+    <div class="col-md-8 col-sm-6 text-left">
+      <p>
+        <small><i>* Click vào grid và nhấn mũi tên xuống để thêm dòng mới</i></small>
+      </p>
+      <p>
+        <small><i>* Nhập mã phụ tùng và ấn enter/tab để bắt đầu tìm kiếm</i></small>
+      </p>
+    </div>
+    <div class="col-md-4 col-sm-6">
+      <div class="row text-right">
+        <div class="col-md-8 col-sm-6">
+          <div class="form-group">
+            Tổng tiền trước thuế:
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            {{totalPriceBeforeTax}}
+          </div>
+        </div>
+
+        <div class="col-md-8 col-sm-6">
+          <div class="form-group">
+            Tổng tiền thuế:
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            {{taxOnly}}
+          </div>
+        </div>
+
+        <div class="col-md-8 col-sm-6">
+          <div class="form-group">
+            Tổng tiền sau thuế:
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="form-group">
+            {{totalPriceIncludeTax}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<parts-manual-checking-modal #partsManualCheckingModal
+                             [orderMethodArr]="orderMethodArr"
+                             [transportTypeList]="transportTypeList"
+                             (close)="order()"
+></parts-manual-checking-modal>
+<select-pack-of-parts-modal #selectPackOfPartsModal></select-pack-of-parts-modal>
+<search-data-grid-modal #searchDataGridModal
+                        [headerText]="'Chọn phụ tùng'"
+                        [apiCall]="searchPartApiCall.bind(this)" [fieldGrid]="fieldGridSearchDataGrid"
+                        (close)="setDataToRow($event)" (cancel)="cancelSearchParts()"></search-data-grid-modal>

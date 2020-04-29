@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="tabbable">
+      <ul class="nav nav-tabs tab-space-3 tab-blue">
+        <li *ngFor="let item of tabs"
+            [class.active]="item === selectedTab" (click)="selectedTab = item" class="pointer">
+          <a data-toggle="tab" class="tab-item text-capitalize">
+            {{item}}
+          </a>
+        </li>
+      </ul>
+      <div class="my-3">
+        <list-ro-export-lack [tabDisplay]="selectedTab === tabs[0]"
+                             [shippingModal]="shippingModal"></list-ro-export-lack>
+        <list-command-bo-no-export [tabDisplay]="selectedTab === tabs[1]"
+                                   [shippingModal]="shippingModal"></list-command-bo-no-export>
+      </div>
+    </div>
+  </div>
+</div>
+
+<shipping-modal #shippingModal ></shipping-modal>

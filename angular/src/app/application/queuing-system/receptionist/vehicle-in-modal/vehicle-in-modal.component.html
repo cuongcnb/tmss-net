@@ -1,0 +1,101 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog modal-sm" style="width: 400px !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Thông tin</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+              <div class="panel panel-default">
+                <strong>Xe vào</strong>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <label class="font-weight-bold">Khách Hàng </label>
+                  <input id="customer" type="text" formControlName="customerName">
+                </div>
+                <div class="form-group" hasError="registerNo">
+                  <label class="required font-weight-bold">Biển số xe</label>
+                  <textarea (change)="verifyRegisterNo(form)" class="form-control textarea-fix registerNo-style"
+                            formControlName="registerNo" #registerNo (keyup.enter)="KeyUpEnter($event)"
+                            [maxLength]="registerNoMaxLength">
+                  </textarea>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Biển số xe bắt buộc nhập</div>
+                    <div *ifError="'minLength'">Độ dài tối thiểu là {{ registerNoMinLength }} kí tự (VD:
+                      00X0000)
+                    </div>
+                    <div *ifError="'maxLength'">Độ dài tối đa là {{ registerNoMaxLength }} kí tự</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <span class="col-md-6" [ngClass]="{'car-firt-in': isFirstIn, 'car-not-firt-in': !isFirstIn}">
+                      Xe lần đầu vào đại lý
+                    </span>
+                    <span class="col-md-6"
+                          [ngClass]="{'have-appointment': checkIsAppointment === 'Y' , 'no-appointment': checkIsAppointment != 'Y'}">
+                      Xe có hẹn
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group" hasError>
+                      <label class="required font-weight-bold">Xe làm dịch vụ</label>
+                      <checkbox formControlName="haveService" text="Có"></checkbox>
+                      <checkbox formControlName="noService" text="Không"></checkbox>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'bothFieldFalse'">Thông tin bắt buộc nhập</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="isBp">
+                      <label class="font-weight-bold">Loại hình công việc</label>
+                      <checkbox formControlName="isMa" text="Bảo dưỡng"></checkbox>
+                      <checkbox formControlName="isGj" text="Sửa chữa chung"></checkbox>
+                      <checkbox formControlName="isBp" text="Đồng sơn"></checkbox>
+                      <checkbox formControlName="is1K" text="1K"></checkbox>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" hasError="floorId">
+                      <label class="required font-weight-bold">Tầng tiếp nhận</label>
+                      <select class="form-control" formControlName="floorId">
+                        <option *ngFor="let floor of floors" [ngValue]="floor.id"
+                                [selected]="!!floor.type ? floor.type == typeFloor : floor.type == 1">
+                          {{floor.floorName}}
+                        </option>
+                      </select>
+                      <div class="error-messages" errorMessage>
+                        <div *ifError="'required'">Tầng bắt buộc nhập</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-footer float-right">
+                <button class="btn btn-blue mr-2" type="submit" #btnSubmit (click)="save()">
+                  <i class="fa fa-save"></i> Lưu
+                </button>
+
+                <button class="btn btn-blue" (click)="print()">
+                  <i class="fa fa-save"></i> In Phiếu
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-keyboard-shortcuts [shortcuts]="keyboardShortcuts"></ng-keyboard-shortcuts>

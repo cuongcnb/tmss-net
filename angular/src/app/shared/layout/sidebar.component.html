@@ -1,0 +1,63 @@
+<div class="main-navigation navbar-collapse collapse" (window:resize)="onResize()">
+  <perfect-scrollbar class="ps" style="max-height: 100%;" *ngIf="isPerfectScrollbar">
+    <sidebar-item (openFilterModal)="openFilterModal($event)"></sidebar-item>
+  </perfect-scrollbar>
+
+  <sidebar-item *ngIf="!isPerfectScrollbar" [isAlwaysShowSubmenu]="isAlwaysShowSubmenu"
+                (openFilterModal)="openFilterModal($event)"></sidebar-item>
+
+  <div class="navigation-toggler" (click)="collapseSidebar()">
+    <i class="clip-chevron-left"></i>
+  </div>
+</div>
+
+<in-out-gate-report #inOutGateReport></in-out-gate-report>
+<progress-report #progressReportModal></progress-report>
+<!--<vehicle-registration-modal #vehicleRegistrationModal></vehicle-registration-modal>-->
+<!--<dlr-unclaim-order-modal #dlrUnclaimOrderModal></dlr-unclaim-order-modal>-->
+<list-deal-car #islistDealCar></list-deal-car>
+<progress-report #progressReport
+                 (close)="openComponentAfterCloseModal(tMSSTabs.progressReport, $event)"></progress-report>
+<import-data-survey #importDataSurvey></import-data-survey>
+<labor-wages #isLaborWages></labor-wages>
+<labor-wages-nationwide #isLaborWagesNation></labor-wages-nationwide>
+
+<!-- SERVICE REPORT -->
+<customer-service-report #customerServiceReport></customer-service-report>
+<report-by-month #reportByMonth></report-by-month> <!--đại lý, tháng-->
+<report-in-range-date #reportInRangeDate></report-in-range-date><!--đại lý, từ ngày, đến ngày, định dạng file, others-->
+<report-by-accessory #reportByAccessory></report-by-accessory><!--đại lý, từ ngày, đến ngày, định dạng file, phụ tùng (mã + loại), nhóm theo-->
+<report-with-tab #reportWithTab></report-with-tab><!--đại lý, ngày/ tháng/ năm/ từ ngày đến ngày-->
+<warranty-daily-claim-report #warrantyDailyClaimReport></warranty-daily-claim-report>
+
+<stock-inventory-report-by-price #stockInventoryReportByPrice></stock-inventory-report-by-price>
+<part-import-export-history-report #partImportExportHistoryReport></part-import-export-history-report>
+<part-import-export-report #partImportExportReport></part-import-export-report>
+<part-amount-adjustment-report #partAmountAdjustmentReport></part-amount-adjustment-report>
+<part-supply-rate-by-part-code-report #partSupplyRateByPartCodeReport></part-supply-rate-by-part-code-report>
+<parts-supply-ratio-report #partsSupplyRatioReport></parts-supply-ratio-report>
+<report-receive #reportReceive></report-receive>
+<ro-general-report #roGeneralByDayReport></ro-general-report>
+<parts-check-inventory-report #partsCheckInventoryReport></parts-check-inventory-report>
+<accessory-inventory-check-report #accessoryInventoryCheckReport></accessory-inventory-check-report>
+<output-report #outputReport></output-report>
+<order-of-dlr-to-tmv #orderOfDlrToTmv></order-of-dlr-to-tmv>
+<accessory-selling-report #accessorySellingReport></accessory-selling-report>
+<retail-sales-report #retailSalesReport></retail-sales-report>
+<owe-tmv-report #oweTmvReport></owe-tmv-report>
+<decentralized-inspection-agent-quality #decentralizedInspectionAgentQuality></decentralized-inspection-agent-quality>
+<part-retail-general-report #partRetailGeneralReport></part-retail-general-report>
+<service-rate-and-ro-fill-report #serviceRateAndRoFillReport></service-rate-and-ro-fill-report>
+<ro-unfinished-report #roUnfinishedReport></ro-unfinished-report>
+<ro-list-with-full-part #roListWithFullPart></ro-list-with-full-part>
+<time-store-bo #timeStoreBo></time-store-bo>
+<list-ro-part-bo-not-enough #listRoPartBoNotEnough></list-ro-part-bo-not-enough>
+<vehicle-summary-report #vehicleSummaryReport></vehicle-summary-report>
+<appointment-report #appointmentReport></appointment-report>
+<contract-filter-start-modal #contractFilterStartModal (close)="openComponentAfterCloseModal(tMSSTabs.contractManagement, $event)"></contract-filter-start-modal>
+<vehicle-arrival-filter-modal #vehicleArrivalFilterModal (close)="openComponentAfterCloseModal(tMSSTabs.vehicleArrival, $event)"></vehicle-arrival-filter-modal>
+<cbu-filter-start-modal #cbuFilterStartModal (close)="openComponentAfterCloseModal(tMSSTabs.cbuVehicleInfo, $event)" [isCbuFilterModal]="true"></cbu-filter-start-modal>
+<cbu-filter-start-modal #ckdFilterStartModal (close)="openComponentAfterCloseModal(tMSSTabs.ckdVehicleInfo, $event)"></cbu-filter-start-modal>
+<dlr-report #dlrReport [reportFunction]="reportFunction"></dlr-report>
+<delivery-filter-start-modal #deliveryFilterStartModal (close)="openComponentAfterCloseModal(tMSSTabs.changeDelivery, $event)"></delivery-filter-start-modal>
+<user-list-function-report #userListFunctionReport></user-list-function-report>

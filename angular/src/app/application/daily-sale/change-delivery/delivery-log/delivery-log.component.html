@@ -1,0 +1,28 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="contractFollowupId = null">
+  <div class="modal-dialog lg-width" *ngIf="contractFollowupId">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title"> Delivery Date Change Log</h5>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Delivery Date Change Log
+          </div>
+          <grid-table [fieldGrid]="gridField"
+                      (callbackGrid)="callbackGrid($event)"
+          ></grid-table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-blue" (click)="modal.hide()">
+          <i class="fa fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

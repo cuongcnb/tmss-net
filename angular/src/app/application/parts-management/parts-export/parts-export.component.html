@@ -1,0 +1,204 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartExportOrderPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartExportOrderPart" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" focusField>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Số RO</span>
+                <input type="text" class="form-control" formControlName="ro">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Kiểu</span>
+                <select class="form-control" formControlName="type">
+                  <option *ngFor="let type of exportTypeArr" [ngValue]="type.key">{{type.value}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Biển số</span>
+                <input type="text" class="form-control" formControlName="plate">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-blue" (click)="searchRo()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+        <grid-table [fieldGrid]="fieldGridRo" [height]="'150px'"
+                    (callbackGrid)="callbackRoInfo($event)"
+                    (getParams)="getParamsRoInfo()"
+                    (changePaginationParams)="changePaginationParams($event)"
+                    [paginationTotalsData]="paginationTotalsData"
+        ></grid-table>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin RO
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartExportRO" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartExportRO" class="panel-collapse collapse in">
+
+    <div class="panel-body">
+      <form [formGroup]="roDetailForm" *ngIf="roDetailForm" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro">Biển số xe</span>
+                <input type="text" class="form-control" formControlName="plate">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro">Khách hàng</span>
+                <input type="text" class="form-control" formControlName="customerName">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro">Model</span>
+                <input type="text" class="form-control" formControlName="model">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro">Mã số thuế</span>
+                <input type="text" class="form-control" formControlName="taxNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro" data-toggle="tooltip" data-placement="bottom"
+                      title="Cố vấn dịch vụ">CVDV</span>
+                <input type="text" class="form-control" formControlName="advisor">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-ro">Địa chỉ</span>
+                <input type="text" class="form-control" formControlName="address">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Xuất Phụ Tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartExportPartOfRo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartExportPartOfRo" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGridPartsOfRo" [height]="'200px'" [showPagination]="false"
+                  (callbackGrid)="callbackPartsOfRo($event)"
+                  (getParams)="getParamsPartsOfRo()"
+                  (cellEditingStopped)="cellEditingStopped($event)"
+                  [frameworkComponents]="frameworkComponents"></grid-table>
+      <div class="row">
+        <div class="col-sm-offset-4 col-sm-7 my-2">
+          <div class="row text-right">
+            <div class="col-xs-4 detail">
+              Trước thuế: <strong>{{totalPriceBeforeTax}}</strong>
+            </div>
+            <div class="col-xs-4 detail">
+              + Thuế: <strong>{{taxOnly}}</strong>
+            </div>
+            <div class="col-xs-4 detail">
+              = Sau thuế: <strong>{{totalPriceIncludeTax}}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="float-right">
+          <button type="button" class="btn btn-blue ml-2"
+                  (click)="export()" [disabled]="disableXuatBtn">Xác nhận
+          </button>
+          <button type="button" class="btn btn-blue ml-2"
+                  (click)="exportAllParts()" [disabled]="disableXuatTatCaBtn">Xác nhận tất cả
+          </button>
+          <button type="button" class="btn btn-blue ml-2" style="width: 126.05px;"
+                  (click)="viewExportSlip()" [disabled]="disableXemPhieuXuatBtn">Xem phiếu xuất
+          </button>
+          <button type="submit" class="btn btn-blue ml-2 mr-2" [disabled]="!selectedPart || !(selectedPart.slCan > selectedPart.slDaXuat + selectedPart.slTon) "
+                  (click)="orderPartBo()">
+            <i class="fa fa-search"></i> Đặt hàng BO
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tabbable">
+  <ul class="nav nav-tabs tab-blue">
+    <li *ngFor="let item of tabs"
+        [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer">
+      <a data-toggle="tab" class="tab-item text-capitalize">
+        {{item.name}}
+      </a>
+    </li>
+  </ul>
+  <parts-export-shipping-history [partShippingHistory]="partShippingHistory"
+                                 [tabDisplay]="selectedTab === tabs[0].tab"
+  ></parts-export-shipping-history>
+  <prepick-list [prepickListOfRo]="prepickListOfRo"
+                [selectedRo]="selectedRo"
+                [tabDisplay]="selectedTab === tabs[1].tab"
+                (prePickActionSuccess)="getRoDetail()"
+  ></prepick-list>
+</div>
+
+<parts-export-single-slip-modal #partsExportSingleSlipModal></parts-export-single-slip-modal>
+<parts-export-view-slip-modal #partsExportViewSlipModal></parts-export-view-slip-modal>

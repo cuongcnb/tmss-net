@@ -1,0 +1,12 @@
+<grid-table
+  [fieldGrid]="fieldGrid"
+  (callbackGrid)="callbackGrid($event)"
+  (getParams)="getParams()"
+  [height]="'250px'"
+></grid-table>
+<div class="my-2 float-right">
+  <button class="btn btn-blue" (click)="openProposal()">
+    <i class="fa fa-folder-open"></i> Mở cửa sổ báo giá
+  </button>
+</div>
+<proposal-print #proposalPrintModal [isAdvisor]="true" (back)="proposalPrintModal.open()"></proposal-print>

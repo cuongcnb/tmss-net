@@ -1,0 +1,146 @@
+<form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off" focusField>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin Tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartReceiveManualSearch" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartReceiveManualSearch" class="panel-collapse collapse in">
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <div class="input-group ">
+              <span class="input-group-addon min-width" addonWidth="75px" data-toggle="tooltip" data-placement="bottom" title="Số đơn hàng">
+                Số ĐH
+              </span>
+              <input type="text" class="form-control" formControlName="orderNo">
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+            <div class="input-group">
+            <span class="input-group-addon min-width" addonWidth="75px" data-toggle="tooltip" data-placement="bottom" title="Loại đơn hàng">
+             Loại ĐH
+            </span>
+              <select class="form-control" formControlName="orderType">
+                <option value=""></option>
+                <option *ngFor="let orderMethod of orderMethodList" [ngValue]="orderMethod.id">
+                  {{orderMethod.orderMName}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <!--<div class="col-md-12 form-group">-->
+          <!--<div class="input-group ">-->
+          <!--<span class="input-group-addon min-width" addonWidth="75px">-->
+          <!--Trạng thái-->
+          <!--</span>-->
+          <!--<select class="form-control" formControlName="status">-->
+          <!--<option value=""></option>-->
+          <!--<option value="bean">Đặt hàng điều chỉnh (TMV ko get)</option>-->
+          <!--<option value="air">Dầu mỡ và nước làm mát</option>-->
+          <!--<option value="air">Hàng chiến dịch</option>-->
+          <!--</select>-->
+          <!--</div>-->
+          <!--</div>-->
+          <div class="col-md-3 form-group">
+            <tmss-datepicker formControlName="orderDate" text="Ngày đặt" className="min-width"
+                             addOnMinWidth="75px"></tmss-datepicker>
+          </div>
+          <div class="col-md-3 form-group search-group">
+            <div class="input-group ">
+                <span class="input-group-addon min-width" addonWidth="75px" data-toggle="tooltip"
+                      data-placement="bottom"
+                      title="Phương thức vận chuyển">
+                PTVC
+                </span>
+              <select class="form-control" formControlName="transportationTypeId">
+                <option></option>
+                <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">
+                  {{transportType.transportName}}
+                </option>
+              </select>
+              <button class="btn btn-blue" (click)="resetPaginationParams();searchManualOrder(isNonToyota) "><i
+                class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<div class="panel panel-default ro-search-result">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i> Thông tin đơn
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartReceiveManualInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartReceiveManualInfo" class="panel-collapse collapse in">
+    <div class="panel-body">
+      <grid-table *ngIf="partsParams" [fieldGrid]="fieldManualOrderList"
+                  (callbackGrid)="callbackManualOrder($event)"
+                  (getParams)="getParamsManualOrder()"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [paginationTotalsData]="paginationTotalsData"
+                  height="210px"
+      ></grid-table>
+    </div>
+    <div class="panel-footer">
+      <div class="text-right">
+        <button class="btn btn-blue mr-2" (click)="openPartsReceiveDetailModal()"><span class="fa fa-eye"></span>
+          Xem đơn hàng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-table-area mt-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>Thông tin chi tiết
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapsePartReceiveManualDetail" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapsePartReceiveManualDetail" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldPartsList"
+                  (callbackGrid)="callbackParts($event)"
+                  [height]="'300px'"
+                  suppressRowClickSelection="true"></grid-table>
+      <div class="panel-footer">
+        <div class="row">
+          <div class="col-sm-offset-4 col-sm-8">
+            <div class="row text-right">
+              <div class="col-xs-4 detail">
+                Trước thuế: <strong>{{formatMoney(price?.preTaxPrice)}}</strong>
+              </div>
+              <div class="col-xs-4 detail">
+                + Thuế: <strong>{{formatMoney(price?.taxPrice)}}</strong>
+              </div>
+              <div class="col-xs-4 detail">
+                = Sau thuế: <strong>{{formatMoney(price?.totalPrice)}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<parts-receive-manual-detail-modal (receive)="refresh()"
+                                   #partsReceiveManualDetailModal></parts-receive-manual-detail-modal>
+

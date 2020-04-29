@@ -1,0 +1,286 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form class="standardize-form" [formGroup]="form" *ngIf="form && modal.isShown && choosingData" novalidate
+        autocomplete="off" focusField>
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Chuẩn hoá thông tin khách</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" hasError="cusno">
+                  <div class="input-group">
+                    <label class="input-group-addon">Mã khách hàng</label>
+                    <input-search fieldAccessor="input" formControlName="cusno" [isRequired]="true"
+                                  [ignoreEnterEvent]="true"
+                                  [isReadonly]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('cusno', choosingData.cusno)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải chọn mã khách hàng</div>
+                    <div *ifError="'maxLength'">Tối đa 20 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carownername">
+                  <div class="input-group">
+                    <label class="input-group-addon">Tên khách hàng</label>
+                    <input-search fieldAccessor="input" formControlName="carownername" [isRequired]="true"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carownername', choosingData.carownername)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải nhập tên khách hàng</div>
+                    <div *ifError="'maxLength'">Tối đa 180 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carowneremail">
+                  <div class="input-group">
+                    <label class="input-group-addon">Email</label>
+                    <input-search formControlName="carowneremail"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carowneremail', choosingData.carowneremail)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'emailFormat'">Giá trị bạn nhập không phải là email</div>
+                    <div *ifError="'maxLength'">Tối đa 50 ký tự</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon">Loại khách hàng</label>
+                    <select class="form-control" formControlName="custypeId">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let cusType of cusTypes" [ngValue]="cusType.id">
+                        {{cusType.cusTypeCode}} - {{cusType.cusTypeName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carowneradd">
+                  <div class="input-group">
+                    <label class="input-group-addon">Địa chỉ</label>
+                    <input-search fieldAccessor="input" formControlName="carowneradd" [isRequired]="true"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carowneradd', choosingData.carowneradd)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải nhập địa chỉ</div>
+                    <div *ifError="'maxLength'">Tối đa 180 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="taxcode">
+                  <div class="input-group">
+                    <label class="input-group-addon">Mã số thuế</label>
+                    <input-search formControlName="taxcode"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('taxcode', choosingData.taxcode)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'taxFormat'">Giá trị bạn nhập không phải là mã số thuế</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carownertel">
+                  <div class="input-group">
+                    <label class="input-group-addon">Điện thoại</label>
+                    <input-search formControlName="carownertel"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carownertel', choosingData.carownertel)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="orgname">
+                  <div class="input-group">
+                    <label class="input-group-addon">Tên công ty</label>
+                    <input-search formControlName="orgname"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('orgname', choosingData.orgname)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 2000 ký tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon">Số tài khoản</label>
+                    <input-search formControlName="accno"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('accno', choosingData.accno)"
+                    ></input-search>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carownermobil">
+                  <div class="input-group">
+                    <label class="input-group-addon">Di động</label>
+                    <input-search fieldAccessor="input" formControlName="carownermobil" [isRequired]="true"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carownermobil', choosingData.carownermobil)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải nhập số điện thoại</div>
+                    <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="provinceId">
+                  <div class="input-group">
+                    <label class="input-group-addon">Tỉnh thành</label>
+                    <select class="form-control required" formControlName="provinceId">
+                      <option value=""></option>
+                      <option *ngFor="let province of provinceList" [ngValue]="province.id">
+                        {{province.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải chọn tỉnh thành</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon">Tên ngân hàng</label>
+                    <select class="form-control" formControlName="bankId">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let bank of bankList" [ngValue]="bank.id">
+                        {{bank.bankCode}} - {{bank.bankName}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carownerfax">
+                  <div class="input-group">
+                    <label class="input-group-addon">Fax</label>
+                    <input-search formControlName="carownerfax"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carownerfax', choosingData.carownerfax)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'phoneFormat'">Sai định dạng, phải là số từ 10-15 kí tự</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="districtId">
+                  <div class="input-group">
+                    <label class="input-group-addon">Quận huyện</label>
+                    <select class="form-control required" formControlName="districtId">
+                      <option value=""></option>
+                      <option *ngFor="let district of districtList" [ngValue]="district.id">
+                        {{district.name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bạn phải chọn quận/huyện</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" hasError="carowneridnum">
+                  <div class="input-group">
+                    <label class="input-group-addon">Số CMTND</label>
+                    <input-search formControlName="carowneridnum"
+                                  [ignoreEnterEvent]="true" [showBtn]="true"
+                                  (onSearch)="choosingModal.open('carowneridnum', choosingData.carowneridnum)"
+                    ></input-search>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'maxLength'">Tối đa 30 ký tự</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabbable">
+              <ul class="nav nav-tabs tab-space-3 tab-blue">
+                <li *ngFor="let item of tabs"
+                    [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+                  <a data-toggle="tab" class="tab-item text-capitalize">
+                    {{item}}
+                  </a>
+                </li>
+              </ul>
+              <div class="my-3">
+                <vehicle-info-tab-modal #vehicleInfoTabModalComponent [tabDisplay]="selectedTab === tabs[0]" [isShown]="modal.isShown"
+                                        [listCus]="selectedData">
+                </vehicle-info-tab-modal>
+
+                <lsc-info-tab-modal #lscInfoTabModalComponent [tabDisplay]="selectedTab === tabs[1]" [isShown]="modal.isShown"
+                                    [listCus]="selectedData">
+                </lsc-info-tab-modal>
+
+                <retail-part-info-tab-modal #retailPartInfoTabModalComponent [tabDisplay]="selectedTab === tabs[2]" [isShown]="modal.isShown"
+                                            [listCus]="selectedData">
+                </retail-part-info-tab-modal>
+
+                <cus-info-detail-tab-modal #cusInfoDetailTabModalComponent [tabDisplay]="selectedTab === tabs[3]" [isShown]="modal.isShown"
+                                           [listCus]="selectedData">
+                </cus-info-detail-tab-modal>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Huỷ
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<standardize-choosing-data #choosingModal (close)="patchData($event)"></standardize-choosing-data>

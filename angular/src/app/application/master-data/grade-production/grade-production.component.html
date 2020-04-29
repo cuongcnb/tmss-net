@@ -1,0 +1,64 @@
+<div pageTitle="Grade Production">
+  <div class="grid-table-area mt-3">
+    <div class="row pb-2">
+      <div class="col-lg-4 col-md-5">
+        <div class="input-group">
+          <label class="input-group-addon control-label">Model</label>
+          <select [(ngModel)]="modelId" class="form-control" (change)="onModelChange()">
+            <option value="">All</option>
+            <option *ngFor="let model of models" [value]="model.id">{{model.marketingCode}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Grade List
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGradeList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridGrade" [height]="'300px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGradeList($event)"
+                  (getParams)="getParamsGradeList()"
+      ></grid-table>
+    </div>
+  </div>
+
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Grade Production
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshGradeProductionList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGridProduction" [height]="'180px'"
+                  [showPagination]="false"
+                  (callbackGrid)="callbackGradeProduction($event)"
+                  (getParams)="getParamsGradeProduction()"
+                  overlayLoadingTemplate="Please choose a grade to show grade production"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="addProduction()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateProduction()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedGradeProduction" (click)="deleteGradeProduct()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<grade-production-modal #gradeProductionModal (close)="refreshGradeProductionList()"></grade-production-modal>

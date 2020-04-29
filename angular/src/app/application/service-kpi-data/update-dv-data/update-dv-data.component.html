@@ -1,0 +1,125 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseUpdateDvDataSearch" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseUpdateDvDataSearch" class="panel-collapse collapse in">
+
+      <div class="panel-body w-span">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <select class="form-control" formControlName="sortAgency">
+                  <option>TGP-ND</option>
+                  <option>THTL</option>
+                  <option>TTG</option>
+                  <option>THHC</option>
+                  <option>THKC</option>
+                  <option>TGP</option>
+                  <option>TGP_PV</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group w-span">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái lệnh</span>
+                <select class="form-control" formControlName="statusCommand">
+                  <option>Còn hiệu lực</option>
+                  <option>Hết hiệu lực</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group ">
+              <tmss-datepicker text="Ngày quyết toán từ" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group ">
+              <tmss-datepicker text="Đến" formControlName="dateTimeTo"></tmss-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group w-span">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái phân loại</span>
+                <select class="form-control" formControlName="statusClassify">
+                  <option>Phân loại 1</option>
+                  <option>Phân loại 2</option>
+                  <option>Phân loại 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group w-span">
+              <div class="input-group">
+                <span class="input-group-addon">Tỉ lệ vật tư sơn (%)</span>
+                <input type="text" class="form-control" formControlName="ratioSupplies">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-blue mr-2">
+              <i class="fa fa-search mr-2"></i>Tìm kiếm
+            </button>
+            <button type="button" class="btn btn-blue mr-2">
+              <i class="fa fa-search mr-2"></i>Làm mới
+            </button>
+            <button type="button" class="btn btn-blue mr-2" (click)="updateRate()">
+              <i class="fa fa-refresh mr-2"></i>Cập nhật tỉ lệ
+            </button>
+            <button type="button" class="btn btn-blue mr-2" (click)="lockRO.open()">
+              <i class="fa fa-lock mr-2"></i>Khóa RO
+            </button>
+            <button type="button" class="btn btn-blue mr-2">
+              <i class="fa fa-unlock-alt mr-2"></i>Mở khóa RO
+            </button>
+          </div>
+        </div>
+
+        <grid-table [fieldGrid]="fieldGrid" [height]="'320px'"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+      </div>
+    </div>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2">
+        <i class="fa clip-file-2"></i>Ghi lại
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="isCommand()">
+        <i class="fa clip-file-remove"></i>Trạng thái lệnh
+      </button>
+      <button type="button" class="btn btn-blue mr-2">
+        <i class="fa fa-cloud-download"></i>Xuất ra excel
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="hideColumnModal.open()">
+        <i class="fa clip-eye-2"></i>Ẩn cột dữ liệu
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="decisionDate.open()">
+        <i class="fa clip-history"></i>Chuyển ngày quyết toán
+      </button>
+      <button type="button" class="btn btn-blue" (click)="importInvoiceModal.open()">
+        <i class="fa clip-download"></i>Import số hóa đơn
+      </button>
+    </div>
+  </div>
+</form>
+<import-invoice-modal #importInvoiceModal></import-invoice-modal>
+<lock-ro-modal #lockRO></lock-ro-modal>
+<decision-date-modal #decisionDate></decision-date-modal>
+<hide-column-modal #hideColumnModal></hide-column-modal>

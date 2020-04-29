@@ -1,0 +1,46 @@
+<div class="modal fade" bsModal #modifyFleetUnit="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedData">Add New Fleet Unit</h5>
+          <h5 class="modal-title" *ngIf="selectedData">Update Fleet Unit</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group" hasError="unitMin">
+            <label>Min</label>
+            <input type="text" class="form-control" formControlName="unitMin">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'unitMin'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="unitMax">
+            <label>Max</label>
+            <input type="text" class="form-control" formControlName="unitMax">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'unitMax'">Must be a positive value</div>
+            </div>
+          </div>
+          <div class="form-group" hasError="available">
+            <label>Available</label>
+            <input type="text" class="form-control" formControlName="available">
+            <div class="error-messages" errorMessage>
+              <div *ifError="'available'">Must be a positive value</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,21 @@
+::ng-deep checkbox {
+  .checkbox-text-sm {
+    margin-left: 1.2rem;
+  }
+}
+
+input[bsDatepicker][readonly] {
+  background-color: #fff !important;
+}
+
+input[bsDatepicker][disabled] {
+  background-color: #eee !important;
+}
+
+[attr='bsDatepicker readonly'] {
+  background-color: #fff;
+}
+
+.input-group.filter-date {
+  width: 100%
+}

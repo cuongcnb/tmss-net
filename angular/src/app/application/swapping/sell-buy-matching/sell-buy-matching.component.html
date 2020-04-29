@@ -1,0 +1,98 @@
+<div pageTitle="Sell Buy Matching">
+  <form [formGroup]="sellBuyMatchingForm" *ngIf="sellBuyMatchingForm">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="form-group input-group">
+          <span class="input-group-addon" addonWidth="75px">Model</span>
+          <multi-column-select-control formControlName="modelControl" displayField="marketingCode"
+                                       [fieldGrid]="fieldModelList"
+                                       [apiCall]="getModel.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div class="form-group input-group">
+          <span class="input-group-addon" addonWidth="75px">Grade</span>
+          <multi-column-select-control formControlName="gradeControl" displayField="marketingCode"
+                                       [fieldGrid]="fieldGradeList"
+                                       [apiCall]="getGrade.bind(this)">
+          </multi-column-select-control>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <button type="submit" class="btn btn-blue" (click)="onBtnSearch()"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-5 form-group">
+        <tmss-datepicker-sale formControlName="approve_from" addOnMinWidth="75px" [showDeleteBtn]="true"
+                         text="From Date"></tmss-datepicker-sale>
+      </div>
+      <div class="col-sm-5 form-group">
+        <tmss-datepicker-sale formControlName="approve_to" addOnMinWidth="75px" [showDeleteBtn]="true"
+                         text="To date"></tmss-datepicker-sale>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <checkbox formControlName="includePending" text="Include pending"></checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Matched List
+    </div>
+    <grid-table [fieldGrid]="fieldGridMatchedList"
+                [showPagination]="false"
+                [overlayLoadingTemplate]="' '"
+                [height]="'300px'"
+                (callbackGrid)="callbackMatchedList($event)"
+                (getParams)="getParamMatchedList()">
+    </grid-table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Buy request
+        </div>
+        <grid-table [fieldGrid]="fieldGridBuyRequestList" [height]="'200px'"
+                    [showPagination]="false"
+                    [overlayLoadingTemplate]="''"
+                    (callbackGrid)="callbackBuyRequestList($event)"
+                    (getParams)="getParamsBuyRequestList()"
+                    [rowClassRules]="rowClassRulesBuy">
+        </grid-table>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Selling list
+        </div>
+        <grid-table [fieldGrid]="fieldGridSellingList" [height]="'200px'"
+                    [showPagination]="false"
+                    [overlayLoadingTemplate]="' '"
+                    (callbackGrid)="callbackSellingList($event)"
+                    (getParams)="getParamsSellingList()"
+                    [rowClassRules]="rowClassRules">
+        </grid-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <button class="btn btn-blue mr-2" [disabled]="changeStateButtonSend" (click)="sendData()"><i
+      class="fa fa-location-arrow"></i> Send
+    </button>
+    <button class="btn btn-blue mr-2" [disabled]="changeStateButtonMatch" (click)="match()"><i
+      class="fa fa-check-square-o"></i> Match
+    </button>
+    <button class="btn btn-blue mr-2" (click)="exportMatched()"><i class="fa fa-download"></i> Export Matched</button>
+    <button class="btn btn-blue" (click)="exportMatchingList()"><i class="fa fa-download"></i> Export Matching</button>
+  </div>
+</div>

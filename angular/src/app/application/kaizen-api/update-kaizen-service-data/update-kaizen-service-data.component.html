@@ -1,0 +1,84 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseUpdateKaizenServiceData" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseUpdateKaizenServiceData" class="panel-collapse collapse in">
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <select class="form-control" formControlName="sortAgency">
+                  <option>Đại lý 1</option>
+                  <option>Đại lý 2</option>
+                  <option>Đại lý 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Trạng thái</span>
+                <select class="form-control" formControlName="isStatus">
+                  <option>Chưa cập nhật</option>
+                  <option>Đã cập nhật</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <tmss-datepicker formControlName="settlementDate" text="Ngày quyết toán từ"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group w-span">
+              <tmss-datepicker formControlName="settlementDateTo" text="Đến ngày"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <div class="row">
+              <div class="col-md-6">
+                <button type="button" class="btn btn-blue mb-2 mr-2">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+              <div class="col-md-6">
+                <button type="button" class="btn btn-blue mb-2">
+                  <i class="fa fa-refresh"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"></grid-table>
+    </div>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2 ">
+        <i class="fa clip-file-2 mr-2"></i>
+        Ghi lại
+      </button>
+      <button type="button" class="btn btn-blue mr-2 ">
+        <i class="fa fa-pencil mr-2"></i>
+        Import
+      </button>
+      <button type="button" class="btn btn-blue ">
+        <i class="fa fa-cloud-download"></i>
+        Xuất excel
+      </button>
+    </div>
+  </div>
+</form>

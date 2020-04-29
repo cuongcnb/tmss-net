@@ -1,0 +1,145 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Chi tiết tình trạng BO </h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <!-- BO -->
+        <div class="modal-body">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Tìm kiếm đơn hàng BO
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="searchBoForm" *ngIf="searchBoForm" novalidate autocomplete="off">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Số ĐH B/O</span>
+                        <input type="text" class="form-control" formControlName="orderNo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Số RO</span>
+                        <input type="text" class="form-control" formControlName="soRo">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Biển số</span>
+                        <input type="text" class="form-control" formControlName="bienSoXe">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">CVDV</span>
+                        <input type="text" class="form-control" formControlName="tenCvdv">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon same-addon-width">Kiểu đặt hàng</span>
+                        <input type="text" class="form-control" formControlName="kieuDh">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="submit" class="btn btn-blue" (click)="resetBoPagination(); searchBoOrder()">
+                      <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách đơn hàng BO
+            </div>
+            <grid-table [fieldGrid]="fieldGridBoOrder" [height]="'185px'"
+                        (callbackGrid)="callbackBoOrder($event)"
+                        (getParams)="getBoParams($event)"
+                        (changePaginationParams)="changePaginationParamsBo($event)"
+                        [paginationTotalsData]="paginationTotalBo"
+            ></grid-table>
+          </div>
+
+          <!-- PART -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Tìm kiếm phụ tùng
+            </div>
+            <div class="panel-body">
+              <form [formGroup]="searchPartForm" *ngIf="searchPartForm" novalidate autocomplete="off">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Mã PT</span>
+                        <input type="text" class="form-control" formControlName="partsCode">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Tên PT</span>
+                        <input type="text" class="form-control" formControlName="partsName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Nhà CC</span>
+                        <input type="text" class="form-control" formControlName="supplier">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <button type="submit" class="btn btn-blue" [disabled]="!selectedBoDetail" (click)="resetPartPagination(); searchPartOfBo()">
+                      <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="panel panel-default mb-0" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách phụ tùng
+            </div>
+            <grid-table [fieldGrid]="fieldGridPartList" [height]="'185px'"
+                        (callbackGrid)="callbackPartList($event)"
+                        (changePaginationParams)="changePaginationParamsPart($event)"
+                        [paginationTotalsData]="paginationTotalPart"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="cropper-container">
+  <div class="image-cropper">
+    <label #container [class.without-image]="isEmpty">
+      <div *ngIf="isEmpty" class="text-left p-3 text-white">Choose Image</div>
+      <img *ngIf="displayedUrl || imageUrl" [src]="displayedUrl || imageUrl" class="preview img-rounded"/>
+      <input type="file" (change)="open($event.target)" accept="image/*" class="ghost"/>
+      <div *ngIf="!isEmpty" class="overlay">
+        <div class="btn-group">
+          <a (click)="remove($event)" class="btn-remove">
+            <i class="fa fa-trash-o"></i>
+          </a>
+        </div>
+      </div>
+    </label>
+  </div>
+  <image-cropper-modal #cropperModal (ready)="ready.emit()" (saved)="saveData($event)" [settings]="settings"></image-cropper-modal>
+</div>

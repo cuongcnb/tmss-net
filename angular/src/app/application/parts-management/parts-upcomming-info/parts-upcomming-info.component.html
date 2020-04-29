@@ -1,0 +1,40 @@
+<form [formGroup]="searchForm" *ngIf="searchForm">
+  <div class="row">
+    <div class="col-sm-3 form-group">
+      <div class="input-group ">
+        <span class="input-group-addon">Mã phụ tùng</span>
+        <input type="text" class="form-control" formControlName="orderNo">
+      </div>
+    </div>
+    <div class="col-sm-3 form-group">
+      <div class="input-group ">
+        <span class="input-group-addon">Lô hàng</span>
+        <input type="text" class="form-control" formControlName="orderNo">
+      </div>
+    </div>
+    <div class="col-sm-3 form-group">
+      <tmss-datepicker text="Ngày về" formControlName="arrivalDate"></tmss-datepicker>
+    </div>
+    <div class="col-sm-3 form-group">
+      <button class="btn btn-blue " (click)="search()"><i class="fa fa-search"> </i> Tìm kiếm
+      </button>
+    </div>
+
+  </div>
+</form>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="grid-table-area mt-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+        </div>
+        <grid-table [fieldGrid]="fieldPartsUpcommingList"
+                    (callbackGrid)="callbackPartsUpcomming($event)"
+                    (getParams)="getParamsPartsUpcomming()"></grid-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

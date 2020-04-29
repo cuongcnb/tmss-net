@@ -1,0 +1,61 @@
+<ng-container>
+  <div class="row">
+    <div class="col-lg-4 mb-3">
+      <button class="btn btn-blue mr-2" (click)="openApproveModal()"><i class="fa fa-check"></i> Approve</button>
+      <button class="btn btn-blue mr-2" (click)="openRejectModal()"><i class="fa fa-ban"></i> Reject</button>
+      <button class="btn btn-blue mr-2" (click)="export()"><i class="fa fa-download"></i> Export</button>
+    </div>
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="input-group form-group">
+            <span class="input-group-addon">Dealer</span>
+            <select class="form-control" [(ngModel)]="dealerId">
+              <option value=""></option>
+              <option *ngFor="let dlr of dealers" [value]="dlr.id">{{dlr.abbreviation}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="input-group form-group search-group">
+            <span class="input-group-addon">Keyword</span>
+            <input type="text" placeholder="Customer No, Frame No, Customer Tel" class="form-control"
+                   [(ngModel)]="keywords">
+            <button class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Approve Change Information Contract
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refresh()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="gridField"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</ng-container>
+
+<swal #confirmApproveModal
+      type="warning"
+      title="Warning"
+      text="Bạn có đồng ý việc thay đổi thông tin không?"
+      (confirm)="approve()"
+      [showCancelButton]="true"
+></swal>
+<swal #confirmRejectModal
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn từ chối việc thay đổi thông tin không?"
+      (confirm)="reject()"
+      [showCancelButton]="true"
+></swal>

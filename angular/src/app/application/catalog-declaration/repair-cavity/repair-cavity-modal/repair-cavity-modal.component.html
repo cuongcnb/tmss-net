@@ -1,0 +1,114 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">{{selectedData ? 'Cập nhật khoang sửa chữa': 'Thêm mới khoang sửa chữa'}}</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group span-110" hasError="wsCode">
+              <div class="input-group">
+                <span class="input-group-addon">Mã khoang</span>
+                <input type="text" formControlName="wsCode" class="form-control required">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 20 kí tự</div>
+                <div *ifError="'required'">Mã khoang là bắt buộc</div>
+                <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+              </div>
+            </div>
+            <div class="form-group span-110" hasError="wsName">
+              <div class="input-group">
+                <span class="input-group-addon">Tên khoang</span>
+                <input type="text" formControlName="wsName" class="form-control">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 50 kí tự</div>
+                <div *ifError="'specialCharacter'">Không được phép chứa kí tự đặc biệt</div>
+              </div>
+            </div>
+            <div class="form-group span-110" hasError="description">
+              <div class="input-group">
+                <span class="input-group-addon">Mô tả</span>
+                <input type="text" formControlName="description" class="form-control">
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'maxLength'">Tối đa 100 kí tự</div>
+              </div>
+            </div>
+            <div class="form-group span-110" hasError="wsTypeId">
+              <div class="input-group">
+                <span class="input-group-addon">Loại khoang</span>
+                <select class="form-control required" formControlName="wsTypeId">
+                  <option *ngFor="let type of shopTypes" [ngValue]="type.id">
+                    {{type.wsTypeCode}} - {{type.wsTypeName}}
+                  </option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Yêu cầu phải chọn</div>
+              </div>
+            </div>
+            <div class="input-group form-group span-110">
+              <span class="input-group-addon">Tổ phụ trách</span>
+              <input-search fieldAccessor="input" formControlName="divCode" (onSearch)="getDivisions()" [showBtn]="true"
+                            [isReadonly]="true"></input-search>
+            </div>
+
+            <div class="form-group span-110">
+              <multi-checkbox-select text="Chọn nhân viên"
+                                     placeHolder="{{form.value.divId ? 'Chọn nhân viên' : 'Hãy chọn tổ phụ trách'}}"
+                                     [data]="employeeData"
+                                     [id]="'id'"
+                                     [content]="'empName'"
+                                     formControlName="listEmpID"
+                                     [itemsShowLimit]="2"
+              ></multi-checkbox-select>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 form-group span-110" hasError="ordering">
+                <div class="input-group">
+                  <span class="input-group-addon">Thứ tự</span>
+                  <input type="text" class="form-control" formControlName="ordering">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Giá trị phải là số</div>
+                  <div *ifError="'maxLength'">Tối đa 10 kí tự</div>
+                </div>
+              </div>
+              <div class="col-sm-6 form-group span-110">
+                <div class="input-group">
+                  <span class="input-group-addon">Trạng thái</span>
+                  <select formControlName="status" class="form-control">
+                    <option value="Y">Còn sử dụng</option>
+                    <option value="N">Hết sử dụng</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<search-data-grid-modal #searchDivision [headerText]="'Chọn tổ phụ trách'"
+                        (close)="patchDivision($event)"
+                        [fieldGrid]="nestGridField"
+                        [isHideSearchField]="true"
+></search-data-grid-modal>

@@ -1,0 +1,36 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Lựa chọn điều kiện tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+          <div class="col-sm-6 form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Loại khách hàng</span>
+              <select class="form-control" formControlName="customerType">
+                <option value="1">SSI</option>
+                <option value="2">CSI</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-blue" (click)="search()"><i class="fa fa-search"></i> Tìm kiếm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <grid-table
+      [fieldGrid]="fieldGridBlackList"
+      (callbackGrid)="callBackGrid($event)"
+      (getParams)="getParams()"
+    ></grid-table>
+    <div class="panel-footer">
+      <button class="btn btn-blue" (click)="modal.open(selectedRowData)"><i class="fa fa-copy"></i> Sao chép</button>
+      <button class="btn btn-blue ml-2"><i class="clip-download"></i> Xuất Excel</button>
+    </div>
+  </div>
+</div>
+
+<copy-black-list #modal (close)="copyData($event)"></copy-black-list>

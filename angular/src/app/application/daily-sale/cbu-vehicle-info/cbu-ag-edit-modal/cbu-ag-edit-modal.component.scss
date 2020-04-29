@@ -1,0 +1,25 @@
+[bsdatepicker][readonly] {
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.timepicker {
+  margin: 0 auto;
+  width: 100%;
+  input {
+    text-align: right;
+  }
+  div.input-group {
+    width: 50%;
+    float: left;
+    display: table;
+  }
+  div.input-group:not(:first-child) .input-group-addon {
+    border-radius: 0;
+    min-width: 0;
+    padding: 6px 6px;
+  }
+  .clear-timepicker {
+    clear: both;
+  }
+}

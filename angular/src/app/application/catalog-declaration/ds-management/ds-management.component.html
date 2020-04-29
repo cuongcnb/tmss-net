@@ -1,0 +1,30 @@
+<div>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Danh mục công việc đồng sơn
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseBankManagementList" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseBankManagementList" class="panel-collapse collapse in">
+        <grid-table [fieldGrid]="fieldGrid"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"></grid-table>
+      </div>
+    </div>
+    <div class="my-3 text-right grid-table-btn">
+      <button type="button" class="btn btn-blue mr-2" (click)="dsModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="updateDs()">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+    </div>
+  </div>
+</div>
+
+<ds-management-modal #dsModal (close)="refreshList()"></ds-management-modal>

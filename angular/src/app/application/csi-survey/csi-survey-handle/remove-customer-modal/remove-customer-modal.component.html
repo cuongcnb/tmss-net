@@ -1,0 +1,30 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5>chọn lý do loại bỏ</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form *ngIf="form" [formGroup]="form">
+            <checkbox text="Loại bỏ doanh thu <= 500.000" formControlName="revenue"></checkbox>
+            <checkbox text="Loại bỏ khách hàng trong danh sách đen" formControlName="inBlackList"></checkbox>
+            <checkbox text="Loại bỏ số điện thoại không hợp lệ" formControlName="illegalPhoneNumber"></checkbox>
+            <checkbox text="Loại bỏ khách trong danh sách gợi ý" formControlName="suggestionsList"></checkbox>
+            <checkbox text="Loại bỏ thời gian làm dịch vụ lớn hơn 3 ngày" formControlName="overTimeService"></checkbox>
+            <checkbox text="Loại bỏ khách hàng trong đại lý Lexus và KH CBU" formControlName="lexusCbuList"></checkbox>
+            <checkbox text="Loại bỏ số điện thoại trùng lặp trong vòng 3 tháng"
+                      formControlName="phoneNumberRepeat"></checkbox>
+          </form>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="save()"><i class="fa fa-check"></i> Lưu</button>
+        <button class="btn btn-light-grey" (click)="modal.hide()"><i class="fa fa-times"></i> Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>

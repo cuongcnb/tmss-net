@@ -1,0 +1,437 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartInfoManagementSearch" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartInfoManagementSearch" class="panel-collapse collapse in">
+
+    <div class="panel-body">
+      <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width-search">Đại lý</span>
+                    <select class="form-control" formControlName="dlrId" autofocus>
+                      <option [ngValue]="null">Tất cả</option>
+                      <ng-container *ngIf="currentUser.isAdmin">
+                        <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+                      </ng-container>
+                      <ng-container *ngIf="!currentUser.isAdmin">
+                        <option [ngValue]="-1">TMV</option>
+                        <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width-search" data-toggle="tooltip" data-placement="bottom" title="Mã PT">Mã PT</span>
+                    <input type="text" class="form-control" formControlName="partsCode" (change)="changeSearchInput($event.target.value, 'partsCode', true)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search" data-toggle="tooltip" data-placement="bottom" title="Tên phụ tùng">Tên PT</span>
+                <input type="text" class="form-control" formControlName="partsName">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search">Trạng thái</span>
+                <select class="form-control" formControlName="status">
+                  <option [ngValue]="null">Tất cả</option>
+                  <option value="Y">Hoạt động</option>
+                  <option value="N">Không hoạt động</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width-search" data-toggle="tooltip" data-placement="bottom" title="Nhà cung cấp">Nhà CC</span>
+                <div class="double-input-7-3">
+                  <select class="form-control" formControlName="supplierId">
+                    <option [ngValue]="null">Tất cả</option>
+                    <option *ngFor="let supplier of supplierList"
+                            [ngValue]="supplier.id">{{supplier.supplierCode}}
+                    </option>
+                  </select>
+                  <select class="form-control" formControlName="genuine">
+                    <option [ngValue]="null">Tất cả</option>
+                    <option value="Y">Genuine</option>
+                    <option value="N">Non-Genuine</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width-search">PNC</span>
+                    <input type="text" class="form-control" formControlName="pnc">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="text-left">
+                  <button type="submit" class="btn btn-blue mr-2" (click)="searchPartsInfo(); resetPaginationParams()">
+                    <i class="fa fa-search"></i> Tìm kiếm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartInfoManagementPart" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartInfoManagementPart" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridPartList" [height]="'220px'"
+                [suppressRowClickSelection]="true"
+                [frameworkComponents]="frameworkComponents"
+                (changePaginationParams)="changePaginationParams($event)"
+                [paginationTotalsData]="paginationTotalsData"
+                (callbackGrid)="callBackGridPartList($event)"
+                [rowSelection]="'multiple'"
+                (getParams)="getParamsPartList()"
+                (cellFocused)="onCellFocused($event)"
+                (keyup)="agKeyUp($event)"
+                (cellValueChanged)="cellValueChanged($event)"
+    ></grid-table>
+    <div class="text-right my-2">
+      <button type="button" class="btn btn-blue mr-2" (click)="editPartInfoModal.open()"
+              [disabled]="showSaveButton">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="modifySelectedPart()"
+              [disabled]="showSaveButton">
+        <i class="fa fa-edit"></i> Sửa
+      </button>
+      <!--<button type="button" class="btn btn-danger mr-2" (click)="deletePart()" [disabled]="showSaveButton">-->
+      <!--<i class="fa fa-trash-o"></i> Xóa-->
+      <!--</button>-->
+      <button type="button" class="btn btn-blue mr-2" (click)="exportCsv()">
+        <i class="fa fa-download"></i> Export
+      </button>
+      <button type="button" class="btn btn-blue mr-2" (click)="importPartsInfoModal.open()">
+        <i class="fa fa-upload"></i> Import
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="tabbable">
+  <ul class="nav nav-tabs tab-space-3 tab-blue">
+    <li *ngFor="let item of tabList"
+        [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+      <a data-toggle="tab" class="tab-item text-capitalize">
+        {{item}}
+      </a>
+    </li>
+  </ul>
+  <!-- Tab 1 -->
+  <div [tabDisplay]="selectedTab === tabList[0]">
+    <form class="mt-2" [formGroup]="partDetailForm" autocomplete="off" novalidate *ngIf="partDetailForm">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Loại PT</span>
+              <select class="form-control" formControlName="partsType">
+                <option *ngFor="let partType of partTypes" [ngValue]="partType.id">{{partType.gTypeName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Nguồn nhập</span>
+              <select class="form-control" formControlName="localFlag">
+                <option value="L">Nội địa (LSP)</option>
+                <option value="J">Nhật bản (JSP)</option>
+                <option value="S">Khác (MSP)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã PT</span>
+              <input type="text" class="form-control" formControlName="partsCode" pattern="/[^a-zA-Z0-9]/g">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">PNC</span>
+              <input type="text" class="form-control" formControlName="pnc">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon same-addon-width">Tên PT</span>
+          <input type="text" class="form-control" formControlName="partsName">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon same-addon-width">Tên TV</span>
+          <input type="text" class="form-control" formControlName="partsNameVn">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <tmss-money-input [addOnMinWidth]="'100px'" text="Giá nhập" formControlName="price"></tmss-money-input>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">ĐVT</span>
+                  <input class="form-control" formControlName="unit">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <tmss-money-input [addOnMinWidth]="'100px'" text="Giá bán"
+                                  formControlName="sellPrice"></tmss-money-input>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">ĐVT</span>
+                  <input class="form-control" formControlName="sellUnit">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Thuế</span>
+              <select class="form-control" formControlName="rate">
+                <option [ngValue]="0">0</option>
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="currentUser.isAdmin">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <tmss-money-input [addOnMinWidth]="'100px'" text="Giá FOB"
+                                  formControlName="fobPrice"></tmss-money-input>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">ĐVT</span>
+                  <input type="text" class="form-control" formControlName="fobUnit">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Nhà CC</span>
+              <input type="text" class="form-control" formControlName="supplier">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon same-addon-width">Lead Time</span>
+                  <input type="text" class="form-control" formControlName="leadTime">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">KPI Part Types</div>
+                  <select class="form-control" formControlName="kpiPartType">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let partType of kpiPartTypes" [value]="partType">{{partType}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã TT mới</span>
+              <input type="text" class="form-control" formControlName="newPart">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Mã TT cũ</span>
+              <input type="text" class="form-control" formControlName="oldPart">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group"><span class="input-group-addon same-addon-width">Model</span>
+              <input type="text" class="form-control" formControlName="handlemodel"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">FRC</span>
+              <input type="text" class="form-control" formControlName="frCd">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Kích thước</span>
+              <input type="text" class="form-control" formControlName="partSize">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Chuyển nhanh</span>
+              <input type="text" class="form-control" formControlName="expressShipping">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Xuất xứ</span>
+              <input type="text" class="form-control" formControlName="coo">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Trạng thái</span>
+              <select class="form-control" formControlName="status">
+                <option value="Y">Hoạt động</option>
+                <option value="N">Không hoạt động</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon same-addon-width">Ghi chú</span>
+          <input type="text" class="form-control" formControlName="remark">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tab 2 -->
+  <div [tabDisplay]="selectedTab === tabList[1]">
+    <div class="panel panel-default">
+      <grid-table [fieldGrid]="fieldGridPriceHistory" [height]="'380px'" [showPagination]="false"
+                  (callbackGrid)="callBackGridPriceHistory($event)"
+                  (getParams)="getParamsPriceHistory()"
+      ></grid-table>
+    </div>
+  </div>
+</div>
+
+<edit-part-management-info-modal #editPartInfoModal (close)="refreshAfterEdit($event)"
+                                 [partTypes]="partTypes"
+                                 [supplierList]="supplierList"
+                                 [unitArr]="unitArr"
+                                 [currencyArr]="currencyArr"
+                                 [kpiPartTypes]="kpiPartTypes"
+></edit-part-management-info-modal>
+<import-parts-info-modal #importPartsInfoModal (close)="searchPartsInfo()"></import-parts-info-modal>
+<tmss-export [fieldGrid]="fieldGridExport" [excelStyles]="excelStyles" (getExportParams)="exportParams = $event"></tmss-export>

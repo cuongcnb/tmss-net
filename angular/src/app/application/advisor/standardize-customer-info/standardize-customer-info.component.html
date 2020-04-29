@@ -1,0 +1,61 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group" hasError="registerno">
+          <div class="input-group">
+            <span class="input-group-addon">Biển số xe *</span>
+            <input class="form-control required" formControlName="registerno">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Yêu cầu phải nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <button type="submit" class="btn btn-blue mb-3" (click)="search()">
+          <i class="fa fa-search"> </i>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách khách hàng
+    </div>
+    <grid-table [fieldGrid]="fieldGrid"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                (rowClicked)="getRowClicked($event)"
+                [suppressRowClickSelection]="true"
+                [rowSelection]="'multiple'"
+                [showPagination]="false"
+                [height]="'300px'"
+    ></grid-table>
+    <div class="panel-footer">
+      <button type="button" class="btn btn-blue" (click)="standarizeInfo.open(customerSelected)"
+              [disabled]="!customerSelected || !customerSelected.length">
+        Chuẩn hóa thông tin
+      </button>
+    </div>
+  </div>
+  <div class="tabbable" *ngIf="customerClicked">
+    <ul class="nav nav-tabs tab-space-3 tab-blue">
+      <li *ngFor="let item of tabs"
+          [class.active]="item === selectedTab" (click)="selectedTab = item" class="pointer">
+        <a data-toggle="tab" class="tab-item text-capitalize">{{item}}</a>
+      </li>
+    </ul>
+    <div class="my-3">
+      <vehicles-info [cusId]="customerClicked.id"
+                     [tabDisplay]="selectedTab === tabs[0]"
+      ></vehicles-info>
+      <detail-cus-info [cusId]="customerClicked.id"
+                       [tabDisplay]="selectedTab === tabs[1]"
+      ></detail-cus-info>
+    </div>
+  </div>
+</div>
+
+<standardize-info-modal #standarizeInfo (saved)="search()"></standardize-info-modal>

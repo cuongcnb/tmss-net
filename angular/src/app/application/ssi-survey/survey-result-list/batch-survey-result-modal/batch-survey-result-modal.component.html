@@ -1,0 +1,21 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Tìm kiếm theo đợt</h5>
+      </div>
+      <grid-table
+        [fieldGrid]="batchGrid"
+        (callbackGrid)="callBackGridBatch($event)"
+        (getParams)="getParamsBatch()"
+      ></grid-table>
+      <div class="modal-footer">
+        <button class="btn btn-blue" (click)="save()"><i class="fa fa-check"></i> Lưu</button>
+        <button class="btn btn-light-grey" (click)="modal.hide()"><i class="fa fa-times"></i> Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>

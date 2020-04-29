@@ -1,0 +1,33 @@
+<div>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Quản lý tỉnh thành
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (getParams)="getParamsProvince()"
+                  (callbackGrid)="callbackGridProvinces($event)"
+                  [showPagination]="false"
+      ></grid-table>
+    </div>
+    <div class="text-right mt-3">
+      <button class="btn btn-blue mr-2" (click)="provincesModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" (click)="updateProvince()">
+        <i class="fa fa-edit"></i> Sửa
+      </button>
+      <!--<button class="btn btn-blue" [disabled]="!selectedProvince" (click)="deleteProvince()">-->
+      <!--<i class="fa fa-trash-o"></i> Delete-->
+      <!--</button>-->
+    </div>
+  </div>
+</div>
+
+<provinces-modal #provincesModal (close)="refreshList()"></provinces-modal>

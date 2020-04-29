@@ -1,0 +1,28 @@
+<div pageTitle="Fleet Unit">
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Fleet Unit
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridFleetUnit($event)"
+                  (getParams)="getParamsFleetUnit()"></grid-table>
+
+    </div>
+    <div class="my-3 text-right grid-table-btn">
+      <button type="button" class="btn btn-blue mr-2" (click)="modifyFleetUnit.open()">
+        <i class="fa fa-plus"></i> Add
+      </button>
+      <button type="button" class="btn btn-blue" (click)="updateFleetUnit()">
+        <i class="fa fa-pencil"></i> Edit
+      </button>
+    </div>
+  </div>
+</div>
+<modify-fleet-unit #modifyFleetUnit (close)="refreshList()"></modify-fleet-unit>

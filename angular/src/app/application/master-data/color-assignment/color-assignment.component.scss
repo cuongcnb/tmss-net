@@ -1,0 +1,5 @@
+.row {
+  ::ng-deep ag-grid-angular {
+    min-width: inherit !important;
+  }
+}

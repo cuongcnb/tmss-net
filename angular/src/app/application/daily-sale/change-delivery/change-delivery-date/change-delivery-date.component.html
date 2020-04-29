@@ -1,0 +1,96 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Delivery Information</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contract No</span>
+                  <input type="text" class="form-control" formControlName="contractNo">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Frame No</span>
+                  <input type="text" class="form-control" formControlName="frameNo">
+                </div>
+              </div>
+
+            </div>
+            <div class="row pt-2">
+              <div class="col-sm-6">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Grade</span>
+                  <input type="text" class="form-control" formControlName="grade">
+                </div>
+              </div>
+
+              <div class="col-sm-6" hasError="contactName">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Name</span>
+                  <input type="text" class="form-control required" formControlName="contactName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-sm-6" hasError="contactAddress">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Address</span>
+                  <input type="text" class="required form-control" formControlName="contactAddress">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="contactTel">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Tel</span>
+                  <input type="text" class="required form-control" formControlName="contactTel">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                  <div *ifError="'maxLength'">Max length is 50</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <tmss-datepicker-sale [addOnMinWidth]="'108px'" [text]="'Sale Date'"
+                                 formControlName="salesDate"></tmss-datepicker-sale>
+              </div>
+              <div class="col-sm-6" hasError="deliveryDate">
+                <tmss-datepicker-sale [addOnMinWidth]="'108px'" [text]="'Delivery Date'"
+                                 [isRequired]="true" formControlName="deliveryDate"></tmss-datepicker-sale>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Required field</div>
+                  <!--                  <div *ifError="'depositDate'">Delivery date must be today</div>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

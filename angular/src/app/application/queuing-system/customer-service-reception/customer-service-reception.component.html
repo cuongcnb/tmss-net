@@ -1,0 +1,102 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="search()">
+    <div class="row">
+      <div class="form-group col-lg-3 col-sm-6">
+        <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+      </div>
+      <div class="form-group col-lg-3 col-sm-6">
+        <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+      </div>
+      <div class="form-group col-lg-3 col-sm-6">
+        <div class="input-group">
+          <span class="input-group-addon">Đại lý</span>
+          <select class="form-control" formControlName="dlrId">
+            <option [ngValue]="currentUser.dealerId">{{currentUser.dealerName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-lg-3 col-sm-6">
+        <div class="input-group search-group">
+          <span class="input-group-addon">Biển số</span>
+          <input type="text" formControlName="registerNo" class="form-control">
+          <button class="btn btn-blue row-style d-small" type="submit"><i class="fa fa-search"> </i></button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row mb-2">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Danh sách khách hàng chờ tiếp nhận
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseCustomerServiceReceptionListWait" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseCustomerServiceReceptionListWait" class="panel-collapse collapse in">
+          <grid-table [fieldGrid]="waitingfieldGrid" [frameworkComponents]="frameworkComponents"
+            (changePaginationParams)="changeWaitingPaginationParams($event)" (getParams)="getWaitingParams()"
+            (callbackGrid)="callbackGridWaiting($event)" [paginationTotalsData]="waitingPaginationTotalsData">
+          </grid-table>
+        </div>
+      </div>
+      <button class="btn btn-blue mr-2" (click)="chooseAdviser()">
+        <i class="fa fa-plus"></i> Chọn bàn CVDV
+      </button>
+      <button class="btn btn-blue mr-2" (click)="update()">
+        <i class="fa fa-sign-in"></i> Tiếp nhận KH
+      </button>
+      <button class="btn btn-blue" (click)="vehicleIn.open()">
+        <i class="fa fa-sign-in"></i> Thêm xe ra vào
+      </button>
+    </div>
+
+
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Danh sách khách hàng đang tiếp nhận
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseCustomerServiceReceptionList" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseCustomerServiceReceptionList" class="panel-collapse collapse in">
+
+          <grid-table [fieldGrid]="receptingfieldGrid"
+            (changePaginationParams)="changeReceptingPaginationParams($event)" (getParams)="getReceptingParams()"
+            (callbackGrid)="callbackGridRecepting($event)" [paginationTotalsData]="receptingPaginationTotalsData">
+          </grid-table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <button class="btn btn-blue" (click)="changeAdviser()">
+            <i class="fa fa-refresh"></i> Đổi bàn + CVDV
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <input class="form-control deskInfo" [value]="deskInfo" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<advisor-desk-change #advisorDeskChangeModal (close)="search()"></advisor-desk-change>
+<search-data-grid-modal
+  #deskAdvisorModal
+  [headerText]="'Danh sách bàn cố vấn dịch vụ'"
+  (close)="saveDeskAdvisor($event)"
+  [fieldGrid]="fieldDeskAdvisor"
+  [isHideSearchField]="true"
+  [showPagination]="false"
+></search-data-grid-modal>
+<vehicle-in-modal #vehicleIn (close)="search()"></vehicle-in-modal>

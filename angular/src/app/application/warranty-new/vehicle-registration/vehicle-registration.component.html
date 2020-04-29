@@ -1,0 +1,70 @@
+
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off"
+        (keydown.enter)="$event.preventDefault()" focusField>
+    <div class="row">
+      <div class="col-sm-3 col-md-3">
+        <div class="form-group" hasError="vinno">
+          <div class="input-group">
+            <span class="input-group-addon">Số VIN</span>
+            <input-search [maxLength]="13" formControlName="vinno" [focus]="firstFocus" (onSearch)="search()"
+                          [isRequired]="true" (onFocus)="onFocus()" fieldAccessor="input"
+                          (keyup.enter)="KeyUpEnter()"></input-search>
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 col-md-3 mr-2">
+        <div class="form-group" hasError="modelCode">
+          <div class="input-group">
+            <span class="input-group-addon">Full model code</span>
+            <input type="text" class="required" formControlName="modelCode">
+          </div>
+          <div class="error-messages" errorMessage>
+            <div *ifError="'required'">Bắt buộc nhập</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2 col-md-2 ml-2">
+        <div class="form-group">
+          <checkbox text="Đại lý bảo hành xe chưa bán" style="position: relative; left: 3px;"
+                    formControlName="isNotSoldYetVehicle"></checkbox>
+        </div>
+      </div>
+      <div class="col-sm-3 col-md-3">
+        <div class="form-group">
+          <checkbox [disabled]="true" text="ĐK bảo hành xe nội bộ" style="position: relative; left: 3px;"
+                    formControlName="isInternalWarranty"></checkbox>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 text-left col-sm-3 ml-2 pl-0 mr-0">
+        <button type="button" class="btn btn-blue mr-2 mb-1" (click)="search()">
+          <i class="fa fa-search"></i> Tìm kiếm
+        </button>
+        <button type="button" class="btn btn-blue" (click)="clear()">
+          <i class="fa fa-refresh"></i> Làm mới
+        </button>
+      </div>
+    </div>
+
+    <perfect-scrollbar class="ps pr-3" [style.max-height.px]="screenHeight" (window:resize)="onResize()">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <vehicle-info></vehicle-info>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <customer-info></customer-info>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <relative-info></relative-info>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </form>

@@ -1,0 +1,14 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs tab-space-3 tab-blue">
+    <li *ngFor="let item of tabs"
+        [class.active]="item === selectedTab" (click)="selectTab(item)" class="pointer">
+      <a data-toggle="tab" class="tab-item text-capitalize">
+        {{item}}
+      </a>
+    </li>
+  </ul>
+  <div class="my-2">
+    <inr-com [tabDisplay]="selectedTab === tabs[0]"></inr-com>
+    <inr-file [tabDisplay]="selectedTab === tabs[1]"></inr-file>
+  </div>
+</div>

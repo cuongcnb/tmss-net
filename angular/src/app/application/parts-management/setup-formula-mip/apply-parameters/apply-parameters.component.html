@@ -1,0 +1,7 @@
+<grid-table [height]="'345px'" [fieldGrid]="fieldGrid" *ngIf="tabDisplay"
+            [frameworkComponents]="frameworkComponents"
+            [showPagination]="false"
+            (callbackGrid)="callbackGrid($event)"
+            (getParams)="getParams()"
+            (cellEditingStopped)="cellEditingStopped($event)"
+></grid-table>

@@ -1,0 +1,14 @@
+.search-area {
+  [class*='col-sm-'] {
+    padding-right: 0;
+
+    &:last-child {
+      padding-right: 15px;
+    }
+  }
+
+  .form-control {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}

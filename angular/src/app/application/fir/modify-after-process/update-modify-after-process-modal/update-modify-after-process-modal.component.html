@@ -1,0 +1,348 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()"
+     [config]="{ backdrop: 'static', keyboard: false }">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Phản hồi của các phòng chuyên môn</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <!-- ===*** Top Group ***===-->
+            <div class="row input-modal">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">Mã số</span>
+                    <input formControlName="code" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">Biển số xe</span>
+                    <input formControlName="licensePlate" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">Tên lái xe</span>
+                    <input formControlName="driverName" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">CVDV</span>
+                    <input formControlName="serviceAdvisor" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row inputcss">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <tmss-datepicker formControlName="licensePlate" text="Ngày vào"></tmss-datepicker>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <tmss-datepicker formControlName="dateOut" text="Ngày ra"></tmss-datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">Loại hình SC</span>
+                    <input formControlName="lscType" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="input-group input-modal">
+                    <span class="input-group-addon">LSC</span>
+                    <input formControlName="lsc" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Ý kiến khách hàng</span>
+                <textarea class="form-control textarea-fix" formControlName="customerResponse"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group input-ngayph">
+                  <div class="input-group ">
+                    <span class="input-group-addon">Người phản hồi</span>
+                    <input class="form-control" formControlName="feedbackPerson">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Tổ</span>
+                    <input class="form-control" formControlName="group">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Tầng</span>
+                    <input class="form-control" formControlName="floor">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Bộ phận</span>
+                    <input class="form-control" formControlName="department">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-ngayph">
+                  <tmss-datepicker formControlName="feedbackDate" text="Ngày phản hồi"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Tình trạng liên hệ với khách hàng
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="jumbotron m-0 form-group padding-contact">
+                      <div class="pl-4">
+                        <input type="radio" value="N" formControlName="statusContactCustomer"> Không liên
+                        hệ với khách hàng
+                      </div>
+                      <div class="pl-4">
+                        <input type="radio" value="Y" formControlName="statusContactCustomer"> Đã liên hệ với
+                        khách hàng
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon">Lý do</span>
+                        <textarea class="form-control textarea-fix" formControlName="reasonNotContact"></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group datetime-customerBack">
+                          <tmss-datepicker text="Ngày" formControlName="dateContactCustomer"></tmss-datepicker>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Giờ</span>
+                            <input class="form-control" formControlName="timeContactCustomer">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                Xác nhận No Q1
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="text-center">
+                      Là trường hợp Non FIR
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <checkbox text="Q1" formControlName="q1"></checkbox>
+                      </div>
+                      <div class="col-md-4">
+                        <checkbox text="Q2" formControlName="q2"></checkbox>
+                      </div>
+                      <div class="col-md-4">
+                        <checkbox text="Q3" formControlName="q3"></checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <checkbox text="Hài lòng" formControlName="hailong"></checkbox>
+                  </div>
+                  <div class="col-md-4">
+                    <div>
+                      <checkbox text="Đồng ý quay lại" formControlName="agreeBack"></checkbox>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-7 form-group datetime-customerBack">
+                        <tmss-datepicker text="Ngày" formControlName="dateBack"></tmss-datepicker>
+                      </div>
+                      <div class="col-md-5 form-group datetime-customerBack">
+                        <div class="input-group">
+                          <span class="input-group-addon">Giờ</span>
+                          <input class="form-control" formControlName="timeBack">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <checkbox text="Không quay lại" formControlName="notBack"></checkbox> Lý do
+                      </span>
+                      <textarea class="form-control textarea-reasonNotBack" formControlName="reasonNotBack"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <grid-table [fieldGrid]="fieldGrid"
+                            (callbackGrid)="callbackGrid($event)"
+                            (getParams)="getParams()"
+                            [height]="'200px'">
+                </grid-table>
+
+                <div class="row form-group">
+                  <button class="btn btn-blue form-group ml-2" (click)="searchDataGridModal.open($event)">
+                    <i class="fa fa-plus"></i>
+                    Thêm
+                  </button>
+                  <button class="btn btn-blue form-group ml-2" (click)="openEditModal()">
+                    <i class="fa fa-edit"></i>
+                    Sửa
+                  </button>
+                  <button class="btn btn-blue form-group ml-2" (click)="del()">
+                    <i class="fa fa-trash-o"></i>
+                    Xóa
+                  </button>
+                </div>
+
+                <div class="input-group form-group">
+                  <span class="input-group-addon input-addon-infoNonFIR">Thông tin Non FIR</span>
+                  <textarea class="form-control textarea-infoNonFIR" formControlName="infoNonFIR"></textarea>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <i class="fa fa-external-link-square"></i>
+                    Thông tin trường hợp sửa chữa lại
+                  </div>
+                  <div class="panel-body row">
+                    <div class="col-md-5">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Xác nhận của bộ phận sửa chữa</div>
+                        <div class="panel-body">
+                          <div class="input-group form-group">
+                            <span class="input-group-addon">Khách hàng sửa chữa lại?</span>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <checkbox text="Có" formControlName="customerComeBack"></checkbox>
+                              </div>
+                              <div class="col-md-6">
+                                <checkbox text="Không" formControlName="customerNotComeBack"></checkbox>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <tmss-datepicker class="form-control" formControlName="dateCustomerBack"
+                                             text="Ngày khách hàng quay lại"></tmss-datepicker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          Xác nhận thông tin từ phòng dịch vụ
+                          <div class="panel-tools">
+                            <button type="button" class="btn btn-link">
+                              <i class="fa fa-plus"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="panel-body">
+                          <div class="row">
+                            <div class="col-md-6 form-group">
+                              <div class="input-group">
+                                <span class="input-group-addon">Số LSC</span>
+                                <input class="form-control" formControlName="sLSC">
+                              </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                              <div class="input-group">
+                                <span class="input-group-addon">Tên TA giải quyết</span>
+                                <input class="form-control" formControlName="nameResolve">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="input-group">
+                            <span class="input-group-addon">Nội dung sửa chữa lại</span>
+                            <textarea class="form-control" formControlName="repairContent"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <span class="input-group-addon mr-3">Tình trạng giải quyết*</span>
+                  <div class="row">
+                    <div class="col-md-1">
+                      <checkbox text="Đóng" formControlName="statusSettlement"></checkbox>
+                    </div>
+                    <div class="col-md-1">
+                      <checkbox text="Mở" formControlName="statusSettlement1"></checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<search-data-grid-modal #searchDataGridModal isHideSearchField="true"
+                        [headerText]="'Chọn lỗi'"
+                        [apiCall]="apiCall.bind(this)"
+                        (close)="selectedErrorCode? update($event): add($event)"
+                        [fieldGrid]="fieldGridSearchDataGrid"
+></search-data-grid-modal>
+
+

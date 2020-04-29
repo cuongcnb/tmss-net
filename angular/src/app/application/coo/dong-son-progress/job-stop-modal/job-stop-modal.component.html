@@ -1,0 +1,25 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Theo dõi dừng công việc</h5>
+        </div>
+        <div class="modal-body">
+          <checkbox-list *ngIf="reasons" formControlName="pendingReasonId" [dataList]="reasons"></checkbox-list>
+          <div class="input-group mt-3">
+            <span class="input-group-addon">Nội dung</span>
+            <textarea class="form-control" formControlName="pendingReasonText"></textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-blue mt-3 float-right" (click)="chooseReason()">Dừng</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

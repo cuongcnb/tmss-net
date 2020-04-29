@@ -1,0 +1,25 @@
+<ng-container>
+  <label class="checkbox" *ngFor="let data of dataList; let idx = index" [ngClass]="textClassName">
+    <div class="icheckbox_minimal-grey checkbox-item"
+         [class.checked]="selectedValue === data.value">
+      <input type="checkbox" class="grey" [checked]="selectedValue === data.value" (change)="changeValue(data.value, idx, $event.currentTarget.checked)" [class.disabled]="isDisabled">
+      <ins class="iCheck-helper"[class.disabled]="isDisabled"></ins>
+    </div>
+    <div class="checkbox-text">{{data.text}}</div>
+  </label>
+
+  <!--trường hợp checkbox để gõ text-->
+  <label class="checkbox" *ngIf="placeholder">
+    <div class="icheckbox_minimal-grey checkbox-item"
+         [class.checked]="selectedValue === -999"
+         [class.disabled]="isDisabled">
+      <input type="checkbox" class="grey" [checked]="selectedValue === -999" (change)="changeValue(-999, dataList.length, $event.currentTarget.checked)"
+      [class.disabled]="isDisabled">
+      <ins class="iCheck-helper" [class.disabled]="isDisabled"></ins>
+    </div>
+    <div class="checkbox-text position-relative">
+      <input class="form-control position-absolute" [placeholder]="placeholder" [value]="textValue || ''"
+             (change)="onChangeInput($event.target.value)" (click)="onChangeInput($event.target.value, $event.currentTarget.checked)" [class.disabled]="isDisabled">
+    </div>
+  </label>
+</ng-container>

@@ -1,0 +1,116 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" addonWidth="105px">Mã đại lý</span>
+          <select class="form-control" formControlName="sortAgency">
+            <option>Đại lý 1</option>
+            <option>Đại lý 2</option>
+            <option>Đại lý 3</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="105px">Mã Đ.hàng</span>
+              <input type="text" class="form-control" formControlName="codeDH">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Mã P.tùng</span>
+              <input type="text" class="form-control" formControlName="codePT">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker text="Từ ngày" formControlName="dateTime"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="105px">Số ĐH gửi TMV</span>
+              <input type="text" class="form-control" formControlName="sentTMV">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Trạng thái</span>
+              <input type="text" class="form-control" formControlName="isStatus">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker text="Đến ngày" formControlName="dateTimeTo"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+      <button type="button" class="btn btn-blue mb-2 mr-2">
+        <i class="fa fa-download"></i> Export
+      </button>
+    </div>
+    <grid-table [fieldGrid]="fieldGrid" [height]="'150px'"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+    <order-sent-lexus-table></order-sent-lexus-table>
+    <div class="panel-footer">
+      <div class="row">
+        <div class="col-md-6">
+          <button type="button" class="btn btn-blue mb-2 mr-2">
+            Đặt hàng đặc biệt
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div class="row text-right">
+            <div class="col-sm-8">
+              <div class="form-group">
+                Tổng tiền trước thuế:
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group"></div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                Tổng tiền thuế:
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group"></div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                Tổng tiền sau thuế:
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

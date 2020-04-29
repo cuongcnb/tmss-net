@@ -1,0 +1,16 @@
+.emphasize {
+  font-weight: bold;
+  color: red;
+}
+
+.cashier-form {
+  .input-group-addon {
+    min-width: 130px;
+  }
+}
+
+.search-group {
+  .form-control {
+    width: calc(100% - 105px);
+  }
+}

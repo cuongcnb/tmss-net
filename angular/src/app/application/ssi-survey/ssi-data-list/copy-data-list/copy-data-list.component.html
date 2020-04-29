@@ -1,0 +1,56 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Copy</h5>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Loại khảo sát</span>
+                <input class="form-control" formControlName="surveyType">
+              </div>
+            </div>
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Cột dữ liệu</span>
+                <input class="form-control" formControlName="colData">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Loại dữ liệu</span>
+                <input class="form-control" formControlName="dataType">
+              </div>
+            </div>
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Tên dữ liệu</span>
+                <input class="form-control" formControlName="dataName">
+              </div>
+            </div>
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon">Trạng thái</span>
+            <input class="form-control" formControlName="status">
+          </div>
+          <div class="input-group form-group">
+            <span class="input-group-addon">Ghi chú</span>
+            <textarea class="form-control" formControlName="node"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-blue" (click)="saveCopy()"><i class="fa fa-check"></i> Lưu</button>
+            <button class="btn btn-light-grey" (click)="modal.hide()"><i class="fa fa-times"></i> Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

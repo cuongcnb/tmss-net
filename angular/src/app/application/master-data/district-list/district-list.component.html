@@ -1,0 +1,52 @@
+<div pageTitle="District list">
+  <div class="grid-table-area my-3">
+    <div class="row">
+     <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="fa fa-external-link-square"></i>
+              Province List
+              <div class="panel-tools">
+                <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshProvinceList()">
+                  <i class="fa fa-refresh"></i>
+                </button>
+              </div>
+            </div>
+            <grid-table [enableFilter]="true" [fieldGrid]="fieldGridProvince" (callbackGrid)="callbackGridProvince($event)"
+              (getParams)="getParamsProvince()" [showPagination]="false" [height]="'300px'"></grid-table>
+          </div>
+     </div>
+     <div class="col-md-7">
+        <div class="grid-table-area">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-external-link-square"></i>
+                District of province
+                <div class="panel-tools">
+                  <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshDistrictList()">
+                    <i class="fa fa-refresh"></i>
+                  </button>
+                </div>
+              </div>
+              <grid-table [enableFilter]="true" [fieldGrid]="fieldGridDistrict" (callbackGrid)="callbackGridDistrict($event)"
+                (getParams)="getParamsDistrict()" overlayLoadingTemplate="Please choose a province to show district"
+                [showPagination]="false" [height]="'300px'"></grid-table>
+              <div class="panel-footer text-right">
+                <button class="btn btn-blue mr-2" (click)="addDistrict()">
+                  <i class="fa fa-plus"></i> Add
+                </button>
+                <button class="btn btn-blue mr-2" (click)="updateDistrict()">
+                  <i class="fa fa-pencil"></i> Edit
+                </button>
+                <button class="btn btn-blue" [disabled]="!selectedDistrict" (click)="deleteDistrict()">
+                  <i class="fa fa-trash-o"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+     </div>
+    </div>
+  </div>
+</div>
+
+<district-list-modal #districtListModal (close)="refreshDistrictList()"></district-list-modal>

@@ -1,0 +1,12 @@
+<div class="input-group">
+  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+  <input [(ngModel)]="displayValue"
+         type="text" class="form-control text-right"
+         [class.required]="isRequired"
+         [disabled]="isDisabled ? true : null"
+         [ngClass]="(kmBefore && kmBefore > convertStringMoneyToInt(displayValue)) ? 'warning' : ''"
+         (keyup)="onInput($event)"
+         [attr.maxlength]="maxLength ? maxLength : 20"
+  >
+  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="endText">{{endText}}</span>
+</div>

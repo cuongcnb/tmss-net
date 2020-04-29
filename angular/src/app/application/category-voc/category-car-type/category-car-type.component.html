@@ -1,0 +1,30 @@
+<grid-table [fieldGrid]="fieldGrid"
+            (callbackGrid)="callbackGrid($event)"
+            (getParams)="getParams()"
+></grid-table>
+<div class="text-right">
+  <button class="btn btn-blue mb-2 ml-2" (click)="openAddModal()">
+    <i class="fa fa-plus"></i>
+    Thêm
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="openEditModal()">
+    <i class="fa fa-edit"></i>
+    Sửa
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="onDelRow()">
+    <i class="fa fa-trash-o"></i>
+    Xóa
+  </button>
+  <button *ngIf="!specifications" class="btn btn-blue mb-2 ml-2">
+    <i class="fa fa-copy"></i>
+    Sao chép
+  </button>
+  <button class="btn btn-blue mb-2 ml-2">
+    <i class="clip-download"></i>
+    Xuất excel
+  </button>
+</div>
+
+<car-type-modal #carTypeModal></car-type-modal>
+<car-model-modal #carModelModal></car-model-modal>
+<specifications-modal #specificationsModal></specifications-modal>

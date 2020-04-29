@@ -1,0 +1,27 @@
+<div>
+  <div class="mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Đặt hàng cho dự trữ tồn kho
+        <div class="panel-tools">
+                      <button class="btn btn-link" (click)="searchParts()">
+                        <i class="fa fa-refresh"></i>
+                      </button>
+        </div>
+      </div>
+      <grid-table [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  (changePaginationParams)="changePaginationParams($event)"
+                  [paginationTotalsData]="paginationTotalsData"
+                  (keyup)="agKeyUp($event)"
+                  (cellValueChanged)="cellValueChanged($event)"></grid-table>
+    </div>
+  </div>
+  <div class="mt-2 text-right">
+    <button class="btn btn-blue" (click)="showOrderList()">Xem đơn hàng
+    </button>
+  </div>
+</div>
+<storing-parts-order-detail #orderDetailModal (close)="searchParts()"></storing-parts-order-detail>

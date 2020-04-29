@@ -1,0 +1,140 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartShippingHistorySearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartShippingHistorySearch" class="panel-collapse collapse in">
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Kiểu</span>
+              <select type="text" class="form-control" formControlName="requestType">
+                <option [ngValue]="null">Tất cả</option>
+                <option [ngValue]="0">Lệnh sửa chữa</option>
+                <option [ngValue]="1">Bán lẻ phụ tùng</option>
+                <option [ngValue]="2">Đặt hẹn</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Số RO</span>
+              <input type="text" class="form-control" formControlName="code">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width">Biển số xe</span>
+              <input type="text" class="form-control" formControlName="vehicleNo">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Mã phụ tùng">Mã PT</span>
+              <input type="text" class="form-control" formControlName="partCode">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Tên phụ tùng">Tên PT</span>
+              <input type="text" class="form-control" formControlName="partName">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Tên khách hàng">Tên KH</span>
+              <input type="text" class="form-control" formControlName="cusName">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" [addOnMinWidth]="'80px'" text="Từ ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="toDate" [addOnMinWidth]="'80px'" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-blue mr-2" (click)="resetPaginationParams(); search()">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+          <button type="button" class="btn btn-blue" (click)="exportExcel()">
+            <i class="fa fa-download"></i> Export
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách lệnh xuất phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartShippingHistoryPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartShippingHistoryPart" class="panel-collapse collapse in">
+
+  <grid-table [fieldGrid]="fieldGrid" [height]="'450px'"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [suppressRowClickSelection]="true"
+              [rowSelection]="'multiple'"
+              [frameworkComponents]="frameworkComponents"
+              [paginationTotalsData]="paginationTotalsData"
+              (changePaginationParams)="changePaginationParams($event)"
+              (cellDoubleClicked)="cellDoubleClicked($event)"
+              (cellValueChanged)="cellValueChanged($event)"
+  ></grid-table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-offset-8 col-md-4">
+    <div class="row text-right">
+      <div class="col-sm-8">
+        <div class="form-group">
+          Tổng:
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          {{totalAmount}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<part-shipping-detail-modal #detailModal></part-shipping-detail-modal>
+<tmss-export [fieldGrid]="fieldGridExport" (getExportParams)="exportParams = $event"></tmss-export>

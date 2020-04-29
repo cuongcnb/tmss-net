@@ -1,0 +1,64 @@
+=
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title"><strong>Cập nhật</strong></h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12" hasError="currencycode">
+              <label class="required">Mã tiền tệ</label>
+              <select class="form-control" formControlName="currencycode">
+                <option value=""></option>
+                <option *ngFor="let val of currencyList" [ngValue]="val.id">{{val.currencyCode}}</option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa chọn loại tiền tệ</div>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-sm-12" hasError="exchangerate">
+              <label class="required">Exchange Rate</label>
+              <input type="text" formControlName="exchangerate" class="form-control">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bạn chưa nhập tỷ giá</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group"  hasError="startdate">
+                <label class="required">Ngày bắt đầu</label>
+                <tmss-datepicker formControlName="startdate" [isRequired]="true"></tmss-datepicker>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn chưa chọn ngày bắt đầu</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group"  hasError="enddate">
+                <label class="required">Ngày kết thúc</label>
+                <tmss-datepicker formControlName="enddate" [isRequired]="true"></tmss-datepicker>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn chưa chọn ngày kết thúc</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

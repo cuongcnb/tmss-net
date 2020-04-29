@@ -1,0 +1,30 @@
+<ng-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Phân công theo dõi bảo hành
+    </div>
+    <div class="panel-body">
+      <grid-table [fieldGrid]="fieldGrid" [height]="'200px'" [showPagination]="false"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+                  [frameworkComponents]="frameworkComponents"
+                  [height]="'450px'"></grid-table>
+    </div>
+  </div>
+
+  <div class="row mt-3 text-right">
+    <button class="btn btn-blue mr-2" (click)="updateModal.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" [disabled]="!this.selectedData" (click)="updateModal.open(selectedData)">
+      <i class="fa fa-plus"></i> Sửa
+    </button>
+    <button class="btn btn-blue mr-2" (click)="delete()" [disabled]="!this.selectedData">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+
+</ng-container>
+
+<update-warranty-assign-modal #updateModal (close)="refreshData()"></update-warranty-assign-modal>

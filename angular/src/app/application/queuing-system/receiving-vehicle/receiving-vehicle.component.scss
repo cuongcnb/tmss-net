@@ -1,0 +1,232 @@
+$box-length: 223px;
+
+.receptionist-search-box {
+  width: $box-length;
+
+  input {
+    text-transform: uppercase;
+  }
+}
+
+.btn-pause {
+  background-color: #ffc107 !important;
+  border-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.register-no {
+  font-size: 18px !important;
+}
+
+.cars-list {
+  padding: 5px;
+}
+
+.guests-list {
+  width: $box-length;
+  max-width: $box-length;
+
+  .customer-list {
+    height: 356px;
+
+    .waiting-list, .appointment-list {
+      height: 315px;
+    }
+  }
+}
+
+.scrollable-container {
+  position: relative;
+  overflow: auto;
+  min-height: 0 !important;
+  background-color: #fff;
+}
+
+.scrollable-content {
+  padding: 16px;
+  margin: 0;
+}
+
+.advisers-list {
+  position: relative;
+  height: 705px;
+  width: auto;
+  border: 1px solid #ccc;
+}
+
+.actions {
+  height: 50px;
+  padding-right: 20px;
+}
+
+.adviser-disabled {
+  background-color: #3C5B9A;
+  color: white;
+}
+
+.adviser-info {
+  width: 100%;
+  height: 40px;
+  border-bottom: solid 1px #ccc;
+  padding: 0 5px;
+}
+
+.scroll-container {
+  position: relative;
+}
+
+.car-current {
+  width: 100%;
+  height: 80px;
+  border-bottom: solid 1px #ccc;
+}
+
+.consulted-number { color: #8a8680; }
+
+.car-consulted {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: white;
+}
+
+.car-consulted-list {
+  height: 250px;
+  border-bottom: solid 1px #ccc;
+}
+
+// drag and drop
+.car-container {
+  //width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cars {
+  min-height: 35px !important;
+  border: solid 1px #ccc;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.car-box {
+  padding: 0 5px;
+  height: 40px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  //cursor: move;
+  background: white;
+
+  &.is-first-in {
+    background-color: #8994BD !important;
+    color: white;
+  }
+
+  &.in-wait-time {
+    background-color: #C8A377 !important;
+    color: white;
+  }
+
+  &.out-wait-time {
+    background-color: #B05346 !important;
+    color: white;
+  }
+
+  &.before-today {
+    background: #ccc !important;
+    color: rgba(0, 0, 0, 0.87);
+    border-bottom: solid 1px #a7a7ad7d !important;
+  }
+
+  &.cdk-drag-disabled {
+    background: #7C7C7C;
+    color: white;
+    cursor: default;
+    filter: contrast(100%);
+  }
+
+  &:last-child {
+    border: none;
+  }
+
+  &.cdk-drag-disabled {
+    border-bottom: solid 1px #a7a7ad7d;
+  }
+
+  &.cdk-drag-disabled:last-child {
+    border: none;
+  }
+
+  img {
+    width: 8%;
+    box-sizing: border-box;
+  }
+
+  .circle {
+    position: relative;
+    display: block;
+    background-color: powderblue;
+    color: #333;
+    border-radius: 50%;
+    box-sizing: border-box;
+    text-align: center;
+    //padding: 5px;
+    //&:before {
+    //  content: '';
+    //  display: inline-block;
+    //  height: 100%;
+    //  vertical-align: middle;
+    //  margin-right: -2%;
+    //}
+    border: 2px solid darken(powderblue, 5%);
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+    //&:hover {
+    //  background-color: maroon;
+    //  border: 2px solid darken(maroon, 10%);
+    //  color: #fff;
+    //}
+  }
+}
+
+.horizontal-cars {
+  width: 100%;
+  max-width: 100%;
+  min-height: 40px;
+  flex-wrap: wrap;
+}
+
+.horizontal-car-box {
+  padding: 0 8px;
+  height: 60px;
+  border: solid 1px #ccc;
+  cursor: pointer !important;
+
+  //&:hover {
+  //  color: #262626;
+  //  background-color: #f5f5f5;
+  //}
+
+  img {
+    width: 20px;
+    box-sizing: border-box;
+  }
+}
+
+// Chuột phải

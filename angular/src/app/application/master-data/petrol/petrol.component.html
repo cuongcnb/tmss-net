@@ -1,0 +1,43 @@
+<div pageTitle="Petrol">
+  <div class="grid-table-area mt-3">
+    <div class="row pb-2">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="input-group">
+          <span class="input-group-addon">Dealer</span>
+          <select [(ngModel)]="dealerId" class="form-control" (change)="onDealerChange()">
+            <option *ngFor="let dealer of dealers" [ngValue]="dealer.id">{{dealer.vnName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Petrol Management
+        <div class="panel-tools">
+          <button class="btn btn-xs btn-link" (click)="getPetrols(); getDealers()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  (callbackGrid)="callbackGridPetrol($event)"
+                  (getParams)="getParamsPetrol()"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="petrolModal.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updatePetrol()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="selectedPetrol" (click)="deletePetrol()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<petrol-modal #petrolModal [dealerId]="dealerId" (close)="getPetrols()"></petrol-modal>

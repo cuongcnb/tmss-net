@@ -1,0 +1,68 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseSettlementDebt" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseSettlementDebt" class="panel-collapse collapse in">
+      <div class="panel-body w-span">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <select class="form-control" formControlName="sortAgency">
+                  <option>Đại lý 1</option>
+                  <option>Đại lý 2</option>
+                  <option>Đại lý 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <tmss-datepicker text="Xe vào từ ngày" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <tmss-datepicker text="Đến ngày" formControlName="dateTime"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="row">
+              <button type="button" class="btn btn-blue mb-2 mr-2">
+                <i class="fa fa-search"></i> Tìm kiếm
+              </button>
+              <button type="button" class="btn btn-blue mb-2 mr-2">
+                <i class="fa fa-refresh"></i> Làm mới
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+      </div>
+    </div>
+    <div class="panel-footer text-right">
+      <button type="button" class="btn btn-blue mr-2" (click)="settlementDebtModal.open()">
+        <i class="fa fa-plus mr-2"></i>
+        Tạo báo cáo
+      </button>
+      <button type="button" class="btn btn-light-grey">
+        <i class="fa fa-power-off mr-2"></i>
+        Đóng RO
+      </button>
+    </div>
+  </div>
+</form>
+<settlement-debt-modal #settlementDebtModal></settlement-debt-modal>

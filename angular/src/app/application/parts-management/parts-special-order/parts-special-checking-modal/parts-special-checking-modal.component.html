@@ -1,0 +1,143 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog xl-width">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">Đặt hàng đặc biệt</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Số ĐH</span>
+                    <input type="text" class="form-control" formControlName="orderNo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">ĐL nhận</span>
+                    <select class="form-control" formControlName="receiveDlrId">
+                      <option [ngValue]="null"></option>
+                      <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">ĐL ghi chú</span>
+                    <input type="text" class="form-control" formControlName="remark">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">PTVC</span>
+                    <select class="form-control required" formControlName="transportTypeId">
+                      <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">{{transportType.transportName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group" hasError="status">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Trạng thái</span>
+                    <select class="form-control required" formControlName="status">
+                      <option value="1">Đại lý mới gửi</option>
+                      <option value="2">Từ chối</option>
+                      <option value="3">Hoàn thành</option>
+                    </select>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Bắt buộc nhập Trạng thái</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">TMV ghi chú</span>
+                    <input type="text" class="form-control" formControlName="remarkTmv">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-right">
+              <div class="form-group">
+                <button type="submit" class="btn btn-blue mr-2" (click)="placeOrder()">
+                  <i class="fa fa-shopping-cart"></i> {{selectedOrder ? 'Cập nhật đơn hàng' : 'Đặt hàng'}}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách đặt hàng
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'400px'" [showPagination]="false"
+                        (callbackGrid)="callBackGrid($event)"
+            ></grid-table>
+          </div>
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-8 col-sm-6">
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

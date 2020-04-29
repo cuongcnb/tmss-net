@@ -1,0 +1,74 @@
+<form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate class="row" focusField>
+  <div class="col-md-5 col-sm-5 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Mã dòng xe</span>
+      <input class="form-control" formControlName="cfCode">
+    </div>
+  </div>
+  <div class="col-md-5 col-sm-5 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Mã kiểu xe</span>
+      <input class="form-control" formControlName="cmCode">
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-2 form-group">
+    <div class="input-group">
+      <button type="button" class="btn btn-blue mr-2 mb-1" (click)="refreshCarFamily()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Danh mục dòng xe
+      </div>
+      <grid-table [fieldGrid]="carFamGrid"
+                  (callbackGrid)="callbackCarFam($event)"
+                  (getParams)="getCarFamParams()"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button type="button" class="btn btn-blue mr-2" (click)="carFamModify.open()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!carFamSelected || currentDlrId !== carFamSelected?.dlrId" (click)="updateCarFam()">
+          <i class="fa fa-pencil"></i> Sửa
+        </button>
+        <button type="button" class="btn btn-blue" [disabled]="!carFamSelected || currentDlrId !== carFamSelected?.dlrId" (click)="deleteCarFam()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Danh mục kiểu xe
+      </div>
+      <grid-table [fieldGrid]="modelGrid"
+                  (callbackGrid)="callbackModel($event)"
+                  (getParams)="getModelParams()"
+                  [showPagination]="false"
+      ></grid-table>
+      <div class="panel-footer text-right">
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!carFamSelected || currentDlrId !== carFamSelected?.dlrId" (click)="addCarModel()">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!modelSelected || currentDlrId !== modelSelected?.dlrId" (click)="updateCarModel()">
+          <i class="fa fa-pencil"></i> Sửa
+        </button>
+        <button type="button" class="btn btn-blue" [disabled]="!modelSelected || currentDlrId !== modelSelected?.dlrId" (click)="deleteCarModel()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modify-car-family-modal #carFamModify (close)="refreshCarFamily()"></modify-car-family-modal>
+<modify-model-car-modal #carModelModify (close)="refreshCarModel()"></modify-model-car-modal>

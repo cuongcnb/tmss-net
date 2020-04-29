@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Định nghĩa danh mục đơn vị
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseUnitCatalogDefine" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseUnitCatalogDefine" class="panel-collapse collapse in">
+        <perfect-scrollbar class="ps" [style.height.px]="'153'">
+          <div class="panel-body">
+            <h5 *ngIf="!unitsTreeData || unitsTreeData.length === 0">Chưa có dữ liệu</h5>
+            <tree-root *ngIf="unitsTreeData && unitsTreeData.length !== 0"
+                       #divisionTree
+                       [nodes]="unitsTreeData"
+                       [options]="unitsOptions"
+                       (activate)="active($event)"
+            ></tree-root>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-blue" [disabled]="!selectedData"
+              (click)="removeSelection()">
+        <i class="fa fa-plus"></i> Thêm mới
+      </button>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info"></i>
+        Chi tiết
+        <div class="panel-tools">
+          <button type="button" class="btn btn-link" data-toggle="collapse"
+                  data-target="#collapseUnitCatalogDetail" aria-expanded="true">
+          </button>
+        </div>
+      </div>
+      <div id="collapseUnitCatalogDetail" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <unit-detail #unitDetail [detailData]="selectedData" (close)="refresh()"></unit-detail>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-blue mr-2" (click)="unitDetail.submit()">
+        <i class="fa fa-save"></i> Lưu
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedData" (click)="deleteUnit()">
+        <i class="fa fa-save"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>

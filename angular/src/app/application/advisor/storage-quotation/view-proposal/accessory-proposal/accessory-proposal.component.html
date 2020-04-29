@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="fa btn-collapse" [ngClass] ="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'" (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseEventAcc">
+      </button>
+    </div>
+  </div>
+  <div id="collapseEventAcc" [collapse]="isCollapsed">
+    <grid-table [fieldGrid]="gridField" #gridTable
+                [showPagination]="false"
+                (getParams)="getParams()"
+                [isSuppressHorizontalScroll]="true"
+                [frameworkComponents]="frameworkComponents"
+                (callbackGrid)="callbackGrid($event)"
+                [height]="gridHeight"
+                (keyup)="agKeyUp($event)"
+                [tabToNextCell]="tabToNextCell.bind(this)"
+                [noSizeColumn]="true"
+    ></grid-table>
+    <div class="text-right m-2 money-style">
+      <div class="form-group inline mr-2">
+        T/tiền trước thuế:
+      </div>
+      <div class="form-group inline fix-width">
+        <strong>{{moneyFormat(footerData?.beforeTax)}}</strong>
+      </div>
+      <div class="form-group inline mr-2">
+        Giảm giá:
+      </div>
+      <div class="form-group inline fix-width">
+        <strong>{{moneyFormat(footerData?.discount)}}</strong>
+      </div>
+      <div class="form-group inline mr-2">
+        Tổng tiền thuế:
+      </div>
+      <div class="form-group inline fix-width">
+        <strong>{{moneyFormat(footerData?.taxRate)}}</strong>
+      </div>
+      <div class="form-group inline mr-2">
+        T/tiền sau thuế:
+      </div>
+      <div class="form-group inline fix-width">
+        <strong>{{moneyFormat(footerData?.total)}}</strong>
+      </div>
+    </div>
+  </div>
+</div>

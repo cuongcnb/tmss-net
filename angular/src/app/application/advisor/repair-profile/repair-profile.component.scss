@@ -1,0 +1,21 @@
+.row {
+  ::ng-deep .input-group-addon:first-child {
+    min-width: 73px !important;
+  }
+}
+
+.row {
+  .col {
+    ::ng-deep .input-group-addon:first-child {
+      min-width: 50px !important;
+    }
+  }
+}
+
+.lb-ghost {
+  opacity: 0;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  cursor: default;
+}

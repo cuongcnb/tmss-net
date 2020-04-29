@@ -1,0 +1,59 @@
+<form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Thông tin tìm kiếm
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseNewPromotion" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseNewPromotion" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Chủ đề</span>
+                <select class="form-control" formControlName="searchInfo">
+                  <option></option>
+                  <option [ngValue]="null">Tất cả</option>
+                  <option [ngValue]="0">Khuyến mãi</option>
+                  <option [ngValue]="1">Báo chí</option>
+                  <option [ngValue]="2">Sự kiện</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <button type="button" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i>
+              Tìm kiếm
+            </button>
+          </div>
+        </div>
+
+        <grid-table [fieldGrid]="fieldGrid" [height]="'150px'"
+                    (callbackGrid)="callbackGrid($event)"
+                    (getParams)="getParams()"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-right">
+    <button class="btn btn-blue mr-2" (click)="newPromotionDetail.open()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" (click)="editNewPromotion()">
+      <i class="fa fa-pencil"></i> Sửa
+    </button>
+    <button class="btn btn-blue" (click)="deleteNewPromotion()">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+</form>
+<new-promotion-detail #newPromotionDetail (refresh)="refresh()"
+                      (close)="selectedData? updateNewPromotion($event):addNewPromotion($event)"
+></new-promotion-detail>
+

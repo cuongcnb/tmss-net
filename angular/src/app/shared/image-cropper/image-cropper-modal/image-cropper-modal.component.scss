@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.block-content {
+  padding: 18px;
+  background-color: #888;
+}
+
+::ng-deep {
+  .wrapper, .cropper-container {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,45 @@
+<div pageTitle="Dealer Address Delivery">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group form-group">
+        <span role="button" class="input-group-addon">Dealer</span>
+        <select type="text" class="form-control" (change)="filterByDealer($event.target.value)">
+          <option value="">All</option>
+          <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-table-area">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Dealer Address Delivery
+        <div class="panel-tools">
+          <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="refreshList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <grid-table [enableFilter]="true" [fieldGrid]="fieldGrid"
+                  [height]="'450px'"
+                  [showPagination]="false"
+                  (getParams)="getParams($event)"
+                  (callbackGrid)="callbackGrid($event)"></grid-table>
+      <div class="panel-footer text-right">
+        <button class="btn btn-blue mr-2" (click)="modifyAddressDelivery.open()">
+          <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-blue mr-2" (click)="updateData()">
+          <i class="fa fa-pencil"></i> Edit
+        </button>
+        <button class="btn btn-blue" [disabled]="!selectedData" (click)="deleteDealerAddress()">
+          <i class="fa fa-trash-o"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modify-address-delivery #modifyAddressDelivery (close)="refreshList()"></modify-address-delivery>

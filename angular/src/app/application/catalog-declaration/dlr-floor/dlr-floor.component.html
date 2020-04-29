@@ -1,0 +1,30 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-info"></i>
+      Khai báo tầng sửa chữa của đại lý
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseDlrFloor"
+          aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseDlrFloor" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="gridField" (callbackGrid)="callbackGrid($event)" (getParams)="getParams()"></grid-table>
+    </div>
+  </div>
+</div>
+
+<div class="text-right">
+  <button type="button" class="btn btn-blue mr-2" (click)="updateFloorModal.open()">
+    <i class="fa fa-plus"></i> Thêm
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="update()">
+    <i class="fa fa-pencil"></i> Sửa
+  </button>
+  <button type="button" class="btn btn-blue" (click)="delete()">
+    <i class="fa fa-trash-o"></i> Xóa
+  </button>
+</div>
+
+<update-dlr-floor-modal #updateFloorModal (close)="refresh()"></update-dlr-floor-modal>

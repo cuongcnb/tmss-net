@@ -1,0 +1,31 @@
+::ng-deep.span-50{
+  .input-group-addon:first-child{
+    min-width: 50px!important;
+  }
+}
+.span-95 {
+  .input-group-addon{
+    min-width: 95px!important;
+  }
+}
+::ng-deep.span-125{
+  .input-group-addon:first-child{
+    min-width: 125px!important;
+  }
+}
+.span-130{
+  .input-group-addon{
+    min-width: 130px!important;
+  }
+}
+fieldset {
+  border: 1px solid silver;
+  padding: 1rem;
+  legend {
+    width: auto;
+    margin-bottom: 5px;
+    font-size:
+      15px; border: none;
+  }
+}
+

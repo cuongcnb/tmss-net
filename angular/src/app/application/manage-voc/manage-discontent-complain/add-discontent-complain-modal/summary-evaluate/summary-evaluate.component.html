@@ -1,0 +1,202 @@
+<form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Thời gian giải quyết
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-5 form-group">
+              <tmss-datepicker text="Ngày đóng/hoàn tất" formControlName="dateFinish"></tmss-datepicker>
+            </div>
+            <div class="col-md-7 form-group">
+              <tmss-timepicker text="Thời gian thu thập thông tin chuẩn bị cho giải thích"
+                               formControlName="timeCollectInfo"></tmss-timepicker>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Thời gian không tính (số ngày nghỉ, hoặc chờ khách hàng sắp xếp thời gian đến Đại lý)</span>
+              <input class="form-control" formControlName="timeNotCount">
+            </div>
+          </div>
+          <div class="form-group span-450">
+            <div class="input-group">
+              <span class="input-group-addon">Tổng số ngày giải quyết (Ngày hoàn tất - ngày tiếp nhận - số thời gian không tính)</span>
+              <input class="form-control" formControlName="totalDate">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Đánh giá</span>
+              <checkbox class="checkbox-padding" text="Đạt" formControlName="evaluateSettlementTimeTrue"></checkbox>
+              <checkbox class="checkbox-padding" text="Không đạt"
+                        formControlName="evaluateSettlementTimeFalse"></checkbox>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Tổng kết rút kinh nghiệm
+        </div>
+        <div class="panel-body">
+          <div class="form-group span-75">
+            <div class="input-group">
+              <span class="input-group-addon">Nội dung</span>
+              <textarea class="form-control textarea-fix" formControlName="contentEXP"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Thực hiện</span>
+              <textarea class="form-control textarea-fix" formControlName="performEXP"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Tài liệu đính kèm
+        </div>
+        <file-uploader acceptType=""
+                       [apiCallUpload]="apiCallUpload.bind(this)"
+                       (responseUpload)="uploadSuccess($event)"
+                       (errorUpload)="uploadFail($event)"
+        ></file-uploader>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Khách hàng hài lòng
+        </div>
+        <div class="panel-body">
+          <div class="form-group span-120">
+            <div class="input-group">
+              <span class="input-group-addon">Liên hệ thành công</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <checkbox class="checkbox-padding" text="Có" formControlName="contactSuccess"></checkbox>
+                </div>
+                <div class="col-md-6">
+                  <checkbox class="checkbox-padding" text="Không" formControlName="contactFail"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group span-120">
+            <div class="input-group">
+              <span class="input-group-addon">Mức độ hài lòng</span>
+              <select class="form-control" formControlName="satisfied"></select>
+            </div>
+          </div>
+          <div class="form-group span-120">
+            <div class="input-group">
+              <span class="input-group-addon">Lý do</span>
+              <textarea class="form-control textarea-fix" formControlName="reasonSatisfied"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          VOC Handler
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="130px">Người xử lý</span>
+              <select class="form-control" formControlName="handler"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="130px">Phòng ban liên quan</span>
+              <select class="form-control" formControlName="partRelate"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon" addonWidth="130px">Nhân viên hỗ trợ</span>
+              <input class="form-control" formControlName="staffSupport">
+            </div>
+          </div>
+          <div class="form-group" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <span class="input-group-addon">Thông tin ban đầu đầy đủ, kịp thời (đánh giá)</span>
+              <select class="form-control" formControlName="necessaryInfo"></select>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <div class="input-group-addon" addonWidth="130px">Lý do không đạt</div>
+              <textarea class="form-control textarea-fix" formControlName="reasonFailNecessary"></textarea>
+            </div>
+          </div>
+          <div class="form-group span-245" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <span class="input-group-addon">Cập nhật tiến độ đầy đủ, kịp thời (đánh giá)</span>
+              <select class="form-control" formControlName="modifyProcessFull"></select>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <div class="input-group-addon" addonWidth="130px">Lý do không đạt</div>
+              <textarea class="form-control textarea-fix" formControlName="reasonFailModify"></textarea>
+            </div>
+          </div>
+          <div class="form-group span-245" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <span class="input-group-addon">Làm tổng kết đầy đủ, kịp thời (đánh giá)</span>
+              <select class="form-control" formControlName="summaryFull"></select>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <div class="input-group-addon" addonWidth="130px">Lý do không đạt</div>
+              <textarea class="form-control textarea-fix" formControlName="reasonFailSummary"></textarea>
+            </div>
+          </div>
+          <div class="form-group span-245">
+            <div class="input-group">
+              <span class="input-group-addon">Làm rõ được vấn đề (đánh giá)</span>
+              <select class="form-control" formControlName="clarityProblem"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon" addonWidth="130px">Lý do không đạt</div>
+              <textarea class="form-control textarea-fix" formControlName="reasonFailClarity"></textarea>
+            </div>
+          </div>
+          <div class="form-group" [hidden]="manageComplainPotential">
+            <div class="input-group">
+              <span class="input-group-addon">Đánh giá lỗi của đại lý</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <checkbox class="checkbox-padding" text="Có" formControlName="failSupplierTrue"></checkbox>
+                </div>
+                <div class="col-md-6">
+                  <checkbox class="checkbox-padding" text="Không" formControlName="failSupplierFalse"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Ý kiến của TMV đối với đại lý</span>
+              <textarea class="form-control textarea-fix" formControlName="tmvToSupplier"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

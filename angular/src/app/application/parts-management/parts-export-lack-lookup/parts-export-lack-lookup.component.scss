@@ -1,0 +1,5 @@
+.input-group-addon:not(.btn) {
+  &.min-width {
+    min-width: 7rem;
+  }
+}

@@ -1,0 +1,134 @@
+<form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate class="row" focusField>
+  <!--  <div class="col-sm-2 form-group w-20">-->
+  <!--    <div class="input-group">-->
+  <!--      <span class="input-group-addon">Dòng xe</span>-->
+  <!--      <select class="form-control" formControlName="cmName" (change)="changeCmName($event.target)">-->
+  <!--        <option *ngFor="let it of listCmName" [ngValue]="it">{{it.dataNameVn}}</option>-->
+  <!--      </select>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="col-md-4 col-sm-6 form-group">
+    <div class="input-group" *ngIf="carFamListDefault">
+      <span class="input-group-addon">Kiểu xe</span>
+      <multi-column-select-control formControlName="cfId"
+                                   displayField="cfCode"
+                                   dataField="id"
+                                   [fieldGrid]="carFamField"
+                                   [list]="carFamListDefault"
+                                   [enableFilter]="true"
+                                   [isClear]="false"
+      ></multi-column-select-control>
+    </div>
+  </div>
+  <!--<div class="col-md-3 col-sm-6 form-group">-->
+    <!--<div class="input-group" *ngIf="carModelList">-->
+      <!--<span class="input-group-addon">Đời xe</span>-->
+      <!--<multi-column-select-control formControlName="cmId"-->
+                                   <!--displayField="doixe"-->
+                                   <!--dataField="id"-->
+                                   <!--[fieldGrid]="carModelField"-->
+                                   <!--[list]="carModelList"-->
+                                   <!--[enableFilter]="true"-->
+                                   <!--[isClear]="false"-->
+      <!--&gt;</multi-column-select-control>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="col-md-3 col-sm-6 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Mã công việc</span>
+      <input class="form-control" formControlName="searchKeyword">
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-6 form-group">
+    <div class="input-group">
+      <button type="button" class="btn btn-blue mr-2 mb-1" (click)="getAllData()">
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+    </div>
+  </div>
+  <!--  <div class="col-sm-2 form-group w-20">-->
+  <!--    <div class="input-group">-->
+  <!--      <span class="input-group-addon">Trạng thái</span>-->
+  <!--      <select class="form-control" formControlName="deleteFlag" (change)="changeDeleteFlag()">-->
+  <!--        <option *ngFor="let it of listState" [ngValue]="it.dataValue">{{it.dataNameVn}}</option>-->
+
+  <!--      </select>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</form>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách công việc
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRepairJobDetailList" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRepairJobDetailList" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridJob"
+                (callbackGrid)="callbackGridJob($event)"
+                (getParams)="getParamsJob()"
+                [showPagination]="true"
+                [paginationTotalsData]="paginationTotalsData"
+                (changePaginationParams)="changePaginationParams($event)"
+                [height]="'300px'"
+    ></grid-table>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-blue mr-2" (click)="addUpdateModal.open('job', null,form.value)">
+          <i class="fa fa-plus"></i> Thêm
+        </button>
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!selectDataJob || selectDataJob?.rcjDlrId !== currentDlrId"
+                (click)="addUpdateModal.open('job', selectDataJob, form.value)">
+          <i class="fa fa-plus"></i> Sửa
+        </button>
+        <button type="button" class="btn btn-blue" [disabled]="!selectDataJob || selectDataJob?.rcjDlrId !== currentDlrId" (click)="onBtnDeleteJob()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách phụ tùng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseRepairJobDetailPart" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseRepairJobDetailPart" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridPart"
+                (callbackGrid)="callbackGridParts($event)"
+                (getParams)="getParamsPart()"
+                [showPagination]="false"
+                [height]="'300px'"
+    ></grid-table>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-blue mr-2" [disabled]="!selectDataJob || selectDataJob?.rcjDlrId !== currentDlrId"
+                (click)="addUpdateModal.open('part', selectDataJob, form.value)">
+          <i class="fa fa-plus"></i> Cập nhật
+        </button>
+        <!--        <button type="button" class="btn btn-blue mr-2" [disabled]="!selectDataJob" (click)="addUpdateModal.open('part', selectDataJob, form.value)">-->
+        <!--          <i class="fa fa-plus"></i> Sửa-->
+        <!--        </button>-->
+        <button type="button" class="btn btn-blue" [disabled]="!selectDataPart || selectDataJob?.rcjDlrId !== currentDlrId" (click)="onBtnDeletePart()">
+          <i class="fa fa-trash-o"></i> Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<add-update-bp-modal (closeModal)="getAllData()" #addUpdateModal></add-update-bp-modal>

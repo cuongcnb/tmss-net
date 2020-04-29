@@ -1,0 +1,190 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Thông tin xe</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Khách hàng</span>
+                  <input class="form-control" formControlName="cusName">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Biển số xe</span>
+                  <input class="form-control" formControlName="registerno">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Số điện thoại</span>
+                  <input class="form-control" formControlName="mobil">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Ngày bắt đầu</span>
+                  <input class="form-control" formControlName="openroDate">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Ngày trả xe</span>
+                  <input class="form-control" formControlName="closeroDate">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Ghi chú</span>
+                  <input class="form-control" formControlName="notes">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Dịch vụ thực hiện</span>
+                  <input class="form-control" formControlName="service">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">CVDV</span>
+                  <input class="form-control" formControlName="empName">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group input-group span-115">
+                  <span class="input-group-addon">Kế hoạch giao xe</span>
+                  <input class="form-control" disabled  value="{{dataPlan ? dataFormatService.parseTimestampToFullDate( dataPlan.cardelivery) : null}}">
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="col-md-3">
+                    <checkbox text="KH đợi" formControlName="cuswait"></checkbox>
+                  </div>
+                  <div class="col-md-3">
+                    <checkbox text="Rửa xe" formControlName="carWash"></checkbox>
+                  </div>
+                  <div class="col-md-3">
+                    <checkbox text="Lấy phụ tùng" formControlName="parts"></checkbox>
+                  </div>
+                  <div class="col-md-3">
+                    <checkbox text="Ưu tiên" formControlName="prioritize"></checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Công việc</th>
+                <th>KTV</th>
+                <th>KH Bắt đầu</th>
+                <th>KH Kết thúc</th>
+                <th>Bắt đầu</th>
+                <th>Kết thúc</th>
+                <th>Trạng thái</th>
+                <th>Lý do dừng</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngFor="let job of jobs">
+                <tr>
+                  <td class="pointer" (click)="job.isShowPlan = !job.isShowPlan">
+                    <span class="fa " [ngClass]="job.isShowPlan ? 'fa-angle-down' : 'fa-angle-right'"></span> {{job.name}}
+                  </td>
+                  <td></td>
+                  <td>{{job.fromDatetime | tmssDate}}</td>
+                  <td>{{job.toDatetime | tmssDate}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="pointer text-center" (click)="addNewJob(job)">
+                    <i class="fa fa-plus text-primary"></i>
+                  </td>
+                </tr>
+                <ng-container *ngIf="job.isShowPlan && job.plans.length">
+                  <tr *ngFor="let plan of job.plans; let idx = index">
+                    <td></td>
+                    <td>
+                      <select class="form-control" (change)="plan.empId = $event.target.value" [disabled]="plan.state && plan.state !== ProgressState.plan">
+                        <option value=""></option>
+                        <option *ngFor="let emp of job.emps" [value]="emp.id" [selected]="plan.empId === emp.id">{{emp.empName}}</option>
+                      </select>
+                    </td>
+                    <td>
+                      <tmss-datepicker [hasTimepicker]="true" *ngIf="!plan.state || plan.state === ProgressState.plan"
+                                       (onChoose)="plan.fromDatetime = $event; calculateJobRangeTimes(job)"
+                                       [dateInputFormat]="'DD/MM/YYYY HH:mm'"
+                      ></tmss-datepicker>
+                      <span *ngIf="plan.state && plan.state !== ProgressState.plan">{{plan.fromDatetime | tmssDate}}</span>
+                    </td>
+                    <td>
+                      <tmss-datepicker [hasTimepicker]="true" *ngIf="!plan.state || plan.state === ProgressState.plan"
+                                       (onChoose)="plan.toDatetime = $event; calculateJobRangeTimes(job)"
+                                       [dateInputFormat]="'DD/MM/YYYY HH:mm'"
+                      ></tmss-datepicker>
+                      <span *ngIf="plan.state && plan.state !== ProgressState.plan">{{plan.toDatetime | tmssDate}}</span>
+                    </td>
+                    <td>{{plan.fromDateTimeAct | tmssDate}}</td>
+                    <td>{{plan.toDateTimeAct | tmssDate}}</td>
+                    <td>
+                      <select class="form-control" (change)="changeState($event, plan, job)">
+                        <option value="0" [selected]="plan.state == 0">Tạo kế hoạch</option>
+                        <option value="1" [selected]="plan.state == 1">Bắt đầu</option>
+                        <option value="2" [selected]="plan.state == 2">Dừng</option>
+                        <option value="4" [selected]="plan.state == 4">Kết thúc</option>
+                      </select>
+                    </td>
+                    <td>
+                      {{plan?.pendingReasonText}}{{plan?.pendingReasonValue?.text}}
+                    </td>
+                    <td class="pointer text-center" (click)="removeJob(job, idx)">
+                      <i class="fa fa-minus text-danger"></i>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button class="float-left btn btn-blue" [disabled]="dataPlan.isComplete" (click)="jobAriseModal.open(dataPlan)">
+            <i class="fa fa-check"></i> Công việc PS
+          </button>
+          <button class="float-left ml-2 btn btn-blue" [disabled]="dataPlan.isComplete" (click)="onBtnFinish()">
+            <i class="fa fa-check"></i> Kết thúc
+          </button>
+          <button class="btn btn-blue" [disabled]="dataPlan.isComplete" (click)="accept()">
+            <i class="fa fa-check"></i> Chấp nhận
+          </button>
+          <button class="btn btn-light-grey" (click)="close()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<job-stop-modal #jobStopModal (choose)="onChoose($event)"></job-stop-modal>
+<job-arise-modal #jobAriseModal ></job-arise-modal>

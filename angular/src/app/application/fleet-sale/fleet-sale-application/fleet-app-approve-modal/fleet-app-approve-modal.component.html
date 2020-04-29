@@ -1,0 +1,76 @@
+<div class="modal fade" bsModal #fleetAppApprovalModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">TMV Answer</h5>
+        </div>
+        <div class="modal-body">
+          <ng-container *ngIf="!isRejectForm">
+            <div class="form-group" hasError="tmvRefNo">
+              <label class="required">TMV Ref No</label>
+              <input type="text" class="form-control" formControlName="tmvRefNo">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">TMV Ref No is required</div>
+                <div *ifError="'maxLength'">Max length is 50</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group" hasError="approvedDate">
+                  <label class="required">Approved Date</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" #approvedDate="bsDatepicker" bsDatepicker readonly
+                           formControlName="approvedDate">
+                    <span class="input-group-addon btn btn-blue" (click)="approvedDate.toggle()"
+                          [attr.aria-expanded]="approvedDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Approved Date is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group" hasError="expiryDate">
+                  <label class="required">Expiry Date</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" #expiryDate="bsDatepicker" bsDatepicker readonly
+                           formControlName="expiryDate">
+                    <span class="input-group-addon btn btn-blue" (click)="expiryDate.toggle()"
+                          [attr.aria-expanded]="expiryDate.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                  </div>
+                  <div class="error-messages" errorMessage>
+                    <div *ifError="'required'">Expiry Date is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <div class="form-group" hasError="description">
+            <label>Description</label>
+            <textarea type="text" class="form-control resize-vertical" formControlName="description"
+                      rows="3"></textarea>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'maxLength'">Max length is 2000</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="sendToDlr()">
+            <i class="fa fa-save"></i> Send To DLR
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

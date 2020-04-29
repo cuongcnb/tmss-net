@@ -1,0 +1,68 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="form" *ngIf="form" autocomplete="off" novalidate focusField>
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Báo cáo điều chỉnh số lượng PT</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group" hasError="dlrId">
+              <div class="input-group">
+                <span class="input-group-addon required" style="min-width: 88px">Mã đại lý</span>
+                <select class="form-control required" formControlName="dlrId">
+                  <option *ngFor="let dealer of dealerList"
+                          [ngValue]="dealer.id">{{dealer.code}}: {{dealer.vnName}}</option>
+                </select>
+              </div>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập Mã đại lý</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker text="Từ ngày" addOnMinWidth="88px" formControlName="fromDate"></tmss-datepicker>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <tmss-datepicker text="Đến ngày" addOnMinWidth="88px" formControlName="toDate"></tmss-datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">Loại báo cáo</span>
+                    <select class="form-control" formControlName="extension">
+                      <option value="xls">XLS</option>
+                      <option value="doc">DOC</option>
+                      <option value="pdf">PDF</option>
+                      <option value="rtf">RTF</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="downloadFile()">
+            <i class="fa fa-download"></i> Xuất báo cáo
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

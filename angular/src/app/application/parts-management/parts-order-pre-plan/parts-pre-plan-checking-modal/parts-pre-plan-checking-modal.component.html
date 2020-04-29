@@ -1,0 +1,128 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ backdrop: 'static', keyboard: false }">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title">{{selectedOrder ? currentUser.isAdmin ? 'Phản hồi đơn hàng kế hoạch' : 'Sửa đơn hàng kế hoạch' : 'Tạo mới đơn hàng kế hoạch'}}</h5>
+      </div>
+      <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+        <div class="modal-body">
+          <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Số kế hoạch</span>
+                    <input type="text" class="form-control" formControlName="planNo">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Tên kế hoạch</span>
+                    <input type="text" class="required form-control" formControlName="planName">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Người tạo</span>
+                    <input type="text" class="form-control" formControlName="createdPerson">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Ghi chú</span>
+                    <input type="text" class="form-control" formControlName="remark">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon same-addon-width">Trạng thái</span>
+                    <select class="form-control" formControlName="status">
+                      <option value="1">Đại lý mới hỏi</option>
+                      <option value="2">Đang trao đổi</option>
+                      <option value="3">Từ chối</option>
+                      <option value="4">Hoàn thành</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 text-center">
+                <button type="submit" class="btn btn-blue" (click)="placeOrder()">
+                  <i class="fa fa-shopping-cart"></i> {{selectedOrder ? 'Cập nhật đơn hàng' : 'Đặt hàng'}}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="panel panel-default" *ngIf="modal.isShown">
+            <div class="panel-heading">
+              <i class="fa fa-info"></i>
+              Danh sách phụ tùng
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'300px'" [showPagination]="false"
+                        (callbackGrid)="callBackGrid($event)"
+                        [frameworkComponents]="frameworkComponents"
+            ></grid-table>
+          </div>
+
+        </div>
+      </perfect-scrollbar>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-7 col-sm-5">
+          </div>
+          <div class="col-md-5 col-sm-7">
+            <div class="row text-right">
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền trước thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceBeforeTax}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{taxOnly}}
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-6">
+                <div class="form-group">
+                  Tổng tiền sau thuế:
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                  {{totalPriceIncludeTax}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

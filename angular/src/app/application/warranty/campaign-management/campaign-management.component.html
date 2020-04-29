@@ -1,0 +1,69 @@
+<div>
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" (submit)="search()">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <tmss-datepicker formControlName="from" [text]="'Áp dụng từ'"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <tmss-datepicker formControlName="to" [text]="'đến'"></tmss-datepicker>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Mã Công việc</span>
+          <input type="text" class="form-control" formControlName="opemCode">
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 search-group">
+        <div class="input-group form-group">
+          <span class="input-group-addon">Tên chiến dịch</span>
+          <input type="text" class="form-control" formControlName="campaignName">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách chiến dịch
+    </div>
+    <grid-table [fieldGrid]="campaignField"
+                (callbackGrid)="callbackCampaignGrid($event)"
+                (getParams)="getRowCampaign()"
+                [height]="'400px'"
+    ></grid-table>
+  </div>
+
+  <div class="text-right">
+    <button class="btn btn-blue mr-2" (click)="addCampaign()">
+      <i class="fa fa-plus"></i> Thêm
+    </button>
+    <button class="btn btn-blue mr-2" (click)="updateCampaign()">
+      <i class="fa fa-pencil"></i> Sửa
+    </button>
+    <button class="btn btn-blue" (click)="deleteCampaign()">
+      <i class="fa fa-trash-o"></i> Xóa
+    </button>
+  </div>
+
+  <div class="panel panel-default mt-3">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách vin bị ảnh hưởng
+    </div>
+    <grid-table [fieldGrid]="vinAffectedField"
+                (changePaginationParams)="changePaginationParams($event)"
+                [paginationTotalsData]="vinPaginationTotalsData"
+                (callbackGrid)="callbackVinAffectedGrid($event)"
+                [height]="'200px'"
+    ></grid-table>
+  </div>
+</div>
+<update-campaign-modal #updateCampaignModal (close)="search()"></update-campaign-modal>

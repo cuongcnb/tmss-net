@@ -1,0 +1,391 @@
+<div class="modal fade" bsModal #contractChangeModal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog lg-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="title-header">Request & Response Change</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5><strong>Before Change</strong></h5>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Grade</span>
+                  <input type="text" class="form-control" formControlName="grade">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Grade Production</span>
+                  <input type="text" class="form-control" formControlName="gradeProduction">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Customer Name</span>
+                  <input type="text" class="form-control" formControlName="customerName">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Customer Tel</span>
+                  <input type="text" class="form-control" formControlName="tel">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Customer Address</span>
+                  <input type="text" class="form-control" formControlName="customerAddress">
+                </div>
+                <div class="form-group input-group">
+                  <label class="input-group-addon min-width">Invoice Name</label>
+                  <input type="text" class="form-control" formControlName="invoiceName">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Invoice Address</span>
+                  <input type="text" class="form-control" formControlName="invoiceAddress">
+                </div>
+                <div class="form-group ">
+                  <tmss-datepicker-sale [addOnMinWidth]="'130px'" [text]="'Deposit Date'" formControlName="depositDate"></tmss-datepicker-sale>
+                </div>
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'130px'" [text]="'Sales Date'" formControlName="salesDate"></tmss-datepicker-sale>
+                </div>
+                <div class="form-group">
+                  <tmss-datepicker-sale [addOnMinWidth]="'130px'" [text]="'New Est Date'" formControlName="newEstimatedDate"></tmss-datepicker-sale>
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Reason Type</span>
+                  <input type="text" class="form-control" formControlName="estimatedReasonType">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Detail Reason</span>
+                  <textarea type="text" class="form-control resize-vertical"
+                            formControlName="estimatedReasonText"></textarea>
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Frame No</span>
+                  <input type="text" class="form-control" formControlName="frameNo">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Represent</span>
+                  <input type="text" class="form-control" formControlName="contractRepresentative">
+                </div>
+                <div class="form-group input-group">
+                  <label class="input-group-addon min-width">Contact Name</label>
+                  <input type="text" class="form-control" formControlName="contactName">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Address</span>
+                  <input type="text" class="form-control" formControlName="contactAddress">
+                </div>
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">Contact Tel</span>
+                  <input type="text" class="form-control" formControlName="contactTel">
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <h5><strong>After Change</strong></h5>
+                <div class="form-group after-change" hasError="gradeNewId">
+                  <select class="form-control" [class.is-admin]="currentUser.isAdmin" formControlName="gradeNewId">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let grade of gradeList" [ngValue]="grade.id">{{grade.marketingCode}}</option>
+                  </select>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('gradeNewId')"
+                          [attr.disabled]="!form.getRawValue().gradeNewId ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="gradeProductionNewId">
+                  <select class="form-control" [class.is-admin]="currentUser.isAdmin"
+                          formControlName="gradeProductionNewId">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let gradeProduct of gradeProductionList" [ngValue]="gradeProduct.id">
+                      {{gradeProduct.productionCode}}
+                    </option>
+                  </select>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('gradeNewId')"
+                          [attr.disabled]="!form.getRawValue().gradeNewId ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeCustomer">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeCustomer">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeCustomer')"
+                          [attr.disabled]="!form.getRawValue().changeCustomer ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeTel">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeTel">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                    <div class="position-absolute" *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                    <div class="position-absolute" *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeTel')"
+                          [attr.disabled]="!form.getRawValue().changeTel ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeCustomerAddress">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeCustomerAddress">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeCustomerAddress')"
+                          [attr.disabled]="!form.getRawValue().changeCustomerAddress ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeInvoiceName">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeInvoiceName">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeInvoiceName')"
+                          [attr.disabled]="!form.getRawValue().changeInvoiceName ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeInvoiceAddress">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeInvoiceAddress">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeInvoiceAddress')"
+                          [attr.disabled]="!form.getRawValue().changeInvoiceAddress ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="depositDateNew">
+                  <tmss-datepicker-sale formControlName="depositDateNew"
+                                   [ngClass]="{'is-admin hide-datepicker-btn': currentUser.isAdmin}"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('depositDateNew')"
+                          [attr.disabled]="!form.getRawValue().depositDateNew ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="salesDateNew">
+                  <tmss-datepicker-sale formControlName="salesDateNew"
+                                   [ngClass]="{'is-admin hide-datepicker-btn': currentUser.isAdmin}"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('salesDateNew')"
+                          [attr.disabled]="!form.getRawValue().salesDateNew ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeNewEstimatedDate">
+                  <tmss-datepicker-sale formControlName="changeNewEstimatedDate"
+                                   [ngClass]="{'is-admin hide-datepicker-btn': currentUser.isAdmin}"></tmss-datepicker-sale>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeNewEstimatedDate')"
+                          [attr.disabled]="!form.getRawValue().changeNewEstimatedDate ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeEstimatedReasonId">
+                  <select class="form-control" [class.is-admin]="currentUser.isAdmin"
+                          formControlName="changeEstimatedReasonId">
+                    <option value=""></option>
+                    <option *ngFor="let reason of reasons" [ngValue]="reason.id">{{reason.name}}</option>
+                  </select>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeEstimatedReasonId')"
+                          [attr.disabled]="!form.getRawValue().changeEstimatedReasonId ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeEstimatedReasonText">
+                  <textarea type="text" class="form-control resize-vertical" [class.is-admin]="currentUser.isAdmin"
+                            formControlName="changeEstimatedReasonText"></textarea>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeEstimatedReasonText')"
+                          [attr.disabled]="!form.getRawValue().changeEstimatedReasonText ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="vehicleNewId">
+                  <select class="form-control" [class.is-admin]="currentUser.isAdmin" formControlName="vehicleNewId">
+                    <option [ngValue]="null"></option>
+                    <option *ngFor="let vehicle of vehicleToSaleList" [ngValue]="vehicle.id">{{vehicle.frameNo}}
+                    </option>
+                  </select>
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('vehicleNewId')"
+                          [attr.disabled]="!form.getRawValue().vehicleNewId ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeContractRepresentative">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeContractRepresentative">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin"
+                          (click)="change('changeContractRepresentative')"
+                          [attr.disabled]="!form.getRawValue().changeContractRepresentative ? true : null">Change
+                  </button>
+                </div>
+
+                <div class="form-group after-change" hasError="changeContactName">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeContactName">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeContactName')"
+                          [attr.disabled]="!form.getRawValue().changeContactName ? true : null">Change
+                  </button>
+                </div>
+                <div class="form-group after-change" hasError="changeContactAddress">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeContactAddress">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeContactAddress')"
+                          [attr.disabled]="!form.getRawValue().changeContactAddress ? true : null">Change
+                  </button>
+                </div>
+                <div class="form-group after-change" hasError="changeContactTel">
+                  <input type="text" class="form-control" [class.is-admin]="currentUser.isAdmin"
+                         formControlName="changeContactTel">
+                  <div class="error-messages" errorMessage>
+                    <div class="position-absolute" *ifError="'blank'">Field must not blank</div>
+                    <div class="position-absolute" *ifError="'phoneFormat'">Your input is not a valid phone number</div>
+                    <div class="position-absolute" *ifError="'phoneLength'">Please fill in 10 or 11 numbers</div>
+                  </div>
+                  <button class="btn btn-blue" *ngIf="currentUser.isAdmin" (click)="change('changeContactTel')"
+                          [attr.disabled]="!form.getRawValue().changeContactTel ? true : null">Change
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6"  hasError="dlrRemarkForSale">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">DLR Remark</span>
+                  <input type="text" class="form-control" formControlName="dlrRemarkForSale">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                  <div *ifError="'blank'">Field must not blank</div>
+                </div>
+              </div>
+              <div class="col-sm-6" hasError="tmvRemark">
+                <div class="form-group input-group">
+                  <span class="input-group-addon min-width">TMV Remark</span>
+                  <input type="text" class="form-control" formControlName="tmvRemark">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'maxLength'">Max length is 255</div>
+                  <div *ifError="'blank'">Field must not blank</div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" *ngIf="!currentUser.isAdmin">
+                  <checkbox formControlName="regainFrameNo" text="Regain Frame No"></checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <span class="float-left" *ngIf="currentUser.isAdmin">
+            <button type="button" class="btn btn-blue" (click)="forceRejectModal.show()">
+              <i class="fa fa-ban"></i> Reject
+            </button>
+            <button type="button" class="btn btn-blue" (click)="forceApproveModal.show()">
+              <i class="fa fa-hand-o-right"></i> Approve
+            </button>
+          </span>
+
+          <button type="submit" class="btn btn-blue" (click)="save()" *ngIf="!currentUser.isAdmin">
+            <i class="fa fa-check"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<swal #confirmRegain
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn lấy lại FrameNo khỏi hợp đồng này không?"
+      (confirm)="form.get('vehicleNewId').disable()"
+      (cancel)="form.patchValue({regainFrameNo: false})"
+      [showCancelButton]="true"
+></swal>
+<swal #forceApproveModal
+      type="warning"
+      title="Warning"
+      text="Bạn có đồng ý việc thay đổi thông tin của đại lý không?"
+      (confirm)="approve()"
+      [showCancelButton]="true"
+></swal>
+<swal #forceRejectModal
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn hủy bỏ việc xin thay đổi thông tin của đại lý không?"
+      (confirm)="reject()"
+      [showCancelButton]="true"
+></swal>
+<swal #confirmChangeOneRow
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn muốn thay đổi trường thông tin này không?"
+      (confirm)="confirmChangeOneField()"
+      [showCancelButton]="true"
+></swal>
+<swal #confirmChangeGrade
+      type="warning"
+      title="Warning"
+      text="Bạn có muốn muốn thay đổi Grade và Product không?"
+      (confirm)="confirmChangeGradeAndProduct()"
+      [showCancelButton]="true"
+></swal>
+<swal #confirmRegainFrameNo
+      type="warning"
+      title="Warning"
+      [text]="confirmRegainFrameNoText"
+      (confirm)="regainFrameNo()"
+      [showCancelButton]="true"
+></swal>
+<swal #checkColorProduct
+      type="warning"
+      title="Warning"
+      text="Grade và Grade Production mới không có màu như đã chọn, thay đổi sẽ xóa màu của xe. Bạn có đồng ý không?"
+      (confirm)="confirmChangeColorProduct()"
+      [showCancelButton]="true"
+></swal>

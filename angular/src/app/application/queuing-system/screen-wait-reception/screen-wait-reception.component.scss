@@ -1,0 +1,92 @@
+$colorBlack: black;
+$colorWhite: white;
+
+.text {
+  text-align: center;
+  font-size: 35px !important;
+  font-weight: 900;
+  background: #38a7e8 ;
+  color: $colorWhite;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+::ng-deep .main-container {
+  * {
+    font-size: 20px !important;
+  }
+}
+
+::ng-deep .ag-header-container {
+  background: $colorWhite !important;
+}
+::ng-deep .ag-header-cell-label .ag-header-cell-text {
+  justify-content: center;
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  color: $colorBlack !important;
+}
+
+::ng-deep .ag-row {
+ height: 70px !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+}
+
+::ng-deep .ag-header {
+  height: 50px !important;
+}
+::ng-deep .ag-theme-balham .ag-cell {
+  padding-top: 20px;
+  background: $colorWhite !important;
+}
+
+::ng-deep .cell-border {
+ //border: 1px solid black !important;
+}
+
+::ng-deep .ag-theme-balham .ag-header-row {
+  height: 46px !important;
+}
+
+::ng-deep .ag-theme-balham .ag-header-cell::after, .ag-theme-balham .ag-header-group-cell::after {
+  border-right: 1px solid $colorBlack !important;
+  content: " ";
+  height: 15px;
+  margin-top: 15px;
+  position: absolute;
+  text-indent: -2000px;
+  top: 0;
+}
+.back-group{
+  background: $colorWhite;
+}
+
+
+::ng-deep .btn-xs{
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: $colorBlack !important;
+  bottom: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+::ng-deep .ag-theme-balham {
+  .ag-icon{
+    color: $colorBlack !important;
+
+  }
+  .ag-paging-panel{
+    color: $colorBlack !important;
+  }
+  .ag-root{
+    border: 1px solid $colorBlack !important;
+  }
+  .ag-cell{
+    border: 1px solid $colorBlack !important;
+
+  }
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: $colorBlack !important;
+  opacity: 1 !important;
+  border: 1px solid $colorBlack !important;
+}

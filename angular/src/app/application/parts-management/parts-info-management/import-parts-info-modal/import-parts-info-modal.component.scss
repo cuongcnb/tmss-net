@@ -1,0 +1,11 @@
+.processing-info {
+  p:last-child {
+    margin: 0;
+  }
+}
+
+.search-group {
+  .form-control {
+    width: calc(100% - 110px);
+  }
+}

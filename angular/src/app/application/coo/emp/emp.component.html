@@ -1,0 +1,123 @@
+<div class="row pt-2">
+  <div class="col-md-3">
+    <div class="form-group general-repair">
+      <div class="input-group">
+        <span class="input-group-addon">KTV</span>
+        <input type="text" class="form-control" [(ngModel)]="empName" placeholder="Tên KTV">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-inline col-md-3">
+    <label class="radio-inline col-sm-3 mt-7 required text-bold mt-10">Loại hình</label>
+    <div class="col-sm-4 mt-2">
+      <input type="radio" [value]="2" class="radio-inline" [(ngModel)]="roType" id="scc"><label for="scc">Sửa chữa chung</label>
+    </div>
+    <div class="col-sm-3 mt-2">
+      <input type="radio" [value]="1" class="radio-inline" [(ngModel)]="roType" id="ds"><label for="ds">Đồng sơn</label>
+    </div>
+  </div>
+
+  <div class="col-md-1 mt-1">
+    <div class="form-group">
+        <button class="btn btn-blue" (click)="patchData()"><i class="fa fa fa-search"></i></button>
+    </div>
+  </div>
+</div>
+
+<table class="table table-bordered mt-15">
+  <thead>
+  <tr>
+    <th addonWidth="50px" rowspan="2" class="center-text">Khoang</th>
+    <th addonWidth="90px" rowspan="2" class="center-text">Xe</th>
+    <th  addonWidth="40px" rowspan="2" class="center-text">Trạng thái</th>
+    <th  addonWidth="90px" rowspan="2" class="center-text">KTV</th>
+    <th addonWidth="200px" colspan="2" class="center-text">Kế hoạch</th>
+    <!-- <th addonWidth="150px">TG kết thúc (kế hoạch)</th> -->
+<!--                                  <th addonWidth="90px">Chức năng</th>-->
+    <th addonWidth="200px" colspan="2" class="center-text">Thực tế</th>
+    <!-- <th addonWidth="150px">TG kết thúc (thực tế)</th> -->
+    <th rowspan="2" class="w-100 center-text">
+      Bắt đầu
+    </th>
+    <th rowspan="2" class="w-100 center-text">
+      Kết thúc
+    </th>
+    <!-- <th class="pointer text-center"
+      tooltip="Thêm kỹ thuật viên"
+      (click)="employeeListModal.open(employeeList, {fromDateTime: wshop.planFromTime, toDateTime: wshop.planToTime}, disabled_form, wshop)">
+      <i class="fa fa-plus text-primary"></i>
+    </th> -->
+  </tr>
+  <tr>
+    <th addonWidth="105px" class="center-text">Bắt đầu</th>
+    <th addonWidth="105px" class="center-text">Kết thúc</th>
+    <th class="center-text w-180">Bắt đầu</th>
+    <th class="center-text w-180">Kết thúc</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngIf="employeeList && employeeList.length > 0">
+    <tr *ngFor="let emp of employeeList; let idx = index">
+      <td>
+        <span style="max-width: 100px">{{ emp.wsCode? emp.wsCode: '' }}</span>
+      </td>
+      <td>
+        <span style="max-width: 100px">{{ emp.registerNo? emp.registerNo: '' }}</span>
+      </td>
+      <td>
+        <span style="max-width: 100px">{{ emp.astate? NameProgressByState[emp.astate]: '' }}</span>
+      </td>
+      <td>
+        <span style="max-width: 100px">{{ emp.empName? emp.empName: '' }}</span>
+      </td>
+      <td>
+        {{ emp.planFromTime | date: 'dd/MM/yyyy HH:mm' }}
+      </td>
+      <td>
+        {{ emp.planToTime | date: 'dd/MM/yyyy HH:mm' }}
+      </td>
+      <td>
+        <tmss-datepicker *ngIf="emp" [dateValue]="getDateValue(emp.actualFromTime)"
+                          (onChoose)="emp.actualFromTime = $event;" [hasTimepicker]="true"
+                          [dateInputFormat]="'DD/MM/YYYY HH:mm'"
+        ></tmss-datepicker>
+      </td>
+      <td>
+        <tmss-datepicker *ngIf="emp" [dateValue]="getDateValue(emp.actualToTime)"
+                          (onChoose)="emp.actualToTime = $event;" [hasTimepicker]="true"
+                          [dateInputFormat]="'DD/MM/YYYY HH:mm'"
+        ></tmss-datepicker>
+      </td>
+      <th>
+        <button class="btn btn-blue button-center" [disabled]="emp.disable_start_button" (click)="startJob(emp, idx)">Bắt đầu</button>
+      </th>
+      <th>
+        <button class="btn btn-blue button-center" [disabled]="emp.disable_end_button" (click)="finishJob(emp, idx)">Kết thúc</button>
+      </th>
+      <!-- <td class="pointer text-center" (click)="removeEmployee(emp, idx)">
+        <i class="fa fa-minus text-danger"></i>
+      </td> -->
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+
+<div class="modal fade" id="warningEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+      </div>
+      <div class="modal-body">
+        {{ messeage_notification }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

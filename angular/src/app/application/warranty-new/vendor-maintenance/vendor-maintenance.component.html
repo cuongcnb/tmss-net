@@ -1,0 +1,30 @@
+
+<ng-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Vendor Maintenance
+    </div>
+    <div id="collapseWarrantyFollowUp" class="panel-collapse collapse in">
+      <grid-table [fieldGrid]="fieldGrid"
+                  [sizeColumnToHeaderWidth] = "true"
+                  (callbackGrid)="callbackGrid($event)"
+                  (getParams)="getParams()"
+      ></grid-table>
+    </div>
+  </div>
+</ng-container>
+
+<div class="row mt-3 text-right">
+  <button class="btn btn-blue mr-2" (click)="updateModal.open()">
+    <i class="fa fa-edit"></i> Thêm
+  </button>
+  <button class="btn btn-blue mr-2" [disabled]="!selectedData" (click)="updateModal.open(selectedData)">
+    <i class="fa fa-edit"></i> Sửa
+  </button>
+  <button class="btn btn-blue mr-2" [disabled]="!selectedData" (click)="delete()">
+    <i class="fa fa-edit"></i> Xóa
+  </button>
+</div>
+
+<update-vendor-maintenance-modal #updateModal (close)="refreshData()"></update-vendor-maintenance-modal>

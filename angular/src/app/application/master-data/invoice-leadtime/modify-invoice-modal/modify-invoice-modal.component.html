@@ -1,0 +1,83 @@
+<div class="modal fade" bsModal #modifyInvoiceModal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="!selectedInvoice">New Invoice Lead-time</h5>
+          <h5 class="modal-title" *ngIf="selectedInvoice">Update Invoice Lead-time</h5>
+        </div>
+
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="75px">Departure</label>
+                  <select class="form-control" formControlName="fromDealerId" autoFocusField>
+                    <option value=""></option>
+                    <option *ngFor="let dealer of departure" [value]="dealer.id">{{dealer.abbreviation}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-6" hasError="toDealerId">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="75px">Dealer</label>
+                  <select class="form-control required" formControlName="toDealerId">
+                    <option value=""></option>
+                    <option *ngFor="let dealer of dealers" [value]="dealer.id">{{dealer.abbreviation}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Dealer is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4" hasError="dayAmount">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="75px">Lead-time</label>
+                  <input type="text" class="form-control" formControlName="dayAmount">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'numberFormat'">Lead time must be a number</div>
+                  <div *ifError="'maxLength'">Max length is 18</div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="75px">Region</label>
+                  <select class="form-control" formControlName="regionId">
+                    <option value=""></option>
+                    <option *ngFor="let region of regions" value="{{region.id}}">{{region.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <div class="input-group">
+                  <label class="input-group-addon" addonWidth="75px">Transport Type</label>
+                  <select class="form-control" formControlName="transportationTypesId">
+                    <option value="0"></option>
+                    <option *ngFor="let transportType of transportTypes" value="{{transportType.id}}">
+                      {{transportType.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Save
+          </button>
+          <button type="button" class="btn btn-blue" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

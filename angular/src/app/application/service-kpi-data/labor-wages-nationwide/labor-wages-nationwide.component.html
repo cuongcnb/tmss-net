@@ -1,0 +1,74 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Gói tiền công lao động - tổng doanh thu [Toàn quốc]</h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="form-group w-span">
+              <div class="input-group">
+                <span class="input-group-addon">Đại lý</span>
+                <select class="form-control" formControlName="sortAgency">
+                  <option [ngValue]="1">TMV</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group w-span">
+                  <div class="input-group">
+                    <span class="input-group-addon">Loại hình</span>
+                    <select class="form-control" formControlName="isType">
+                      <option>Loại hình 1</option>
+                      <option>Loại hình 2</option>
+                      <option>Loại hình 3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group w-span">
+                  <div class="input-group">
+                    <span class="input-group-addon">Tính theo</span>
+                    <select class="form-control" formControlName="isLabor">
+                      <option>Công lao động 1</option>
+                      <option>Công lao động 2</option>
+                      <option>Công lao động 3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <grid-table [fieldGrid]="fieldGrid" [height]="'200px'"
+                        (callbackGrid)="callbackGrid($event)"
+                        (getParams)="getParams()"
+            ></grid-table>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-blue m-2" (click)="newLaborWagesNation.open()">
+            <i class="fa fa-plus mr-2"></i>
+            Thêm
+          </button>
+          <button type="button" class="btn btn-blue m-2" (click)="editRow()">
+            <i class="fa fa-pencil mr-2"></i>
+            Sửa
+          </button>
+          <button type="button" class="btn btn-blue m-2" (click)="deleteRow()">
+            <i class="fa fa-trash-o mr-2"></i>
+            Xóa
+          </button>
+          <button type="button" class="btn btn-light-grey m-2" (click)="modal.hide()">
+            <i class="fa fa-power-off mr-2"></i>Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<new-labor-wages-nationwide #newLaborWagesNation
+                            (close)="selectedRowGrid? update($event):addNew($event)"
+></new-labor-wages-nationwide>
+

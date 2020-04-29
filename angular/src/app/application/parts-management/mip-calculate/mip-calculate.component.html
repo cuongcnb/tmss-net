@@ -1,0 +1,107 @@
+<div class="panel panel-default search">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin tìm kiếm
+  </div>
+  <div class="panel-body">
+    <form [formGroup]="searchForm" *ngIf="searchForm" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group input-group" data-toggle="tooltip" data-placement="bottom" title="Tên phụ tùng">
+            <div class="input-group-addon">Tên PT
+            </div>
+            <input type="text" class="form-control" formControlName="partsName">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group input-group">
+            <div class="input-group-addon">Loại
+            </div>
+            <select class="form-control" formControlName="instockType">
+              <option [ngValue]="null">Tất cả</option>
+              <option value="STOCK">STOCK</option>
+              <option value="NON-STOCK">NON-STOCK</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group input-group" data-toggle="tooltip" data-placement="bottom" title="Mã phụ tùng">
+            <div class="input-group-addon">Mã PT
+            </div>
+            <input type="text" class="form-control" formControlName="partsCode">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <month-picker [model]="selectedDate"
+                          (modelChange)="fillMonthPicker($event)"></month-picker>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-blue mr-2" (click)="search(true)"><i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="my-3">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info"></i>
+          Danh sách
+          <div class="panel-tools">
+            <div class="btn-group">
+              <button class="btn  mr-0"
+                      [ngClass]="selectedTab===0?'btn-blue': 'btn-light-grey'"
+                      (click)="changeTab(0)">
+                Thông tin PT
+              </button>
+              <button class="btn mr-0"
+                      [ngClass]="selectedTab===1?'btn-blue': 'btn-light-grey'"
+                      (click)="changeTab(1)">
+                Thông tin MIP
+              </button>
+            </div>
+          </div>
+        </div>
+        <grid-table [fieldGrid]="fieldGrid"
+                    [paginationPageSize]="paginationParams?.size || 100"
+                    (callbackGrid)="callbackGrid($event)"
+                    [frameworkComponents]="frameworkComponents"
+                    (getParams)="getParams()"
+                    [height]="'600px'"
+                    [paginationParamsChanged]="{page: 1, size: 100}"
+                    [suppressRowClickSelection]="true"
+                    [rowSelection]="'multiple'"
+                    [addTotallk]="true"
+                    [paginationTotalsData]="paginationTotalsData"
+                    (changePaginationParams)="changePaginationParams($event)"
+        ></grid-table>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group text-right">
+            <button type="button" class="btn btn-blue mr-2" (click)="calculateMip()"><i class="fa fa-pencil"></i>
+              Tính MIP
+            </button>
+            <button type="button" class="btn btn-blue mr-2" (click)="save()"><i class="fa fa-save"></i>
+              Lưu
+            </button>
+            <!-- <button type="button" class="btn btn-blue mr-2" [disabled]="!selectedPartsNodes || selectedPartsNodes.length <1 " (click)="export()"><i class="fa fa-download"></i>
+              Export
+            </button> -->
+            <button type="button" class="btn btn-blue" (click)="exportAPI()"><i class="fa fa-download"></i>
+              Xuất excel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<tmss-export [fieldGrid]="fieldGridExport" [excelStyles]="excelStyles"
+             (getExportParams)="exportParams = $event"></tmss-export>

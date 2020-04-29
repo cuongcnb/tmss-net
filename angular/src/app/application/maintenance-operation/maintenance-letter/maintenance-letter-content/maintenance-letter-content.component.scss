@@ -1,0 +1,35 @@
+.car-info {
+  .input-group-addon {
+    min-width: 70px;
+  }
+}
+
+.customer-info {
+  .input-group-addon{
+    min-width: 105px!important;
+  }
+}
+
+.content-sc {
+  .input-group-addon{
+    min-width: 110px;
+  }
+}
+
+.content-sck {
+  .input-group-addon{
+    min-width: 90px;
+  }
+}
+
+::ng-deep.datepicker-custom {
+  .input-group-addon:first-child {
+    min-width: 110px!important;
+  }
+}
+
+::ng-deep.datepicker-custom-ver1 {
+  .input-group-addon:first-child {
+    min-width: 90px!important;
+  }
+}

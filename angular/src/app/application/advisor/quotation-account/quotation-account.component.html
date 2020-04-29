@@ -1,0 +1,50 @@
+<form class="row" *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+  <div class="col-sm-3 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">Biển số xe</span>
+      <input type="text" formControlName="registerNo" class="form-control">
+    </div>
+  </div>
+  <div class="col-sm-3 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">VIN</span>
+      <input type="text" formControlName="vinNo" class="form-control">
+    </div>
+  </div>
+  <div class="col-sm-3 form-group">
+    <div class="input-group">
+      <span class="input-group-addon">RO</span>
+      <input type="text" formControlName="ro" class="form-control">
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <button class="btn btn-blue" (click)="search()">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</form>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Phiếu báo giá/ quyết toán kết hợp
+  </div>
+  <grid-table [fieldGrid]="fieldGrid"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+              [suppressRowClickSelection]="true"
+              [rowSelection]="'multiple'"
+              [height]="'350px'"
+              [paginationTotalsData]="paginationTotalsData"
+              (changePaginationParams)="changePaginationParams($event)"
+  ></grid-table>
+</div>
+
+<div style="text-align: right">
+  <button class="btn btn-blue mr-2" (click)="printQuotation()">
+    <i class="fa fa-print"></i> In báo giá
+  </button>
+  <button class="btn btn-blue mr-2" (click)="printSettlement()">
+    <i class="fa fa-print"></i> In quyết toán
+  </button>
+</div>

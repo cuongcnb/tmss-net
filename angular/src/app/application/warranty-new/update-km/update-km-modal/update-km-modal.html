@@ -1,0 +1,42 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Update KM</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="required">Biển số xe</label>
+            <input type="text" formControlName="registerNo" disabled class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="required">Số RO</label>
+            <input type="text" disabled  formControlName="roNo" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="required">Số KM cũ</label>
+            <input type="text" disabled formControlName="km" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="required">Số KM mới</label>
+            <input type="text" formControlName="newKm" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="save()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

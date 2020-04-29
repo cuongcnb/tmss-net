@@ -1,0 +1,113 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Thông tin tìm kiếm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartCancelSearch" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartCancelSearch" class="panel-collapse collapse in">
+
+    <div class="panel-body">
+      <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Số đơn hàng">Số ĐH</span>
+                <input type="text" class="form-control" formControlName="orderNo">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Kiểu đơn hàng">Kiểu ĐH</span>
+                <select class="form-control" formControlName="orderMethodId">
+                  <option [value]="null"></option>
+                  <option *ngFor="let orderMethod of orderMethodList" [ngValue]="orderMethod.id">
+                    {{orderMethod.orderMName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom" title="Phương thức vận chuyển">PTVC</span>
+                <select class="form-control" formControlName="transportationTypeId">
+                  <option [value]="null"></option>
+                  <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">
+                    {{transportType.transportName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+            </div>
+          </div>
+          <div class="col-md-4 text-left">
+            <button type="submit" class="btn btn-blue" (click)="search()">
+              <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+          </div>
+        </div>
+      </form>
+      <small><i>* Giữ phím Control (Ctrl) để chọn nhiều đơn hàng một lúc</i></small>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartCancelOrder" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartCancelOrder" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="fieldGridOrder" [rowSelection]="'multiple'"
+                (callbackGrid)="callBackGridOrder($event)"
+                (getParams)="getParamsOrder()"
+                [groupSelectsChildren]="true"
+                (changePaginationParams)="changePaginationParams($event)"
+                [paginationTotalsData]="paginationTotalsData"
+    ></grid-table>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-md-4">
+    <button class="btn btn-blue" (click)="cancelOrders()">Hủy đơn hàng</button>
+  </div>
+  <div class="col-md-8">
+    <div class="row text-right">
+      <div class="col-xs-4 detail">
+        Trước thuế: <strong>{{beforeTax}}</strong>
+      </div>
+      <div class="col-xs-4 detail">
+        + Thuế: <strong>{{tax}}</strong>
+      </div>
+      <div class="col-xs-4 detail">
+        = Sau thuế: <strong>{{taxIncluded}}</strong>
+      </div>
+    </div>
+  </div>
+</div>

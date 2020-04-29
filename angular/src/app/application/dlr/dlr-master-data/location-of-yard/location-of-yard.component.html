@@ -1,0 +1,69 @@
+<div pageTitle="Location of Dealer Yard Management">
+  <form [formGroup]="yardDealerHeaderForm" *ngIf="yardDealerHeaderForm"
+        novalidate autocomplete="off" (submit)="search()">
+    <div class="row header-form">
+      <div class="col-lg-3" hasError="code">
+        <div class="form-group input-group">
+          <span class="input-group-addon min-w">Code *</span>
+          <input type="text" formControlName="code" class="form-control">
+        </div>
+        <div class="error-messages" errorMessage>
+          <div *ifError="'required'">Code is required</div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group input-group">
+          <span class="input-group-addon">Ordering</span>
+          <input type="text" formControlName="ordering" class="form-control">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group input-group">
+          <span class="input-group-addon">Status</span>
+          <select class="form-control" formControlName="status">
+            <option value=""></option>
+            <option value="Y">ENABLE</option>
+            <option value="N">DISABLE</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="row des-col">
+          <div class="col-xs-9">
+            <div class="form-group input-group">
+              <span class="input-group-addon">Description</span>
+              <input type="text" formControlName="description" class="form-control">
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <button type="submit" class="btn btn-blue mr-2">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="grid-table-area mt-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-external-link-square"></i>
+        Location of Dealer Yard Management
+      </div>
+      <grid-table [fieldGrid]="fieldGridLocationYard"
+                  overlayLoadingTemplate="No data to show!"
+                  (callbackGrid)="callbackLocation($event)"
+                  (getParams)="getParamsLocation()">
+      </grid-table>
+    </div>
+  </div>
+  <div class="text-right mt-3">
+    <button class="btn btn-blue mr-2" (click)="locationOfYardModal.open()">
+      <i class="fa fa-plus"></i> Add
+    </button>
+    <button class="btn btn-blue" (click)="updateYard()">
+      <i class="fa fa-pencil"></i> Edit
+    </button>
+  </div>
+</div>
+<location-of-yard-modal #locationOfYardModal></location-of-yard-modal>

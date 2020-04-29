@@ -1,0 +1,56 @@
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="reset()" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon">{{column.headerName}}</span>
+
+            <div *ngIf="column.type=='number'" hasError="number">
+              <input type="text" class="form-control" formControlName="number">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập {{column.headerName}}</div>
+                <div *ifError="'numberFormat'">Invalid Number</div>
+              </div>
+            </div>
+            <div *ngIf="column.type=='textarea'" hasError="textarea">
+              <textarea type="text" class="form-control" formControlName="textarea" rows="4"></textarea>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập {{column.headerName}}</div>
+              </div>
+            </div>
+            <div *ngIf="column.type=='text'" hasError="text" hasError="text">
+              <input type="text" class="form-control" formControlName="text">
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Trường bắt buộc</div>
+                <div *ifError="'maxLength'">Tối đa {{column.maxLength}} ký tự</div>
+              </div>
+            </div>
+            <div *ngIf="column.type=='date'" hasError="date">
+              <input type="text" class="form-control" formControlName="date" bsDatepicker>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập {{column.headerName}}</div>
+              </div>
+            </div>
+            <div *ngIf="column.type=='select'" hasError="select">
+              <select class="form-control" formControlName="select">
+                <option [ngValue]="null" *ngIf="!column.required"></option>
+                <option *ngFor="let select of selectList" [ngValue]="select[column.select.keyField]">
+                  {{column.select.valueField ? select[column.select.valueField]: select[column.select.keyField] }}
+                </option>
+              </select>
+              <div class="error-messages" errorMessage>
+                <div *ifError="'required'">Bắt buộc nhập {{column.headerName}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 text-right">
+            <button type="submit" class="btn btn-blue mr-2" (click)="confirm()">Đồng ý</button>
+            <button type="button" class="btn btn-light-grey" (click)="modal.hide()">Hủy</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+  <div class="panel-heading" [hidden]="hidden">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách loại lỗi DSO {{errorDSO2 ? '2' : '1'}}
+  </div>
+  <div class="panel-heading" *ngIf="reasonDSO1">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách nguyên nhân DSO 1
+  </div>
+  <div class="panel-heading" *ngIf="reasonDSO2">
+    <i class="fa fa-external-link-square"></i>
+    Danh sách nguyên nhân DSO 2
+  </div>
+  <grid-table [fieldGrid]="fieldGrid"
+              (callbackGrid)="callbackGrid($event)"
+              (getParams)="getParams()"
+  ></grid-table>
+</div>
+<div class="text-right">
+  <button class="btn btn-blue mb-2 ml-2" (click)="openAddModal()">
+    <i class="fa fa-plus"></i>
+    Thêm
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="openEditModal()">
+    <i class="fa fa-edit"></i>
+    Sửa
+  </button>
+  <button class="btn btn-blue mb-2 ml-2" (click)="onDelRow()">
+    <i class="fa fa-trash-o"></i>
+    Xóa
+  </button>
+  <button class="btn btn-blue mb-2 ml-2">
+    <i class="clip-download"></i>
+    Xuất excel
+  </button>
+</div>
+
+<error-dso1-modal #errorDSO1Modal></error-dso1-modal>
+<error-dso2-modal #errorDSO2Modal></error-dso2-modal>
+<reason-dso1-modal #reasonDSO1Modal></reason-dso1-modal>
+<reason-dso2-modal #reasonDSO2Modal></reason-dso2-modal>

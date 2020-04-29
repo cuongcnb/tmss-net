@@ -1,0 +1,64 @@
+<div>
+  <div class="row">
+    <form *ngIf="form" [formGroup]="form" autocomplete="off" novalidate>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <tmss-datepicker text="Từ ngày" formControlName="dayIn"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <tmss-datepicker text="Đến ngày" formControlName="dayOut"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-blue" (click)="searchResult()"><i class="fa fa-search"></i> Tìm kiếm</button>
+          <button class="btn btn-blue ml-2"><i class="fa fa-refresh"></i> Làm mới</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Đại lý</span>
+            <select class="form-control" formControlName="agency"></select>
+          </div>
+        </div>
+        <div class="col-sm-4 form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Tìm kiếm theo</span>
+            <select class="form-control" formControlName="searchCondition">
+              <option value="1">Đợt khảo sát</option>
+              <option value="2">Ngày khảo sát</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-blue" (click)="modal.open()"
+                  [disabled]="!form.value.searchCondition || form.value.searchCondition === '2'">
+            <i class="fa clip-zoom-in"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{csiResult ? 'Xử lý khách hàng khảo sát CSI' : 'Kết quả khảo sát SSI'}}
+    </div>
+    <grid-table
+      [fieldGrid]="surveyResultList"
+      (callbackGrid)="callBackGridSurveyResultList($event)"
+      (getParams)="getParamsSurveyResultList()"
+    ></grid-table>
+    <div class="panel-footer">
+      <button class="btn btn-blue" (click)="updateResultModal.open(selectedData)"><i class="fa fa-edit"></i> Sửa
+      </button>
+      <button class="btn btn-blue ml-2"><i class="fa fa-folder-open"></i> Xuất báo cáo</button>
+      <button class="btn btn-blue ml-2"><i class="clip-download"></i> Xuất excel</button>
+    </div>
+  </div>
+</div>
+<update-survey-result-list-modal (close)="updateData($event)" #updateResultModal></update-survey-result-list-modal>
+<batch-survey-result-modal [detailData]="selectedData" (close)="getDataBatch($event)"
+                           #modal></batch-survey-result-modal>
+

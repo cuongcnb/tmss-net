@@ -1,0 +1,67 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Công ty bảo hiểm
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseInrComCompany" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseInrComCompany" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="gridField"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"
+                [height]="'300px'"
+                [showPagination]="false"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="updateCompany.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!selectedCompany" (click)="updateCompany.open(selectedCompany)">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedCompany" (click)="delete()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-external-link-square"></i>
+    Thông tin nhân viên
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapseInrComInfo" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseInrComInfo" class="panel-collapse collapse in">
+
+    <grid-table [fieldGrid]="gridFieldEmp"
+                (callbackGrid)="callbackGridEmp($event)"
+                (getParams)="getParamsEmp()"
+                [height]="'200px'"
+                [showPagination]="false"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" [disabled]="!selectedCompany"
+              (click)="updateEmployee.open(selectedCompany.id)">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!selectedEmp || !selectedCompany"
+              (click)="updateEmployee.open(selectedCompany.id, selectedEmp)">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedEmp" (click)="deleteEmp()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>
+
+<modify-inr-com-modal #updateCompany (close)="refreshList()"></modify-inr-com-modal>
+<modify-inr-emp-modal #updateEmployee (close)="refreshListEmp()"></modify-inr-emp-modal>

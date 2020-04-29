@@ -1,0 +1,56 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{ignoreBackdropClick : 'Disable'}">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          Danh sách giao xe
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+          <div class="modal-body">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-info"></i>
+                Điều kiện tìm kiếm
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <div class="input-group">
+                    <label class="input-group-addon">Đại lý</label>
+                    <select class="form-control" formControlName="sortAgency">
+                      <option>Đại lý 1</option>
+                      <option>Đại lý 2</option>
+                      <option>Đại lý 3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <tmss-datepicker formControlName="dealDate" text="Giao xe từ ngày"></tmss-datepicker>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <tmss-datepicker formControlName="dealDate" text="Đến ngày"></tmss-datepicker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue">
+            <i class="fa fa-download"></i> Xuất Excel
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

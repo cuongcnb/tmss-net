@@ -1,0 +1,66 @@
+<ng-container>
+  <div class="row header-form">
+    <div class="col-sm-3">
+      <div class="input-group form-group">
+        <span class="input-group-addon min-width">From</span>
+        <input type="text" class="form-control" #fromDate_="bsDatepicker" bsDatepicker readonly [(ngModel)]="fromDate">
+        <span class="input-group-addon btn btn-blue" (click)="fromDate_.toggle()"
+              [attr.aria-expanded]="fromDate_.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="input-group form-group">
+        <span class="input-group-addon min-width">To</span>
+        <input type="text" class="form-control" #toDate_="bsDatepicker" bsDatepicker readonly [(ngModel)]="toDate">
+        <span class="input-group-addon btn btn-blue" (click)="toDate_.toggle()"
+              [attr.aria-expanded]="toDate_.isOpen">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="input-group form-group">
+        <span class="input-group-addon min-width">Dealer</span>
+        <select class="form-control" [(ngModel)]="dealerFilter">
+          <ng-container *ngIf="!isTmv && currentDealer">
+            <option [ngValue]="currentDealer.id">{{currentDealer.abbreviation}}</option>
+          </ng-container>
+          <ng-container *ngIf="isTmv">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.abbreviation}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group input-group">
+        <span class="input-group-addon min-width">Type</span>
+        <select class="form-control" [(ngModel)]="typeFilter">
+          <option [ngValue]="null">All</option>
+          <option value="sell">Sell</option>
+          <option value="swap">Swap</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-blue mr-2" (click)="search()"><i class="fa fa-search"></i></button>
+      <button class="btn btn-blue" (click)="export()"><i class="fa fa-download"></i> Export</button>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Sell/Swap report
+      <div class="panel-tools">
+        <button role="button" class="btn btn-xs btn-link panel-refresh" (click)="search()">
+          <i class="fa fa-refresh"></i>
+        </button>
+      </div>
+    </div>
+    <grid-table [fieldGrid]="sellSwapReportGridField"
+                (callbackGrid)="callbackGrid($event)"
+                (getParams)="getParams()"></grid-table>
+  </div>
+</ng-container>

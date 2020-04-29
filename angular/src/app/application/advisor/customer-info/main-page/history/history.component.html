@@ -1,0 +1,75 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa clip-history"></i>
+    Lịch sử sửa chữa
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
+              data-target="#collapseCusHistory" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapseCusHistory" class="panel-collapse collapse">
+    <form class="panel-body" novalidate autocomplete="off" [formGroup]="form" *ngIf="form">
+      <div class="row">
+        <div class="form-group col-sm-3">
+          <!--<div class="input-group">-->
+          <!--<span class="input-group-addon" addonWidth="108px">Vào lần đầu</span>-->
+          <!--<input type="text" class="form-control" formControlName="firstRODate">-->
+          <tmss-datepicker addOnMinWidth="90px" formControlName="firstRODate" text="Vào lần đầu"></tmss-datepicker>
+          <!--</div>-->
+        </div>
+        <div class="form-group col-sm-3">
+          <!--<div class="input-group">-->
+          <!--<span class="input-group-addon" addonWidth="100px">Vào gần nhất</span>-->
+          <!--<input type="text" class="form-control" formControlName="lastRODate">-->
+          <tmss-datepicker addOnMinWidth="90px" formControlName="lastRODate" text="Vào gần nhất"></tmss-datepicker>
+          <!--</div>-->
+        </div>
+        <div class="form-group col-sm-2">
+          <div class="input-group">
+            <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom"
+                  title="Số lần">Số lần</span>
+            <input type="text" class="form-control" formControlName="repairOrderCount">
+          </div>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <!--<div class="input-group">-->
+          <!--<span class="input-group-addon" addonWidth="108px">Km trước</span>-->
+          <!--<input type="text" class="form-control" formControlName="lastKm">-->
+          <tmss-money-input formControlName="lastKm" text="Km trước" addOnMinWidth="65px"></tmss-money-input>
+          <!--</div>-->
+        </div>
+        <div class="form-group col-sm-2">
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="65px" data-toggle="tooltip" data-placement="bottom"
+                  title="Cố vấn dịch vụ">CVDV</span>
+            <input type="text" class="form-control" formControlName="advisorName">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6" >
+          <div class="input-group">
+            <span class="input-group-addon" addonWidth="90px">Nội dung CV</span>
+            <textarea rows="3" class="form-control" formControlName="reqDesc"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-6">
+          <div class="input-group">
+          <span class="input-group-addon" addonWidth="90px" data-toggle="tooltip" data-placement="bottom"
+                title="Công việc cần làm sớm">CVCLS</span>
+            <textarea rows="3" class="form-control" formControlName="notes"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+      </div>
+
+
+      <button class="ghost" #submitBtn></button>
+    </form>
+  </div>
+</div>

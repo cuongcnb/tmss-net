@@ -1,0 +1,357 @@
+<perfect-scrollbar class="ps pr-3" [style.max-height.px]="screenHeight" (window:resize)="onResize()">
+  <div class="row mb-3">
+    <div class="col-sm-12 col-md-6">
+      <form [formGroup]="repairProfileSearchForm" *ngIf="repairProfileSearchForm" novalidate autocomplete="off">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i class="fa fa-search"></i>
+            Thông tin tìm kiếm
+            <div class="panel-tools">
+              <button type="button" class="btn btn-link" data-toggle="collapse"
+                      data-target="#collapseRepairProfileSearch" aria-expanded="true">
+              </button>
+            </div>
+          </div>
+          <div id="collapseRepairProfileSearch" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="input-group form-group">
+                    <span class="input-group-addon">Dealer</span>
+                    <select formControlName="dealerId" class="form-control">
+                      <option *ngFor="let dlr of dealers" [ngValue]="dlr.id">{{dlr.name}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-7">
+                  <div class="input-group form-group">
+                    <span class="input-group-addon">Ro/P.hẹn</span>
+                    <input-search formControlName="appOrRoNo" (onSearch)="searchRepairProfile()"></input-search>
+                  </div>
+                </div>
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <select formControlName="type" class="form-control">
+                      <option [value]="1">Lệnh sửa chữa</option>
+                      <option [value]="2">Đặt hẹn</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-7">
+                  <tmss-datepicker formControlName="startDate" text="Từ ngày"></tmss-datepicker>
+                </div>
+                <div class="col-sm-5">
+                  <div class="input-group form-group col">
+                    <span class="input-group-addon">B.số</span>
+                    <input-search formControlName="registerNo" (onSearch)="searchRepairProfile()"></input-search>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-7">
+                  <tmss-datepicker formControlName="endDate" text="Đến ngày"></tmss-datepicker>
+                </div>
+                <div class="col-sm-5 col">
+                  <div class="input-group form-group">
+                    <span class="input-group-addon">Vin</span>
+                    <input-search formControlName="vinNo" (onSearch)="searchRepairProfile()"></input-search>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-footer text-right">
+              <button class="btn btn-blue row-style d-small" type="submit" (click)="searchRepairProfile()"><i
+                class="fa fa-search"></i> Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-sm-12 col-md-6">
+      <div class="panel panel-default mb-0">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Kêt quả tìm kiếm
+          <div class="panel-tools">
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#collapseRepairProfileResultSearch" aria-expanded="true">
+            </button>
+          </div>
+        </div>
+        <div id="collapseRepairProfileResultSearch" class="panel-collapse collapse in">
+
+          <grid-table [fieldGrid]="fieldGridRepairProfile"
+                      [height]="'138px'"
+                      (callbackGrid)="callbackRepairProfile($event)"
+                      (getParams)="getParamsRepairProfile()"
+                      [isSuppressHorizontalScroll]="true"
+                      (changePaginationParams)="changePaginationParams($event)"
+                      [paginationTotalsData]="paginationTotalsData"
+          ></grid-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="repairProfileDetailForm" *ngIf="repairProfileDetailForm">
+    <div class="row">
+      <div class="col-md-5 form-group">
+        <div class="panel panel-default mb-0">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Thông tin xe
+            <div class="panel-tools">
+              <button type="button" class="btn btn-link" data-toggle="collapse"
+                      data-target="#collapseRepairProfileInforVehicle" aria-expanded="true">
+              </button>
+            </div>
+          </div>
+          <div id="collapseRepairProfileInforVehicle" class="panel-collapse collapse in">
+
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Vin</span>
+                    <input type="text" class="form-control" formControlName="vinno">
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Biển số</span>
+                    <input type="text" class="form-control" formControlName="registerno">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Mã k.xe</span>
+                    <input type="text" class="form-control" formControlName="cmCode">
+                  </div>
+                </div>
+                <div class="col-sm-6  form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Ghost</span>
+                    <input type="text" class="form-control" formControlName="fullmodel">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Kiểu xe</span>
+                    <input type="text" class="form-control" formControlName="cfCode">
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Đời xe</span>
+                    <input type="text" class="form-control" formControlName="fullmodel">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Số khung</span>
+                    <input type="text" class="form-control" formControlName="frameno">
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Số máy</span>
+                    <input type="text" class="form-control" formControlName="enginecode">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Giao xe</span>
+                    <tmss-datepicker formControlName="deliveryDate"></tmss-datepicker>
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Màu</span>
+                    <input type="text" class="form-control" formControlName="vCCode">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="panel panel-default mb-0">
+          <div class="panel-heading">
+            <i class="fa fa-external-link-square"></i>
+            Thông tin khách hàng
+            <div class="panel-tools">
+              <button type="button" class="btn btn-link" data-toggle="collapse"
+                      data-target="#collapseRepairProfileInfo" aria-expanded="true">
+              </button>
+            </div>
+          </div>
+          <div id="collapseRepairProfileInfo" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <div class="row">
+                <div class=" col-sm-8 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Chủ xe</span>
+                    <input type="text" class="form-control" formControlName="cusno">
+                    <span class="input-group-addon min-width">-</span>
+                    <input type="text" class="form-control" formControlName="carownername">
+                  </div>
+                </div>
+                <div class=" col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Giờ gọi</span>
+                    <input type="text" class="form-control" formControlName="calltimeMap">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Tên Cty</span>
+                    <input type="text" class="form-control" formControlName="orgname">
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Mã số thuế</span>
+                    <input type="text" class="form-control" formControlName="taxcode">
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Loại khác</span>
+                    <input type="text" class="form-control" formControlName="cusTypeName">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-8 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Địa chỉ</span>
+                    <input type="text" class="form-control" formControlName="carowneradd">
+                  </div>
+                </div>
+                <div class="col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">ĐT1</span>
+                    <input type="text" class="form-control" formControlName="carownertel">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class=" col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Người LH</span>
+                    <input type="text" class="form-control" formControlName="name">
+                  </div>
+                </div>
+                <div class=" col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">ĐT1</span>
+                    <input type="text" class="form-control" formControlName="tel">
+                  </div>
+                </div>
+                <div class=" col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Email</span>
+                    <input type="text" class="form-control" formControlName="email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class=" col-sm-8 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Địa chỉ</span>
+                    <input type="text" class="form-control" formControlName="address">
+                  </div>
+                </div>
+                <div class=" col-sm-4 form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon min-width">Giờ gọi</span>
+                    <input type="text" class="form-control" formControlName="cusDCalltime">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh sách RO/ Đặt hẹn
+      <div class="panel-tools">
+        <button type="button" class="btn btn-link" data-toggle="collapse"
+                data-target="#collapseRepairProfileRO" aria-expanded="true">
+        </button>
+      </div>
+    </div>
+    <div id="collapseRepairProfileRO" class="panel-collapse collapse in">
+      <grid-table #tableRo [fieldGrid]="fieldGridRo"
+                  (callbackGrid)="callbackRo($event)"
+                  (getParams)="getParamsRo()"
+                  [height]="'250px'"
+                  [showPagination]="false"
+      ></grid-table>
+    </div>
+  </div>
+
+</perfect-scrollbar>
+<div class="mr-2 float-right">
+  <button type="button" class="btn btn-blue mr-2" (click)="reportTypeModal.open(1)"
+          [disabled]="!selectedRepairProfile || !selectedRepairProfile.appoinmentid">0. Đặt hẹn
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="reportTypeModal.open(5)"
+          [disabled]="!selectedRepairProfile || 
+                      selectedRepairProfile.rostate < 1">
+    1. Báo giá
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="reportTypeModal.open(3)"
+          [disabled]="!selectedRepairProfile || 
+                      selectedRepairProfile.rostate < 1.5 || 
+                      (selectedRepairProfile.rostate > 1.5 && !selectedRepairProfile.lxpt)">
+    2. LXPT
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="reportTypeModal.open(4)"
+          [disabled]="!selectedRepairProfile || 
+                      selectedRepairProfile.rostate < 2 ||
+                      !(selectedRepairProfile.km > 0)">
+    3. LSC
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="reportTypeModal.open(2)"
+          [disabled]="!selectedRepairProfile || 
+                      selectedRepairProfile.rostate < 6">
+    4. Quyết toán
+  </button>
+  <button type="button" class="btn btn-blue mr-2" (click)="printOrder()"
+          [disabled]="!selectedRepairProfile || !enableBtnBillPrint.includes(selectedRepairProfile.rostate)">
+    5. Hoá đơn
+  </button>
+  <!--  <button type="button" class="btn btn-blue"-->
+  <!--          [disabled]="!selectedRepairProfile ||  selectedRepairProfile.rostate !== roStateObj.gateInOut"-->
+  <!--          (click)="printOutGate()">6. Giấy ra cổng-->
+  <!--  </button>-->
+</div>
+<order-print-modal #orderPrintModal></order-print-modal>
+<report-type-modal #reportTypeModal (close)="print($event)"></report-type-modal>

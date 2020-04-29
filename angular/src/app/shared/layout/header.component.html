@@ -1,0 +1,109 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" (click)="clickLogo()">
+        <img src="assets/images/logo.png" alt="">
+      </a>
+      <span class="navbar-brand-sologan">TMSS - TOYOTA MARKETING SALE SERVICES</span>
+    </div>
+    <div class="navbar-tools">
+
+      <ul class="nav navbar-right">
+        <li class="dropdown current-user">
+          <a class="pointer" (click)="isShowMenu = !isShowMenu">
+            <span class="username"> {{currentUser.dealerName}} : {{currentUser.userName}} </span>
+            <i class="clip-chevron-down"></i>
+          </a>
+          <ul class="dropdown-menu show" (click)="$event.stopImmediatePropagation()" *ngIf="isShowMenu">
+            <perfect-scrollbar class="ps" [style.max-height.px]="rightMenuHeight" (window:resize)="setHeightRightMenu()"
+                               *ngIf="menuList && menuList.length">
+              <li class="dropdown-submenu" *ngFor="let menu of menuList" (click)="changeSidebarMenu(menu)">
+                <a href="javascript:void(0)" [class.is-active]="currentSidebar === menu.code">
+                  <i class="fa fa-asterisk"></i>
+                  <span class="title"> {{menu.code}}</span>
+                </a>
+                <ul class="sub-menu d-block" *ngIf="isAlwaysShowSubmenu || checkShowSubmenu(menu)" id="sidebar">
+                  <li *ngFor="let func of menu.list" (click)="openComponent($event, func)">
+                    <a href="javascript:void(0)">
+                      <span class="title"> {{func.functionName}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </perfect-scrollbar>
+            <li (click)="showModalChangePassword()">
+              <a href="#">
+                <i class="clip-spinner-6"></i>
+                &nbsp;<span class="title">Thay đổi mật khẩu</span>
+              </a>
+            </li>
+            <li (click)="logout()">
+              <a href="#">
+                <i class="clip-exit"></i>
+                &nbsp;<span class="title">Log Out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #modal="bs-modal" (onHidden)="form = undefined">
+  <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title">Đổi mật khẩu</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group w-span" hasError="oldPassword">
+            <div class="input-group">
+              <span class="input-group-addon min-width">Mật khẩu cũ</span>
+              <input type="password" class="form-control required" formControlName="oldPassword">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Trường bắt buộc</div>
+            </div>
+          </div>
+          <div class="form-group w-span" hasError="newPassword">
+            <div class="input-group">
+              <span class="input-group-addon min-width">Mật khẩu mới</span>
+              <input type="password" class="form-control required" formControlName="newPassword">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Trường bắt buộc</div>
+              <div *ifError="'requiredPassword'">Mật khẩu ít nhất một chữ thường, chữ hoa, chữ số, ký tự đặc biệt: # ?!
+                @ $% ^ & * và tối thiểu 6 ký tự
+              </div>
+            </div>
+          </div>
+          <div class="form-group w-span" hasError="confirmPassword">
+            <div class="input-group">
+              <span class="input-group-addon min-width">Xác nhận mật khẩu</span>
+              <input type="password" class="form-control required" formControlName="confirmPassword">
+            </div>
+            <div class="error-messages" errorMessage>
+              <div *ifError="'required'">Trường bắt buộc</div>
+              <div *ifError="'requiredPassword'">Mật khẩu ít nhất một chữ thường, chữ hoa, chữ số, ký tự đặc biệt: # ?!
+                @ $% ^ & * và tối thiểu 6 ký tự
+              </div>
+              <div *ifError="'fieldMatch'">Mật khẩu không khớp</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="changePassword()">
+            <i class="fa fa-save"></i> Đồng ý
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="modal.hide()">
+            <i class="fa fa-times"></i> Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

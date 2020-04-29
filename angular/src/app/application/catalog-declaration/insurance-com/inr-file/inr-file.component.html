@@ -1,0 +1,25 @@
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-external-link-square"></i>
+      Danh mục loại hồ sơ bảo hiểm
+    </div>
+    <grid-table [fieldGrid]="gridField"
+                (callbackGrid)="callbackFile($event)"
+                (getParams)="getParamsFile()"
+    ></grid-table>
+    <div class="panel-footer text-right">
+      <button class="btn btn-blue mr-2" (click)="modifyInrFileModal.open()">
+        <i class="fa fa-plus"></i> Thêm
+      </button>
+      <button class="btn btn-blue mr-2" [disabled]="!selectedData" (click)="modifyInrFileModal.open(selectedData)">
+        <i class="fa fa-pencil"></i> Sửa
+      </button>
+      <button class="btn btn-blue" [disabled]="!selectedData" (click)="delete()">
+        <i class="fa fa-trash-o"></i> Xóa
+      </button>
+    </div>
+  </div>
+</div>
+
+<modify-inr-file-modal #modifyInrFileModal (close)="refreshFile()"></modify-inr-file-modal>

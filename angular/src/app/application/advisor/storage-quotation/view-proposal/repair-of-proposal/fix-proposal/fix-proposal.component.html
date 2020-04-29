@@ -1,0 +1,20 @@
+<form [formGroup]="proposalForm" *ngIf="proposalForm" novalidate autocomplete="off">
+  <div class="form-group" hasError="readjustRoid">
+    <label>Số RO gốc (*)</label>
+    <input type="text" class="form-control" formControlName="readjustRoid" (blur)="searchRoRoot($event)">
+    <div class="error-messages" errorMessage>
+      <div *ifError="'readjustRoid'">Số RO không đúng</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 form-group">
+      <label>Nguyên nhân</label>
+      <textarea rows="10" class="form-control" formControlName="readjustReason"></textarea>
+    </div>
+    <div class="col-sm-6 form-group">
+      <label>Cách khắc phục</label>
+      <textarea rows="10" class="form-control" formControlName="readjustFixnote"></textarea>
+    </div>
+  </div>
+  <button class="ghost" #submitBtn></button>
+</form>

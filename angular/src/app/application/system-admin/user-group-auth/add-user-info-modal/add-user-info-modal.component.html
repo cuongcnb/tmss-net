@@ -1,0 +1,162 @@
+<div bsModal #AddUpdateSetPassModal="bs-modal" class="modal fade" [config]="{ backdrop: 'static' }"
+     (onHidden)="reset()">
+  <div class="modal-dialog">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <button type="button" class="close" (click)="modal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title" *ngIf="type == 'add'"><strong>Thêm người dùng</strong></h5>
+          <h5 class="modal-title" *ngIf="type == 'update'"><strong>Sửa thông tin người dùng</strong></h5>
+          <h5 class="modal-title" *ngIf="type == 'setPass'"><strong>Đặt mật khẩu</strong></h5>
+        </div>
+        <perfect-scrollbar class="ps" [style.max-height.px]="modalHeight" (window:resize)="onResize()">
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group col-sm-12" hasError="dealerId">
+                <div class="input-group">
+                  <label class="input-group-addon">TMV/Dealer</label>
+                  <select formControlName="dealerId" class="form-control required">
+                    <option *ngFor="let dealer of dealerList" [ngValue]="dealer.id">{{dealer.vnName}}</option>
+                  </select>
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải nhập TMV/Dealer</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-4" hasError="fullName">
+                <div class="input-group">
+                  <label class="input-group-addon">Họ Tên</label>
+                  <input type="text" [attr.disabled]="(type === 'setPass')? '' : null" class="form-control required" formControlName="fullName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải nhập họ tên</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-8" hasError="disableAfterFailed">
+                <tmss-money-input text="User ID sẽ bị vô hiệu hóa sau" endText="lần đăng nhập thất bại liên tiếp" [isRequired]="true"
+                                  formControlName="disableAfterFailed"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải nhập số lần</div>
+                  <div *ifError="'numberFormat'">Không hợp lệ. Số lần nhập vào phải lớn hơn 0.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="userName">
+                <div class="input-group">
+                  <label class="input-group-addon">Tên Người Dùng</label>
+                  <input type="text" class="form-control required" formControlName="userName">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Trường này là bắt buộc</div>
+                  <div *ifError="'validateInputText'">Tên người dùng không hợp lệ</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-8" hasError="noPasswordHistory">
+                <tmss-money-input text="Cannot repeat any of the previous" endText="passwords had used before" [isRequired]="true"
+                                  formControlName="noPasswordHistory"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Trường này là bắt buộc</div>
+                  <div *ifError="'numberFormat'">Không hợp lệ, trường này phải lớn hơn 0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="userPassword">
+                <div class="input-group">
+                  <label class="input-group-addon">Mật khẩu</label>
+                  <input type="password" class="form-control required" formControlName="userPassword">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải nhập mật khẩu</div>
+                  <div *ifError="'requiredPassword'">Mật khẩu phải chứa chữ cái thường, chữ hoa, chữ số và ký tự đặc biệt: #?!@$%^&* và tối thiểu 6 chữ cái  </div>
+
+                </div>
+              </div>
+              <div class="form-group col-sm-8" hasError="sendEmail">
+                <tmss-money-input text="Mật khẩu sẽ hết hạn trong vòng" endText="ngày" [isRequired]="true"
+                                  formControlName="sendEmail"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Trường này là bắt buộc</div>
+                  <div *ifError="'numberFormat'">Không hợp lệ, bạn phải nhập vào số lớn hơn 0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4" hasError="rePassword">
+                <div class="input-group">
+                  <label class="input-group-addon">Xác nhận Mật khẩu</label>
+                  <input type="password" class="form-control required" formControlName="rePassword">
+                </div>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Bạn phải xác nhận mật khẩu</div>
+                  <div *ifError="'validateInputText'">Mật khẩu xác nhận không hợp lệ</div>
+
+                </div>
+              </div>
+              <div class="form-group col-sm-8" hasError="passwordChangeAfter">
+                <tmss-money-input text="Mật khẩu sẽ có hiệu lực trong vòng" endText="ngày tiếp theo" [isRequired]="true" formControlName="passwordChangeAfter"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Trường này là bắt buộc</div>
+                  <div *ifError="'numberFormat'">Không hợp lệ, bạn phải nhập vào số lớn hơn 0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-offset-4 col-sm-8" hasError="logoutAfter">
+                <tmss-money-input text="Đăng xuất sau" endText="ngày" [isRequired]="true" formControlName="logoutAfter"></tmss-money-input>
+                <div class="error-messages" errorMessage>
+                  <div *ifError="'required'">Trường này là bắt buộc</div>
+                  <div *ifError="'numberFormat'">Không hợp lệ, bạn phải nhập vào số lớn hơn 0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="exPriredDate" text="Ngày hết hạn"></tmss-datepicker>
+              </div>
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="effectiveDate" text="Ngày bắt đầu có hiệu lực"></tmss-datepicker>
+              </div>
+
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="updatePassword" text="Ngày cập nhật Mật khẩu"></tmss-datepicker>
+              </div>
+
+              <div class="form-group col-sm-6">
+                <tmss-datepicker formControlName="createdAt" text="Ngày tạo"></tmss-datepicker>
+              </div>
+              <div class="col-md-6 pl-0 pr-1">
+                <checkbox text="Người dùng phải thay đổi mật khẩu ở lần đăng nhập kế tiếp" formControlName="isNextLogon"></checkbox>
+              </div>
+              <div class="col-md-6  pl-1 pr-0">
+                <checkbox text="Tài khoản đã bị vô hiệu hóa" formControlName="isLocked"></checkbox>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-blue" (click)="submitData()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-blue" (click)="buildForm()">
+            <i class="fa fa-undo"></i> Xóa
+          </button>
+          <button type="button" class="btn btn-light-grey" (click)="hide()">
+            <i class="clip-cancel-circle-2"></i> Hủy
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

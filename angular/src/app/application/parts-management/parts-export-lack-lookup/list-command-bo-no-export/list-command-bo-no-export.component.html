@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-sm-12">
+    <form [formGroup]="searchForm" *ngIf="searchForm" autocomplete="off" novalidate>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <tmss-datepicker text="Từ" [isRequired]="true"
+                                 formControlName="fromDate"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <tmss-datepicker text="Đến" [isRequired]="true"
+                                 formControlName="toDate"></tmss-datepicker>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group input-group">
+                <span class="input-group-addon" addonWidth="58px">Kiểu</span>
+                <select class="form-control" formControlName="requestType">
+                  <option [ngValue]="0">Lệnh sửa chữa</option>
+                  <option [ngValue]="1">Bán lẻ phụ tùng</option>
+                  <option [ngValue]="2">Đặt hẹn</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group input-group search-group">
+                <span class="input-group-addon">Mã PT</span>
+                <input type="text" class="form-control" formControlName="partsCode">
+                <button type="submit" class="btn btn-blue" (click)="searchRo()"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-sm-12">
+    <div class="grid-table-area">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Danh sách RO
+        </div>
+        <grid-table [fieldGrid]="fieldRoList"
+                    (callbackGrid)="callbackRo($event)"
+                    [height]="'200px'"
+                    (getParams)="getParamsRo()"
+                    [isSuppressHorizontalScroll]="true"
+        ></grid-table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="text-right">
+  <button class="btn btn-blue " (click)="openShipping()"><i class="fa fa-mail-forward"></i> Mở Shipping</button>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="mt-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-external-link-square"></i>
+          Chi tiết RO
+        </div>
+        <grid-table [fieldGrid]="fieldRoDetailList"
+                    (callbackGrid)="callbackRoDetail($event)"
+                    [height]="'250px'"></grid-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Tìm kiếm đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartManualSearch" aria-expanded="true">
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartManualSearch" class="panel-collapse collapse in">
+
+  <div class="panel-body">
+    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off" focusField>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                    title="Số đơn hàng">Số ĐH</span>
+              <input type="text" class="form-control" formControlName="orderNo">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="fromDate" text="Từ ngày"></tmss-datepicker>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <tmss-datepicker formControlName="toDate" text="Đến ngày"></tmss-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                    title="Phương thức vận chuyển">PTVC</span>
+              <select class="form-control" formControlName="transportTypeId">
+                <option [ngValue]="null"></option>
+                <option *ngFor="let transportType of transportTypeList" [ngValue]="transportType.id">
+                  {{transportType.transportName}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon same-addon-width" data-toggle="tooltip" data-placement="bottom"
+                    title="Loại đơn hàng">Loại ĐH</span>
+              <select class="form-control" formControlName="orderTypeId">
+                <option [ngValue]="null">Tất cả</option>
+                <option *ngFor="let orderMethod of orderMethodArr" [ngValue]="orderMethod.id">
+                  {{orderMethod.orderMName}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-blue mr-2" (click)="searchOrder(); resetPaginationParams()">
+            <i class="fa fa-search"></i> Tìm kiếm
+          </button>
+          <button type="button" class="btn btn-blue mr-2" (click)="openTab()">
+            <i class="fa fa-plus"></i> Tạo ĐH
+          </button>
+          <!--<button class="btn btn-light-grey mr-2" (click)="updateOrder()">-->
+          <!--<i class="fa fa-edit"></i> Sửa ĐH-->
+          <!--</button>-->
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Danh sách đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartManualList" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartManualList" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridOrder" [height]="'200px'"
+                (callbackGrid)="callBackGridOrder($event)"
+                (getParams)="getParamsOrder()"
+                (changePaginationParams)="changePaginationOrder($event)"
+                [paginationTotalsData]="paginationTotalsOrder"
+    ></grid-table>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-info"></i>
+    Chi tiết đơn hàng
+    <div class="panel-tools">
+      <button type="button" class="btn btn-link" data-toggle="collapse"
+              data-target="#collapsePartManualDetail" aria-expanded="true" >
+      </button>
+    </div>
+  </div>
+  <div id="collapsePartManualDetail" class="panel-collapse collapse in">
+    <grid-table [fieldGrid]="fieldGridParts" [height]="'300px'"
+                (callbackGrid)="callBackGridParts($event)"
+                (getParams)="getParamsParts()"
+                (changePaginationParams)="changePaginationPart($event)"
+                [paginationTotalsData]="paginationTotalsPart"
+    ></grid-table>
+  </div>
+</div>
+<new-manual-order-modal [orderMethodArr]="orderMethodArr" [transportTypeList]="transportTypeList"
+                        #newManualOrderModal (close)="refreshAfterEdit($event)"></new-manual-order-modal>

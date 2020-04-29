@@ -1,0 +1,18 @@
+<div class="input-group" [ngClass]="className ? className : ''">
+  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+  <input type="text" class="form-control" [(ngModel)]="selectedValue" #datepicker="bsDatepicker"
+         [disabled]="isDisabled ? true : null"
+         [class.required]="isRequired"
+         [daysDisabled]="daysDisabled ? daysDisabled : null"
+         [minDate]="minDate" [maxDate]="maxDate"
+         [bsConfig]="dateInputFormat ? { dateInputFormat: dateInputFormat } : { dateInputFormat: 'DD-MMM-YYYY' }"
+         bsDatepicker readonly (bsValueChange)="onValueChange($event)" (onShown)="onShown($event)">
+  <span class="input-group-addon btn btn-light-grey" (click)="!isDisabled ? datepicker.toggle(): undefined"
+        [attr.aria-expanded]="datepicker.isOpen">
+    <i class="fa fa-calendar"></i>
+  </span>
+
+  <span *ngIf="showDeleteBtn" class="input-group-addon btn btn-dark-grey" (click)="remove()">
+    <i class="fa fa-times"></i>
+  </span>
+</div>

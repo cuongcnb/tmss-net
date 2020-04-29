@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-md-4">
+    <grid-table [fieldGrid]="sumRepair"
+                [height]="'188px'"
+                [showPagination]="false"
+    ></grid-table>
+  </div>
+
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form *ngIf="form" (submit)="onSubmit()" [formGroup]="form" autocomplete="off" novalidate>
+          <div class="row">
+            <div class="col-lg-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Nguồn tiếp nhận</span>
+                <select name="selectdl" class="form-control" formControlName="sources"></select>
+              </div>
+            </div>
+            <div class="col-lg-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon">Người L/H</span>
+                <input type="text" class="form-control" formControlName="contactPerson">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 form-group">
+                <tmss-datepicker text="Ngày liên hệ" formGroupName="dayContact"></tmss-datepicker>
+            </div>
+            <div class="col-lg-6 form-group">
+              <tmss-timepicker text="Giờ" formControlName="hourContact"></tmss-timepicker>
+            </div>
+          </div>
+          <div>
+            <span>Liên hệ lần: </span>
+            <label class="radio-inline"> <input type="radio" value="1" formControlName="contacted">1 </label>
+            <label class="radio-inline"> <input type="radio" value="2" formControlName="contacted">2 </label>
+            <label class="radio-inline"> <input type="radio" value="3" formControlName="contacted">3 </label>
+          </div>
+          <div>
+            <label class="radio-inline"> <input type="radio" value="success" formControlName="contactResult">Thành công
+            </label>
+            <label class="radio-inline"> <input type="radio" value="fail" formControlName="contactResult">Không thành
+              công </label>
+            <label class="radio-inline"> <input type="radio" value="notContact" formControlName="contactResult">Không
+              liên hệ </label>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">Lý do</span>
+              <textarea class="form-control" formControlName="reason"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

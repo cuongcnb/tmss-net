@@ -1,0 +1,9 @@
+<div class="text-center w-100">
+  <img *ngFor="let url of imgUrl" [src]="url" class="img-responsive mb-2"
+       [style.max-height.px]="maxHeight"
+  >
+  <input #imgInput type="file" accept="image/*" alt="l" class="d-none" (change)="previewImg($event)">
+  <button type="button" class="btn btn-bricky btn-upload" (click)="imgInput.click()">
+    <span>Chọn ảnh</span>
+  </button>
+</div>
