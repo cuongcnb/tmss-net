@@ -25,7 +25,9 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
     tenancyName = '';
     userName = '';
     profilePicture = AppConsts.appBaseUrl + '/assets/common/images/default-profile-picture.png';
-    defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.currentTheme.baseSettings.menu.asideSkin + '.svg';
+    // cuongnm
+    // defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + this.currentTheme.baseSettings.menu.asideSkin + '.svg';
+    defaultLogo = AppConsts.appBaseUrl + '/assets/common/images/app-logo-on-' + 'light' + '.svg';
     recentlyLinkedUsers: LinkedUserDto[];
     unreadChatMessageCount = 0;
     remoteServiceBaseUrl: string = AppConsts.remoteServiceBaseUrl;
@@ -120,9 +122,10 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
     }
 
     getRecentlyLinkedUsers(): void {
-        this._userLinkServiceProxy.getRecentlyUsedLinkedUsers().subscribe(result => {
-            this.recentlyLinkedUsers = result.items;
-        });
+        // cuongnm
+        // this._userLinkServiceProxy.getRecentlyUsedLinkedUsers().subscribe(result => {
+        //     this.recentlyLinkedUsers = result.items;
+        // });
     }
 
 

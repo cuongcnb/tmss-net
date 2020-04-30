@@ -25,7 +25,8 @@ export class HeaderNotificationsComponent extends AppComponentBase implements On
     }
 
     ngOnInit(): void {
-        this.loadNotifications();
+        // cuongnm
+        // this.loadNotifications();
         this.registerToEvents();
     }
 

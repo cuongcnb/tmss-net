@@ -34,8 +34,7 @@ export class AppPreBootstrap {
             } else if (queryStringObj.switchAccountToken) {
                 AppPreBootstrap.linkedAccountAuthenticate(queryStringObj.switchAccountToken, queryStringObj.tenantId, () => { AppPreBootstrap.getUserConfiguration(callback); });
             } else {
-                // AppPreBootstrap.getUserConfiguration(callback);
-                callback();
+                AppPreBootstrap.getUserConfiguration(callback);
             }
         });
     }

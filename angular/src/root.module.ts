@@ -58,21 +58,15 @@ export function appInitializerFactory(
                     resolve(true);
                 } else {
                     let appSessionService: AppSessionService = injector.get(AppSessionService);
-                    // appSessionService.init().then((result) => {
-                    //     initializeAppCssClasses(injector, result);
-                    //     initializeTenantResources(injector);
-                    //     initializeCookieConsent(injector);
-                    //     // registerLocales(resolve, reject, spinnerService);
-                        
-                    //     spinnerService.hide();
-                    //     resolve(true);
-                    // }, (err) => {
-                    //     spinnerService.hide();
-                    //     reject(err);
-                    // });
-
-                    spinnerService.hide();
-                    resolve(true);
+                    appSessionService.init().then((result) => {
+                        initializeAppCssClasses(injector, result);
+                        initializeTenantResources(injector);
+                        initializeCookieConsent(injector);
+                        registerLocales(resolve, reject, spinnerService);
+                    }, (err) => {
+                        spinnerService.hide();
+                        reject(err);
+                    });
                 }
 
             }, resolve, reject);

@@ -96,7 +96,8 @@ export class NotificationsComponent extends AppComponentBase {
 
     setAllNotificationsAsRead(): void {
         this._userNotificationHelper.setAllAsRead(() => {
-            this.getNotifications();
+            // cuongnm
+            // this.getNotifications();
         });
     }
 

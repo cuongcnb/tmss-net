@@ -12,6 +12,7 @@ import { WidgetViewDefinition, WidgetFilterViewDefinition } from './definitions'
 import { AddWidgetModalComponent } from './add-widget-modal/add-widget-modal.component';
 import { DashboardCustomizationConst } from './DashboardCustomizationConsts';
 import { ModalDirective } from 'ngx-bootstrap';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'customizable-dashboard',
@@ -61,7 +62,48 @@ export class CustomizableDashboardComponent extends AppComponentBase implements 
   ngOnInit() {
     this.loading = true;
 
-    this._dashboardCustomizationServiceProxy.getDashboardDefinition(this.dashboardName, DashboardCustomizationConst.Applications.Angular)
+    // cuongnm
+    // this._dashboardCustomizationServiceProxy.getDashboardDefinition(this.dashboardName, DashboardCustomizationConst.Applications.Angular)
+    of(JSON.parse(`{
+      "name": "HostDashboard",
+      "widgets": [
+        {
+          "id": "Widgets_Host_IncomeStatistics",
+          "name": "WidgetIncomeStatistics",
+          "description": null,
+          "filters": []
+        },
+        {
+          "id": "Widgets_Host_TopStats",
+          "name": "WidgetTopStats",
+          "description": null,
+          "filters": []
+        },
+        {
+          "id": "Widgets_Host_EditionStatistics",
+          "name": "WidgetEditionStatistics",
+          "description": null,
+          "filters": []
+        },
+        {
+          "id": "Widgets_Host_SubscriptionExpiringTenants",
+          "name": "WidgetSubscriptionExpiringTenants",
+          "description": null,
+          "filters": []
+        },
+        {
+          "id": "Widgets_Host_RecentTenants",
+          "name": "WidgetRecentTenants",
+          "description": null,
+          "filters": [
+            {
+              "id": "Filters_DateRangePicker",
+              "name": "FilterDateRangePicker"
+            }
+          ]
+        }
+      ]
+    }`))
       .subscribe((dashboardDefinitionResult: DashboardOutput) => {
         this.dashboardDefinition = dashboardDefinitionResult;
         if (!this.dashboardDefinition.widgets || this.dashboardDefinition.widgets.length === 0) {

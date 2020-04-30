@@ -44,14 +44,18 @@ export class AppComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this._userNotificationHelper.settingsModal = this.notificationSettingsModal;
-        this.theme = abp.setting.get('App.UiManagement.Theme').toLocaleLowerCase();
+        // cuongnm
+        // this.theme = abp.setting.get('App.UiManagement.Theme').toLocaleLowerCase();
+        this.theme = 'default';
+
         this.installationMode = UrlHelper.isInstallUrl(location.href);
 
         this.registerModalOpenEvents();
 
-        if (this.appSession.application) {
-            SignalRHelper.initSignalR(() => { this._chatSignalrService.init(); });
-        }
+        // cuongnm
+        // if (this.appSession.application) {
+        //     SignalRHelper.initSignalR(() => { this._chatSignalrService.init(); });
+        // }
     }
 
     subscriptionStatusBarVisible(): boolean {
