@@ -1,4 +1,4 @@
-import { Component, Injector, ViewEncapsulation, ChangeDetectorRef, QueryList, ViewChildren, ViewChild } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ChangeDetectorRef, QueryList, ViewChildren, ViewChild, ViewRef } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DashboardCustomizationConst } from '@app/shared/common/customizable-dashboard/DashboardCustomizationConsts';
 import { StorageKeys } from '@app/core/constains/storageKeys';
@@ -10,7 +10,7 @@ import { TMSSTabs } from '@app/core/constains/tabs';
 import { FilterFormCode } from '@app/core/constains/filter-form-code';
 import { CustomerModel } from '@app/core/models/advisor/customer';
 import { ShortcutInput } from 'ng-keyboard-shortcuts';
-import { setClickedRow } from '@app/application/advisor/customer-info/proposal/proposal.component';
+import { setClickedRow, proposalShortcutRef$ } from '@app/application/advisor/customer-info/proposal/proposal.component';
 import { HomeApi } from '@app/api/home.api';
 import { GridTableService } from '@app/shared/common-service/grid-table.service';
 import { ConfirmService } from '@app/shared/confirmation/confirm.service';
@@ -20,9 +20,10 @@ const tabChangeObserver = new ReplaySubject(1);
 const focusedCells: Array<any> = [];
 
 @Component({
+    selector: 'dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.less'],
-    encapsulation: ViewEncapsulation.None
+    // encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent extends AppComponentBase {
     @ViewChildren('dynamic_tab') tabElements: QueryList<any>;
@@ -109,6 +110,318 @@ export class DashboardComponent extends AppComponentBase {
                 }
             }
         }, false);
+
+        proposalShortcutRef$.subscribe((sc: Array<any>) => {
+            setClickedRow(null, null, null, true);
+            this.shortcuts = sc ? [...sc] : [];
+            setTimeout(() => {
+                if (this.changeDetectorRef && !(this.changeDetectorRef as ViewRef).destroyed) {
+                    this.changeDetectorRef.detectChanges();
+                }
+            });
+        });
+        this.lazyLoadTabs = [
+            // Fir category
+            TMSSTabs.firContactQuestions,
+            TMSSTabs.agencyContactQuestions,
+            TMSSTabs.listErrorField,
+            TMSSTabs.listPartError,
+            TMSSTabs.isErrorCode,
+            TMSSTabs.errorCause,
+            TMSSTabs.reasonNotContact,
+            // Service Kpi
+            TMSSTabs.updateDvData,
+            TMSSTabs.isSettlementDebtAccessory,
+            TMSSTabs.isLaborWages,
+            TMSSTabs.isInputFormatData,
+            TMSSTabs.isInputFormatDataBefore,
+            TMSSTabs.isInputInvoice,
+            TMSSTabs.isLaborWagesNation,
+            // Category VOC
+            TMSSTabs.categoryRequestField,
+            TMSSTabs.categoryRequestProblem,
+            TMSSTabs.categoryComplainField,
+            TMSSTabs.categoryComplainProblem,
+            TMSSTabs.categoryPartsDamaged,
+            TMSSTabs.categoryPhenomenaDamaged,
+            TMSSTabs.categoryErrorDSO1,
+            TMSSTabs.categoryErrorDSO2,
+            TMSSTabs.categoryReasonDSO1,
+            TMSSTabs.categoryReasonDSO2,
+            TMSSTabs.categoryCarType,
+            TMSSTabs.categoryCarModel,
+            TMSSTabs.categorySpecifications,
+            // DLR khai báo danh mục
+            TMSSTabs.provinceList,
+            TMSSTabs.districtList,
+            TMSSTabs.dealerIpConfig,
+            TMSSTabs.unitCatalog,
+            TMSSTabs.staffCatalog,
+            TMSSTabs.repairCavity,
+            TMSSTabs.parameterOperationAgent,
+            TMSSTabs.wshopBpGroup,
+            TMSSTabs.modelDeclaration,
+            TMSSTabs.generalRepair,
+            TMSSTabs.supplierManagement,
+            TMSSTabs.insuranceCompany,
+            TMSSTabs.repairJobMaster,
+            TMSSTabs.applyJobForCarMaster,
+            TMSSTabs.applyBPJobForCarMaster,
+            // TMSSTabs.agentCampaignManagement,
+            TMSSTabs.bankCatalog,
+            TMSSTabs.dealerFooter,
+            TMSSTabs.deskAdvisor,
+            TMSSTabs.dlrFloor,
+            // TMSSTabs.collocationCustomer,
+            TMSSTabs.forecastOrder,
+            TMSSTabs.followOrder,
+            TMSSTabs.dsManagement,
+            TMSSTabs.campaignDlr,
+            TMSSTabs.laborRateMaintenance,
+            // Kaizen Api
+            TMSSTabs.isUpdateKzServiceData,
+            // Cashier
+            TMSSTabs.cashier,
+            TMSSTabs.carNotSettlementToOutGate,
+            // Part management
+            TMSSTabs.dlrBoPartsExport,
+            TMSSTabs.dlrBoPartsRequest,
+            TMSSTabs.dlrBoPartsFollowup,
+            TMSSTabs.dlrBoPartsFollowupNvpt,
+            TMSSTabs.dlrRoLackOfParts,
+            TMSSTabs.dlrPartsOrderForStoring,
+            TMSSTabs.dlrPartsRetail,
+            TMSSTabs.dlrPartsRetailNewTabOrder,
+            TMSSTabs.dlrPartsManualOrder,
+            TMSSTabs.newManualTabOrder,
+            TMSSTabs.dlrPartsInStockAdjustment,
+            TMSSTabs.dlrPartsSpecialOrder,
+            TMSSTabs.dlrPartsPrePlanOrder,
+            TMSSTabs.dlrPartsInStockStatus,
+            TMSSTabs.dlrPartsInfoManagement,
+            TMSSTabs.dlrPartsCancelOrderRequest,
+            TMSSTabs.dlrPartsReceiveAuto,
+            TMSSTabs.dlrPartsReceiveManual,
+            TMSSTabs.dlrPartsReceiveNonToyota,
+            TMSSTabs.dlrPartsUpcommingInfo,
+            TMSSTabs.dlrPartsLookupInfo,
+            TMSSTabs.dlrPartsExportLackLookup,
+            TMSSTabs.dlrPartsCancelChecking,
+            TMSSTabs.dlrDeadStockPartForSale,
+            TMSSTabs.dlrDeadStockPartSearching,
+            TMSSTabs.dlrSendClaim,
+            TMSSTabs.dlrPartsRepairPositionPrepick,
+            TMSSTabs.dlrMipCalculate,
+            TMSSTabs.dlrOnhandOrderFollowup,
+            TMSSTabs.partsCheckPriceCode,
+            TMSSTabs.partsReciveHistory,
+            TMSSTabs.partShippingHistory,
+            TMSSTabs.mipImport,
+            TMSSTabs.orderForLexusPart,
+            TMSSTabs.partsNonLexusOrderLexus,
+            TMSSTabs.setupFormulaMIP,
+            TMSSTabs.partSaleDlrToTmv,
+            TMSSTabs.lexusReturnToDealer,
+            // Coo
+            TMSSTabs.generalRepairProgress,
+            TMSSTabs.infoGeneralRepairProgress,
+            TMSSTabs.dongsonProgress,
+            TMSSTabs.dongsonProgressByCar,
+            TMSSTabs.dongsonProgressByWshop,
+            TMSSTabs.vehicleHistory,
+            TMSSTabs.carWash,
+            TMSSTabs.emp,
+            // Srv master
+            TMSSTabs.dlrOrderToLexusManagement,
+            TMSSTabs.listOfDlrOrderToLexus,
+            TMSSTabs.lexusPartsPriceManagement,
+            // New infomation
+            TMSSTabs.isNewPromotion,
+            TMSSTabs.regisTestDrive,
+            // Warranty
+            TMSSTabs.campaignManagementTmv,
+            TMSSTabs.warrantyInformation,
+            TMSSTabs.claimStatusReport,
+            TMSSTabs.warrantyTimeSheetDeclare,
+            TMSSTabs.warrantyFollowUp,
+            TMSSTabs.warrantyAssign,
+            TMSSTabs.updateKm,
+            TMSSTabs.exchangeRateMaintenance,
+            TMSSTabs.t1t2t3WarningList,
+            TMSSTabs.subletTypeMaintenance,
+            TMSSTabs.warrantyCheckWmi,
+            TMSSTabs.vendorMaintenance,
+            TMSSTabs.warrantyVehicleRegistration,
+            TMSSTabs.soldVehicleMaintenance,
+            TMSSTabs.campaignVehComplete,
+            TMSSTabs.campaignFollowRemind,
+            TMSSTabs.campaignFollowUp,
+            // dlr new part
+            TMSSTabs.isOrderSentLexus,
+            TMSSTabs.partsReceiveAutoLexus,
+            TMSSTabs.partsReceiveManualLexus,
+            TMSSTabs.isOrderSpecializedLaxus,
+            TMSSTabs.lexusPartsReceiveHistory,
+            // SSI
+            TMSSTabs.ssiSurveyList,
+            TMSSTabs.ssiSurveyHandle,
+            TMSSTabs.webSsiSurveyList,
+            TMSSTabs.webSsiSurveyHandle,
+            TMSSTabs.surveyResultList,
+            TMSSTabs.blackList,
+            TMSSTabs.ssiDataList,
+            TMSSTabs.importDataSurvey,
+            // CSI
+            TMSSTabs.csiSurveyHandle,
+            TMSSTabs.csiSurveyList,
+            TMSSTabs.webCsiSurveyHandle,
+            TMSSTabs.webCsiSurveyList,
+            TMSSTabs.csiSurveyResult,
+            TMSSTabs.blackListCsi,
+            TMSSTabs.csiDataList,
+            // System admin
+            TMSSTabs.systemUserAndGroupDefinition,
+            TMSSTabs.userGroupAndAuthority,
+            TMSSTabs.userManagement,
+            TMSSTabs.systemFunctionList,
+            TMSSTabs.declareIp,
+            // Manage VOC
+            TMSSTabs.manageQuestionRequest,
+            TMSSTabs.manageDiscontentComplain,
+            TMSSTabs.manageComplainPotential,
+            TMSSTabs.referHandlingComplain,
+            TMSSTabs.historyUpdateComplain,
+            TMSSTabs.listComplainHandleTMV,
+            TMSSTabs.listRequestComlainCRAM,
+            TMSSTabs.manageFAQ,
+            TMSSTabs.manageDocumentSupport,
+            TMSSTabs.searchDocumentSupport,
+            // FIR
+            TMSSTabs.firModifyAfterProcess,
+            TMSSTabs.contactAfterRepair,
+            // Nhac bao duong
+            TMSSTabs.maintenanceCalling,
+            TMSSTabs.maintenanceCallingNotContact,
+            TMSSTabs.maintenanceMessage,
+            TMSSTabs.maintenanceLetter,
+            // Track customer
+            TMSSTabs.trackCustomerNotBack,
+            TMSSTabs.trackCustomerBuyCarNotBack,
+            // Works 1k
+            TMSSTabs.contactAfterDays15,
+            TMSSTabs.contactAfterDays55,
+            TMSSTabs.contactMaintenanceRemind,
+            // Search data
+            TMSSTabs.searchCustomer,
+            TMSSTabs.callSearch,
+            TMSSTabs.listCustomerAppointment,
+            TMSSTabs.customerService,
+            TMSSTabs.customerBuyNewCar,
+            // Advisor
+            TMSSTabs.booking,
+            TMSSTabs.customerInfo,
+            TMSSTabs.standardizeCustomerInfo,
+            TMSSTabs.changeCustomerInfo,
+            TMSSTabs.unfWorkDlrAdv,
+            TMSSTabs.repairProfile,
+            TMSSTabs.quotationAccount,
+            TMSSTabs.storageQuotation,
+            TMSSTabs.storageJobPackage,
+            TMSSTabs.proposal,
+            TMSSTabs.viewProposal,
+            TMSSTabs.dlrBoPartsFollowupCvdv,
+            TMSSTabs.moveRoSettlementToRepair,
+            TMSSTabs.dlrBoPartsFollowupCvdv,
+
+            // 'src/app/application/admin/admin.module#AdminModule': [
+            TMSSTabs.columnList,
+            TMSSTabs.formColumn,
+            TMSSTabs.formGroup,
+            TMSSTabs.userColumn,
+            TMSSTabs.dealerIpConfig,
+            TMSSTabs.tmssCheckLogs,
+            TMSSTabs.checkLogVehicles,
+            // 'src/app/application/daily-sale/daily-sale.module':
+            TMSSTabs.cbuVehicleInfo,
+            TMSSTabs.ckdVehicleInfo,
+            TMSSTabs.changeDelivery,
+            TMSSTabs.contractManagement,
+            TMSSTabs.csChangeInformation,
+            TMSSTabs.vehicleArrival,
+            // 'src/app/application/dealer-order/dealer-order.module': [
+            // TMSSTabs.cbuOrder,
+            // TMSSTabs.ckdOrder,
+            // TMSSTabs.dlrOrderSummary,
+            // TMSSTabs.secondCbuOrder,
+            // TMSSTabs.secondCkdOrder,
+            // 'src/app/application/dlr/dlr-master-data/dlr-master-data.module': [
+            TMSSTabs.yardLocation,
+            TMSSTabs.salesGroup,
+            TMSSTabs.salesPerson,
+            // 'src/app/application/fleet-sale/fleet-sale.module': [
+            TMSSTabs.fleetCustomer,
+            TMSSTabs.dlrFleetSaleApplication,
+            TMSSTabs.salesPerson,
+            TMSSTabs.fleetSaleApplicationTMV,
+            // 'src/app/application/master-data/master-data.module': [
+            TMSSTabs.arrivalLeadTime,
+            TMSSTabs.audioManagement,
+            TMSSTabs.bankManagement,
+            TMSSTabs.colorAssignment,
+            TMSSTabs.colorList,
+            TMSSTabs.dealerAddressDelivery,
+            TMSSTabs.dealerGroup,
+            TMSSTabs.districtList,
+            TMSSTabs.gradeProduction,
+            // TMSSTabs.insuranceCompany,
+            TMSSTabs.invoiceLeadtime,
+            TMSSTabs.logisticsCompany,
+            TMSSTabs.meanOfTransportation,
+            TMSSTabs.modelList,
+            TMSSTabs.moneyDefine,
+            TMSSTabs.provinceList,
+            TMSSTabs.tmvDayoff,
+            TMSSTabs.dlrDayoff,
+            TMSSTabs.yardRegion,
+            TMSSTabs.yardManagement,
+            TMSSTabs.dealerList,
+            TMSSTabs.petrolManagement,
+            // TMSSTabs.insuranceManagement,
+            // 'src/app/application/swapping/swapping.module': [
+            TMSSTabs.advanceReport,
+            TMSSTabs.dispatchChangeRequest,
+            TMSSTabs.nationwideSellingList,
+            TMSSTabs.nationwideBuyingList,
+            TMSSTabs.dlrVehicleInformation,
+            TMSSTabs.searchingVehicle,
+            TMSSTabs.sellBuyMatching,
+            TMSSTabs.sellSwapReport,
+            TMSSTabs.swappingVehicle,
+            TMSSTabs.dlrVehicleInformation,
+            // 'src/app/application/tfs/tfs.module': [
+            TMSSTabs.dealersBalance,
+            TMSSTabs.paymentFollowup,
+            TMSSTabs.dealerOrderConfig,
+            TMSSTabs.dealerVersionType,
+            TMSSTabs.dealerSalesTarget,
+            TMSSTabs.dealerSalesPlan,
+            TMSSTabs.dealerOrder,
+            TMSSTabs.dealerAllocation,
+            TMSSTabs.dealerCbuColorOrder,
+            TMSSTabs.dealerRunDown,
+            TMSSTabs.dealerSalesTargetFleet,
+            TMSSTabs.dealerNenkei
+        ];
+
+        this.notService = [
+            TMSSTabs.generalRepairProgress,
+            TMSSTabs.infoGeneralRepairProgress,
+            TMSSTabs.dongsonProgress,
+            TMSSTabs.dongsonProgressByCar,
+            TMSSTabs.dongsonProgressByWshop,
+            TMSSTabs.carWash,
+            TMSSTabs.emp
+        ];
     }
 
     ngOnInit() {

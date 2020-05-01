@@ -6,6 +6,10 @@ import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
 import './polyfills.ts';
 import { RootModule } from './root.module';
+import { LicenseManager } from 'ag-grid-enterprise/main';
+import 'hammerjs';
+
+LicenseManager.setLicenseKey('Evaluation_License-_Not_For_Production_Valid_Until_25_August_2019__MTU2NjY4NzYwMDAwMA==d375b77243a314f97ad493a7492af9ea');
 
 if (environment.production) {
     enableProdMode();

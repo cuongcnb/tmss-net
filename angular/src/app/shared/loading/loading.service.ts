@@ -20,7 +20,7 @@ export class LoadingService {
         const componentRef = this.resolver.resolveComponentFactory(LoadingComponent).create(this.injector);
         const newDiv = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
-        const homeDiv = document.querySelector('home');
+        const homeDiv = document.querySelector('dashboard');
         const authDiv = document.querySelector('auth');
 
         if (homeDiv) {
