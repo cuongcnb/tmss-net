@@ -1,1 +1,56 @@
-<customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard>
+<!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
+<div [hidden]="hide" class="container" id="breadcrumb-container">
+    <div class="tabbable mt-4" *ngIf="activeTabs.length">
+      <ul id="myTab" class="nav nav-tabs tab-bricky">
+        <li (mouseup)="triggerMouseEvent($event, activeTab.tab)"
+            *ngFor="let activeTab of activeTabs"
+            [class.active]="activeTab.tab === selectedTab" (click)="selectTab(activeTab.tab, $event)"
+            data-toggle="tooltip"
+            data-placement="bottom" title="{{activeTab.name}}" class="pointer">
+          <a data-toggle="tab" class="tab-item text-capitalize">
+            <button type="button" class="close" (click)="removeTab(activeTab.tab)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{activeTab.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!--tiến độ-->
+    <!-- <general-repair-progress *ngIf="isLoadComponent(tMSSTabs.generalRepairProgress)"
+                             #generalRepairProgress [dataProgress]="dataProgress"
+                             [tabDisplay]="selectedTab === tMSSTabs.generalRepairProgress"></general-repair-progress>
+    <info-general-repair-progress *ngIf="isLoadComponent(tMSSTabs.infoGeneralRepairProgress)"
+                                  [tabDisplay]="selectedTab === tMSSTabs.infoGeneralRepairProgress"></info-general-repair-progress>
+    <dong-son-progress *ngIf="isLoadComponent(tMSSTabs.dongsonProgress)"
+                       #dongSonProgress [tabDisplay]="selectedTab === tMSSTabs.dongsonProgress"></dong-son-progress>
+    <dong-son-progress-by-car *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByCar)"
+                              #dongSonProgressByCar
+                              [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByCar"></dong-son-progress-by-car>
+    <dong-son-progress-by-wshop *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByWshop)"
+                                #dongSonProgressByWshop
+                                [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByWshop"></dong-son-progress-by-wshop>
+    <car-wash-progress *ngIf="isLoadComponent(tMSSTabs.carWash)"
+                       #carWashProgress [tabDisplay]="selectedTab === tMSSTabs.carWash"></car-wash-progress> -->
+
+    <!-- Lễ tân -->
+    <receptionist *ngIf="isLoadComponent(tMSSTabs.receptionist)"
+                  #receptionist [tabDisplay]="selectedTab === tMSSTabs.receptionist"></receptionist>
+
+    <div class="component-service">
+      <gate-in-out #gateInOut *ngIf="isLoadComponent(tMSSTabs.gateInOut)"
+                   [tabDisplay]="selectedTab === tMSSTabs.gateInOut" (shortcuts)="setShortcuts($event)">
+      </gate-in-out>
+      <customer-service-reception *ngIf="isLoadComponent(tMSSTabs.collocationCustomer)"
+                                  [tabDisplay]="selectedTab === tMSSTabs.collocationCustomer"></customer-service-reception>
+      <receiving-vehicle *ngIf="isLoadComponent(tMSSTabs.receivingVehicle)" #receivingVehicle
+                         [tabDisplay]="selectedTab === tMSSTabs.receivingVehicle"></receiving-vehicle>
+      <dynamic-tab *ngFor="let tab of isService(canLazyLoad(activeTabs))"
+                   [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
+                   [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
+    </div>
+    <dynamic-tab *ngFor="let tab of nonService(canLazyLoad(activeTabs))"
+                 [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
+                 [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
+  </div>

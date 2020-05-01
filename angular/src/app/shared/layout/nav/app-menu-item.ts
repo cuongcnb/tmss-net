@@ -7,7 +7,7 @@ export class AppMenuItem {
     external: boolean;
     requiresAuthentication: boolean;
     featureDependency: any;
-    parameters: {};
+    parameters: any;
 
     constructor(
         name: string,

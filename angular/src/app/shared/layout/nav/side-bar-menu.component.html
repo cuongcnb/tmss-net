@@ -27,14 +27,20 @@
 
 <ng-template #mMenuItem let-item="item" let-parentItem="parentItem">
     <li *ngIf="showMenuItem(item)" class="{{ui.getSideBarMenuItemClass(item, isMenuItemIsActive(item))}}"
-        aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+        aria-haspopup="true" data-ktmenu-submenu-toggle="hover" (click)="openComponent($event, item)">
 
         <!-- if menu item hasn't submenu -->
-        <a *ngIf="!item.items.length && !item.external" [queryParams]="item.parameters" [routerLink]="item.route"
+        <!-- <a *ngIf="!item.items.length && !item.external" [queryParams]="item.parameters" [routerLink]="item.route"
+            class="kt-menu__link">
+            <ng-container [ngTemplateOutlet]="mMenuItemText"
+                [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
+        </a> -->
+        <a *ngIf="!item.items.length && !item.external"
             class="kt-menu__link">
             <ng-container [ngTemplateOutlet]="mMenuItemText"
                 [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
         </a>
+
         <a *ngIf="!item.items.length && item.external" [attr.href]="item.route" target="_blank"
             class="kt-menu__link kt-menu__toggle">
             <ng-container [ngTemplateOutlet]="mMenuItemText"

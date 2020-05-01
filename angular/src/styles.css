@@ -115,3 +115,6 @@ body.swal2-height-auto {
     animation: glowing 2s infinite;
 }
 
+.kt-header--fixed.kt-subheader--fixed.kt-subheader--enabled .kt-wrapper {
+    padding-top: 65px !important;
+}

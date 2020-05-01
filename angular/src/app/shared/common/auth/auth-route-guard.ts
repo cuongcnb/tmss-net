@@ -6,6 +6,8 @@ import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { Observable } from '@node_modules/rxjs/internal/Observable';
 import { RefreshTokenService } from 'abp-ng2-module/dist/src/abpHttpInterceptor';
 import { of, Subject } from 'rxjs';
+import { FormStoringService } from '@app/shared/common-service/form-storing.service';
+import { StorageKeys } from '@app/core/constains/storageKeys';
 
 @Injectable()
 export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -14,7 +16,8 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
         private _permissionChecker: PermissionCheckerService,
         private _router: Router,
         private _sessionService: AppSessionService,
-        private _refreshTokenService: RefreshTokenService
+        private _refreshTokenService: RefreshTokenService,
+        private formStoringService: FormStoringService
     ) { }
 
     canActivateInternal(data: any, state: RouterStateSnapshot): Observable<boolean> {
@@ -22,10 +25,13 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
             return of(true);
         }
 
-        if (!this._sessionService.user) {
+        // cuongnm
+        // if (!this._sessionService.user) {
+        if (!this.formStoringService.get(StorageKeys.currentUser)) {
             let sessionObservable = new Subject<any>();
 
-            this._refreshTokenService.tryAuthWithRefreshToken()
+            // this._refreshTokenService.tryAuthWithRefreshToken()
+            of(this.formStoringService.get(StorageKeys.currentUser))
                 .subscribe(
                     (autResult: boolean) => {
                         if (autResult) {

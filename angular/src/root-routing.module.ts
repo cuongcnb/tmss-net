@@ -42,7 +42,7 @@ export class RootRoutingModule {
             } if (url.indexOf('/auth/login') >= 0) {
                 this.setLoginBodyClassInternal();
             } else {
-                // this.setAppModuleBodyClassInternal();
+                this.setAppModuleBodyClassInternal();
             }
         }
     }
