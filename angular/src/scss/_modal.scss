@@ -1,0 +1,36 @@
+$mdScreen: 768px;
+$lgScreen: 992px;
+$xlScreen: 1200px;
+$fullWidth: 95%;
+
+.modal-dialog.full-width {
+  width: $fullWidth !important;
+}
+
+@media (min-width: $mdScreen) {
+  .modal-dialog.xl-width .modal-dialog.lg-width {
+    width: $fullWidth !important;
+  }
+}
+
+@media (min-width: $lgScreen) {
+  $xlWidth: 940px;
+  $lgWidth: 800px;
+  .modal-dialog.xl-width {
+    width: $xlWidth !important;
+  }
+  .modal-dialog.lg-width {
+    width: $lgWidth !important;
+  }
+}
+
+@media (min-width: $xlScreen) {
+  $xlWidth: 1170px;
+  $lgWidth: 980px;
+  .modal-dialog.xl-width {
+    width: $xlWidth !important;
+  }
+  .modal-dialog.lg-width {
+    width: $lgWidth !important;
+  }
+}

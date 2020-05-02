@@ -1,0 +1,79 @@
+.ag-theme-balham .cell-border {
+  border-right: 1px solid #d9dcde;
+  &:focus {
+    border-right: 1px solid #0091EA;
+  }
+}
+
+.ag-theme-balham .ag-cell-focus {
+  border: 1px solid #0091EA !important;
+}
+
+.ag-row .ag-cell:last-child {
+  border-right: 1px solid #BDC3C7;
+}
+
+.cell-clickable {
+  background-color: #FFFFCC;
+  cursor: pointer;
+  &:hover {
+    background-color: darken(#FFFFCC, 10%);
+  }
+}
+
+.cell-green {
+  background-color: #40C200;
+  cursor: pointer;
+  &:hover {
+    background-color: darken(#40C200, 10%);
+  }
+}
+
+.cell-orange {
+  background-color: #F6C602;
+  cursor: pointer;
+  &:hover {
+    background-color: darken(#F6C602, 10%);
+  }
+
+}
+
+.cell-readonly {
+  background-color: #EFEFEF !important;
+}
+.cell-carFirtIn{
+  background-color: #d4cdcd
+}
+
+.ag-theme-balham .ag-row-selected {
+  .cell-readonly {
+    background-color: #B7E4FF !important;
+  }
+  //.cell-clickable, .cell-green, .cell-orange {
+  //  background-color: #B7E4FF !important;
+  //}
+}
+
+.modal-body {
+  ::ng-deep ag-grid-angular {
+    min-width: inherit !important;
+  }
+}
+
+.ag-body-viewport {
+  -ms-overflow-style: scrollbar;
+}
+
+.ag-theme-balham .ag-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.ag-theme-balham .ag-header-cell, .ag-theme-balham .ag-header-group-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.ag-theme-balham .ag-popup-editor {
+  z-index: 10;
+}

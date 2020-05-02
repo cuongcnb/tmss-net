@@ -1,5 +1,6 @@
 <!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
-<div [hidden]="hide" class="container" id="breadcrumb-container">
+<div id="main-container" class="main-container">
+  <div [hidden]="hide" class="container" id="breadcrumb-container">
     <div class="tabbable mt-4" *ngIf="activeTabs.length">
       <ul id="myTab" class="nav nav-tabs tab-bricky">
         <li (mouseup)="triggerMouseEvent($event, activeTab.tab)"
@@ -54,3 +55,4 @@
                  [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
                  [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
   </div>
+</div>

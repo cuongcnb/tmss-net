@@ -1,0 +1,82 @@
+.search-group {
+  position: relative;
+  .form-control {
+    width: calc(100% - 50px);
+  }
+  .btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.form-group {
+  .radio > .form-check-inline > input[type='radio'] {
+    margin-top: 0;
+  }
+}
+
+label.required {
+  &:after {
+    content: " *";
+    color: #dc3545;
+  }
+}
+
+.invalid-control {
+  input.ng-invalid:not(.ag-floating-filter-input), .trigger-field, select:not(.ingnore-valid), textarea, .check-invalid > input, .input-group > .check-invalid {
+    border-color: #dc3545;
+    &:focus {
+      outline: none;
+    }
+  }
+  .error-messages {
+    & > div {
+      color: #dc3545;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+form {
+  .input-group {
+    .input-group-addon {
+      text-align: right;
+    }
+  }
+  .double-input {
+    input, select {
+      display: inline-block;
+    }
+
+    input, select {
+      width: 50%;
+    }
+  }
+
+  .double-input-7-3 {
+    input, select {
+      display: inline-block;
+    }
+
+    input:first-child, select:first-child {
+      width: 70%;
+    }
+
+    input:last-child, select:last-child {
+      width: 30%;
+    }
+  }
+
+  .row.col-padding {
+    div[class*='col-']:first-child {
+      padding-right: 0;
+    }
+  }
+}
+
+//.input-group-addon:not(.btn) {
+//  &.min-width {
+//    text-align: center;
+//  }
+//}
