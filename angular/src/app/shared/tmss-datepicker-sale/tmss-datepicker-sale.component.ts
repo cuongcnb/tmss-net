@@ -43,8 +43,9 @@ export class TmssDatepickerSaleComponent implements OnInit, ControlValueAccessor
   }
 
   onValueChange(val) {
-    this.selectedValue = this.dataFormatService.formatDateSale(val);
-    if (isFunction(this.onChange)) {
+    const selectedValue = this.dataFormatService.formatDateSale(val);
+    if (isFunction(this.onChange) && selectedValue !== this.selectedValue) {
+      this.selectedValue = selectedValue;
       this.onChange(this.selectedValue);
     }
   }
@@ -57,29 +58,14 @@ export class TmssDatepickerSaleComponent implements OnInit, ControlValueAccessor
   }
 
   writeValue(val) {
-    if (val !== null || this.selectedValue !== undefined) {
 
-      const isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
-      if (isFirefox && typeof val === 'string') {
-        const dateArr = val.split('-');
-        val = `${dateArr[1]} ${dateArr[0]}, ${dateArr[2]}`;
-      }
-
-      if (this.selectedValue !== undefined && val !== this.selectedValue) {
-
-        this.selectedValue = val ? new Date(val.toString()) : '';
-
-      }
-
+    const isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+    if (isFirefox && typeof val === 'string') {
+      const dateArr = val.split('-');
+      val = `${dateArr[1]} ${dateArr[0]}, ${dateArr[2]}`;
     }
 
-    // const isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
-    // if (isFirefox && typeof val === 'string') {
-    //   const dateArr = val.split('-');
-    //   val = `${dateArr[1]} ${dateArr[0]}, ${dateArr[2]}`;
-    // }
-
-    // this.selectedValue = val ? new Date(val.toString()) : '';
+    this.selectedValue = val ? new Date(val.toString()) : '';
   }
 
   registerOnChange(fn) {
