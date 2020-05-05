@@ -55,6 +55,6 @@
                  [tabDisplay]="selectedTab === tab.tab" [tab]="tab.tab" [inputs]="tab.inputs"
                  [isAdmin]="currentUser.isAdmin" (output)="runDynamicOutput($event)" #dynamic_tab></dynamic-tab>
   </div>
-</div>
 
-<vehicle-arrival-filter-modal #vehicleArrivalFilterModal (close)="openComponentAfterCloseModal(tMSSTabs.vehicleArrival, $event)"></vehicle-arrival-filter-modal>
+  <vehicle-arrival-filter-modal #vehicleArrivalFilterModal (close)="openComponentAfterCloseModal(tMSSTabs.vehicleArrival, $event)"></vehicle-arrival-filter-modal>
+</div>

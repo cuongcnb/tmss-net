@@ -32,5 +32,6 @@ $fullWidth: 95%;
   }
   .modal-dialog.lg-width {
     width: $lgWidth !important;
+    max-width: none;
   }
 }
