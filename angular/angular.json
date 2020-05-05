@@ -58,7 +58,6 @@
               
               "src/app/shared/core.less",
               "src/app/shared/layout/layout.less",
-              "src/styles.css",
               "src/styles.scss"
             ],
             "scripts": [
