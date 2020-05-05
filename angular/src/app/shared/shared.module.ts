@@ -443,6 +443,7 @@ const FilterStartModals = [
     SaleFilterComponent,
     AgCellEditModalComponent,
     PageTitleDirective,
+    FilterStartModals
 
   ],
   providers: [

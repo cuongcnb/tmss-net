@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {isFunction} from 'util';
-import {DataFormatService} from '../common-service/data-format.service';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { isFunction } from 'util';
+import { DataFormatService } from '../common-service/data-format.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -43,8 +43,9 @@ export class TmssDatepickerSaleComponent implements OnInit, ControlValueAccessor
   }
 
   onValueChange(val) {
-    this.selectedValue = this.dataFormatService.formatDateSale(val);
-    if (isFunction(this.onChange)) {
+    const selectedValue = this.dataFormatService.formatDateSale(val);
+    if (isFunction(this.onChange) && selectedValue !== this.selectedValue) {
+      this.selectedValue = selectedValue;
       this.onChange(this.selectedValue);
     }
   }
@@ -57,6 +58,7 @@ export class TmssDatepickerSaleComponent implements OnInit, ControlValueAccessor
   }
 
   writeValue(val) {
+
     const isFirefox = /Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent);
     if (isFirefox && typeof val === 'string') {
       const dateArr = val.split('-');
