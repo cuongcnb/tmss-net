@@ -310,7 +310,7 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
     }
 
     openComponent(event, item: AppMenuItem) {
-        const functionCode = item.parameters.functionCode
+        const functionCode = item.parameters.functionCode;
         if (!functionCode) {
             return;
         }
@@ -327,6 +327,10 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
             //     reportFunction: funcSelected.reportFunction,
             //     reportType: funcSelected.menuName
             // });
+            this.eventBus.emit({
+                type: 'openModal',
+                funcSelected: funcSelected
+            });
             console.log(funcSelected);
         } else if (functionCode === 'SCREEN_WAIT_RECEPTION') {
             window.open('/screen-wait-reception', '_blank');

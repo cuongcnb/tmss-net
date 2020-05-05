@@ -1,4 +1,4 @@
-import { Component, Injector, ViewEncapsulation, ChangeDetectorRef, QueryList, ViewChildren, ViewChild, ViewRef } from '@angular/core';
+import { Component, Injector, ViewEncapsulation, ChangeDetectorRef, QueryList, ViewChildren, ViewChild, ViewRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { DashboardCustomizationConst } from '@app/shared/common/customizable-dashboard/DashboardCustomizationConsts';
 import { StorageKeys } from '@app/core/constains/storageKeys';
@@ -25,7 +25,7 @@ const focusedCells: Array<any> = [];
     styleUrls: ['./dashboard.component.less'],
     // encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent extends AppComponentBase {
+export class DashboardComponent extends AppComponentBase implements OnInit, OnDestroy, AfterViewInit {
     @ViewChildren('dynamic_tab') tabElements: QueryList<any>;
     @ViewChild('receptionist', { static: false }) receptionist;
     @ViewChild('receivingVehicle', { static: false }) receivingVehicle;
@@ -40,6 +40,8 @@ export class DashboardComponent extends AppComponentBase {
     @ViewChild('cashierBlock', { static: false }) cashierBlock;
     @ViewChild('proposal', { static: false }) proposal;
     @ViewChild('tabFocus', { static: false }) tabFocus;
+
+    @ViewChild('vehicleArrivalFilterModal', { static: false }) vehicleArrivalFilterModal;
 
     dashboardName = DashboardCustomizationConst.dashboardNames.defaultTenantDashboard;
     checkRemoveTab = false;
@@ -86,6 +88,8 @@ export class DashboardComponent extends AppComponentBase {
     lazyLoadTabs = [];
     notService = [];
     currentFilterFormType: string;
+
+    reportFunction;
 
     constructor(
         injector: Injector,
@@ -695,6 +699,13 @@ export class DashboardComponent extends AppComponentBase {
 
             this.setKeyboardShortcuts(this.selectedTab);
         });
+
+        this.eventBus.on('openModal').subscribe((val) => {
+            const funcSelected = val.funcSelected;
+            this.reportFunction = funcSelected.reportFunction;
+            setTimeout(() => this[funcSelected.modal].open(funcSelected.reportType));
+        });
+
         this.openLastActiveTab();
     }
 

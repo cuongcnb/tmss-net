@@ -31,7 +31,7 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         // CountoModule,
         // NgxChartsModule,
         // BsDatepickerModule.forRoot(),
-        // BsDropdownModule.forRoot(),  
+        // BsDropdownModule.forRoot(),
         // PopoverModule.forRoot()
         SharedModule,
         MainRoutingModule,
