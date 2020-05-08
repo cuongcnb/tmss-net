@@ -1,21 +1,20 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, Injector} from '@angular/core';
 import {SideBars} from '../../core/constains/sidebars';
 import {EventBusService} from '../common-service/event-bus.service';
-import {FormStoringService} from '../common-service/form-storing.service';
 import {StorageKeys} from '../../core/constains/storageKeys';
 import {TMSSTabs} from '../../core/constains/tabs';
 import {SidebarMenuModel} from '../../core/models/base.model';
-import {CurrentUser} from '../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'sidebar-item',
   templateUrl: './sidebar-item.component.html'
 })
-export class SidebarItemComponent implements OnInit {
+export class SidebarItemComponent extends AppComponentBase implements OnInit {
   @Input() isAlwaysShowSubmenu: boolean;
   @Output() openFilterModal = new EventEmitter();
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   systemAdminMenuList: Array<SidebarMenuModel>;
   currentSidebar: SideBars;
   functionsNeedFilterFirst: Array<any> = [];
@@ -23,8 +22,9 @@ export class SidebarItemComponent implements OnInit {
   allTabs: Array<string>;
 
   constructor(
-    private eventBus: EventBusService,
-    private formStoringService: FormStoringService) {
+    injector: Injector,
+    private eventBus: EventBusService) {
+      super(injector);
   }
 
   openComponent(event, item) {

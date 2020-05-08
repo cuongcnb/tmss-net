@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CurrentUser } from '../../../home/home.component';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { DlrFloorModel } from '../../../core/models/catalog-declaration/dlr-floor.model';
 import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DlrFloorApi } from '../../../api/master-data/catalog-declaration/dlr-floor.api';
 import { ConfirmService } from '../../../shared/confirmation/confirm.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,19 +12,21 @@ import { ConfirmService } from '../../../shared/confirmation/confirm.service';
   templateUrl: './dlr-floor.component.html',
   styleUrls: ['./dlr-floor.component.scss'],
 })
-export class DlrFloorComponent implements OnInit {
+export class DlrFloorComponent extends AppComponentBase implements OnInit {
   @ViewChild('updateFloorModal', { static: false }) modal;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   gridField;
   gridParams;
   floors: Array<DlrFloorModel>;
   selectedData: DlrFloorModel;
   constructor(
+    injector: Injector,
     private swalAlertService: ToastService,
     private loadingService: LoadingService,
     private dlrFloorApi: DlrFloorApi,
     private confirm: ConfirmService,
   ) {
+    super(injector);
     this.gridField = [
       { headerName: 'Tên tầng', headerTooltip: 'Tên tầng', field: 'floorName' },
       { headerName: 'Ghi chú', headerTooltip: 'Ghi chú', field: 'description' },

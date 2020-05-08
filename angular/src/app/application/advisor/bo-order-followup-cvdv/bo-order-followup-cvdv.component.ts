@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { isEqual } from 'lodash';
@@ -8,12 +8,12 @@ import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { DataFormatService } from '../../../shared/common-service/data-format.service';
 import { GridTableService } from '../../../shared/common-service/grid-table.service';
 import { BoOrderFollowupApi } from '../../../api/parts-management/bo-order-followup.api';
-import { CurrentUser } from '../../../home/home.component';
 import { CurrentUserModel } from '../../../core/models/base.model';
 import { BoPartsFollowupCvdvModel } from '../../../core/models/parts-management/bo-parts-followup-cvdv.model';
 import { AgCheckboxRendererComponent } from '../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
 import { DownloadService } from '../../../shared/common-service/download.service';
 import {ValidateBeforeSearchService} from '../../../shared/common-service/validate-before-search.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,11 +21,11 @@ import {ValidateBeforeSearchService} from '../../../shared/common-service/valida
   templateUrl: './bo-order-followup-cvdv.component.html',
   styleUrls: ['./bo-order-followup-cvdv.component.scss'],
 })
-export class BoOrderFollowupCvdvComponent implements OnInit {
+export class BoOrderFollowupCvdvComponent extends AppComponentBase implements OnInit {
   @ViewChild('detailModal', {static: false}) detailModal;
   @ViewChild('editModal', {static: false}) editModal;
   form: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   fieldGrid;
   params;
@@ -38,6 +38,7 @@ export class BoOrderFollowupCvdvComponent implements OnInit {
   // oldFormValue: object;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
@@ -47,6 +48,7 @@ export class BoOrderFollowupCvdvComponent implements OnInit {
     private downloadService: DownloadService,
     private validateBeforeSearchService: ValidateBeforeSearchService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

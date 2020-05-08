@@ -1,11 +1,10 @@
-import {Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PartsLookupInfoApi} from '../../../api/parts-management/parts-lookup-info.api';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {CommonService} from '../../../shared/common-service/common.service';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {currentTab, CurrentUser, setFocusedCell} from '../../../home/home.component';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {EventBusService} from '../../../shared/common-service/event-bus.service';
@@ -15,6 +14,8 @@ import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {map, startWith} from 'rxjs/operators';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { setFocusedCell, currentTab } from '@app/shared/common/focused-cells';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,9 +23,9 @@ import {DataFormatService} from '../../../shared/common-service/data-format.serv
   templateUrl: './parts-lookup-info.component.html',
   styleUrls: ['./parts-lookup-info.component.scss']
 })
-export class PartsLookupInfoComponent implements OnInit, OnDestroy {
+export class PartsLookupInfoComponent extends AppComponentBase implements OnInit, OnDestroy {
   form: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   fieldGridSearch;
   selectedPartSearch;
@@ -51,6 +52,7 @@ export class PartsLookupInfoComponent implements OnInit, OnDestroy {
   field = 'partLookup';
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private gridTableService: GridTableService,
     private partsSearchApi: PartsLookupInfoApi,
@@ -62,6 +64,7 @@ export class PartsLookupInfoComponent implements OnInit, OnDestroy {
     private dataFormatService: DataFormatService,
     private elem: ElementRef
   ) {
+    super(injector);
   }
   ngOnDestroy(): void {
     this.elem.nativeElement.removeEventListener('mousedown', (event) => {

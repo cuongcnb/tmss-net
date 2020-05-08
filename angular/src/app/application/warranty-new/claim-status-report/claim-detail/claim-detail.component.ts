@@ -4,7 +4,6 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
 import {ClaimModel} from '../../../../core/models/warranty/claim.model';
 import {LoadingService} from '../../../../shared/loading/loading.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {ClaimDetailApi} from '../../../../api/warranty/claim-detail.api';
 import {DataFormatService} from '../../../../shared/common-service/data-format.service';
 import {ToastService} from '../../../../shared/swal-alert/toast.service';
@@ -35,7 +34,7 @@ export class ClaimDetailComponent implements OnInit {
   action: string;
   isSubmit: boolean;
   isPartsCode = true;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   sourceTable;
   dataIdList;
   tcList;

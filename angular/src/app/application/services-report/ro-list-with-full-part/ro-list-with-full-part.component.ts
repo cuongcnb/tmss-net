@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Injector } from '@angular/core';
 import { CurrentUserModel } from '../../../core/models/base.model';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -9,7 +9,7 @@ import { DealerModel } from '../../../core/models/sales/dealer.model';
 import { DownloadService } from '../../../shared/common-service/download.service';
 import { SetModalHeightService } from '../../../shared/common-service/set-modal-height.service';
 import { ServiceReportApi } from '../../../api/service-report/service-report.api';
-import { CurrentUser } from '../../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,15 +17,16 @@ import { CurrentUser } from '../../../home/home.component';
   templateUrl: './ro-list-with-full-part.component.html',
   styleUrls: ['./ro-list-with-full-part.component.scss']
 })
-export class RoListWithFullPartComponent implements OnInit {
+export class RoListWithFullPartComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class RoListWithFullPartComponent implements OnInit {
     private downloadService: DownloadService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

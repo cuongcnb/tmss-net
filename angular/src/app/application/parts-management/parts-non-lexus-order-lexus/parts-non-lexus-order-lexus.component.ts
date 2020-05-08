@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {
@@ -12,11 +12,11 @@ import {LoadingService} from '../../../shared/loading/loading.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {PartsNonLexusOrderLexusApi} from '../../../api/parts-management/parts-non-lexus-order-lexus.api';
 import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
-import {CurrentUser} from '../../../home/home.component';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {StorageKeys} from '../../../core/constains/storageKeys';
 import {CurrentUserModel} from '../../../core/models/base.model';
 import {forkJoin} from 'rxjs';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -24,9 +24,9 @@ import {forkJoin} from 'rxjs';
   templateUrl: './parts-non-lexus-order-lexus.component.html',
   styleUrls: ['./parts-non-lexus-order-lexus.component.scss']
 })
-export class PartsNonLexusOrderLexusComponent implements OnInit {
+export class PartsNonLexusOrderLexusComponent extends AppComponentBase implements OnInit {
   @ViewChild('orderTmvModal', {static: false}) orderTmvModal;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   form: FormGroup;
 
   fieldGridOrder;
@@ -64,6 +64,7 @@ export class PartsNonLexusOrderLexusComponent implements OnInit {
   totalPriceIncludeTax;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private gridTableService: GridTableService,
@@ -73,6 +74,7 @@ export class PartsNonLexusOrderLexusComponent implements OnInit {
     private partsNonLexusOrderLexusApi: PartsNonLexusOrderLexusApi,
     private dealerApi: DealerApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

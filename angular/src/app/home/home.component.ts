@@ -30,12 +30,12 @@ import {ToastService} from '../shared/swal-alert/toast.service';
 import {FunctionLogApi} from '../api/master-data/function-log.api';
 import {FilterFormCode} from '../core/constains/filter-form-code';
 
-export let CurrentUser;
+// export let CurrentUser;
 
 const tabChangeObserver = new ReplaySubject(1);
 const focusedCells: Array<any> = [];
-export let currentTab;
-export const setFocusedCell = (params: any, tab: any, editing?): void => {
+let currentTab;
+const setFocusedCell = (params: any, tab: any, editing?): void => {
   for (const cell of focusedCells) {
     if (cell.tab === tab) {
       cell.focusCellParams = params;

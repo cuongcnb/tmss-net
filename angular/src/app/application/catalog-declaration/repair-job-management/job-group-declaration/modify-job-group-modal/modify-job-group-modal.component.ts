@@ -1,11 +1,10 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ToastService} from '../../../../../shared/swal-alert/toast.service';
 import {SetModalHeightService} from '../../../../../shared/common-service/set-modal-height.service';
 import {DataFormatService} from '../../../../../shared/common-service/data-format.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {LoadingService} from '../../../../../shared/loading/loading.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CurrentUser} from '../../../../../home/home.component';
 import {JobGroupModel} from '../../../../../core/models/catalog-declaration/job-group.model';
 import {RepairJobApi} from '../../../../../api/common-api/repair-job.api';
 import {JobGroupTypes} from '../../../../../core/constains/job-group-types';
@@ -22,6 +21,7 @@ import {PartsInfoManagementApi} from '../../../../../api/parts-management/parts-
 import {GridTableService} from '../../../../../shared/common-service/grid-table.service';
 import {SrvDRcJobsApi} from '../../../../../api/master-data/warranty/srv-d-rc-jobs.api';
 import {omit} from 'lodash';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -29,7 +29,7 @@ import {omit} from 'lodash';
   templateUrl: './modify-job-group-modal.component.html',
   styleUrls: ['./modify-job-group-modal.component.scss']
 })
-export class ModifyJobGroupModalComponent implements OnInit {
+export class ModifyJobGroupModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -66,6 +66,7 @@ export class ModifyJobGroupModalComponent implements OnInit {
   partSearchGridField;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loading: LoadingService,
@@ -79,6 +80,7 @@ export class ModifyJobGroupModalComponent implements OnInit {
     private gridTableService: GridTableService,
     private srvDRcJobsApi: SrvDRcJobsApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

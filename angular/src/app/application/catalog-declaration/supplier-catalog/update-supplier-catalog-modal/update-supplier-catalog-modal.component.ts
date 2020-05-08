@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { GlobalValidator } from '../../../../shared/form-validation/validators';
@@ -10,8 +10,8 @@ import { CountryModel } from '../../../../core/models/common-models/country-mode
 import { BankModel } from '../../../../core/models/common-models/bank-model';
 import { BankApi } from '../../../../api/common-api/bank.api';
 import { CountryApi } from '../../../../api/common-api/country.api';
-import { CurrentUser } from '../../../../home/home.component';
 import { SupplierCatalogModel } from '../../../../core/models/catalog-declaration/supplier-catalog.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,7 +19,7 @@ import { SupplierCatalogModel } from '../../../../core/models/catalog-declaratio
   templateUrl: './update-supplier-catalog-modal.component.html',
   styleUrls: ['./update-supplier-catalog-modal.component.scss']
 })
-export class UpdateSupplierCatalogModalComponent implements OnInit {
+export class UpdateSupplierCatalogModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('supplierModal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -30,6 +30,7 @@ export class UpdateSupplierCatalogModalComponent implements OnInit {
   bankList: Array<BankModel>;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private setModalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -38,6 +39,7 @@ export class UpdateSupplierCatalogModalComponent implements OnInit {
     private bankApi: BankApi,
     private countryApi: CountryApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

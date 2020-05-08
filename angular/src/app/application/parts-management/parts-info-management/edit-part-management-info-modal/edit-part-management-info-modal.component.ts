@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import { distinctUntilChanged, switchMap, throttleTime } from 'rxjs/operators';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -12,8 +12,8 @@ import { PartsInfoManagementModel } from '../../../../core/models/parts-manageme
 import { PartsInfoManagementApi } from '../../../../api/parts-management/parts-info-management.api';
 import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { CurrentUserModel } from '../../../../core/models/base.model';
-import { CurrentUser } from '../../../../home/home.component';
 import { CurrencyModel } from '../../../../core/models/common-models/currency.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ import { CurrencyModel } from '../../../../core/models/common-models/currency.mo
   templateUrl: './edit-part-management-info-modal.component.html',
   styleUrls: ['./edit-part-management-info-modal.component.scss']
 })
-export class EditPartManagementInfoModalComponent implements OnInit {
+export class EditPartManagementInfoModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -30,7 +30,7 @@ export class EditPartManagementInfoModalComponent implements OnInit {
   @Input() unitArr: Array<UnitCommonModel>;
   @Input() currencyArr: Array<CurrencyModel>;
   @Input() kpiPartTypes: string[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   modalHeight: number;
   form: FormGroup;
   sellUnits: Array<any>;
@@ -38,12 +38,14 @@ export class EditPartManagementInfoModalComponent implements OnInit {
   selectedPart: PartsInfoManagementModel;
 
   constructor(
+    injector: Injector,
     private swalAlertService: ToastService,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private partsInfoManagementApi: PartsInfoManagementApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

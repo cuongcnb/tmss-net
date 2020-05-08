@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, Output, EventEmitter, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
 import {CurrentUserModel} from '../../../../core/models/base.model';
-import {CurrentUser} from '../../../../home/home.component';
 import {
   DlrNonLexusOrderLexusOrderModel,
   DlrNonLexusOrderLexusPartModel
@@ -13,6 +12,7 @@ import {PartsNonLexusOrderLexusApi} from '../../../../api/parts-management/parts
 import {LoadingService} from '../../../../shared/loading/loading.service';
 import {ToastService} from '../../../../shared/swal-alert/toast.service';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,14 +20,14 @@ import {GridTableService} from '../../../../shared/common-service/grid-table.ser
   templateUrl: './part-non-lexus-order-lexus-order-tmv-modal.component.html',
   styleUrls: ['./part-non-lexus-order-lexus-order-tmv-modal.component.scss']
 })
-export class PartNonLexusOrderLexusOrderTmvModalComponent implements OnInit {
+export class PartNonLexusOrderLexusOrderTmvModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @Input() childDealerOfLexus: Array<{ abbreviation: string, dlrCode: string, id: number }> = [];
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
   modalHeight: number;
   form: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   fieldGridOrder;
   orderParams;
@@ -42,6 +42,7 @@ export class PartNonLexusOrderLexusOrderTmvModalComponent implements OnInit {
   totalPriceIncludeTax;
 
   constructor(
+    injector: Injector,
     private loadingService: LoadingService,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class PartNonLexusOrderLexusOrderTmvModalComponent implements OnInit {
     private partsNonLexusOrderLexusApi: PartsNonLexusOrderLexusApi,
     private gridTableService: GridTableService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

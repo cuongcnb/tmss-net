@@ -8,7 +8,6 @@ import {DealerApi} from '../../api/sales-api/dealer/dealer.api';
 import {LoadingService} from '../../shared/loading/loading.service';
 import {GlobalValidator} from '../../shared/form-validation/validators';
 import {AuthApi} from '../../api/auth/auth.api';
-// import {CurrentUser} from '../../home/home.component';
 import {DealerModel} from '../../core/models/sales/dealer.model';
 import {DlrConfigApi} from '../../api/common-api/dlr-config.api';
 

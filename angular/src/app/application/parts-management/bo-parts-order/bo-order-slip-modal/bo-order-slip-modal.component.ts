@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {LoadingService} from '../../../../shared/loading/loading.service';
 import {ToastService} from '../../../../shared/swal-alert/toast.service';
@@ -6,7 +6,6 @@ import {SetModalHeightService} from '../../../../shared/common-service/set-modal
 import {DataFormatService} from '../../../../shared/common-service/data-format.service';
 import {BoPartsOrderApi} from '../../../../api/parts-management/bo-parts-order.api';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {CurrentUserModel} from '../../../../core/models/base.model';
 import {BoOrderModel, BoPartsOfOrder} from '../../../../core/models/parts-management/bo-parts-request.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -14,6 +13,7 @@ import {ConfirmService} from '../../../../shared/confirmation/confirm.service';
 import {remove} from 'lodash';
 import {ServiceReportApi} from '../../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ import {DownloadService} from '../../../../shared/common-service/download.servic
   templateUrl: './bo-order-slip-modal.component.html',
   styleUrls: ['./bo-order-slip-modal.component.scss']
 })
-export class BoOrderSlipModalComponent implements OnInit {
+export class BoOrderSlipModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter<any>();
@@ -41,7 +41,7 @@ export class BoOrderSlipModalComponent implements OnInit {
   paramsPartsNotY;
   paramsPartsY;
 
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   footerDetail = {
     partsY: {
@@ -57,6 +57,7 @@ export class BoOrderSlipModalComponent implements OnInit {
   };
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private toastService: ToastService,
@@ -68,6 +69,7 @@ export class BoOrderSlipModalComponent implements OnInit {
     private serviceReportApi: ServiceReportApi,
     private downloadService: DownloadService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

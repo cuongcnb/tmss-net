@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ModalDirective} from 'ngx-bootstrap';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
-import {CurrentUser} from '../../../home/home.component';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {CasOutGateApi} from '../../../api/dlr-cashier/cas-out-gate.api';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DownloadService} from '../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,13 +15,14 @@ import {DownloadService} from '../../../shared/common-service/download.service';
   templateUrl: './in-out-gate-report.component.html',
   styleUrls: ['./in-out-gate-report.component.scss']
 })
-export class InOutGateReportComponent implements OnInit {
+export class InOutGateReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private swalAlert: ToastService,
@@ -30,6 +31,7 @@ export class InOutGateReportComponent implements OnInit {
     private downloadService: DownloadService,
     private casOutGateApi: CasOutGateApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

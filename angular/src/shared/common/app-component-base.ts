@@ -13,6 +13,9 @@ import { AppUiCustomizationService } from '@shared/common/ui/app-ui-customizatio
 import { PrimengTableHelper } from 'shared/helpers/PrimengTableHelper';
 import { UiCustomizationSettingsDto } from '@shared/service-proxies/service-proxies';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormStoringService } from '@app/shared/common-service/form-storing.service';
+import { StorageKeys } from '@app/core/constains/storageKeys';
+import { CurrentUserModel } from '@app/core/models/base.model';
 
 export abstract class AppComponentBase {
 
@@ -30,6 +33,9 @@ export abstract class AppComponentBase {
     ui: AppUiCustomizationService;
     appUrlService: AppUrlService;
     spinnerService: NgxSpinnerService;
+    protected formStoringService: FormStoringService;
+
+    public currentUser: CurrentUserModel;
 
     constructor(injector: Injector) {
         this.localization = injector.get(LocalizationService);
@@ -44,6 +50,9 @@ export abstract class AppComponentBase {
         this.appUrlService = injector.get(AppUrlService);
         this.primengTableHelper = new PrimengTableHelper();
         this.spinnerService = injector.get(NgxSpinnerService);
+        this.formStoringService = injector.get(FormStoringService);
+
+        this.currentUser = this.formStoringService.get(StorageKeys.currentUser);
     }
 
     flattenDeep(array) {

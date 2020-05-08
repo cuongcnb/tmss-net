@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, Injector} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeCommonModel } from '../../../../core/models/common-models/employee-common.model';
 import { GlobalValidator } from '../../../../shared/form-validation/validators';
@@ -10,9 +10,9 @@ import { TitleModel } from '../../../../core/models/common-models/title-model';
 import { EmployeeTypeModel } from '../../../../core/models/common-models/employee-type-model';
 import { EmployeeTypeApi } from '../../../../api/common-api/employee-type.api';
 import { TitleApi } from '../../../../api/common-api/title.api';
-import { CurrentUser } from '../../../../home/home.component';
 import { JobTypes } from '../../../../core/constains/job-type';
 import {DivisionCommonApi} from '../../../../api/common-api/division-common.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ import {DivisionCommonApi} from '../../../../api/common-api/division-common.api'
   styleUrls: ['./staff-detail.component.scss'],
 })
 
-export class StaffDetailComponent implements OnInit, OnChanges {
+export class StaffDetailComponent extends AppComponentBase implements OnInit, OnChanges {
   @ViewChild('btnSubmit', {static: false}) btnSubmit: ElementRef;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -33,7 +33,7 @@ export class StaffDetailComponent implements OnInit, OnChanges {
   isChangeForm: boolean;
   isClickSaveBtn: boolean;
   jobTypes = JobTypes;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   imgUrl: string;
   form: FormGroup;
   transferUnitList;
@@ -42,6 +42,7 @@ export class StaffDetailComponent implements OnInit, OnChanges {
   empTypes: Array<EmployeeTypeModel> = [];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private confirmService: ConfirmService,
     private swalAlertService: ToastService,
@@ -51,6 +52,7 @@ export class StaffDetailComponent implements OnInit, OnChanges {
     private titleApi: TitleApi,
     private unitCatalogApi: DivisionCommonApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import * as moment from 'moment';
 
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
-import {CurrentUser} from '../../../home/home.component';
 import {ClaimStatusReportApi} from '../../../api/warranty/claim-status-report.api';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
@@ -12,6 +11,7 @@ import {ClaimStatusReportModel} from '../../../core/models/warranty/claim-status
 import {User} from '../../../core/constains/user';
 import {Waranty} from '../../../core/constains/waranty';
 import {SubletApi} from '../../../api/common-api/sublet.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 // import { GridTableService } from '../../../shared/common-service/grid-table.service';
 
@@ -21,7 +21,7 @@ import {SubletApi} from '../../../api/common-api/sublet.api';
   templateUrl: './claim-status-report.component.html',
   styleUrls: ['./claim-status-report.component.scss'],
 })
-export class ClaimStatusReportComponent implements OnInit {
+export class ClaimStatusReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('searchRoModal', {static: false}) searchRoModal;
   @ViewChild('claimDetailModal', {static: false}) claimDetailModal;
   @ViewChild('claimDetailViewModal', {static: false}) claimDetailViewModal;
@@ -37,7 +37,7 @@ export class ClaimStatusReportComponent implements OnInit {
   sourceTable;
   state;
   fieldClaimStatusList;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   dealers = [];
   brands;
   dataIdList;
@@ -47,6 +47,7 @@ export class ClaimStatusReportComponent implements OnInit {
   subletTypeList: Array<any>;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dealerApi: DealerApi,
     private claimStatusReportApi: ClaimStatusReportApi,
@@ -56,6 +57,7 @@ export class ClaimStatusReportComponent implements OnInit {
     private subletApi: SubletApi,
     // private gridTableService: GridTableService
   ) {
+    super(injector);
     this.fieldClaimStatusList = [
       {
         headerName: 'No.',

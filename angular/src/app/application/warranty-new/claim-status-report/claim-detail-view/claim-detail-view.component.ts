@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import { ClaimDetailApi } from '../../../../api/warranty/claim-detail.api';
 import { FormBuilder } from '@angular/forms';
 import { LoadingService } from '../../../../shared/loading/loading.service';
-import { CurrentUser } from '../../../../home/home.component';
 import { DataFormatService } from '../../../../shared/common-service/data-format.service';
 import { ClaimModel } from '../../../../core/models/warranty/claim.model';
 import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import {User} from '../../../../core/constains/user';
 import {SubletApi} from '../../../../api/common-api/sublet.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,7 +16,7 @@ import {SubletApi} from '../../../../api/common-api/sublet.api';
   templateUrl: './claim-detail-view.component.html',
   styleUrls: ['./claim-detail-view.component.scss', '../claim-detail/claim-detail.component.scss'],
 })
-export class ClaimDetailViewComponent implements OnInit {
+export class ClaimDetailViewComponent extends AppComponentBase implements OnInit {
   @ViewChild('repairJobHistoryModal', {static: false}) repairJobHistoryModal;
   @ViewChild('modal', {static: false}) modal;
   modalHeight;
@@ -28,10 +28,11 @@ export class ClaimDetailViewComponent implements OnInit {
   tcList;
   fieldErrorCode;
   isTMV = false;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   subletTypeList: Array<any>;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -39,6 +40,7 @@ export class ClaimDetailViewComponent implements OnInit {
     private dataFormatService: DataFormatService,
     private toastService: ToastService,
   ) {
+    super(injector);
     this.dataIdList = [
       {
         key: 'W',

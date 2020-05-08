@@ -15,9 +15,9 @@ import { HomeApi } from '@app/api/home.api';
 import { GridTableService } from '@app/shared/common-service/grid-table.service';
 import { ConfirmService } from '@app/shared/confirmation/confirm.service';
 import { remove } from 'lodash';
+import { focusedCells, setCurrentTab } from '@app/shared/common/focused-cells';
 
 const tabChangeObserver = new ReplaySubject(1);
-const focusedCells: Array<any> = [];
 
 @Component({
     selector: 'dashboard',
@@ -79,7 +79,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
 
     filterFormCode = FilterFormCode;
     filterStartForm;
-    currentUser;
+    // currentUser;
     dataOrderBo;
     canOpenMultipleTabs: Array<string> = [];
     proposalReopenHook = {};
@@ -94,7 +94,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
     constructor(
         injector: Injector,
         private eventBus: EventBusService,
-        private formStoringService: FormStoringService,
+        // private formStoringService: FormStoringService,
         private router: Router,
         private changeDetectorRef: ChangeDetectorRef,
         private homeService: HomeApi,
@@ -496,6 +496,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
                         const tabName = TMSSTabs.proposal + '-' + registerNo();
                         this.selectedTab = tabName;
                         // currentTab = tabName;
+                        setCurrentTab(tabName);
                         this.activeTabs.push({
                             name: nameProposal,
                             tab: tabName,
@@ -511,6 +512,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
                 }
             } else {
                 // currentTab = selected.tab;
+                setCurrentTab(selected.tab);
                 selected.inputs = {};
                 switch (selected.tab) {
                     case TMSSTabs.agencyContactQuestions:
@@ -840,6 +842,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
 
     selectTabIndex(tab) {
         // currentTab = tab;
+        setCurrentTab(tab);
         tabChangeObserver.next(tab);
         this.selectedTab = tab;
         // những tab chỉ bật 1 lần

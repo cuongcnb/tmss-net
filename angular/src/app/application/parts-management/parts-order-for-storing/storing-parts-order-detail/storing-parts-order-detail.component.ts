@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
 import {PartsOrderForStoringModel} from '../../../../core/models/parts-management/parts-order-for-storing.model';
@@ -8,10 +8,10 @@ import {PartsOrderForStoringApi} from '../../../../api/parts-management/parts-or
 import {LoadingService} from '../../../../shared/loading/loading.service';
 import {ToastService} from '../../../../shared/swal-alert/toast.service';
 import {FormStoringService} from '../../../../shared/common-service/form-storing.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
 import {ServiceReportApi} from '../../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,7 +19,7 @@ import {DownloadService} from '../../../../shared/common-service/download.servic
   templateUrl: './storing-parts-order-detail.component.html',
   styleUrls: ['./storing-parts-order-detail.component.scss']
 })
-export class StoringPartsOrderDetailComponent implements OnInit {
+export class StoringPartsOrderDetailComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -37,17 +37,19 @@ export class StoringPartsOrderDetailComponent implements OnInit {
   orderPlaced = false;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private partsOrderForStoringApi: PartsOrderForStoringApi,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private gridTableService: GridTableService,
     private serviceReportApi: ServiceReportApi,
     private downloadService: DownloadService
   ) {
+    super(injector);
     this.fieldGrid = [
       {
         headerName: '',
@@ -235,7 +237,7 @@ export class StoringPartsOrderDetailComponent implements OnInit {
     this.form = this.formBuilder.group({
       orderNo: [{value: undefined, disabled: true}],
       orderDate: [{value: this.dataFormatService.parseTimestampToFullDate(new Date()), disabled: true}],
-      userRequest: [{value: CurrentUser.userName, disabled: true}]
+      userRequest: [{value: this.currentUser.userName, disabled: true}]
     });
   }
 

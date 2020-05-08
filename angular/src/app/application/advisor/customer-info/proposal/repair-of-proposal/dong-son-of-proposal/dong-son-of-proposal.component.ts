@@ -30,8 +30,6 @@ import {DataCodes} from '../../../../../../core/constains/data-code';
 import {NextShortcutService} from '../../../../../../shared/common-service/nextShortcut.service';
 import {ShortcutEventOutput, ShortcutInput} from 'ng-keyboard-shortcuts';
 
-import {currentTab, setFocusedCell} from '../../../../../../home/home.component';
-
 import {
   discountUpdate$,
   setDiscount
@@ -41,6 +39,7 @@ import {StorageKeys} from '../../../../../../core/constains/storageKeys';
 import {SrvDRcJobsModelsApi} from '../../../../../../api/master-data/warranty/srv-d-rc-jobs-models.api';
 import {GoUpButtonComponent} from '../../go-up-button/go-up-button.component';
 import {RepairJobApi} from '../../../../../../api/common-api/repair-job.api';
+import { setFocusedCell, currentTab } from '@app/shared/common/focused-cells';
 
 @Component({
   // tslint:disable-next-line:component-selector

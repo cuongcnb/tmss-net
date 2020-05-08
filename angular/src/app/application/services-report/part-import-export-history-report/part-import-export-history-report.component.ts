@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {ModalDirective} from 'ngx-bootstrap';
@@ -6,13 +6,13 @@ import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {GlobalValidator} from '../../../shared/form-validation/validators';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {PartsInfoManagementApi} from '../../../api/parts-management/parts-info-management.api';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {PartsInfoManagementModel} from '../../../core/models/parts-management/parts-info-management.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,7 +20,7 @@ import {PartsInfoManagementModel} from '../../../core/models/parts-management/pa
   templateUrl: './part-import-export-history-report.component.html',
   styleUrls: ['./part-import-export-history-report.component.scss']
 })
-export class PartImportExportHistoryReportComponent implements OnInit {
+export class PartImportExportHistoryReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   @ViewChild('searchPartGridModal', {static: false}) searchPartGridModal;
@@ -30,9 +30,10 @@ export class PartImportExportHistoryReportComponent implements OnInit {
 
   fieldGridSearchPartGrid;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private dealerApi: DealerApi,
@@ -42,6 +43,7 @@ export class PartImportExportHistoryReportComponent implements OnInit {
     private partsInfoManagementApi: PartsInfoManagementApi,
     private dataFormatService: DataFormatService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

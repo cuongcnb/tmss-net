@@ -1,27 +1,28 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {CurrentUser} from '../../../home/home.component';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   selector: 'user-list-function-report',
   templateUrl: './user-list-function.component.html',
   styleUrls: ['./user-list-function.component.scss']
 })
-export class UserListFunctionComponent implements OnInit {
+export class UserListFunctionComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private swalAlert: ToastService,
@@ -29,7 +30,9 @@ export class UserListFunctionComponent implements OnInit {
     private loading: LoadingService,
     private downloadService: DownloadService,
     private reportApi: ServiceReportApi
-  ) { }
+  ) {
+    super(injector);
+  }
 
   ngOnInit() {
 

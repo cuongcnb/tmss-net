@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
@@ -12,9 +12,9 @@ import {StorageKeys} from '../../../core/constains/storageKeys';
 import {CurrentUserModel} from '../../../core/models/base.model';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
 import {AgSelectRendererComponent} from '../../../shared/ag-select-renderer/ag-select-renderer.component';
-import {CurrentUser} from '../../../home/home.component';
 import {ValidateBeforeSearchService} from '../../../shared/common-service/validate-before-search.service';
 import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,11 +22,11 @@ import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/
   templateUrl: './parts-special-order.component.html',
   styleUrls: ['./parts-special-order.component.scss']
 })
-export class PartsSpecialOrderComponent implements OnInit {
+export class PartsSpecialOrderComponent extends AppComponentBase implements OnInit {
   @ViewChild('createSpecialOrderModal', {static: false}) createSpecialOrderModal;
   @ViewChild('cellTableEditModal', {static: false}) cellTableEditModal;
   form: FormGroup;
-  currentUser: CurrentUserModel;
+  // currentUser: CurrentUserModel;
 
   frameworkComponents;
 
@@ -57,6 +57,7 @@ export class PartsSpecialOrderComponent implements OnInit {
   ];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private dataFormatService: DataFormatService,
@@ -67,10 +68,10 @@ export class PartsSpecialOrderComponent implements OnInit {
     private gridTableService: GridTableService,
     private validateBeforeSearchService: ValidateBeforeSearchService
   ) {
+    super(injector);
   }
 
   ngOnInit() {
-    this.currentUser = CurrentUser;
     this.getDealerList();
     this.buildForm();
     this.fieldGridSpecialOrder = [

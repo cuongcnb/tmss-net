@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 
 import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { DeskAdvisorModel } from '../../../core/models/catalog-declaration/desk-advisor.model';
-import { CurrentUser } from '../../../home/home.component';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DeskAdvisorApi } from '../../../api/master-data/catalog-declaration/desk-advisor.api';
 import { ConfirmService } from '../../../shared/confirmation/confirm.service';
 import { GridTableService } from '../../../shared/common-service/grid-table.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,9 +14,9 @@ import { GridTableService } from '../../../shared/common-service/grid-table.serv
   templateUrl: './desk-advisor.component.html',
   styleUrls: ['./desk-advisor.component.scss']
 })
-export class DeskAdvisorComponent implements OnInit {
+export class DeskAdvisorComponent extends AppComponentBase implements OnInit {
   @ViewChild('deskAdvisorModal', { static: false }) deskAdvisorModal;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   gridField;
   gridParams;
   selectedDealerId: number;
@@ -24,12 +24,14 @@ export class DeskAdvisorComponent implements OnInit {
   selectedData: DeskAdvisorModel;
 
   constructor(
+    injector: Injector,
     private swalAlertService: ToastService,
     private loadingService: LoadingService,
     private deskAdvisorApi: DeskAdvisorApi,
     private confirm: ConfirmService,
     private gridTableService: GridTableService,
   ) {
+    super(injector);
     this.gridField = [
       { headerName: 'Tên bàn', headerTooltip: 'Tên bàn', field: 'deskName' },
       { headerName: 'Mã cố vấn dịch vụ', headerTooltip: 'Mã cố vấn dịch vụ', field: 'advisorCode' },

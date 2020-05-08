@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -15,12 +15,12 @@ import {TransportTypeApi} from '../../../../api/common-api/transport-type.api';
 import {TransportTypeModel} from '../../../../core/models/common-models/transport-type.model';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
 import {CurrentUserModel} from '../../../../core/models/base.model';
-import {CurrentUser} from '../../../../home/home.component';
 import {AgDataValidateService} from '../../../../shared/ag-grid-table/ag-data-validate/ag-data-validate.service';
 import {ConfirmService} from '../../../../shared/confirmation/confirm.service';
 import {OrderForLexusPartApi} from '../../../../api/parts-management/order-for-lexus-part.api';
 import {CheckingLexusPartModel, PartsManagementService} from '../../parts-management.service';
 import {forkJoin} from 'rxjs';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -28,7 +28,7 @@ import {forkJoin} from 'rxjs';
   templateUrl: './new-special-order-modal.component.html',
   styleUrls: ['./new-special-order-modal.component.scss']
 })
-export class NewSpecialOrderModalComponent implements OnInit {
+export class NewSpecialOrderModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('searchDataGridModal', {static: false}) searchDataGridModal;
   @ViewChild('partsSpecialCheckingModal', {static: false}) checkingModal;
@@ -39,7 +39,7 @@ export class NewSpecialOrderModalComponent implements OnInit {
   modalHeight: number;
   selectedOrder: PartsSpecialOrderModel;
   partsOfOrderData: Array<PartsOfSpecialOrder>;
-  currentUser: CurrentUserModel;
+  // currentUser: CurrentUserModel;
 
   form: FormGroup;
 
@@ -60,6 +60,7 @@ export class NewSpecialOrderModalComponent implements OnInit {
   focusCellIndex = 0;
 
   constructor(
+    injector: Injector,
     private loadingService: LoadingService,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
@@ -75,6 +76,7 @@ export class NewSpecialOrderModalComponent implements OnInit {
     private orderForLexusPartApi: OrderForLexusPartApi,
     private partsManagementService: PartsManagementService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

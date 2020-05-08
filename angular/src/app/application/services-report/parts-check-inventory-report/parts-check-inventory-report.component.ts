@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
@@ -12,6 +11,7 @@ import {GlobalValidator} from '../../../shared/form-validation/validators';
 import {PartsInfoManagementModel} from '../../../core/models/parts-management/parts-info-management.model';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {PartsInfoManagementApi} from '../../../api/parts-management/parts-info-management.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,18 +19,19 @@ import {PartsInfoManagementApi} from '../../../api/parts-management/parts-info-m
   templateUrl: './parts-check-inventory-report.component.html',
   styleUrls: ['./parts-check-inventory-report.component.scss']
 })
-export class PartsCheckInventoryReportComponent implements OnInit {
+export class PartsCheckInventoryReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('searchPartGridModal', {static: false}) searchPartGridModal;
   form: FormGroup;
   modalHeight: number;
 
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   dealerList: DealerModel[] = [];
   selectedDate;
   fieldGridSearchPartGrid;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private serviceReportApi: ServiceReportApi,
@@ -40,6 +41,7 @@ export class PartsCheckInventoryReportComponent implements OnInit {
     private partsInfoManagementApi: PartsInfoManagementApi,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

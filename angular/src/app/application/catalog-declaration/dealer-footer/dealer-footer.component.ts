@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { FooterDetailModel, FooterModel } from '../../../core/models/catalog-declaration/dealer-footer.model';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DlrFooterApi } from '../../../api/master-data/catalog-declaration/dlr-footer.api';
-import { CurrentUser } from '../../../home/home.component';
 import { DealerApi } from '../../../api/sales-api/dealer/dealer.api';
 import { DealerModel } from '../../../core/models/sales/dealer.model';
 import { ConfirmService } from '../../../shared/confirmation/confirm.service';
 import { GlobalValidator } from '../../../shared/form-validation/validators';
 import { GridTableService } from '../../../shared/common-service/grid-table.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -18,8 +18,8 @@ import { GridTableService } from '../../../shared/common-service/grid-table.serv
   templateUrl: './dealer-footer.component.html',
   styleUrls: ['./dealer-footer.component.scss']
 })
-export class DealerFooterComponent implements OnInit {
-  currentUser = CurrentUser;
+export class DealerFooterComponent extends AppComponentBase implements OnInit {
+  // currentUser = CurrentUser;
   dealers: Array<DealerModel>;
   form: FormGroup;
   gridField;
@@ -32,6 +32,7 @@ export class DealerFooterComponent implements OnInit {
   oldType: FooterModel;
 
   constructor(
+    injector: Injector,
     private swalAlertService: ToastService,
     private confirmService: ConfirmService,
     private loadingService: LoadingService,
@@ -40,6 +41,7 @@ export class DealerFooterComponent implements OnInit {
     private gridTableService: GridTableService,
     private formBuilder: FormBuilder,
   ) {
+    super(injector);
     this.gridField = [
       {field: 'code'},
       {field: 'name'},

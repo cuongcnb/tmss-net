@@ -8,12 +8,13 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  Injector,
 } from '@angular/core';
 import { LoadingService } from '../loading/loading.service';
 import { FileItem, FileUploader } from 'ng2-file-upload';
-import { CurrentUser } from '../../home/home.component';
 import { ToastService } from '../swal-alert/toast.service';
 import { ErrorCodes } from '../../core/interceptors/error-code';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +22,7 @@ import { ErrorCodes } from '../../core/interceptors/error-code';
   templateUrl: './file-uploader.component.html',
   styleUrls: ['./file-uploader.component.scss'],
 })
-export class FileUploaderComponent implements OnInit, OnChanges {
+export class FileUploaderComponent extends AppComponentBase implements OnInit, OnChanges {
   @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
   @Input() placeholder = '';
   @Input() acceptType: string;
@@ -38,9 +39,11 @@ export class FileUploaderComponent implements OnInit, OnChanges {
 
 
   constructor(
+    injector: Injector,
     private loading: LoadingService,
     private swalAlertService: ToastService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

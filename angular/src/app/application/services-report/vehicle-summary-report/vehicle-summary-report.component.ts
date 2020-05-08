@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { SetModalHeightService } from '../../../shared/common-service/set-modal-height.service';
-import { CurrentUser } from '../../../home/home.component';
 import { DealerModel } from '../../../core/models/sales/dealer.model';
 import { DownloadService } from '../../../shared/common-service/download.service';
 import { ServiceReportApi } from '../../../api/service-report/service-report.api';
@@ -10,6 +9,7 @@ import { CurrentUserModel } from '../../../core/models/base.model';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DealerApi } from '../../../api/sales-api/dealer/dealer.api';
 import { GlobalValidator } from '../../../shared/form-validation/validators';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,15 +17,16 @@ import { GlobalValidator } from '../../../shared/form-validation/validators';
   templateUrl: './vehicle-summary-report.component.html',
   styleUrls: ['./vehicle-summary-report.component.scss']
 })
-export class VehicleSummaryReportComponent implements OnInit, AfterViewInit {
+export class VehicleSummaryReportComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('reportTypeModal', {static: false}) reportTypeModal;
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class VehicleSummaryReportComponent implements OnInit, AfterViewInit {
     private downloadService: DownloadService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

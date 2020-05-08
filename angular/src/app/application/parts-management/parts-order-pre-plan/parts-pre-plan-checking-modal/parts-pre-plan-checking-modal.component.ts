@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import {
   PartsOfPrePlanOrderModel,
   PartsOrderPrePlanModel,
 } from '../../../../core/models/parts-management/parts-order-pre-plan.model';
-import { CurrentUser } from '../../../../home/home.component';
 import { CurrentUserModel } from '../../../../core/models/base.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GridTableService } from '../../../../shared/common-service/grid-table.service';
@@ -14,6 +13,7 @@ import { PartOrderPrePlanApi } from '../../../../api/parts-management/part-order
 import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { DataFormatService } from '../../../../shared/common-service/data-format.service';
 import { AgDatepickerRendererComponent } from '../../../../shared/ag-datepicker-renderer/ag-datepicker-renderer.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,12 +21,11 @@ import { AgDatepickerRendererComponent } from '../../../../shared/ag-datepicker-
   templateUrl: './parts-pre-plan-checking-modal.component.html',
   styleUrls: ['./parts-pre-plan-checking-modal.component.scss'],
 })
-export class PartsPrePlanCheckingModalComponent implements OnInit {
+export class PartsPrePlanCheckingModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
   modalHeight: number;
-  currentUser: CurrentUserModel = CurrentUser;
   form: FormGroup;
 
   fieldGrid;
@@ -40,6 +39,7 @@ export class PartsPrePlanCheckingModalComponent implements OnInit {
   totalPriceIncludeTax;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private gridTableService: GridTableService,
@@ -48,6 +48,7 @@ export class PartsPrePlanCheckingModalComponent implements OnInit {
     private swalAlertService: ToastService,
     private dataFormatService: DataFormatService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

@@ -1,13 +1,13 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Injector } from '@angular/core';
 import { JobGroupTypes } from '../../../../../core/constains/job-group-types';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { DataFormatService } from '../../../../../shared/common-service/data-format.service';
 import { GlobalValidator } from '../../../../../shared/form-validation/validators';
-import { CurrentUser } from '../../../../../home/home.component';
 import { SetModalHeightService } from '../../../../../shared/common-service/set-modal-height.service';
 import { JobGroupModel } from '../../../../../core/models/catalog-declaration/job-group.model';
 import { CarFamilyApi } from '../../../../../api/common-api/car-family.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,7 +15,7 @@ import { CarFamilyApi } from '../../../../../api/common-api/car-family.api';
   templateUrl: './add-storage-job-package.component.html',
   styleUrls: ['./add-storage-job-package.component.scss'],
 })
-export class AddStorageJobPackageComponent implements OnInit {
+export class AddStorageJobPackageComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-input-rename
@@ -23,16 +23,18 @@ export class AddStorageJobPackageComponent implements OnInit {
   selectedData: JobGroupModel;
   form;
   modalHeight;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   jobGroupTypes = JobGroupTypes;
   cfList = [];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private modalHeightService: SetModalHeightService,
     private carFamilyApi: CarFamilyApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

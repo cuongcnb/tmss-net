@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ModalDirective} from 'ngx-bootstrap';
 
@@ -13,13 +13,13 @@ import {TransportTypeModel} from '../../../../core/models/common-models/transpor
 import {PartsManualOrderApi} from '../../../../api/parts-management/parts-manual-order.api';
 import {FormStoringService} from '../../../../shared/common-service/form-storing.service';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {AgDataValidateService} from '../../../../shared/ag-grid-table/ag-data-validate/ag-data-validate.service';
 import {ConfirmService} from '../../../../shared/confirmation/confirm.service';
 import {CurrentUserModel} from '../../../../core/models/base.model';
 import {DealerModel} from '../../../../core/models/sales/dealer.model';
 import {OrderForLexusPartApi} from '../../../../api/parts-management/order-for-lexus-part.api';
 import {CheckingLexusPartModel, PartsManagementService} from '../../parts-management.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -27,7 +27,7 @@ import {CheckingLexusPartModel, PartsManagementService} from '../../parts-manage
   templateUrl: './new-manual-order-modal.component.html',
   styleUrls: ['./new-manual-order-modal.component.scss']
 })
-export class NewManualOrderModalComponent implements OnInit {
+export class NewManualOrderModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('submitFormBtn', {static: false}) submitFormBtn: ElementRef;
   @ViewChild('searchDataGridModal', {static: false}) searchDataGridModal;
@@ -55,12 +55,13 @@ export class NewManualOrderModalComponent implements OnInit {
 
   fieldGridSearchDataGrid;
 
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   focusCellIndex = 0;
   editingRowParams;
   currentOrderTypeId: number;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
@@ -75,6 +76,7 @@ export class NewManualOrderModalComponent implements OnInit {
     private orderForLexusPartApi: OrderForLexusPartApi,
     private partsManagementService: PartsManagementService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit, Injector} from '@angular/core';
 import {CurrentUserModel} from '../../../core/models/base.model';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {ModalDirective} from 'ngx-bootstrap';
@@ -9,7 +9,7 @@ import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
-import {CurrentUser} from '../../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,16 +17,17 @@ import {CurrentUser} from '../../../home/home.component';
   templateUrl: './order-of-dlr-to-tmv.component.html',
   styleUrls: ['./order-of-dlr-to-tmv.component.scss']
 })
-export class OrderOfDlrToTmvComponent implements OnInit, AfterViewInit {
+export class OrderOfDlrToTmvComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class OrderOfDlrToTmvComponent implements OnInit, AfterViewInit {
     private serviceReportApi: ServiceReportApi,
     private downloadService: DownloadService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

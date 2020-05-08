@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SetModalHeightService } from '../common-service/set-modal-height.service';
 import { ServiceCodeApi } from '../../api/common-api/service-code.api';
@@ -7,7 +7,7 @@ import { CarFamilyApi } from '../../api/common-api/car-family.api';
 import { RepairBodyApi } from '../../api/common-api/repair-body.api';
 import { TCodeApi } from '../../api/common-api/t-code.api';
 import { LoadingService } from '../loading/loading.service';
-import { CurrentUser } from '../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,7 +15,7 @@ import { CurrentUser } from '../../home/home.component';
   templateUrl: './find-operation-modal.component.html',
   styleUrls: ['./find-operation-modal.component.scss'],
 })
-export class FindOperationModalComponent implements OnInit {
+export class FindOperationModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal;
   @Input() modalClass;
   fieldGeneralRepair;
@@ -41,17 +41,19 @@ export class FindOperationModalComponent implements OnInit {
   option;
   carFamilyList;
   roType;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter<any>();
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(injector: Injector,
+    private formBuilder: FormBuilder,
               private serviceCodeApi: ServiceCodeApi,
               private setModalHeightService: SetModalHeightService,
               private carFamilyApi: CarFamilyApi,
               private repairBodyApi: RepairBodyApi,
               private tCodeApi: TCodeApi,
               private loadingService: LoadingService) {
+                super(injector);
     this.fieldGeneralRepair = [
       {
         headerName: 'Mã CV',

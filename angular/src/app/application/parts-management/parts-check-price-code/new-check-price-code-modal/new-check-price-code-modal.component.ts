@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -6,7 +6,6 @@ import { GlobalValidator } from '../../../../shared/form-validation/validators';
 import { GridTableService } from '../../../../shared/common-service/grid-table.service';
 import { LoadingService } from '../../../../shared/loading/loading.service';
 import { ToastService } from '../../../../shared/swal-alert/toast.service';
-import { CurrentUser } from '../../../../home/home.component';
 import {
   InquiryPriceCodeModel,
   PartsOfInquiryModel
@@ -15,6 +14,7 @@ import { AgDatepickerRendererComponent } from '../../../../shared/ag-datepicker-
 import { PartsCheckPriceCodeApi } from '../../../../api/parts-management/parts-check-price-code.api';
 import { AgSelectRendererComponent } from '../../../../shared/ag-select-renderer/ag-select-renderer.component';
 import { CurrentUserModel } from '../../../../core/models/base.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,14 +22,14 @@ import { CurrentUserModel } from '../../../../core/models/base.model';
   templateUrl: './new-check-price-code-modal.component.html',
   styleUrls: ['./new-check-price-code-modal.component.scss']
 })
-export class NewCheckPriceCodeModalComponent implements OnInit {
+export class NewCheckPriceCodeModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', { static: false }) modal: ModalDirective;
   @ViewChild('submitFormBtn', { static: false }) submitFormBtn: ElementRef;
   @Input() statusCodes1: { key: any, value: any }[];
   @Input() statusCodes2: { key: any, value: any }[];
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   modalHeight: number;
   form: FormGroup;
   focusCellIndex = 0;
@@ -46,6 +46,7 @@ export class NewCheckPriceCodeModalComponent implements OnInit {
   renderTable = true;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private gridTableService: GridTableService,
@@ -53,6 +54,7 @@ export class NewCheckPriceCodeModalComponent implements OnInit {
     private swalAlertService: ToastService,
     private partsCheckPriceCodeApi: PartsCheckPriceCodeApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

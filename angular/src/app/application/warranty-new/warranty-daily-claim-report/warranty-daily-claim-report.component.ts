@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
@@ -6,8 +6,8 @@ import {SetModalHeightService} from '../../../shared/common-service/set-modal-he
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {ModalDirective} from 'ngx-bootstrap';
-import {CurrentUser} from '../../../home/home.component';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,14 +15,15 @@ import {ServiceReportApi} from '../../../api/service-report/service-report.api';
   templateUrl: './warranty-daily-claim-report.component.html',
   styleUrls: ['./waranty-daily-claim-report.component.scss']
 })
-export class WarrantyDailyClaimReportComponent implements OnInit {
+export class WarrantyDailyClaimReportComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private swalAlert: ToastService,
@@ -30,7 +31,9 @@ export class WarrantyDailyClaimReportComponent implements OnInit {
     private loading: LoadingService,
     private downloadService: DownloadService,
     private reportApi: ServiceReportApi
-  ) { }
+  ) {
+    super(injector);
+   }
 
   ngOnInit() {
 

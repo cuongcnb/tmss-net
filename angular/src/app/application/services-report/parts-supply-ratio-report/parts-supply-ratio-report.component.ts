@@ -1,15 +1,15 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {GlobalValidator} from '../../../shared/form-validation/validators';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,16 +17,17 @@ import {DownloadService} from '../../../shared/common-service/download.service';
   templateUrl: './parts-supply-ratio-report.component.html',
   styleUrls: ['./parts-supply-ratio-report.component.scss']
 })
-export class PartsSupplyRatioReportComponent implements OnInit {
+export class PartsSupplyRatioReportComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -35,6 +36,7 @@ export class PartsSupplyRatioReportComponent implements OnInit {
     private downloadService: DownloadService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

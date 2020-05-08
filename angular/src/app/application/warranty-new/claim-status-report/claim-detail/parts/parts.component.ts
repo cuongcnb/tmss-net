@@ -1,12 +1,12 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, Injector} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ClaimModel } from '../../../../../core/models/warranty/claim.model';
 import { GlobalValidator } from '../../../../../shared/form-validation/validators';
-import { CurrentUser } from '../../../../../home/home.component';
 import { PartsInfoManagementApi } from '../../../../../api/parts-management/parts-info-management.api';
 import { CommonService } from '../../../../../shared/common-service/common.service';
 import { LoadingService } from '../../../../../shared/loading/loading.service';
 import { DataFormatService } from '../../../../../shared/common-service/data-format.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +14,7 @@ import { DataFormatService } from '../../../../../shared/common-service/data-for
   templateUrl: './parts.component.html',
   styleUrls: ['./parts.component.scss', '../claim-detail.component.scss'],
 })
-export class PartsComponent implements AfterViewInit, OnInit, OnChanges {
+export class PartsComponent extends AppComponentBase implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('submitBtn', {static: false}) submitBtn;
   @ViewChild('findPartsModal', {static: false}) findPartsModal;
   @Input() form: FormGroup;
@@ -22,7 +22,7 @@ export class PartsComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() claim: ClaimModel;
   @Input() payCodeList: Array<any>;
   @Input() isTMV: boolean;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   partsArray: FormArray;
   fieldParts;
   isCheck = false;
@@ -34,12 +34,14 @@ export class PartsComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() sourceTable: string;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private partsInfoManagementApi: PartsInfoManagementApi,
     private commonService: CommonService,
     private loadingService: LoadingService,
     private dataFormatService: DataFormatService,
   ) {
+    super(injector);
     this.fieldParts = [
       {
         headerName: 'Parts_Code',

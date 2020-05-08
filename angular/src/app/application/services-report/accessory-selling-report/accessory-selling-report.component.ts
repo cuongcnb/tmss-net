@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
@@ -13,6 +12,7 @@ import {GlobalValidator} from '../../../shared/form-validation/validators';
 import {PartsInfoManagementApi} from '../../../api/parts-management/parts-info-management.api';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {PartsInfoManagementModel} from '../../../core/models/parts-management/parts-info-management.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,7 +20,7 @@ import {PartsInfoManagementModel} from '../../../core/models/parts-management/pa
   templateUrl: './accessory-selling-report.component.html',
   styleUrls: ['./accessory-selling-report.component.scss']
 })
-export class AccessorySellingReportComponent implements OnInit {
+export class AccessorySellingReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('reportTypeModal', {static: false}) reportTypeModal;
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('searchPartGridModal', {static: false}) searchPartGridModal;
@@ -28,9 +28,10 @@ export class AccessorySellingReportComponent implements OnInit {
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -41,6 +42,7 @@ export class AccessorySellingReportComponent implements OnInit {
     private dataFormatService: DataFormatService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

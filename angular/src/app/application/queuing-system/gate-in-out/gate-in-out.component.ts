@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {concatMapTo, tap} from 'rxjs/operators';
 import * as moment from 'moment';
 import {ShortcutEventOutput, ShortcutInput} from 'ng-keyboard-shortcuts';
 
-import {CurrentUser} from '../../../home/home.component';
 import {GateInOutModel} from '../../../core/models/queuing-system/gate-in-out.model';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {LoadingService} from '../../../shared/loading/loading.service';
@@ -16,6 +15,7 @@ import {ConfirmService} from '../../../shared/confirmation/confirm.service';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {AgInCellButtonComponent} from '../../../shared/ag-in-cell-button/ag-in-cell-button.component';
 import {CommonFunctionsService} from '../common-functions.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 
 @Component({
@@ -24,12 +24,12 @@ import {CommonFunctionsService} from '../common-functions.service';
   templateUrl: './gate-in-out.component.html',
   styleUrls: ['./gate-in-out.component.scss']
 })
-export class GateInOutComponent implements AfterViewInit, OnInit {
+export class GateInOutComponent extends AppComponentBase implements AfterViewInit, OnInit {
   @ViewChild('vehicleInOut', { static: false }) vehicleInOut;
   @ViewChild('reportTypeModal', { static: false }) reportTypeModal;
   @Output() shortcuts = new EventEmitter<Array<ShortcutInput>>();
   form: FormGroup;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   selectedData: GateInOutModel;
   gateInOutList: Array<GateInOutModel>;
   params;
@@ -44,9 +44,11 @@ export class GateInOutComponent implements AfterViewInit, OnInit {
   shortcutsMoldal;
 
   constructor(
+    injector: Injector,
     private downloadService: DownloadService, private formBuilder: FormBuilder, private confirmService: ConfirmService, private swalAlertService: ToastService,
     private loadingService: LoadingService, private queuingApi: QueuingApi, private dataFormatService: DataFormatService, private gridTableService: GridTableService,
     private commonFunctionsService: CommonFunctionsService) {
+      super(injector);
     this.fieldGrid = [
       {
         headerName: 'STT',

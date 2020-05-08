@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SetModalHeightService } from '../../../shared/common-service/set-modal-height.service';
 import { GlobalValidator } from '../../../shared/form-validation/validators';
-import { CurrentUser } from '../../../home/home.component';
 import { CurrentUserModel } from '../../../core/models/base.model';
 import { ServiceReportApi } from '../../../api/service-report/service-report.api';
 import { DownloadService } from '../../../shared/common-service/download.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,16 +15,17 @@ import { LoadingService } from '../../../shared/loading/loading.service';
   templateUrl: './service-rate-and-ro-fill-report.component.html',
   styleUrls: ['./service-rate-and-ro-fill-report.component.scss']
 })
-export class ServiceRateAndRoFillReportComponent implements OnInit {
+export class ServiceRateAndRoFillReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   modalHeight: number;
   form: FormGroup;
   tabs: Array<any>;
   selectedTab: string;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   selectedDate: Date;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private setModalHeightService: SetModalHeightService,
     private serviceReportApi: ServiceReportApi,
@@ -32,6 +33,7 @@ export class ServiceRateAndRoFillReportComponent implements OnInit {
     private loadingService: LoadingService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   onResize() {

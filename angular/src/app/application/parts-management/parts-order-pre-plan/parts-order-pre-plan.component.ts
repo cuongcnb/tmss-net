@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { ToastService } from '../../../shared/swal-alert/toast.service';
@@ -13,8 +13,8 @@ import { DealerApi } from '../../../api/sales-api/dealer/dealer.api';
 import { FormStoringService } from '../../../shared/common-service/form-storing.service';
 import { PartOrderPrePlanApi } from '../../../api/parts-management/part-order-pre-plan.api';
 import { GridTableService } from '../../../shared/common-service/grid-table.service';
-import { CurrentUser } from '../../../home/home.component';
 import { ValidateBeforeSearchService } from '../../../shared/common-service/validate-before-search.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,10 +22,10 @@ import { ValidateBeforeSearchService } from '../../../shared/common-service/vali
   templateUrl: './parts-order-pre-plan.component.html',
   styleUrls: ['./parts-order-pre-plan.component.scss'],
 })
-export class PartsOrderPrePlanComponent implements OnInit {
+export class PartsOrderPrePlanComponent extends AppComponentBase implements OnInit {
   @ViewChild('newOrderPlanModal', {static: false}) newOrderPlanModal;
   form: FormGroup;
-  currentUser: CurrentUserModel;
+  // currentUser: CurrentUserModel;
 
   fieldGridOrder;
   orderParams;
@@ -43,16 +43,18 @@ export class PartsOrderPrePlanComponent implements OnInit {
   dealerList: Array<DealerModel>;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
     private dataFormatService: DataFormatService,
     private dealerApi: DealerApi,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private partOrderPrePlanApi: PartOrderPrePlanApi,
     private gridTableService: GridTableService,
     private validateBeforeSearchService: ValidateBeforeSearchService,
   ) {
+    super(injector);
     this.fieldGridOrder = [
       {
         headerName: 'STT',

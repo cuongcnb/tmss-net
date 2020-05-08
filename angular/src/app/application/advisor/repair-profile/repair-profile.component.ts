@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {throttleTime} from 'rxjs/operators';
 import * as moment from 'moment';
 
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
-import {CurrentUser} from '../../../home/home.component';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {RcTypeApi} from '../../../api/rc-type/rc-type.api';
@@ -14,6 +13,7 @@ import {DownloadService} from '../../../shared/common-service/download.service';
 import {AppoinmentApi} from '../../../api/appoinment/appoinment.api';
 import {RoStateOfProposal, state} from '../../../core/constains/ro-state';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ import {GridTableService} from '../../../shared/common-service/grid-table.servic
   templateUrl: './repair-profile.component.html',
   styleUrls: ['./repair-profile.component.scss']
 })
-export class RepairProfileComponent implements AfterViewInit, OnInit {
+export class RepairProfileComponent extends AppComponentBase implements AfterViewInit, OnInit {
   @ViewChild('orderPrintModal', {static: false}) orderPrintModal;
   @ViewChild('reportTypeModal', {static: false}) reportTypeModal;
   @ViewChild('tableRo', {static: false}) tableRo;
@@ -66,6 +66,7 @@ export class RepairProfileComponent implements AfterViewInit, OnInit {
   }
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private downloadService: DownloadService,
     private appointmentApi: AppoinmentApi,
@@ -77,6 +78,7 @@ export class RepairProfileComponent implements AfterViewInit, OnInit {
     private swalAlert: ToastService,
     private gridTableService: GridTableService
   ) {
+    super(injector);
     this.fieldGridRepairProfile = [
       {headerName: 'DLRNO', headerTooltip: 'DLRNO', field: 'dlrno', width: 130},
       {headerName: 'RO', headerTooltip: 'RO', field: 'repairorderno', width: 130},

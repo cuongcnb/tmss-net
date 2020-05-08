@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {AgDataValidateService} from '../../../shared/ag-grid-table/ag-data-validate/ag-data-validate.service';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
 import {OrderForLexusPartModel} from '../../../core/models/parts-management/order-for-lexus-part.model';
@@ -12,6 +11,7 @@ import {LoadingService} from '../../../shared/loading/loading.service';
 import {OrderForLexusPartApi} from '../../../api/parts-management/order-for-lexus-part.api';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -19,10 +19,10 @@ import {DealerModel} from '../../../core/models/sales/dealer.model';
   templateUrl: './order-for-lexus-part.component.html',
   styleUrls: ['./order-for-lexus-part.component.scss']
 })
-export class OrderForLexusPartComponent implements OnInit {
+export class OrderForLexusPartComponent extends AppComponentBase implements OnInit {
   @ViewChild('searchDataGridModal', {static: false}) searchDataGridModal;
   form: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   dlrLexusOfCurrentDlr: DealerModel;
 
   fieldGrid;
@@ -42,6 +42,7 @@ export class OrderForLexusPartComponent implements OnInit {
 
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
     private agDataValidateService: AgDataValidateService,
@@ -52,6 +53,7 @@ export class OrderForLexusPartComponent implements OnInit {
     private loadingService: LoadingService,
     private downloadService: DownloadService
   ) {
+    super(injector);
   }
 
   ngOnInit() {

@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { VehicleInfoApi } from '../../../api/warranty/vehicle-info.api';
 import { DataFormatService } from '../../../shared/common-service/data-format.service';
 import { CurrentUserModel } from '../../../core/models/base.model';
-import { CurrentUser } from '../../../home/home.component';
 import {User} from '../../../core/constains/user';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +14,7 @@ import {User} from '../../../core/constains/user';
   templateUrl: './warranty-information.component.html',
   styleUrls: ['./warranty-information.component.scss'],
 })
-export class WarrantyInformationComponent implements OnInit {
+export class WarrantyInformationComponent extends AppComponentBase implements OnInit {
   @ViewChild('vinDetailModal', {static: false}) vinDetailModal;
   searchForm: FormGroup;
   fieldVinInfo;
@@ -24,14 +24,16 @@ export class WarrantyInformationComponent implements OnInit {
   claimStatusList;
   paginationTotalsData;
   selectedNode;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   isTMV = false;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(injector: Injector,
+    private formBuilder: FormBuilder,
               private loadingService: LoadingService,
               private swalAlertService: ToastService,
               private vehicleInfoApi: VehicleInfoApi,
               private dataFormatService: DataFormatService) {
+                super(injector);
     this.fieldVinInfo = [
       {
         headerName: 'Số Vin',

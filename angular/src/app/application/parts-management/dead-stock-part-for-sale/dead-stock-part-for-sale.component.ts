@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { DeadStockPartModel } from '../../../core/models/parts-management/dead-stock-part.model';
-import { CurrentUser } from '../../../home/home.component';
 import { PartsInfoManagementApi } from '../../../api/parts-management/parts-info-management.api';
 import { ConfirmService } from '../../../shared/confirmation/confirm.service';
 import { PaginationParamsModel } from '../../../core/models/base.model';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DeadStockPartApi } from '../../../api/parts-management/dead-stock-part.api';
 import { ToastService } from '../../../shared/swal-alert/toast.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,12 +14,12 @@ import { ToastService } from '../../../shared/swal-alert/toast.service';
   templateUrl: './dead-stock-part-for-sale.component.html',
   styleUrls: ['./dead-stock-part-for-sale.component.scss']
 })
-export class DeadStockPartForSaleComponent implements OnInit {
+export class DeadStockPartForSaleComponent extends AppComponentBase implements OnInit {
   partSearchGridField;
   gridField;
   gridParams;
 
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   paginationParams: PaginationParamsModel;
   paginationTotalsData: number;
 
@@ -29,12 +29,14 @@ export class DeadStockPartForSaleComponent implements OnInit {
 
 
   constructor(
+    injector: Injector,
     private loading: LoadingService,
     private swalAlert: ToastService,
     private confirmService: ConfirmService,
     private partsInfoManagementApi: PartsInfoManagementApi,
     private deadStockPartApi: DeadStockPartApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

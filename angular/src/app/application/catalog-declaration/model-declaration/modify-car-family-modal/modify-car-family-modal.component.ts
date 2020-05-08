@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarFamilyModel } from '../../../../core/models/catalog-declaration/car-family.model';
@@ -8,7 +8,7 @@ import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { CarFamilyApi } from '../../../../api/common-api/car-family.api';
 import { GlobalValidator } from '../../../../shared/form-validation/validators';
 import { CarFamilyTypes } from '../../../../core/constains/car-type';
-import { CurrentUser } from '../../../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,7 +16,7 @@ import { CurrentUser } from '../../../../home/home.component';
   templateUrl: './modify-car-family-modal.component.html',
   styleUrls: ['./modify-car-family-modal.component.scss']
 })
-export class ModifyCarFamilyModalComponent implements OnInit {
+export class ModifyCarFamilyModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
@@ -26,12 +26,14 @@ export class ModifyCarFamilyModalComponent implements OnInit {
   carTypes = CarFamilyTypes;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loading: LoadingService,
     private swalAlert: ToastService,
     private carFamilyApi: CarFamilyApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

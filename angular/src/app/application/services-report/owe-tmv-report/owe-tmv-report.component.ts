@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Injector } from '@angular/core';
 import { GlobalValidator } from '../../../shared/form-validation/validators';
 import { CurrentUserModel } from '../../../core/models/base.model';
-import { CurrentUser } from '../../../home/home.component';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DealerModel } from '../../../core/models/sales/dealer.model';
@@ -10,6 +9,7 @@ import { LoadingService } from '../../../shared/loading/loading.service';
 import { DealerApi } from '../../../api/sales-api/dealer/dealer.api';
 import { ServiceReportApi } from '../../../api/service-report/service-report.api';
 import { DownloadService } from '../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,16 +17,17 @@ import { DownloadService } from '../../../shared/common-service/download.service
   templateUrl: './owe-tmv-report.component.html',
   styleUrls: ['./owe-tmv-report.component.scss']
 })
-export class OweTmvReportComponent implements OnInit {
+export class OweTmvReportComponent extends AppComponentBase implements OnInit {
   @ViewChild('reportTypeModal', {static: false}) reportTypeModal;
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class OweTmvReportComponent implements OnInit {
     private serviceReportApi: ServiceReportApi,
     private downloadService: DownloadService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

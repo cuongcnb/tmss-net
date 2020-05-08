@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, Injector} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AgSelectRendererComponent } from '../../../../shared/ag-select-renderer/ag-select-renderer.component';
 import { SendClaimApi } from '../../../../api/parts-management/send-claim.api';
 import { LoadingService } from '../../../../shared/loading/loading.service';
-import { CurrentUser } from '../../../../home/home.component';
 import { CurrentUserModel, PaginationParamsModel } from '../../../../core/models/base.model';
 import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { ValidateBeforeSearchService } from '../../../../shared/common-service/validate-before-search.service';
@@ -15,6 +14,7 @@ import {
   PartsOfApprovalClaimModel,
 } from '../../../../core/models/parts-management/approval-claim.model';
 import { DataFormatService } from '../../../../shared/common-service/data-format.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,12 +22,12 @@ import { DataFormatService } from '../../../../shared/common-service/data-format
   templateUrl: './approval-claim.component.html',
   styleUrls: ['./approval-claim.component.scss'],
 })
-export class ApprovalClaimComponent implements OnInit {
+export class ApprovalClaimComponent extends AppComponentBase implements OnInit {
   @ViewChild('attachedFileModal', {static: false}) attachedFileModal;
 
   searchForm: FormGroup;
   claimForm: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   dealerList: DealerModel[];
 
   fieldClaim;
@@ -48,9 +48,10 @@ export class ApprovalClaimComponent implements OnInit {
   claimStatusOld;
   isHeaderChange;
 
-  listPartsTemp = []
+  listPartsTemp = [];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private sendClaimApi: SendClaimApi,
     private loadingService: LoadingService,
@@ -60,6 +61,7 @@ export class ApprovalClaimComponent implements OnInit {
     private dealerApi: DealerApi,
     private dataFormatService: DataFormatService,
   ) {
+    super(injector);
     this.fieldClaim = [
       {
         headerName: 'STT',

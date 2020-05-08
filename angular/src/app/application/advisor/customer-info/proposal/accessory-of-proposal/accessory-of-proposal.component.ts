@@ -11,12 +11,12 @@ import { state } from '../../../../../core/constains/ro-state';
 import { ConfirmService } from '../../../../../shared/confirmation/confirm.service';
 import { AgCheckboxRendererComponent } from '../../../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
 import { NextShortcutService } from '../../../../../shared/common-service/nextShortcut.service';
-import { currentTab, setFocusedCell } from '../../../../../home/home.component';
 import { RepairOrderApi } from '../../../../../api/quotation/repair-order.api';
 
 import { discountUpdate$, setDiscount } from './accessory-discount/accessory-discount.component';
 import { setClickedRow } from '../proposal.component';
 import { GoUpButtonComponent } from '../go-up-button/go-up-button.component';
+import { setFocusedCell, currentTab } from '@app/shared/common/focused-cells';
 
 @Component({
   // tslint:disable-next-line:component-selector

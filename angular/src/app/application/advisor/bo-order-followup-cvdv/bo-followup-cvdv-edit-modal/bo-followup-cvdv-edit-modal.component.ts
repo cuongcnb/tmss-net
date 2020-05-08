@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import {
   AdvisorEditedDataModel,
   BoPartsFollowupCvdvModel,
 } from '../../../../core/models/parts-management/bo-parts-followup-cvdv.model';
 import { CurrentUserModel } from '../../../../core/models/base.model';
-import { CurrentUser } from '../../../../home/home.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import { LoadingService } from '../../../../shared/loading/loading.service';
@@ -15,6 +14,7 @@ import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { BoOrderFollowupApi } from '../../../../api/parts-management/bo-order-followup.api';
 import { AgCheckboxRendererComponent } from '../../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
 import { AgDatepickerRendererComponent } from '../../../../shared/ag-datepicker-renderer/ag-datepicker-renderer.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,13 +22,13 @@ import { AgDatepickerRendererComponent } from '../../../../shared/ag-datepicker-
   templateUrl: './bo-followup-cvdv-edit-modal.component.html',
   styleUrls: ['./bo-followup-cvdv-edit-modal.component.scss']
 })
-export class BoFollowupCvdvEditModalComponent implements OnInit {
+export class BoFollowupCvdvEditModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
   modalHeight: number;
   selectedBo: BoPartsFollowupCvdvModel;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   form: FormGroup;
 
@@ -39,6 +39,7 @@ export class BoFollowupCvdvEditModalComponent implements OnInit {
   selectedData: AdvisorEditedDataModel;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -47,6 +48,7 @@ export class BoFollowupCvdvEditModalComponent implements OnInit {
     private swalAlertService: ToastService,
     private boOrderFollowupApi: BoOrderFollowupApi,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

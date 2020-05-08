@@ -30,7 +30,6 @@ import {PartsInfoManagementApi} from '../../../../../../api/parts-management/par
 import {RepairJobApi} from '../../../../../../api/common-api/repair-job.api';
 import {NextShortcutService} from '../../../../../../shared/common-service/nextShortcut.service';
 
-import {currentTab, setFocusedCell} from '../../../../../../home/home.component';
 import {
   discountUpdate$,
   setDiscount
@@ -38,6 +37,7 @@ import {
 import {setClickedRow} from '../../proposal.component';
 import {StorageKeys} from '../../../../../../core/constains/storageKeys';
 import {GoUpButtonComponent} from '../../go-up-button/go-up-button.component';
+import { setFocusedCell, currentTab } from '@app/shared/common/focused-cells';
 
 @Component({
   // tslint:disable-next-line:component-selector

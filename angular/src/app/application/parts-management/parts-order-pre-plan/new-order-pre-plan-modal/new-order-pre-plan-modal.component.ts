@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import {
@@ -17,8 +17,8 @@ import { CurrentUserModel } from '../../../../core/models/base.model';
 import { FormStoringService } from '../../../../shared/common-service/form-storing.service';
 import { GridTableService } from '../../../../shared/common-service/grid-table.service';
 import { AgDataValidateService } from '../../../../shared/ag-grid-table/ag-data-validate/ag-data-validate.service';
-import { CurrentUser } from '../../../../home/home.component';
 import { ConfirmService } from '../../../../shared/confirmation/confirm.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -26,7 +26,7 @@ import { ConfirmService } from '../../../../shared/confirmation/confirm.service'
   templateUrl: './new-order-pre-plan-modal.component.html',
   styleUrls: ['./new-order-pre-plan-modal.component.scss'],
 })
-export class NewOrderPrePlanModalComponent implements OnInit {
+export class NewOrderPrePlanModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('searchDataGridModal', {static: false}) searchDataGridModal;
   @ViewChild('partsPrePlanCheckingModal', {static: false}) checkModal;
@@ -34,7 +34,7 @@ export class NewOrderPrePlanModalComponent implements OnInit {
   @Output() close = new EventEmitter();
   modalHeight: number;
   selectedOrder: PartsOrderPrePlanModel;
-  currentUser: CurrentUserModel;
+  // currentUser: CurrentUserModel;
 
   fieldGrid;
   params;
@@ -55,6 +55,7 @@ export class NewOrderPrePlanModalComponent implements OnInit {
   focusCellIndex = 0;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
@@ -67,11 +68,12 @@ export class NewOrderPrePlanModalComponent implements OnInit {
     private agDataValidateService: AgDataValidateService,
     private confirmService: ConfirmService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {
     this.onResize();
-    this.currentUser = CurrentUser;
+    // this.currentUser = CurrentUser;
 
     this.fieldGrid = [
       {

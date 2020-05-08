@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
-import { CurrentUser } from '../../../home/home.component';
 import { ToastService } from '../../../shared/swal-alert/toast.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { PaginationParamsModel } from '../../../core/models/base.model';
@@ -17,6 +16,7 @@ import { GridTableService } from '../../../shared/common-service/grid-table.serv
 import { AgSelectRendererComponent } from '../../../shared/ag-select-renderer/ag-select-renderer.component';
 import { DlrConfigApi } from '../../../api/common-api/dlr-config.api';
 import { CommonFunctionsService } from '../common-functions.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -24,12 +24,12 @@ import { CommonFunctionsService } from '../common-functions.service';
   templateUrl: './customer-service-reception.component.html',
   styleUrls: ['./customer-service-reception.component.scss'],
 })
-export class CustomerServiceReceptionComponent implements OnInit {
+export class CustomerServiceReceptionComponent extends AppComponentBase implements OnInit {
   @ViewChild('advisorDeskChangeModal', { static: false }) advisorDeskChangeModal;
   @ViewChild('deskAdvisorModal', { static: false }) deskAdvisorModal;
   @ViewChild('vehicleIn', { static: false }) vehicleIn;
   form: FormGroup;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   desks: Array<{ key: number, value: string }> = [];
   advisorDesks: Array<any> = [];
   warningTime: number;
@@ -52,6 +52,7 @@ export class CustomerServiceReceptionComponent implements OnInit {
   fieldDeskAdvisor;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private swalAlertService: ToastService,
     private dataFormatService: DataFormatService,
@@ -62,7 +63,7 @@ export class CustomerServiceReceptionComponent implements OnInit {
     private commonFunctionsService: CommonFunctionsService,
     private dlrConfigApi: DlrConfigApi
   ) {
-
+    super(injector);
     this.fieldDeskAdvisor = [
       { headerName: 'Tên bàn', headerTooltip: 'Tên bàn', field: 'deskName' },
       { headerName: 'Mã CVDV', headerTooltip: 'Mã cố vấn dịch vụ', field: 'advisorId' },

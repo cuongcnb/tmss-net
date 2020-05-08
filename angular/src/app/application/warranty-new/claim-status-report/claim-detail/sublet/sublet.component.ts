@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, Injector} from '@angular/core';
 import { GlobalValidator } from '../../../../../shared/form-validation/validators';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClaimModel } from '../../../../../core/models/warranty/claim.model';
-import { CurrentUser } from '../../../../../home/home.component';
 import { SubletApi } from '../../../../../api/common-api/sublet.api';
 import { CommonService } from '../../../../../shared/common-service/common.service';
 import {ToastService} from '../../../../../shared/swal-alert/toast.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,7 +13,7 @@ import {ToastService} from '../../../../../shared/swal-alert/toast.service';
   templateUrl: './sublet.component.html',
   styleUrls: ['./sublet.component.scss', '../claim-detail.component.scss'],
 })
-export class SubletComponent implements AfterViewInit, OnInit, OnChanges {
+export class SubletComponent extends AppComponentBase implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('submitBtn', {static: false}) submitBtn;
   @Input() form: FormGroup;
   @Input() isSubmit: boolean;
@@ -22,15 +22,17 @@ export class SubletComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() subletTypeList: Array<any>;
   @Input() isTMV: boolean;
 
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   subletArray: FormArray;
   @Input() sourceTable: string;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(injector: Injector,
+      private formBuilder: FormBuilder,
               private subletApi: SubletApi,
               private toastService: ToastService,
               private commonService: CommonService
               ) {
+                super(injector);
   }
 
   ngOnInit() {

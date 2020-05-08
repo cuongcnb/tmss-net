@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
@@ -8,7 +8,6 @@ import {ToastService} from '../../../../shared/swal-alert/toast.service';
 import {PartsInfoManagementApi} from '../../../../api/parts-management/parts-info-management.api';
 import {DataFormatService} from '../../../../shared/common-service/data-format.service';
 import {CarModelApi} from '../../../../api/common-api/car-model.api';
-import {CurrentUser} from '../../../../home/home.component';
 import {GlobalValidator} from '../../../../shared/form-validation/validators';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
 import {SrvDRcJobsApi} from '../../../../api/master-data/warranty/srv-d-rc-jobs.api';
@@ -26,6 +25,7 @@ import {SrvDRcJobsModelsApi} from '../../../../api/master-data/warranty/srv-d-rc
 import {SrvDRcRepairPartsApi} from '../../../../api/master-data/warranty/srv-d-rc-repair-parts.api';
 import {DealerModel} from '../../../../core/models/sales/dealer.model';
 import {DealerApi} from '../../../../api/sales-api/dealer/dealer.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -33,7 +33,7 @@ import {DealerApi} from '../../../../api/sales-api/dealer/dealer.api';
   templateUrl: './add-update-modal.component.html',
   styleUrls: ['./add-update-modal.component.scss']
 })
-export class AddUpdateBPModalComponent implements OnInit {
+export class AddUpdateBPModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // @ViewChild('partModal', {static: false}) partModal;
   // @ViewChild('searchCarModel', {static: false}) searchCarModel;
@@ -41,7 +41,7 @@ export class AddUpdateBPModalComponent implements OnInit {
   modalHeight: number;
   form: FormGroup;
   selectedJob;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   jobGroupTypes = JobGroupTypes;
   carInfo;
   partGridField;
@@ -61,6 +61,7 @@ export class AddUpdateBPModalComponent implements OnInit {
   dealerList: DealerModel[];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private setModalHeightService: SetModalHeightService,
     private gridTableService: GridTableService,
@@ -78,6 +79,7 @@ export class AddUpdateBPModalComponent implements OnInit {
     private srvDRcRepairPartsApi: SrvDRcRepairPartsApi,
     private dealerApi: DealerApi
   ) {
+    super(injector);
     this.fieldGridSearch = [
       {headerName: 'Mã CV', headerTooltip: 'Mã CV', field: 'rccode'},
       {headerName: 'Tên CV', headerTooltip: 'Tên CV', field: 'rcname'},

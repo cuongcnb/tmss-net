@@ -1,5 +1,5 @@
 import { EventBus } from './../../../core/constains/eventBus';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { remove } from 'lodash';
@@ -19,7 +19,6 @@ import {UnitCommonModel} from '../../../core/models/common-models/unit-common.mo
 import {DataFormatService} from '../../../shared/common-service/data-format.service';
 import {PartTypeCommonModel} from '../../../core/models/common-models/part-type-common.model';
 import {CurrentUserModel, PaginationParamsModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {CurrencyApi} from '../../../api/common-api/currency.api';
 import {CurrencyModel} from '../../../core/models/common-models/currency.model';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
@@ -28,6 +27,7 @@ import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {StorageKeys} from '../../../core/constains/storageKeys';
 import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
 import {AgCheckboxHeaderRendererComponent} from '../../../shared/ag-checkbox-header-renderer/ag-checkbox-header-renderer.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -35,10 +35,10 @@ import {AgCheckboxHeaderRendererComponent} from '../../../shared/ag-checkbox-hea
   templateUrl: './parts-info-management.component.html',
   styleUrls: ['./parts-info-management.component.scss']
 })
-export class PartsInfoManagementComponent implements OnInit {
+export class PartsInfoManagementComponent extends AppComponentBase implements OnInit {
   @ViewChild('importPartsInfoModal', {static: false}) importPartsInfoModal;
   @ViewChild('editPartInfoModal', {static: false}) editPartInfoModal;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   searchForm: FormGroup;
   dealerList: Array<DealerModel>;
   kpiPartTypes: string[];
@@ -72,6 +72,7 @@ export class PartsInfoManagementComponent implements OnInit {
   excelStyles;
 
   constructor(
+    injector: Injector,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
     private formBuilder: FormBuilder,
@@ -84,6 +85,7 @@ export class PartsInfoManagementComponent implements OnInit {
     private gridTableService: GridTableService,
     private dealerApi: DealerApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../shared/common-service/download.service';
 import {GlobalValidator} from '../../../shared/form-validation/validators';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,15 +17,16 @@ import {GlobalValidator} from '../../../shared/form-validation/validators';
   templateUrl: './ro-general-report.component.html',
   styleUrls: ['./ro-general-report.component.scss']
 })
-export class RoGeneralReportComponent implements OnInit, AfterViewInit {
+export class RoGeneralReportComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class RoGeneralReportComponent implements OnInit, AfterViewInit {
     private downloadService: DownloadService,
     private el: ElementRef
   ) {
+    super(injector);
   }
 
   ngOnInit() {

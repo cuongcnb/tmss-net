@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DealerModel } from '../../../../core/models/sales/dealer.model';
 import { TransportTypeModel } from '../../../../core/models/common-models/transport-type.model';
 import { PartsOfSpecialOrder, PartsSpecialOrderModel, } from '../../../../core/models/parts-management/parts-special-order.model';
-import { CurrentUser } from '../../../../home/home.component';
 import { LoadingService } from '../../../../shared/loading/loading.service';
 import { GridTableService } from '../../../../shared/common-service/grid-table.service';
 import { PartsSpecialOrderApi } from '../../../../api/parts-management/parts-special-order.api';
@@ -14,6 +13,7 @@ import { ToastService } from '../../../../shared/swal-alert/toast.service';
 import { DataFormatService } from '../../../../shared/common-service/data-format.service';
 import {ServiceReportApi} from '../../../../api/service-report/service-report.api';
 import {DownloadService} from '../../../../shared/common-service/download.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ import {DownloadService} from '../../../../shared/common-service/download.servic
   templateUrl: './parts-special-checking-modal.component.html',
   styleUrls: ['./parts-special-checking-modal.component.scss']
 })
-export class PartsSpecialCheckingModalComponent implements OnInit {
+export class PartsSpecialCheckingModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   modalHeight: number;
   form: FormGroup;
@@ -30,7 +30,7 @@ export class PartsSpecialCheckingModalComponent implements OnInit {
   @Input() transportTypeList: TransportTypeModel[];
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
 
   fieldGrid;
   params;
@@ -43,6 +43,7 @@ export class PartsSpecialCheckingModalComponent implements OnInit {
   totalPriceIncludeTax;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -53,6 +54,7 @@ export class PartsSpecialCheckingModalComponent implements OnInit {
     private downloadService: DownloadService,
     private serviceReportApi: ServiceReportApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

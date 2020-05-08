@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ModalDirective} from 'ngx-bootstrap';
 
@@ -13,7 +13,6 @@ import {TransportTypeModel} from '../../../../core/models/common-models/transpor
 import {PartsManualOrderApi} from '../../../../api/parts-management/parts-manual-order.api';
 import {FormStoringService} from '../../../../shared/common-service/form-storing.service';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {AgDataValidateService} from '../../../../shared/ag-grid-table/ag-data-validate/ag-data-validate.service';
 import {ConfirmService} from '../../../../shared/confirmation/confirm.service';
 import {CurrentUserModel} from '../../../../core/models/base.model';
@@ -25,6 +24,7 @@ import {OrderMethodApi} from '../../../../api/common-api/order-method.api';
 import {TransportTypeApi} from '../../../../api/common-api/transport-type.api';
 import {TMSSTabs} from '../../../../core/constains/tabs';
 import {EventBusService} from '../../../../shared/common-service/event-bus.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -32,7 +32,7 @@ import {EventBusService} from '../../../../shared/common-service/event-bus.servi
   templateUrl: './new-manual-tab-order.component.html',
   styleUrls: ['./new-manual-tab-order.component.scss']
 })
-export class NewManualTabOrderComponent implements OnInit {
+export class NewManualTabOrderComponent extends AppComponentBase implements OnInit {
   @ViewChild('submitFormBtn', {static: false}) submitFormBtn: ElementRef;
   @ViewChild('searchDataGridModal', {static: false}) searchDataGridModal;
   @ViewChild('selectPackOfPartsModal', {static: false}) selectPackOfPartsModal;
@@ -58,12 +58,13 @@ export class NewManualTabOrderComponent implements OnInit {
 
   fieldGridSearchDataGrid;
 
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   focusCellIndex = 0;
   editingRowParams;
   currentOrderTypeId: number;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
@@ -81,6 +82,7 @@ export class NewManualTabOrderComponent implements OnInit {
     private transportTypeApi: TransportTypeApi,
     private eventBus: EventBusService
   ) {
+    super(injector);
     this.masterDataApi();
     this.getLexusOfCurrentDealer();
   }

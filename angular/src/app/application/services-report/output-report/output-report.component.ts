@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DealerModel } from '../../../core/models/sales/dealer.model';
 import { CurrentUserModel } from '../../../core/models/base.model';
-import { CurrentUser } from '../../../home/home.component';
 import { SetModalHeightService } from '../../../shared/common-service/set-modal-height.service';
 import { LoadingService } from '../../../shared/loading/loading.service';
 import { DealerApi } from '../../../api/sales-api/dealer/dealer.api';
 import { ServiceReportApi } from '../../../api/service-report/service-report.api';
 import { DownloadService } from '../../../shared/common-service/download.service';
 import { GlobalValidator } from '../../../shared/form-validation/validators';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,23 +17,26 @@ import { GlobalValidator } from '../../../shared/form-validation/validators';
   templateUrl: './output-report.component.html',
   styleUrls: ['./output-report.component.scss']
 })
-export class OutputReportComponent implements OnInit, AfterViewInit {
+export class OutputReportComponent extends AppComponentBase implements OnInit, AfterViewInit {
 
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   form: FormGroup;
   modalHeight: number;
   dealerList: DealerModel[];
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
     private loadingService: LoadingService,
     private dealerApi: DealerApi,
     private serviceReportApi: ServiceReportApi,
     private downloadService: DownloadService,
-  ) { }
+  ) {
+    super(injector);
+  }
 
   ngOnInit() {
   }

@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild, AfterViewInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit, ElementRef, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CurrentUserModel} from '../../../core/models/base.model';
-import {CurrentUser} from '../../../home/home.component';
 import {SetModalHeightService} from '../../../shared/common-service/set-modal-height.service';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {ServiceReportApi} from '../../../api/service-report/service-report.api';
@@ -10,6 +9,7 @@ import {DownloadService} from '../../../shared/common-service/download.service';
 import {GlobalValidator} from '../../../shared/form-validation/validators';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,16 +17,17 @@ import {DealerModel} from '../../../core/models/sales/dealer.model';
   templateUrl: './part-import-export-report.component.html',
   styleUrls: ['./part-import-export-report.component.scss']
 })
-export class PartImportExportReportComponent implements OnInit, AfterViewInit {
+export class PartImportExportReportComponent extends AppComponentBase implements OnInit, AfterViewInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('btn', {static: false}) btn: ElementRef;
   form: FormGroup;
   modalHeight: number;
 
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   dealerList: DealerModel[] = [];
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -34,6 +35,7 @@ export class PartImportExportReportComponent implements OnInit, AfterViewInit {
     private downloadService: DownloadService,
     private dealerApi: DealerApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

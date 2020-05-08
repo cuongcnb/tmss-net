@@ -1,6 +1,5 @@
-import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {Router} from '@angular/router';
-import {CurrentUser} from '../../home/home.component';
 import {EventBusService} from '../common-service/event-bus.service';
 import {StorageKeys} from '../../core/constains/storageKeys';
 import {SideBars} from '../../core/constains/sidebars';
@@ -16,6 +15,7 @@ import {SysUserApi} from '../../api/system-admin/sys-user.api';
 import {omit} from 'lodash';
 import {SectionApi} from '../../api/system-admin/section.api';
 import {fieldMatch} from '../form-validation/fieldMatch';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -24,7 +24,7 @@ import {fieldMatch} from '../form-validation/fieldMatch';
   styleUrls: ['./header.component.scss']
 
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent extends AppComponentBase implements OnInit, OnDestroy {
   @Input() isAlwaysShowSubmenu: boolean;
   @Output() openFilterModal = new EventEmitter();
   @ViewChild('modal', {static: true}) modal: ModalDirective;
@@ -32,17 +32,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter();
   modalHeight: number;
   form: FormGroup;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   currentSidebar: SideBars;
   allTabs: Array<string>;
   isShowMenu = false;
   rightMenuHeight: number;
   numberOpen = 1;
   constructor(
+    injector: Injector,
     private router: Router,
     private eventBusService: EventBusService,
     private elem: ElementRef,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -50,6 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sysUserApi: SysUserApi,
     private sectionApi: SectionApi
   ) {
+    super(injector);
   }
 
   // @HostListener('document:click', ['$event'])

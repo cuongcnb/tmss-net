@@ -1,11 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TransportTypeModel} from '../../../../core/models/common-models/transport-type.model';
 import {OrderMethodModel} from '../../../../core/models/common-models/order-method.model';
 import {DataFormatService} from '../../../../shared/common-service/data-format.service';
-import {CurrentUser} from '../../../../home/home.component';
 import {CurrentUserModel} from '../../../../core/models/base.model';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
 import {DownloadService} from '../../../../shared/common-service/download.service';
@@ -17,6 +16,7 @@ import {
   PartsOfManualOrderModel
 } from '../../../../core/models/parts-management/parts-manual-order.model';
 import {ServiceReportApi} from '../../../../api/service-report/service-report.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -24,7 +24,7 @@ import {ServiceReportApi} from '../../../../api/service-report/service-report.ap
   templateUrl: './parts-manual-checking-modal.component.html',
   styleUrls: ['./parts-manual-checking-modal.component.scss']
 })
-export class PartsManualCheckingModalComponent implements OnInit {
+export class PartsManualCheckingModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   modalHeight: number;
   form: FormGroup;
@@ -33,7 +33,7 @@ export class PartsManualCheckingModalComponent implements OnInit {
   @Input() orderMethodArr: OrderMethodModel[];
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   selectedOrder: ManualOrderModel;
 
   fieldGrid;
@@ -45,6 +45,7 @@ export class PartsManualCheckingModalComponent implements OnInit {
   totalPriceIncludeTax;
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private dataFormatService: DataFormatService,
@@ -55,6 +56,7 @@ export class PartsManualCheckingModalComponent implements OnInit {
     private swalAlertService: ToastService,
     private serviceReportApi: ServiceReportApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

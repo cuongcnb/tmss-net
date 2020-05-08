@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
@@ -8,7 +8,6 @@ import {ToastService} from '../../../../shared/swal-alert/toast.service';
 import {PartsInfoManagementApi} from '../../../../api/parts-management/parts-info-management.api';
 import {DataFormatService} from '../../../../shared/common-service/data-format.service';
 import {CarModelApi} from '../../../../api/common-api/car-model.api';
-import {CurrentUser} from '../../../../home/home.component';
 import {GlobalValidator} from '../../../../shared/form-validation/validators';
 import {GridTableService} from '../../../../shared/common-service/grid-table.service';
 import {SrvDRcJobsApi} from '../../../../api/master-data/warranty/srv-d-rc-jobs.api';
@@ -21,6 +20,7 @@ import {CarFamilyModel} from '../../../../core/models/catalog-declaration/car-fa
 import {ModelCarModel} from '../../../../core/models/catalog-declaration/model-car.model';
 import {CarFamilyTypes} from '../../../../core/constains/car-type';
 import {CarFamilyApi} from '../../../../api/common-api/car-family.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -28,7 +28,7 @@ import {CarFamilyApi} from '../../../../api/common-api/car-family.api';
   templateUrl: './apply-job-for-car.component.html',
   styleUrls: ['./apply-job-for-car.component.scss']
 })
-export class ApplyJobForCarComponent implements OnInit {
+export class ApplyJobForCarComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('partModal', {static: false}) partModal;
   @ViewChild('searchCarModel', {static: false}) searchCarModel;
@@ -36,7 +36,7 @@ export class ApplyJobForCarComponent implements OnInit {
   modalHeight: number;
   form: FormGroup;
   selectedJob;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   jobGroupTypes = JobGroupTypes;
   carInfo;
   partGridField;
@@ -53,6 +53,7 @@ export class ApplyJobForCarComponent implements OnInit {
   jobTimeDlrId: number;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private setModalHeightService: SetModalHeightService,
     private gridTableService: GridTableService,
@@ -67,6 +68,7 @@ export class ApplyJobForCarComponent implements OnInit {
     private repairJobApi: RepairJobApi,
     private carFamilyApi: CarFamilyApi
   ) {
+    super(injector);
   }
 
   ngOnInit() {

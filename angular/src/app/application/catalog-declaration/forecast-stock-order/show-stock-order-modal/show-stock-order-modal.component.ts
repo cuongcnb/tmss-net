@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, Injector } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ForecastOrderModel } from '../../../../core/models/catalog-declaration/forecast-order.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SetModalHeightService } from '../../../../shared/common-service/set-modal-height.service';
-import { CurrentUser } from '../../../../home/home.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -11,21 +11,23 @@ import { CurrentUser } from '../../../../home/home.component';
   templateUrl: './show-stock-order-modal.component.html',
   styleUrls: ['./show-stock-order-modal.component.scss'],
 })
-export class ShowStockOrderModalComponent implements OnInit {
+export class ShowStockOrderModalComponent extends AppComponentBase implements OnInit {
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   // tslint:disable-next-line:no-output-native
   @Output() close = new EventEmitter();
   selectedList: Array<ForecastOrderModel>;
   modalHeight: number;
   form: FormGroup;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   gridField;
   gridParams;
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private modalHeightService: SetModalHeightService,
   ) {
+    super(injector);
   }
 
   ngOnInit() {

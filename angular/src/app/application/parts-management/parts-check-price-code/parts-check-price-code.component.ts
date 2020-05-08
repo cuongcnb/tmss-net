@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Injector} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {InquiryPriceCodeModel, PartsOfInquiryModel} from '../../../core/models/parts-management/parts-check-price-code.model';
 import {LoadingService} from '../../../shared/loading/loading.service';
 import {ToastService} from '../../../shared/swal-alert/toast.service';
 import {GridTableService} from '../../../shared/common-service/grid-table.service';
-import {CurrentUser} from '../../../home/home.component';
 import {CurrentUserModel, PaginationParamsModel} from '../../../core/models/base.model';
 import {DealerApi} from '../../../api/sales-api/dealer/dealer.api';
 import {DealerModel} from '../../../core/models/sales/dealer.model';
@@ -14,6 +13,7 @@ import {DownloadService} from '../../../shared/common-service/download.service';
 import {ValidateBeforeSearchService} from '../../../shared/common-service/validate-before-search.service';
 import {AgCheckboxRendererComponent} from '../../../shared/ag-checkbox-renderer/ag-checkbox-renderer.component';
 import {remove} from 'lodash';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,10 +21,10 @@ import {remove} from 'lodash';
   templateUrl: './parts-check-price-code.component.html',
   styleUrls: ['./parts-check-price-code.component.scss']
 })
-export class PartsCheckPriceCodeComponent implements OnInit {
+export class PartsCheckPriceCodeComponent extends AppComponentBase implements OnInit {
   @ViewChild('newCheckPriceCodeModal', {static: false}) newCheckPriceCodeModal;
   form: FormGroup;
-  currentUser: CurrentUserModel = CurrentUser;
+  // currentUser: CurrentUserModel = CurrentUser;
   dealerList: DealerModel[] = [];
 
   fieldGridInquiry;
@@ -60,6 +60,7 @@ export class PartsCheckPriceCodeComponent implements OnInit {
   ];
 
   constructor(
+    injector: Injector,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
     private swalAlertService: ToastService,
@@ -70,6 +71,7 @@ export class PartsCheckPriceCodeComponent implements OnInit {
     private downloadService: DownloadService,
     private validateBeforeSearchService: ValidateBeforeSearchService
   ) {
+    super(injector);
   }
 
   ngOnInit() {
