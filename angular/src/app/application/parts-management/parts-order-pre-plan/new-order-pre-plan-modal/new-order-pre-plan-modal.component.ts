@@ -63,7 +63,7 @@ export class NewOrderPrePlanModalComponent extends AppComponentBase implements O
     private dataFormatService: DataFormatService,
     private partsInfoManagementApi: PartsInfoManagementApi,
     private partOrderPrePlanApi: PartOrderPrePlanApi,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private gridTableService: GridTableService,
     private agDataValidateService: AgDataValidateService,
     private confirmService: ConfirmService,

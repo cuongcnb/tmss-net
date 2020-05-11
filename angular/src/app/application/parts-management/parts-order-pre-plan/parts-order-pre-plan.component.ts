@@ -187,7 +187,7 @@ export class PartsOrderPrePlanComponent extends AppComponentBase implements OnIn
   }
 
   ngOnInit() {
-    this.currentUser = CurrentUser;
+    this.currentUser = this.currentUser;
     this.buildForm();
     this.getDealerList();
   }

@@ -68,7 +68,7 @@ export class NewSpecialOrderModalComponent extends AppComponentBase implements O
     private dataFormatService: DataFormatService,
     private partsSpecialOrderApi: PartsSpecialOrderApi,
     private partsInfoManagementApi: PartsInfoManagementApi,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private transportTypeApi: TransportTypeApi,
     private gridTableService: GridTableService,
     private agDataValidateService: AgDataValidateService,
@@ -81,7 +81,7 @@ export class NewSpecialOrderModalComponent extends AppComponentBase implements O
 
   ngOnInit() {
     this.onResize();
-    this.currentUser = CurrentUser;
+    this.currentUser = this.currentUser;
     this.fieldGrid = [
       {
         headerName: 'STT',

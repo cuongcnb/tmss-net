@@ -36,7 +36,7 @@ export class ModifyJobGroupModalComponent extends AppComponentBase implements On
   selectedData: JobGroupModel;
   form: FormGroup;
   modalHeight: number;
-  currentUser = CurrentUser;
+  // currentUser = CurrentUser;
   jobGroupTypes = JobGroupTypes;
 
   jobGroupField;

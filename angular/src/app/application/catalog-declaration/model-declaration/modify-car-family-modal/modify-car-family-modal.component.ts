@@ -77,7 +77,7 @@ export class ModifyCarFamilyModalComponent extends AppComponentBase implements O
       cfCode: [undefined, Validators.compose([GlobalValidator.required, GlobalValidator.maxLength(20), GlobalValidator.specialCharacter])],
       id: [undefined],
       status: ['Y'],
-      dlrId: [CurrentUser.dealerId],
+      dlrId: [this.currentUser.dealerId],
       cfName: [undefined, Validators.compose([GlobalValidator.maxLength(50), GlobalValidator.specialCharacter])],
       cfType: [this.carTypes[0].id],
     });

@@ -133,8 +133,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     private router: Router,
     private functionLogApi: FunctionLogApi,
     private toastService: ToastService) {
-    CurrentUser = this.formStoringService.get(StorageKeys.currentUser);
-    this.currentUser = CurrentUser;
+    // CurrentUser = this.formStoringService.get(StorageKeys.currentUser);
+    // this.currentUser = CurrentUser;
     window.addEventListener('storage', (event) => {
       if (event.storageArea === localStorage) {
         const token = localStorage.getItem(StorageKeys.currentUser);

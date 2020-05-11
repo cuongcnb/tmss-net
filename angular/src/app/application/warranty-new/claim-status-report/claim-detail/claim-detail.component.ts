@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild, Injector} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SetModalHeightService} from '../../../../shared/common-service/set-modal-height.service';
@@ -15,6 +15,7 @@ import {TCodeApi} from '../../../../api/common-api/t-code.api';
 import {SubletApi} from '../../../../api/common-api/sublet.api';
 import {User} from '../../../../core/constains/user';
 import {PartsInfoManagementApi} from '../../../../api/parts-management/parts-info-management.api';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -22,7 +23,7 @@ import {PartsInfoManagementApi} from '../../../../api/parts-management/parts-inf
   templateUrl: './claim-detail.component.html',
   styleUrls: ['./claim-detail.component.scss']
 })
-export class ClaimDetailComponent implements OnInit {
+export class ClaimDetailComponent extends AppComponentBase implements OnInit {
   @ViewChild('repairJobHistoryModal', {static: false}) repairJobHistoryModal;
   @ViewChild('modal', {static: false}) modal: ModalDirective;
   @ViewChild('reasonCode', {static: false}) reasonCode;
@@ -57,6 +58,7 @@ export class ClaimDetailComponent implements OnInit {
   @Output() reload = new EventEmitter<any>();
 
   constructor(
+    injector: Injector,
     private setModalHeightService: SetModalHeightService,
     private formBuilder: FormBuilder,
     private loadingService: LoadingService,
@@ -70,6 +72,7 @@ export class ClaimDetailComponent implements OnInit {
     private subletApi: SubletApi,
     private partsInfoManagementApi: PartsInfoManagementApi,
   ) {
+    super(injector);
     this.dataIdList = [
       {
         key: 'W',

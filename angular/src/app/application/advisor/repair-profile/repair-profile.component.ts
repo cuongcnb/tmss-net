@@ -222,7 +222,7 @@ export class RepairProfileComponent extends AppComponentBase implements AfterVie
   }
 
   getRelatedDealers() {
-    this.dealerApi.getRelatedDealers(CurrentUser.dealerId).subscribe(val => {
+    this.dealerApi.getRelatedDealers(this.currentUser.dealerId).subscribe(val => {
       this.dealers = val;
     });
     this.rcTypeApi.findAll().subscribe(val => {
@@ -234,7 +234,7 @@ export class RepairProfileComponent extends AppComponentBase implements AfterVie
 
   private buildForm() {
     this.repairProfileSearchForm = this.formBuilder.group({
-      dealerId: [{value: CurrentUser.dealerId, disabled: this.dealers && this.dealers.length === 1}],
+      dealerId: [{value: this.currentUser.dealerId, disabled: this.dealers && this.dealers.length === 1}],
       appOrRoNo: [undefined],
       type: ['1'],
       registerNo: [undefined],

@@ -72,7 +72,7 @@ export class NewManualTabOrderComponent extends AppComponentBase implements OnIn
     private divisionApi: DivisionCommonApi,
     private loadingService: LoadingService,
     private partsManualOrderApi: PartsManualOrderApi,
-    private formStoringService: FormStoringService,
+    // private formStoringService: FormStoringService,
     private gridTableService: GridTableService,
     private agDataValidateService: AgDataValidateService,
     private confirmService: ConfirmService,

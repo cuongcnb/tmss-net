@@ -64,7 +64,7 @@ export class ChatBarComponent extends AppComponentBase implements OnInit, AfterV
     friendDtoState: typeof FriendshipState = FriendshipState;
 
     friends: ChatFriendDto[];
-    currentUser: UserLoginInfoDto = this.appSession.user;
+    // currentUser: UserLoginInfoDto = this.appSession.user;
     profilePicture = AppConsts.appBaseUrl + '/assets/common/images/default-profile-picture.png';
     chatMessage = '';
 

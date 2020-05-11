@@ -64,8 +64,7 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
         private _appNavigationService: AppNavigationService,
         @Inject(DOCUMENT) private document: Document,
         private render: Renderer2,
-        private eventBus: EventBusService,
-        private formStoringService: FormStoringService) {
+        private eventBus: EventBusService) {
         super(injector);
     }
 

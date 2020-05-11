@@ -115,7 +115,7 @@ export class FileUploaderComponent extends AppComponentBase implements OnInit, O
     this.uploader.onBeforeUploadItem = (item) => {
       item.withCredentials = false;
     };
-    const token = CurrentUser.token;
+    const token = this.currentUser.token;
     this.uploader.setOptions({
       authToken: `Bearer ${token}`,
     });

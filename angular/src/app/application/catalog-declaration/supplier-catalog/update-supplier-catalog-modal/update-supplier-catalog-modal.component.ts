@@ -83,7 +83,7 @@ export class UpdateSupplierCatalogModalComponent extends AppComponentBase implem
     this.form = this.formBuilder.group({
       supplierCode: [undefined, [GlobalValidator.required, GlobalValidator.maxLength(20), GlobalValidator.specialCharacter]],
       id: [undefined],
-      dlrId: [CurrentUser.dealerId],
+      dlrId: [this.currentUser.dealerId],
       status: ['Y'],
       supplierName: [undefined, [GlobalValidator.maxLength(50), GlobalValidator.specialCharacter]],
       address: [undefined, GlobalValidator.maxLength(50)],
