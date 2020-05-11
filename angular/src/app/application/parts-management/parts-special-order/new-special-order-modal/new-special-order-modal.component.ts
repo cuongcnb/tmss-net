@@ -471,7 +471,7 @@ export class NewSpecialOrderModalComponent extends AppComponentBase implements O
       keyCode: null,
       seatNo: null,
       remark: null,
-      dlrId: CurrentUser.dealerId,
+      dlrId: this.currentUser.dealerId,
       frCd: rowData.frCd,
       specialOrderId: null
     };
