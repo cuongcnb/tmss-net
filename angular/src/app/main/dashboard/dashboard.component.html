@@ -1,14 +1,14 @@
 <!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
 <div id="main-container" class="main-container">
   <div [hidden]="hide" class="container" id="breadcrumb-container">
-    <div class="tabbable mt-4" *ngIf="activeTabs.length">
+    <div class="tabbable mt-4 tab-container" *ngIf="activeTabs.length">
       <ul id="myTab" class="nav nav-tabs tab-bricky">
         <li (mouseup)="triggerMouseEvent($event, activeTab.tab)"
             *ngFor="let activeTab of activeTabs"
             [class.active]="activeTab.tab === selectedTab" (click)="selectTab(activeTab.tab, $event)"
             data-toggle="tooltip"
-            data-placement="bottom" title="{{activeTab.name}}" class="pointer">
-          <a data-toggle="tab" class="tab-item text-capitalize">
+            data-placement="bottom" title="{{activeTab.name}}" class="pointer nav-item">
+          <a data-toggle="tab" [class.active]="activeTab.tab === selectedTab" class="tab-item nav-link text-capitalize">
             <button type="button" class="close" (click)="removeTab(activeTab.tab)">
               <span aria-hidden="true">&times;</span>
             </button>

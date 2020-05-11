@@ -13,25 +13,25 @@
 @import "./scss/_modal.scss";
 @import "./scss/ag-grid-common-table";
 @import "./scss/common";
-@import "./scss/form";
+// @import "./scss/form";
 @import "./scss/progress-coo";
 @import "./scss/loading";
 
-html, body {
-  font-family: Arial, sans-serif !important;
-}
+// html, body {
+//   font-family: Arial, sans-serif !important;
+// }
 
 .main-container {
   margin-top: 0px !important;
   * {
-    font-size: 11px !important;
-    input:not([type='radio']), select {
-      height: 26px;
-      padding: 0 5px !important;
-      &.required:not([disabled]) {
-        background: #FFFFCC !important;
-      }
-    }
+    // font-size: 11px;
+    // input:not([type='radio']), select {
+    //   height: 26px;
+    //   padding: 0 5px !important;
+    //   &.required:not([disabled]) {
+    //     background: #FFFFCC !important;
+    //   }
+    // }
     textarea {
       &.required:not([disabled]) {
         background: #FFFFCC;
@@ -44,9 +44,9 @@ html, body {
       }
     }
 
-    .form-group {
-      margin-bottom: 5px !important;
-    }
+    // .form-group {
+    //   margin-bottom: 5px !important;
+    // }
 
     .panel {
       margin-bottom: 5px !important;
@@ -99,9 +99,9 @@ html, body {
     }
 
     .tab-item {
-      padding: 7px 20px 7px 7px !important;
+      // padding: 7px 20px 7px 7px !important;
       .close {
-        position: absolute;
+        // position: absolute;
         top: 2px;
         right: 8px;
         & > span {
