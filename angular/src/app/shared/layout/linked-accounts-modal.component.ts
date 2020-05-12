@@ -9,6 +9,7 @@ import { Paginator } from 'primeng/components/paginator/paginator';
 import { Table } from 'primeng/components/table/table';
 import { LinkAccountModalComponent } from './link-account-modal.component';
 import { finalize } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'linkedAccountsModal',
@@ -34,17 +35,21 @@ export class LinkedAccountsModalComponent extends AppComponentBase {
 
     getLinkedUsers(event?: LazyLoadEvent) {
         // cuongnm
-        // this.primengTableHelper.showLoadingIndicator();
+        if(environment.useOldBackend) {
+            return;
+        }
 
-        // this._userLinkService.getLinkedUsers(
-        //     this.primengTableHelper.getMaxResultCount(this.paginator, event),
-        //     this.primengTableHelper.getSkipCount(this.paginator, event),
-        //     this.primengTableHelper.getSorting(this.dataTable)
-        // ).pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator())).subscribe(result => {
-        //     this.primengTableHelper.totalRecordsCount = result.totalCount;
-        //     this.primengTableHelper.records = result.items;
-        //     this.primengTableHelper.hideLoadingIndicator();
-        // });
+        this.primengTableHelper.showLoadingIndicator();
+
+        this._userLinkService.getLinkedUsers(
+            this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            this.primengTableHelper.getSkipCount(this.paginator, event),
+            this.primengTableHelper.getSorting(this.dataTable)
+        ).pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator())).subscribe(result => {
+            this.primengTableHelper.totalRecordsCount = result.totalCount;
+            this.primengTableHelper.records = result.items;
+            this.primengTableHelper.hideLoadingIndicator();
+        });
     }
 
     getShownLinkedUserName(linkedUser: LinkedUserDto): string {

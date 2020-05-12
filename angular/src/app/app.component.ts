@@ -13,6 +13,7 @@ import { ChangeProfilePictureModalComponent } from '@app/shared/layout/profile/c
 import { MySettingsModalComponent } from '@app/shared/layout/profile/my-settings-modal.component';
 import { NotificationSettingsModalComponent } from '@app/shared/layout/notifications/notification-settings-modal.component';
 import { UserNotificationHelper } from '@app/shared/layout/notifications/UserNotificationHelper';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './app.component.html',
@@ -45,8 +46,9 @@ export class AppComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         this._userNotificationHelper.settingsModal = this.notificationSettingsModal;
         // cuongnm
+        
         // this.theme = abp.setting.get('App.UiManagement.Theme').toLocaleLowerCase();
-        this.theme = 'default';
+        this.theme = environment.useOldBackend ? 'default': abp.setting.get('App.UiManagement.Theme').toLocaleLowerCase();
 
         this.installationMode = UrlHelper.isInstallUrl(location.href);
 

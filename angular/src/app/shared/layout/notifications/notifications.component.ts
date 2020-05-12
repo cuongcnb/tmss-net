@@ -8,6 +8,7 @@ import { Paginator } from 'primeng/components/paginator/paginator';
 import { Table } from 'primeng/components/table/table';
 import { IFormattedUserNotification, UserNotificationHelper } from './UserNotificationHelper';
 import { finalize } from 'rxjs/operators';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './notifications.component.html',
@@ -97,7 +98,10 @@ export class NotificationsComponent extends AppComponentBase {
     setAllNotificationsAsRead(): void {
         this._userNotificationHelper.setAllAsRead(() => {
             // cuongnm
-            // this.getNotifications();
+            if (environment.useOldBackend) {
+                return;
+            }
+            this.getNotifications();
         });
     }
 

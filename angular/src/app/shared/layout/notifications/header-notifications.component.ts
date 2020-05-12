@@ -4,6 +4,7 @@ import { NotificationServiceProxy, UserNotification } from '@shared/service-prox
 import { IFormattedUserNotification, UserNotificationHelper } from './UserNotificationHelper';
 import * as _ from 'lodash';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './header-notifications.component.html',
@@ -26,7 +27,11 @@ export class HeaderNotificationsComponent extends AppComponentBase implements On
 
     ngOnInit(): void {
         // cuongnm
-        // this.loadNotifications();
+        if(environment.useOldBackend) {
+            this.registerToEvents();
+            return;
+        }
+        this.loadNotifications();
         this.registerToEvents();
     }
 

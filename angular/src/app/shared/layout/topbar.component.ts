@@ -8,6 +8,8 @@ import { AppConsts } from '@shared/AppConsts';
 import { ThemesLayoutBaseComponent } from '@app/shared/layout/themes/themes-layout-base.component';
 import { ChangeUserLanguageDto, LinkedUserDto, ProfileServiceProxy, UserLinkServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
+import { environment } from 'environments/environment';
+import { of } from 'rxjs';
 
 @Component({
     templateUrl: './topbar.component.html',
@@ -114,18 +116,23 @@ export class TopBarComponent extends ThemesLayoutBaseComponent implements OnInit
     }
 
     getProfilePicture(): void {
-        this._profileServiceProxy.getProfilePicture().subscribe(result => {
-            if (result && result.profilePicture) {
-                this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
-            }
-        });
+        (environment.useOldBackend ? of(null) :
+            this._profileServiceProxy.getProfilePicture()).subscribe(result => {
+                if (result && result.profilePicture) {
+                    this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
+                }
+            });
     }
 
     getRecentlyLinkedUsers(): void {
         // cuongnm
-        // this._userLinkServiceProxy.getRecentlyUsedLinkedUsers().subscribe(result => {
-        //     this.recentlyLinkedUsers = result.items;
-        // });
+        if (environment.useOldBackend) {
+            return;
+        }
+
+        this._userLinkServiceProxy.getRecentlyUsedLinkedUsers().subscribe(result => {
+            this.recentlyLinkedUsers = result.items;
+        });
     }
 
 

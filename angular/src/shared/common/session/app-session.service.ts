@@ -1,6 +1,8 @@
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { Injectable } from '@angular/core';
 import { ApplicationInfoDto, GetCurrentLoginInformationsOutput, SessionServiceProxy, TenantLoginInfoDto, UserLoginInfoDto, UiCustomizationSettingsDto } from '@shared/service-proxies/service-proxies';
+import { of } from 'rxjs';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AppSessionService {
@@ -62,17 +64,76 @@ export class AppSessionService {
 
     init(): Promise<UiCustomizationSettingsDto> {
         return new Promise<UiCustomizationSettingsDto>((resolve, reject) => {
-            this._sessionService.getCurrentLoginInformations().toPromise().then((result: GetCurrentLoginInformationsOutput) => {
-                this._application = result.application;
-                this._user = result.user;
-                this._tenant = result.tenant;
-                this._theme = result.theme;
+            // cuongnm
+            (environment.useOldBackend ? this.getCurrentLoginInformationsTTMS() : this._sessionService.getCurrentLoginInformations())
+                .toPromise().then((result: GetCurrentLoginInformationsOutput) => {
+                    this._application = result.application;
+                    this._user = result.user;
+                    this._tenant = result.tenant;
+                    this._theme = result.theme;
 
-                resolve(result.theme);
-            }, (err) => {
-                reject(err);
-            });
+                    resolve(result.theme);
+                }, (err) => {
+                    reject(err);
+                });
         });
+    }
+
+    getCurrentLoginInformationsTTMS() {
+        // cuongnm
+        return of(JSON.parse(`{
+            "user": {
+              "name": "admin",
+              "surname": "admin",
+              "userName": "admin",
+              "emailAddress": "admin@aspnetzero.com",
+              "profilePictureId": null,
+              "id": 1
+            },
+            "application": {
+              "version": "8.1.0.0",
+              "releaseDate": "2020-04-27T23:21:13+07:00",
+              "currency": "USD",
+              "currencySign": "$",
+              "allowTenantsToChangeEmailSettings": false,
+              "features": {}
+            },
+            "theme": {
+              "baseSettings": {
+                "theme": "default",
+                "layout": {
+                  "layoutType": "fluid"
+                },
+                "header": {
+                  "desktopFixedHeader": true,
+                  "mobileFixedHeader": false,
+                  "headerSkin": "light",
+                  "minimizeDesktopHeaderType": null,
+                  "headerMenuArrows": false
+                },
+                "subHeader": {
+                  "fixedSubHeader": true,
+                  "subheaderStyle": "solid"
+                },
+                "menu": {
+                  "position": "left",
+                  "asideSkin": "light",
+                  "fixedAside": true,
+                  "allowAsideMinimizing": true,
+                  "defaultMinimizedAside": false,
+                  "submenuToggle": "false",
+                  "searchActive": false
+                },
+                "footer": {
+                  "fixedFooter": false
+                }
+              },
+              "isLeftMenuUsed": true,
+              "isTopMenuUsed": false,
+              "isTabMenuUsed": false,
+              "allowMenuScroll": true
+            }
+          }`));
     }
 
     changeTenantIfNeeded(tenantId?: number): boolean {

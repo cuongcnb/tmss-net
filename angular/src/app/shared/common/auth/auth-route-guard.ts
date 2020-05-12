@@ -8,6 +8,7 @@ import { RefreshTokenService } from 'abp-ng2-module/dist/src/abpHttpInterceptor'
 import { of, Subject } from 'rxjs';
 import { FormStoringService } from '@app/shared/common-service/form-storing.service';
 import { StorageKeys } from '@app/core/constains/storageKeys';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -21,6 +22,49 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
     ) { }
 
     canActivateInternal(data: any, state: RouterStateSnapshot): Observable<boolean> {
+        if (UrlHelper.isInstallUrl(location.href)) {
+            return of(true);
+        }
+
+        if (!this._sessionService.user) {
+            let sessionObservable = new Subject<any>();
+
+            this._refreshTokenService.tryAuthWithRefreshToken()
+                .subscribe(
+                    (autResult: boolean) => {
+                        if (autResult) {
+                            sessionObservable.next(true);
+                            sessionObservable.complete();
+                            location.reload();
+                        } else {
+                            sessionObservable.next(false);
+                            sessionObservable.complete();
+                            this._router.navigate(['/account/login']);
+                        }
+                    },
+                    (error) => {
+                        sessionObservable.next(false);
+                        sessionObservable.complete();
+                        this._router.navigate(['/account/login']);
+                    }
+                );
+            return sessionObservable;
+        }
+
+        if (!data || !data['permission']) {
+            return of(true);
+        }
+
+        if (this._permissionChecker.isGranted(data['permission'])) {
+            return of(true);
+        }
+
+        this._router.navigate([this.selectBestRoute()]);
+        return of(false);
+    }
+
+    // cuongnm
+    canActivateTtms(data: any, state: RouterStateSnapshot): Observable<boolean> {
         if (UrlHelper.isInstallUrl(location.href)) {
             return of(true);
         }
@@ -68,6 +112,10 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        // cuongnm
+        if(environment.useOldBackend) {
+            return this.canActivateTtms(route.data, state);    
+        }
         return this.canActivateInternal(route.data, state);
     }
 
@@ -76,6 +124,10 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     canLoad(route: any): Observable<boolean> | Promise<boolean> | boolean {
+        // cuongnm
+        if(environment.useOldBackend) {
+            return this.canActivateTtms(route.data, null);    
+        }
         return this.canActivateInternal(route.data, null);
     }
 

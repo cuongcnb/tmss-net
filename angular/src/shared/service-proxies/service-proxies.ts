@@ -2042,7 +2042,6 @@ export class DashboardCustomizationServiceProxy {
      * @return Success
      */
     getDashboardDefinition(dashboardName: string | undefined, application: string | undefined): Observable<DashboardOutput> {
-        debugger;
         let url_ = this.baseUrl + "/api/services/app/DashboardCustomization/GetDashboardDefinition?";
         if (dashboardName === null)
             throw new Error("The parameter 'dashboardName' cannot be null.");
@@ -7017,9 +7016,6 @@ export class ProfileServiceProxy {
      * @return Success
      */
     getProfilePicture(): Observable<GetProfilePictureOutput> {
-        // cuongnm
-        return of(null);
-
         let url_ = this.baseUrl + "/api/services/app/Profile/GetProfilePicture";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -7485,61 +7481,6 @@ export class SessionServiceProxy {
      * @return Success
      */
     getCurrentLoginInformations(): Observable<GetCurrentLoginInformationsOutput> {
-        // cuongnm
-        return of(JSON.parse(`{
-            "user": {
-              "name": "admin",
-              "surname": "admin",
-              "userName": "admin",
-              "emailAddress": "admin@aspnetzero.com",
-              "profilePictureId": null,
-              "id": 1
-            },
-            "application": {
-              "version": "8.1.0.0",
-              "releaseDate": "2020-04-27T23:21:13+07:00",
-              "currency": "USD",
-              "currencySign": "$",
-              "allowTenantsToChangeEmailSettings": false,
-              "features": {}
-            },
-            "theme": {
-              "baseSettings": {
-                "theme": "default",
-                "layout": {
-                  "layoutType": "fluid"
-                },
-                "header": {
-                  "desktopFixedHeader": true,
-                  "mobileFixedHeader": false,
-                  "headerSkin": "light",
-                  "minimizeDesktopHeaderType": null,
-                  "headerMenuArrows": false
-                },
-                "subHeader": {
-                  "fixedSubHeader": true,
-                  "subheaderStyle": "solid"
-                },
-                "menu": {
-                  "position": "left",
-                  "asideSkin": "light",
-                  "fixedAside": true,
-                  "allowAsideMinimizing": true,
-                  "defaultMinimizedAside": false,
-                  "submenuToggle": "false",
-                  "searchActive": false
-                },
-                "footer": {
-                  "fixedFooter": false
-                }
-              },
-              "isLeftMenuUsed": true,
-              "isTopMenuUsed": false,
-              "isTabMenuUsed": false,
-              "allowMenuScroll": true
-            }
-          }`));
-
         let url_ = this.baseUrl + "/api/services/app/Session/GetCurrentLoginInformations";
         url_ = url_.replace(/[?&]$/, "");
 

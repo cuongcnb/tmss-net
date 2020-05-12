@@ -16,6 +16,7 @@ import { GridTableService } from '@app/shared/common-service/grid-table.service'
 import { ConfirmService } from '@app/shared/confirmation/confirm.service';
 import { remove } from 'lodash';
 import { focusedCells, setCurrentTab } from '@app/shared/common/focused-cells';
+import { environment } from 'environments/environment';
 
 const tabChangeObserver = new ReplaySubject(1);
 
@@ -42,6 +43,8 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
     @ViewChild('tabFocus', { static: false }) tabFocus;
 
     @ViewChild('vehicleArrivalFilterModal', { static: false }) vehicleArrivalFilterModal;
+
+    useOldBackend = environment.useOldBackend;
 
     dashboardName = DashboardCustomizationConst.dashboardNames.defaultTenantDashboard;
     checkRemoveTab = false;
@@ -105,15 +108,15 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
 
         this.currentUser = this.formStoringService.get(StorageKeys.currentUser);
 
-        window.addEventListener('storage', (event) => {
-            if (event.storageArea === localStorage) {
-                const token = localStorage.getItem(StorageKeys.currentUser);
-                if (!token) {
-                    document.body.classList.add('login');
-                    this.router.navigate(['/auth/login']);
-                }
-            }
-        }, false);
+        // window.addEventListener('storage', (event) => {
+        //     if (event.storageArea === localStorage) {
+        //         const token = localStorage.getItem(StorageKeys.currentUser);
+        //         if (!token) {
+        //             document.body.classList.add('login');
+        //             this.router.navigate(['/auth/login']);
+        //         }
+        //     }
+        // }, false);
 
         proposalShortcutRef$.subscribe((sc: Array<any>) => {
             setClickedRow(null, null, null, true);

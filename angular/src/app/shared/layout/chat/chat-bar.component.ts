@@ -30,6 +30,8 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { ChatFriendDto } from './ChatFriendDto';
 import { ChatSignalrService } from './chat-signalr.service';
+import { environment } from 'environments/environment';
+import { of } from 'rxjs';
 
 @Component({
     templateUrl: './chat-bar.component.html',
@@ -211,7 +213,9 @@ export class ChatBarComponent extends AppComponentBase implements OnInit, AfterV
     }
 
     getProfilePicture(): void {
-        this._profileService.getProfilePicture().subscribe(result => {
+        // cuongnm
+        (environment.useOldBackend ? of(null) : 
+        this._profileService.getProfilePicture()).subscribe(result => {
             if (result && result.profilePicture) {
                 this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
             }

@@ -15,26 +15,33 @@ import { SharedModule } from '@app/shared/shared.module';
 import { ServicesReportModule } from '@app/application/services-report/services-report.module';
 import { QueuingSystemModule } from '@app/application/queuing-system/queuing-system.module';
 import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
+import { environment } from 'environments/environment';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
 @NgModule({
-    imports: [
-        // CommonModule,
-        // FormsModule,
-        // ModalModule,
-        // TabsModule,
-        // TooltipModule,
-        // AppCommonModule,
-        // UtilsModule,
-        // MainRoutingModule,
-        // CountoModule,
-        // NgxChartsModule,
-        // BsDatepickerModule.forRoot(),
-        // BsDropdownModule.forRoot(),
-        // PopoverModule.forRoot()
+    imports: environment.useOldBackend ? [
         SharedModule,
         MainRoutingModule,
+        ServicesReportModule,
+        QueuingSystemModule,
+        KeyboardShortcutsModule
+    ] : [
+        CommonModule,
+        FormsModule,
+        ModalModule,
+        TabsModule,
+        TooltipModule,
+        AppCommonModule,
+        UtilsModule,
+        MainRoutingModule,
+        CountoModule,
+        NgxChartsModule,
+        BsDatepickerModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        PopoverModule.forRoot(),
+
+        SharedModule,
         ServicesReportModule,
         QueuingSystemModule,
         KeyboardShortcutsModule
@@ -42,10 +49,10 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
     declarations: [
         DashboardComponent
     ],
-    providers: [
-        // { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
-        // { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
-        // { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
+    providers: environment.useOldBackend ? [] : [
+        { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
+        { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
+        { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale }
     ]
 })
 export class MainModule { }

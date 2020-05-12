@@ -4,6 +4,8 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { ProfileServiceProxy, UserLoginAttemptDto, UserLoginServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import { ModalDirective } from 'ngx-bootstrap';
+import { environment } from 'environments/environment';
+import { of } from 'rxjs';
 
 @Component({
     selector: 'loginAttemptsModal',
@@ -11,7 +13,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 })
 export class LoginAttemptsModalComponent extends AppComponentBase {
 
-    @ViewChild('loginAttemptsModal', {static: true}) modal: ModalDirective;
+    @ViewChild('loginAttemptsModal', { static: true }) modal: ModalDirective;
 
     userLoginAttempts: UserLoginAttemptDto[];
     profilePicture = AppConsts.appBaseUrl + '/assets/common/images/default-profile-picture.png';
@@ -28,12 +30,13 @@ export class LoginAttemptsModalComponent extends AppComponentBase {
     show(): void {
         this._userLoginService.getRecentUserLoginAttempts().subscribe(result => {
             this.userLoginAttempts = result.items;
-            this._profileService.getProfilePicture().subscribe(result => {
-                if (result && result.profilePicture) {
-                    this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
-                }
-                this.modal.show();
-            });
+            (environment.useOldBackend ? of(null) :
+                this._profileService.getProfilePicture()).subscribe(result => {
+                    if (result && result.profilePicture) {
+                        this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
+                    }
+                    this.modal.show();
+                });
         });
     }
 

@@ -12,6 +12,7 @@ import { FormStoringService } from '@app/shared/common-service/form-storing.serv
 import { AppMenuItem } from './app-menu-item';
 import { EventBusService } from '@app/shared/common-service/event-bus.service';
 import { TMSSTabs } from '@app/core/constains/tabs';
+import { environment } from 'environments/environment';
 
 @Component({
     templateUrl: './side-bar-menu.component.html',
@@ -56,6 +57,8 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
         }
     };
 
+    useOldBackend = environment.useOldBackend;
+
     constructor(
         injector: Injector,
         private el: ElementRef,
@@ -69,17 +72,18 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
     }
 
     ngOnInit() {
-        this.currentUser = this.formStoringService.get(StorageKeys.currentUser);
-        this.menuList = this.currentUser.menuList.filter(it => it.code.indexOf('Warrantly') < 0);
+        if (environment.useOldBackend) {
+            this.currentUser = this.formStoringService.get(StorageKeys.currentUser);
+            this.menuList = this.currentUser.menuList.filter(it => it.code.indexOf('Warrantly') < 0);
+            this.menu = new AppMenu('MainMenu', 'MainMenu', this.buildMenuItems(this.menuList));
+        } else {
+            this.menu = this._appNavigationService.getMenu();
+            this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
 
-        // this.menu = this._appNavigationService.getMenu();
-        this.menu = new AppMenu('MainMenu', 'MainMenu', this.buildMenuItems(this.menuList));
-
-        // this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
-
-        // this.router.events
-        //     .pipe(filter(event => event instanceof NavigationEnd))
-        //     .subscribe(event => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
+            this.router.events
+                .pipe(filter(event => event instanceof NavigationEnd))
+                .subscribe(event => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
+        }
 
         this.allTabs = Object.values(TMSSTabs);
 
@@ -309,6 +313,10 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
     }
 
     openComponent(event, item: AppMenuItem) {
+        if(environment.useOldBackend) {
+            return;
+        }
+
         const functionCode = item.parameters.functionCode;
         if (!functionCode) {
             return;
