@@ -313,7 +313,7 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
     }
 
     openComponent(event, item: AppMenuItem) {
-        if(environment.useOldBackend) {
+        if (!environment.useOldBackend) {
             return;
         }
 
