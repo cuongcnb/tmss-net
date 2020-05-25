@@ -1,5 +1,8 @@
 <div class="input-group">
-  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+  <!-- <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span> -->
+  <div class="input-group-prepend">
+    <span class="input-group-text">{{text}}</span>
+  </div>
   <input [(ngModel)]="displayValue"
          type="text" class="form-control text-right"
          [class.required]="isRequired"

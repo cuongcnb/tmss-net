@@ -6,14 +6,17 @@
       <div class="row">
         <div class="col-sm-3">
           <div class="input-group">
-                  <span data-toggle="tooltip" data-placement="bottom" title="Cố vấn dịch vụ"
-                        class="input-group-addon" addonWidth="64px">CVDV</span>
+            <div class="input-group-prepend">
+              <span data-toggle="tooltip" data-placement="bottom" title="Cố vấn dịch vụ" class="input-group-text">CVDV</span>
+            </div>
             <input type="text" class="form-control" readonly formControlName="cvdv">
           </div>
         </div>
         <div class="col-sm-4 form-group">
           <div class="input-group">
-            <span class="input-group-addon" addonWidth="64px">RO#</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">RO#</span>
+            </div>
             <!--<input class="form-control" formControlName="roNo">-->
             <select class="form-control" formControlName="roId" (change)="onSelectRo()" (keydown)="keyDown($event)">
               <option value=""></option>
@@ -42,7 +45,7 @@
           </div>
           <div class="form-group">
             <div class="float-right">
-              <button class="btn btn-blue" (click)="reload(true)" placement="left" [tooltip]="'Refresh'"><i class="fa fa fa-rotate-right"></i></button>
+              <button class="btn btn-primary" (click)="reload(true)" placement="left" [tooltip]="'Refresh'"><i class="fas fa-sync"></i></button>
             </div>
             <!--          <div class="float-right btn-group">-->
             <!--&lt;!&ndash;            <button class="btn btn-blue" (click)="getPreviousRo()"><i class="fa fa-backward"></i></button>&ndash;&gt;-->
@@ -59,7 +62,9 @@
       <div class="row">
         <div class="col-sm-2 form-group w-20">
           <div class="input-group">
-            <span class="input-group-addon" addonWidth="64px">Loại hình SC</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Loại hình SC</span>
+            </div>
             <select class="form-control" formControlName="rotype" (change)="changeType($event.target.value)">
               <option [ngValue]="'2'">S/C chung</option>
               <option [ngValue]="'1'">Đồng sơn</option>
@@ -68,7 +73,9 @@
         </div>
         <div class="col-sm-3 form-group w-20">
           <div class="input-group">
-            <span class="input-group-addon" addonWidth="64px">HT thanh toán</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">HT thanh toán</span>
+            </div>
             <select class="form-control" formControlName="rctypeId">
               <option *ngFor="let type of rcTypes" [ngValue]="type.id"
                       [ngClass]="(type.rctypename) === claimVehicleOld ? 'opacity' : ''">{{type.rctypename}}
@@ -78,13 +85,17 @@
         </div>
         <div class="col-sm-2 form-group w-20">
           <div class="input-group">
-            <span class="input-group-addon" addonWidth="64px">Biển số</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Biển số</span>
+            </div>
             <input class="form-control required" formControlName="registerno" readonly>
           </div>
         </div>
         <div class="col-sm-2 form-group w-20">
           <div class="input-group">
-            <span class="input-group-addon" addonWidth="44px">VIN</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">VIN</span>
+            </div>
             <input class="form-control" formControlName="vinno" readonly>
           </div>
         </div>
@@ -111,7 +122,9 @@
       <div class="col-sm-5">
         <div class="form-group" hasError="reqdesc">
           <div class="input-group">
-            <span class="input-group-addon">Yêu cầu KH</span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Yêu cầu KH</span>
+            </div>
             <input class="form-control required" #firstFocus formControlName="reqdesc" (focusout)="onFocusOut($event)">
           </div>
           <div class="error-messages" errorMessage>

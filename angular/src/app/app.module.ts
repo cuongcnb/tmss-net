@@ -86,9 +86,14 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SharedModule } from './shared/shared.module';
 import { EnvConfigService } from './env-config.service';
+import { JwtModule } from '@auth0/angular-jwt';
 
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => () => envConfig.loadEnvConfig();
+
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
 
 @NgModule({
     declarations: [
@@ -142,6 +147,13 @@ const appEnvInitializerFn = (envConfig: EnvConfigService) => () => envConfig.loa
         MenuSearchBarComponent
     ],
     imports: [
+        JwtModule.forRoot({
+            config: {
+                tokenGetter,
+                whitelistedDomains: ['example.com'],
+                blacklistedRoutes: ['example.com/examplebadroute/']
+            }
+        }),
         ngCommon.CommonModule,
         FormsModule,
         HttpClientModule,
@@ -203,7 +215,7 @@ const appEnvInitializerFn = (envConfig: EnvConfigService) => () => envConfig.loa
             useFactory: appEnvInitializerFn,
             multi: true,
             deps: [EnvConfigService]
-          }
+        }
     ],
     entryComponents: [NgxSpinnerComponent]
 })

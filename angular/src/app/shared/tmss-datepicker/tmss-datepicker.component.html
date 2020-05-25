@@ -1,5 +1,8 @@
 <div class="input-group" [ngClass]="className ? className : ''">
-  <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span>
+  <!-- <span class="input-group-addon" [style.minWidth]="addOnMinWidth" *ngIf="text">{{text}}</span> -->
+  <div class="input-group-prepend" *ngIf="text">
+    <span class="input-group-text">{{text}}</span>
+  </div>
   <input type="text" class="form-control" [(ngModel)]="selectedValue" #datepicker="bsDatepicker"
          (blur)="onBlur($event)"
          [placement]="placement ? placement : 'bottom left'"
