@@ -13,8 +13,8 @@
         <div class="tabbable">
           <ul class="nav nav-tabs tab-blue">
             <li *ngFor="let item of tabs"
-                [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer">
-              <a data-toggle="tab" class="tab-item text-capitalize">
+                [class.active]="item.tab === selectedTab" (click)="selectTab(item.tab)" class="pointer nav-item">
+              <a data-toggle="tab" class="tab-item nav-link text-capitalize">
                 {{item.name}}
               </a>
             </li>

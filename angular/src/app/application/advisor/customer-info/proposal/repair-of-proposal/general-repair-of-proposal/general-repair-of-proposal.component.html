@@ -47,15 +47,15 @@
     </div>
   </div>
   <div class="text-right col-sm-2">
-    <button type="button" class="btn btn-blue mr-2"
+    <button type="button" class="btn btn-primary btn-sm"
             [disabled]="state && disabledBtnAdd.includes(state.toString()) || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy  && !stateCVDV.includes(state))"
             (click)="addWork()">
-      <i class="fa fa-plus"></i> Thêm
+      <i class="fas fa-plus"></i> Thêm
     </button>
-    <button type="button" class="btn btn-blue"
+    <button type="button" class="btn btn-primary btn-sm"
             [disabled]="state && selectedNode && selectedNode.data.status === 'Y' || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy  && !stateCVDV.includes(state))"
             (click)="removeWork()">
-      <i class="fa fa-trash-o"></i> Xóa
+      <i class="fas fa-trash"></i> Xóa
     </button>
   </div>
 </div>

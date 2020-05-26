@@ -44,22 +44,22 @@
             </div>
           </div>
           <div class="col-sm-4 text-right">
-            <button type="button" class="btn btn-blue mr-2"
+            <button type="button" class="btn btn-primary btn-sm"
               [disabled]="!(proposalForm.getRawValue().appointmentId && proposalForm.getRawValue().rostate <= stateQuotation) "
               (click)="partFromBooking.open(proposalForm.getRawValue().appointmentId)">Chọn PT
             </button>
-            <button type="button" class="btn btn-blue mr-2" [disabled]="!(proposalForm.getRawValue().roId)"
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="!(proposalForm.getRawValue().roId)"
               (click)="partFromBookingDetail.open(proposalForm.getRawValue().roId)"> TT Chi tiết
             </button>
-            <button type="button" class="btn btn-blue mr-2"
+            <button type="button" class="btn btn-primary btn-sm"
               [disabled]="state && disabledBtnAdd.includes(state.toString()) || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy && !stateCVDV.includes(state) )"
               (click)="addParts()">
-              <i class="fa fa-plus"></i> Thêm
+              <i class="fas fa-plus"></i> Thêm
             </button>
-            <button type="button" class="btn btn-blue"
+            <button type="button" class="btn btn-primary btn-sm"
               [disabled]="partHasAppId || (state && !disableBtnDel.includes(state.toString()) && selectedNode && selectedNode.data.pstate === 'Y' || (proposalForm.getRawValue().jti !==  proposalForm.getRawValue().createdBy  && !stateCVDV.includes(state)))"
               (click)="removePart()">
-              <i class="fa fa-trash-o"></i> Xóa
+              <i class="fas fa-trash"></i> Xóa
             </button>
           </div>
         </div>

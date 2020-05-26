@@ -45,7 +45,7 @@
           </div>
           <div class="form-group">
             <div class="float-right">
-              <button class="btn btn-primary" (click)="reload(true)" placement="left" [tooltip]="'Refresh'"><i class="fas fa-sync"></i></button>
+              <button class="btn btn-primary btn-sm" (click)="reload(true)" placement="left" [tooltip]="'Refresh'"><i class="fas fa-sync"></i></button>
             </div>
             <!--          <div class="float-right btn-group">-->
             <!--&lt;!&ndash;            <button class="btn btn-blue" (click)="getPreviousRo()"><i class="fa fa-backward"></i></button>&ndash;&gt;-->
@@ -218,13 +218,13 @@
   </div>
   <div class="py-1 float-right">
     <button type="button"
-            class="btn btn-blue mr-2"
+            class="btn btn-primary btn-sm"
             (click)="refresh()"
             [disabled]="(form.getRawValue().rostate=== State.cancel || form.getRawValue().roId)">
       Refresh
     </button>
     <div class="btn-group dropup mr-2">
-      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
         1. Báo giá <span class="caret"></span>
       </button>
@@ -267,7 +267,7 @@
     </div>
 
     <div class="btn-group dropup mr-2">
-      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
               [disabled]="(form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
               || !isAdvisor"
               aria-haspopup="true" aria-expanded="false">
@@ -297,7 +297,7 @@
         </li>
       </ul>
     </div>
-    <button class="btn btn-blue mr-2"
+    <button class="btn btn-primary btn-sm mr-2"
             [disabled]="!enableBtnFinishRo.includes(form.getRawValue().rostate)
             || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
             || !isAdvisor"
@@ -306,7 +306,7 @@
     </button>
 
     <div class="btn-group dropup mr-2">
-      <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown"
+      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"
               [disabled]="(form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
               || !isAdvisor"
               aria-haspopup="true" aria-expanded="false">
@@ -335,12 +335,12 @@
 
       </ul>
     </div>
-    <button class="btn btn-blue mr-2" data-toggle="tooltip" data-placement="bottom"
+    <button class="btn btn-primary btn-sm mr-2" data-toggle="tooltip" data-placement="bottom"
             title="Lịch sử sửa chữa"
             (click)="openRepairHistory()">
       5. LSSC
     </button>
-    <button class="btn btn-blue mr-2"
+    <button class="btn btn-primary btn-sm mr-2"
             data-toggle="tooltip" data-placement="bottom"
             title="Công việc phát sinh"
             [disabled]="!form.getRawValue().roNo || !enableBtnWorkIncurred.includes(form.getRawValue().rostate) || (form.getRawValue().jti !==  form.getRawValue().createdBy && !stateCVDV.includes(form.getRawValue().rostate))
