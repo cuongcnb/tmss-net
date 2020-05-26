@@ -1,4 +1,107 @@
-<div class="panel panel-default">
+<div class="accordion accordion-solid accordion-toggle-plus" id="accordionEventCar">
+  <div class="card">
+    <div class="card-header" id="headingOne6">
+      <div class="card-title" data-toggle="collapse" data-target="#collapseEventCar" 
+        (click)="isCollapsed = !isCollapsed" 
+        [attr.aria-expanded]="!isCollapsed"
+        [ngClass]="isCollapsed ? 'collapsed' : ''">
+        <i class="fas fa-info-circle"></i> Thông tin xe
+      </div>
+    </div>
+    <div id="collapseEventCar" class="collapse" data-parent="#accordionEventCar" [ngClass]="isCollapsed ? '' : 'show'">
+      <div class="card-body">
+        <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Mã k/xe</span>
+                <input class="form-control" formControlName="cmCode" readonly>
+              </div>
+            </div>
+    
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">FM</span>
+                <input type="text" class="form-control" readonly formControlName="fullmodel" maxlength="50">
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Màu xe</span>
+                <input type="text" class="form-control required" readonly formControlName="vccode">
+              </div>
+            </div>
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Loại máy</span>
+                <input type="text" class="form-control" readonly formControlName="enginecode">
+              </div>
+            </div>
+          </div>
+    
+    
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Kiểu xe</span>
+                <input formControlName="cmName" readonly disabled class="form-control">
+                <!--<select class="form-control required" formControlName="cmName">-->
+                <!--<option [ngValue]="null"></option>-->
+                <!--<option *ngFor="let val of cmListByType" [ngValue]="val.cmName">{{val.cmName}}</option>-->
+                <!--</select>-->
+              </div>
+            </div>
+            <!--<div class="col-sm-6 ">-->
+              <!--<div class="form-group" hasError="km" [ignoreCss]="['required']">-->
+                <!--<tmss-money-input [kmBefore]="kmBefore" [maxLength]="7" text="Km vào" [isRequired]="true"-->
+                                  <!--[addOnMinWidth]="'72px'" formControlName="km"-->
+                                  <!--fieldAccessor="input"></tmss-money-input>-->
+                <!--<div class="error-messages" errorMessage>-->
+                  <!--<div *ifError="'maxLength'">Số có độ dài 6 ký tự</div>-->
+                  <!--<div *ifError="'numberFormat'">Sai định dạng</div>-->
+                <!--</div>-->
+              <!--</div>-->
+    
+            <!--</div>-->
+          </div>
+    
+          <div class="form-group">
+            <div class="input-group last-km">
+              <div>
+                <span class="input-group-addon" addonWidth="72px">Km trước</span>
+                <input type="text" class="form-control" formControlName="lastKm">
+              </div>
+              <div>
+                <span class="input-group-addon">-</span>
+                <input type="text" class="form-control" formControlName="lastKmDate">
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Số khung</span>
+                <input type="text" class="form-control" formControlName="frameno" maxlength="20">
+              </div>
+            </div>
+            <div class="col-sm-6 form-group" hasError="engineno">
+              <div class="input-group">
+                <span class="input-group-addon" addonWidth="72px">Số máy</span>
+                <input type="text" class="form-control" formControlName="engineno" maxlength="20">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="panel panel-default">
   <div class="panel-heading">
     <i class="fa fa-info"></i>
     <span>Thông tin xe</span>
@@ -9,91 +112,6 @@
     </div>
   </div>
   <div id="collapseEventCar" [collapse]="isCollapsed">
-    <form [formGroup]="form" *ngIf="form" novalidate autocomplete="off">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Mã k/xe</span>
-            <input class="form-control" formControlName="cmCode" readonly>
-          </div>
-        </div>
-
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">FM</span>
-            <input type="text" class="form-control" readonly formControlName="fullmodel" maxlength="50">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Màu xe</span>
-            <input type="text" class="form-control required" readonly formControlName="vccode">
-          </div>
-        </div>
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Loại máy</span>
-            <input type="text" class="form-control" readonly formControlName="enginecode">
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Kiểu xe</span>
-            <input formControlName="cmName" readonly disabled class="form-control">
-            <!--<select class="form-control required" formControlName="cmName">-->
-            <!--<option [ngValue]="null"></option>-->
-            <!--<option *ngFor="let val of cmListByType" [ngValue]="val.cmName">{{val.cmName}}</option>-->
-            <!--</select>-->
-          </div>
-        </div>
-        <!--<div class="col-sm-6 ">-->
-          <!--<div class="form-group" hasError="km" [ignoreCss]="['required']">-->
-            <!--<tmss-money-input [kmBefore]="kmBefore" [maxLength]="7" text="Km vào" [isRequired]="true"-->
-                              <!--[addOnMinWidth]="'72px'" formControlName="km"-->
-                              <!--fieldAccessor="input"></tmss-money-input>-->
-            <!--<div class="error-messages" errorMessage>-->
-              <!--<div *ifError="'maxLength'">Số có độ dài 6 ký tự</div>-->
-              <!--<div *ifError="'numberFormat'">Sai định dạng</div>-->
-            <!--</div>-->
-          <!--</div>-->
-
-        <!--</div>-->
-      </div>
-
-      <div class="form-group">
-        <div class="input-group last-km">
-          <div>
-            <span class="input-group-addon" addonWidth="72px">Km trước</span>
-            <input type="text" class="form-control" formControlName="lastKm">
-          </div>
-          <div>
-            <span class="input-group-addon">-</span>
-            <input type="text" class="form-control" formControlName="lastKmDate">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Số khung</span>
-            <input type="text" class="form-control" formControlName="frameno" maxlength="20">
-          </div>
-        </div>
-        <div class="col-sm-6 form-group" hasError="engineno">
-          <div class="input-group">
-            <span class="input-group-addon" addonWidth="72px">Số máy</span>
-            <input type="text" class="form-control" formControlName="engineno" maxlength="20">
-          </div>
-        </div>
-      </div>
-    </form>
+    
   </div>
-</div>
+</div> -->
