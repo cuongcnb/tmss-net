@@ -130,6 +130,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
         this.lazyLoadTabs = [
             // Administration
             TMSSTabs.AdministrationOrganizationUnits,
+            TMSSTabs.AdministrationUsers,
 
             // Fir category
             TMSSTabs.firContactQuestions,
@@ -1023,6 +1024,7 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
         this.tabs = [
             // Administration
             { name: 'Cơ cấu tổ chức', tab: TMSSTabs.AdministrationOrganizationUnits },
+            { name: 'Người dùng', tab: TMSSTabs.AdministrationUsers },
 
             // DLR Khai báo danh mục
             { name: 'Danh sách tỉnh thành', tab: TMSSTabs.provinceList },

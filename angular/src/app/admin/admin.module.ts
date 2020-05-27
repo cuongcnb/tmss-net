@@ -93,6 +93,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 const map = {
     [TMSSTabs.AdministrationOrganizationUnits]: OrganizationUnitsComponent,
+    [TMSSTabs.AdministrationUsers]: UsersComponent,
 };
 @NgModule({
     imports: [
