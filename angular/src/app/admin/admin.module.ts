@@ -86,10 +86,14 @@ import { DropdownModule } from 'primeng/dropdown';
 // Metronic
 import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { PermissionTreeModalComponent } from './shared/permission-tree-modal.component';
+import { TMSSTabs } from '@app/core/constains/tabs';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     // suppressScrollX: true
 };
 
+const map = {
+    [TMSSTabs.AdministrationOrganizationUnits]: OrganizationUnitsComponent,
+};
 @NgModule({
     imports: [
         FormsModule,
@@ -187,6 +191,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         AddMemberModalComponent,
         AddRoleModalComponent
     ],
+    entryComponents: [
+
+    ],
     providers: [
         ImpersonationService,
         TreeDragDropService,
@@ -196,4 +203,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
     ]
 })
-export class AdminModule { }
+export class AdminModule {
+    static getComponent(key) {
+        return map[key];
+    }
+}

@@ -30,12 +30,12 @@
         aria-haspopup="true" data-ktmenu-submenu-toggle="hover" (click)="openComponent($event, item)">
 
         <!-- if menu item hasn't submenu -->
-        <a *ngIf="!item.items.length && !item.external && !useOldBackend" [queryParams]="item.parameters" [routerLink]="item.route"
+        <!-- <a *ngIf="!item.items.length && !item.external && !useOldBackend" [queryParams]="item.parameters" [routerLink]="item.route"
             class="kt-menu__link">
             <ng-container [ngTemplateOutlet]="mMenuItemText"
                 [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>
-        </a>
-        <a *ngIf="!item.items.length && !item.external && useOldBackend"
+        </a> -->
+        <a *ngIf="!item.items.length && !item.external"
             class="kt-menu__link">
             <ng-container [ngTemplateOutlet]="mMenuItemText"
                 [ngTemplateOutletContext]="{ item: item, parentItem: parentItem }"></ng-container>

@@ -30,7 +30,6 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         CommonModule,
         FormsModule,
         ModalModule,
-        TabsModule,
         TooltipModule,
         AppCommonModule,
         UtilsModule,

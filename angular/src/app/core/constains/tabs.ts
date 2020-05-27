@@ -7,6 +7,8 @@ export const TMSSTabs = {
   userManagement: 'USER_MANAGEMENT', // Đang k dùng
   userListFunctionReport: 'USER_LIST_FUNCTION_REPORT',
 
+  AdministrationOrganizationUnits: 'organization-units',
+
   // DLR Khai báo danh mục
   provinceList: 'PROVINCES', // Danh sách tỉnh thành
   districtList: 'DISTRICTS', // Danh sách quận huyện
@@ -401,6 +403,9 @@ export const TMSSTabs = {
 };
 
 export const MODULE_MAP = {
+  'src/app/admin/admin.module#AdminModule': [
+    TMSSTabs.AdministrationOrganizationUnits
+  ],
   'src/app/application/fir-category/fir-category.module#FirCategoryModule': [
     TMSSTabs.firContactQuestions,
     TMSSTabs.agencyContactQuestions,

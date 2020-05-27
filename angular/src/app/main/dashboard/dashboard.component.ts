@@ -128,6 +128,9 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
             });
         });
         this.lazyLoadTabs = [
+            // Administration
+            TMSSTabs.AdministrationOrganizationUnits,
+
             // Fir category
             TMSSTabs.firContactQuestions,
             TMSSTabs.agencyContactQuestions,
@@ -1018,6 +1021,9 @@ export class DashboardComponent extends AppComponentBase implements OnInit, OnDe
 
     private initTabs() {
         this.tabs = [
+            // Administration
+            { name: 'Cơ cấu tổ chức', tab: TMSSTabs.AdministrationOrganizationUnits },
+
             // DLR Khai báo danh mục
             { name: 'Danh sách tỉnh thành', tab: TMSSTabs.provinceList },
             { name: 'Danh sách quận huyện', tab: TMSSTabs.districtList },

@@ -1,5 +1,5 @@
 <!-- <customizable-dashboard [dashboardName]="dashboardName" *ngIf="!useOldBackend"></customizable-dashboard> -->
-<div id="main-container" class="main-container" *ngIf="useOldBackend">
+<div id="main-container" class="main-container">
   <div class="main-content">
     <div [hidden]="hide" class="container" id="breadcrumb-container">
       <div class="tabbable mt-4 tab-container" *ngIf="activeTabs.length">
@@ -19,24 +19,6 @@
         </ul>
       </div>
   
-      <!--tiến độ-->
-      <!-- <general-repair-progress *ngIf="isLoadComponent(tMSSTabs.generalRepairProgress)"
-                               #generalRepairProgress [dataProgress]="dataProgress"
-                               [tabDisplay]="selectedTab === tMSSTabs.generalRepairProgress"></general-repair-progress>
-      <info-general-repair-progress *ngIf="isLoadComponent(tMSSTabs.infoGeneralRepairProgress)"
-                                    [tabDisplay]="selectedTab === tMSSTabs.infoGeneralRepairProgress"></info-general-repair-progress>
-      <dong-son-progress *ngIf="isLoadComponent(tMSSTabs.dongsonProgress)"
-                         #dongSonProgress [tabDisplay]="selectedTab === tMSSTabs.dongsonProgress"></dong-son-progress>
-      <dong-son-progress-by-car *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByCar)"
-                                #dongSonProgressByCar
-                                [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByCar"></dong-son-progress-by-car>
-      <dong-son-progress-by-wshop *ngIf="isLoadComponent(tMSSTabs.dongsonProgressByWshop)"
-                                  #dongSonProgressByWshop
-                                  [tabDisplay]="selectedTab === tMSSTabs.dongsonProgressByWshop"></dong-son-progress-by-wshop>
-      <car-wash-progress *ngIf="isLoadComponent(tMSSTabs.carWash)"
-                         #carWashProgress [tabDisplay]="selectedTab === tMSSTabs.carWash"></car-wash-progress> -->
-  
-      <!-- Lễ tân -->
       <receptionist *ngIf="isLoadComponent(tMSSTabs.receptionist)"
                     #receptionist [tabDisplay]="selectedTab === tMSSTabs.receptionist"></receptionist>
   

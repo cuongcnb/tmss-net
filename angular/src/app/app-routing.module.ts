@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AppRouteGuard } from './shared/common/auth/auth-route-guard';
 import { NotificationsComponent } from './shared/layout/notifications/notifications.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'environments/environment';
 
 @NgModule({
     imports: [
@@ -31,7 +32,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
                         loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule), //Lazy load admin module
                         data: { preload: true },
                         canLoad: [AppRouteGuard]
-                    }, 
+                    },
                     // {
                     //     path: '**', redirectTo: 'notifications'
                     // }
@@ -41,7 +42,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
                 path: 'auth',
                 // loadChildren: './auth/auth.module#AuthModule',
                 loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
-                // canActivate: [AppRouteGuard]
+                canActivate: environment.useOldBackend ? [] : [AppRouteGuard]
             }
         ])
     ],

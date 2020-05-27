@@ -207,7 +207,7 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
             const menuItem = new AppMenuItem(item.code || item.functionName,
                 '',
                 '',
-                item.code || item.menuCode,
+                null,
                 this.buildMenuItems(item.list || []),
                 false,
                 item);
@@ -313,11 +313,11 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
     }
 
     openComponent(event, item: AppMenuItem) {
-        if (!environment.useOldBackend) {
-            return;
-        }
+        // if (!environment.useOldBackend) {
+        //     return;
+        // }
 
-        const functionCode = item.parameters.functionCode;
+        const functionCode = (item.parameters && item.parameters.functionCode) || item.route;
         if (!functionCode) {
             return;
         }
@@ -325,6 +325,8 @@ export class SideBarMenuComponent extends AppComponentBase implements OnInit, Af
         event.stopPropagation();
 
         if (this.allTabs.indexOf(functionCode) < 0) {
+            alert('Cần khai báo tab theo hướng dẫn: https://docs.google.com/document/d/1uOrj-NLiwmecNK2o-xMvLPKJfsrf5dKifu_M3zioxjg/edit');
+            window.open('https://docs.google.com/document/d/1uOrj-NLiwmecNK2o-xMvLPKJfsrf5dKifu_M3zioxjg/edit', '_blank');
             return;
         }
         if (this.functionsNeedFilterFirst.indexOf(functionCode) > -1) {

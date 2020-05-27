@@ -77,6 +77,7 @@
               "src/assets/metronic/common/js/scripts.bundle.js"
             ],
             "lazyModules": [
+              "src/app/admin/admin.module",
               "src/app/application/fir-category/fir-category.module",
               "src/app/application/service-kpi-data/service-kpi-data.module",
               "src/app/application/category-voc/category-voc.module",
